@@ -21,7 +21,7 @@
 		</div>
     </section>
 	<!-- /Section: intro -->
-
+	
 	<!-- Section: about -->
     <section id="about" class="home-section text-center">
 		<div class="heading-about">

@@ -11,17 +11,21 @@ class home extends CI_Controller {
 		
 		// Load Setting data
 		$this->load->model('setting/Settings');
+		
+		// Load Setting data
+		$this->load->model('career/Careers');
 
 	}
 	
 	public function index() {
 		
-		// Set main template
-		$data['main'] = 'home';
 					
 		// Set site title page with module menu
 		$data['page_title'] = $this->config->item('developer_name') .' | '. $this->Settings->getByParameter('title_default')->value;
 		
+		// Set facebook link data
+		$data['vacancies']	= $this->Careers->getAllCareer();
+				
 		// Set facebook link data
 		$data['facebook']	= $this->Settings->getByParameter('socmed_facebook');
 				
@@ -36,6 +40,9 @@ class home extends CI_Controller {
 		
 		// Set contactus address info data
 		$data['contactus_address']	= $this->Settings->getByParameter('contactus_address');		
+		
+		// Set main template
+		$data['main'] = 'home';
 		
 		// Load admin template
 		$this->load->view('template/public/site_template', $this->load->vars($data));
