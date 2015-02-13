@@ -22,7 +22,7 @@ class Pages Extends CI_Model {
                 
                 $sql	= 'CREATE TABLE IF NOT EXISTS `'.$this->table.'` ('
 				. '`id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, '
-				. '`menu_id` INT(11) UNSIGNED NULL, '
+				. '`category_id` INT(11) UNSIGNED NULL, '
 				. '`name` VARCHAR(255) NULL, '
 				. '`subject` VARCHAR(255) NULL, '
 				. '`synopsis` TEXT NULL, '

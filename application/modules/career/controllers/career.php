@@ -41,7 +41,7 @@ class Career extends Admin_Controller {
             // Set CRUD subject
             $crud->set_subject('Career');                            
             // Set table relation
-            $crud->set_relation('division_id', 'tbl_career_divisions', 'name');
+            $crud->set_relation('division_id', 'tbl_career_divisions', 'subject');
             // Set column
             $crud->columns('subject', 'name', 'sent_to', 'division_id','status');			
             // Set column display 

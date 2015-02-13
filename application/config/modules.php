@@ -95,43 +95,44 @@ $config['modulelist'] = array(
 	// Page module
 	'Page' => array (
 		// Page Model list
-		'models'			=> array('Pages','PageMenus'),
+		'models'		=> array('Pages','PageMenus'),
 		// Page module menu
-		'module_menu'		=> array('page/index'	=> 'Page Listings'),
+		'module_menu'		=> array('page/index'	  => 'Page Listings',
+						 'pagemenu/index' => 'Page Menu Listings'),
 		// Page module function
 		'module_function'	=> array(
-									// Page index
-									'page/add'		=> 'Add Page Details',									
-									'page/view'		=> 'View Page Details',
-									'page/edit'		=> 'Edit Page Details',
-									'page/delete'	=> 'Delete Page Details',
-									'page/change'	=> 'Change Page Status'	
-                                    ),
+						// Page index
+						'page/add'	=> 'Add Page Details',									
+						'page/view'	=> 'View Page Details',
+						'page/edit'	=> 'Edit Page Details',
+						'page/delete'	=> 'Delete Page Details',
+						'page/change'	=> 'Change Page Status'	
+					    ),
 	),
 	// Career module
 	'Career' => array (
 		// Career Model list
-		'models'			=> array('Careers','CareerDivisions','CareerApplicants'),
+		'models'		=> array('Careers','CareerDivisions','CareerApplicants'),
 		// Career module menu
 		'module_menu'		=> array(
-									'career/index'			=> 'Career Listings',
-									'careerdivision/index'	=> 'Career Division Listings',
-									'careerapplicant/index'	=> 'Career Applicant Listings'
-								),
+						'career/index'		=> 'Career Listings',
+						'careerdivision/index'	=> 'Career Division Listings',
+						'careerapplicant/index'	=> 'Career Applicant Listings'
+						),
 		// Career module function
 		'module_function'	=> array(
-									// Career index
-									'career/add'		=> 'Add Career Details',
-									'career/view'		=> 'View Career Details',
-									'career/edit'		=> 'Edit Career Details',
-									'career/delete'		=> 'Delete Career Details',
-									'career/change'		=> 'Change Career Status',	
-									'careerapplicant/add'	 => 'Add Career Division Listings',
-									'careerapplicant/view'	 => 'View Career Division Listings',			
-									'careerapplicant/edit'	 => 'Edit Career Division Listings',			
-									'careerapplicant/delete' => 'Delete Career Division Listings',
-									'careerapplicant/change' => 'Change Career Division Listings'
-									),
+						// Career index
+						'career/add'		=> 'Add Career Details',
+						'career/view'		=> 'View Career Details',
+						'career/edit'		=> 'Edit Career Details',
+						'career/delete'		=> 'Delete Career Details',
+						'career/change'		=> 'Change Career Status',	
+						'careerapplicant/add'	 => 'Add Career Division Listings',
+						'careerapplicant/view'	 => 'View Career Division Listings',			
+						'careerapplicant/edit'	 => 'Edit Career Division Listings',			
+						'careerapplicant/delete' => 'Delete Career Division Listings',
+						'careerapplicant/change' => 'Change Career Division Listings'
+						),
 	)
 );
 

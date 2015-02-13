@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Page extends Admin_Controller {
+class PageMenu extends Admin_Controller {
 
     /**
      * Index Page for this controller.
@@ -37,15 +37,11 @@ class Page extends Admin_Controller {
 	    // Set our Grocery CRUD
             $crud = new grocery_CRUD();
             // Set tables
-            $crud->set_table('tbl_pages');
+            $crud->set_table('tbl_page_menus');
             // Set CRUD subject
-            $crud->set_subject('Page');                            
-            // Set table relation
-            $crud->set_relation('menu_id','tbl_page_menus','name');
+            $crud->set_subject('Page Menu');                            
             // Set column
-            $crud->columns('subject','name','menu_id','synopsis','text','status');			
-            // Set column display 
-            $crud->display_as('menu_id', 'Menu');
+            $crud->columns('name', 'title', 'description', 'status');	
             // Set upload field
             //$crud->set_field_upload('file_name','uploads/pages');
             $this->load($crud, 'page');
@@ -64,7 +60,7 @@ class Page extends Admin_Controller {
         $output->nav = $nav;
         if ($crud->getState() == 'list') {
             // Set Page Title 
-            $output->page_title = 'Page Listings';
+            $output->page_title = 'Page Menu Listings';
             // Set Main Template
             $output->main       = 'template/admin/metronix';
             // Set Primary Template
@@ -76,4 +72,4 @@ class Page extends Admin_Controller {
 }
 
 /* End of file page.php */
-/* Location: ./application/module/page/controllers/page.php */
+/* Location: ./application/module/page/controllers/pagemenu.php */
