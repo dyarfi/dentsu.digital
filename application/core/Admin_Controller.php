@@ -24,21 +24,21 @@ class Admin_Controller extends CI_Controller {
 		//exit;
 		
 		// Load Admin config
-		$this->configs				= $this->load->config('admin/admin',true);																	
+		$this->configs			= $this->load->config('admin/admin',true);																	
 		// Set user data lists from login session		
-		$this->user					= Acl::user();
+		$this->user			= Acl::user();
 															
 		// Load user module and function lists
-		$this->module_list			= json_decode($this->session->userdata('module_list'),TRUE);
+		$this->module_list		= json_decode($this->session->userdata('module_list'),TRUE);
 		$this->module_function_list	= json_decode($this->session->userdata('module_function_list'),TRUE);		
 		
-		$this->module				= @$this->uri->segments[1];
-		$this->controller			= @$this->uri->segments[2];
-		$this->action				= @$this->uri->segments[3];
-		$this->param				= @$this->uri->segments[4];											
+		$this->module			= @$this->uri->segments[1];
+		$this->controller		= @$this->uri->segments[2];
+		$this->action			= @$this->uri->segments[3];
+		$this->param			= @$this->uri->segments[4];											
 								
 		$this->module_request		= $this->controller . '/' .$this->action;	
-		$this->module_menu			= self::check_module_menu($this->module_request);
+		$this->module_menu		= self::check_module_menu($this->module_request);
 		
 		
 		// Check if user data is true empty and redirect to authenticate
@@ -57,9 +57,9 @@ class Admin_Controller extends CI_Controller {
 
 	public function check_module_permission ($controller='',$action='', $param='') {
 		
-		$accessible				= FALSE;
+		$accessible		= FALSE;
 		
-		$module_list 			= $this->module_list;
+		$module_list 		= $this->module_list;
 
 		$module_function_list 	= $this->module_function_list;				
 		

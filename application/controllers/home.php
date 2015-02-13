@@ -10,7 +10,7 @@ class home extends CI_Controller {
 		$this->load->model('admin/UserProfiles');
 		
 		// Load Setting data
-		$this->load->model('setting/Settings');
+		$this->load->model('admin/Settings');
 		
 		// Load Setting data
 		$this->load->model('career/Careers');

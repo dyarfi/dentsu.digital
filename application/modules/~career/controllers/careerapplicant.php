@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Setting extends Admin_Controller {
+class CareerApplicant extends Admin_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -21,8 +21,14 @@ class Setting extends Admin_Controller {
 	public function __construct() {
 		parent::__construct();
 		
-		// Load settings model
-		$this->load->model('Settings');
+		// Load Careers model
+		$this->load->model('Careers');
+		
+		// Load CareerDivision model
+		$this->load->model('CareerDivisions');
+		
+		// Load CareerApplicant model
+		$this->load->model('CareerApplicants');
 
 	}
 	
@@ -30,12 +36,12 @@ class Setting extends Admin_Controller {
 	{
 		// Set default statuses
 		$data['statuses'] = $this->configs['status'];
-		
+				 
 		// Set data rows
-		$data['rows']	= $this->Settings->getAllSetting();
-				
+		$data['rows']	= $this->CareerDivisions->getAllCareerDivision();
+						
 		// Set main template
-		$data['main']		= 'setting_index';
+		$data['main']		= 'careerdivision_index';
 		
 		// Set module with URL request 
 		$data['module_title'] = $this->module;
@@ -49,10 +55,13 @@ class Setting extends Admin_Controller {
 		// Set default system
 		$data['is_system'] = $this->configs['is_system'];
 		
+		// Set this controller
+		$data['controller'] = $this->controller;
+		
 		// Load admin template
 		$this->load->view('template/admin/admin_template', $this->load->vars($data));
 	}
 }
 
-/* End of file welcome.php */
-/* Location: ./application/setting/controllers/setting.php */
+/* End of file division.php */
+/* Location: ./application/module/career/controllers/careerdivision.php */

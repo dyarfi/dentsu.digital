@@ -164,11 +164,11 @@ class ModuleLists Extends CI_Model {
 			// List DB module
 			$module_list	= array();
 			
-			$module_db		= $this->db->get_where($this->table, array('parent_id' => 0))->result();
+			$module_db	= $this->db->get_where($this->table, array('parent_id' => 0))->result();
 			
 			$user_groups	= $this->db->get_where('user_groups', array('status' => 1))->result();
 			
-			$buffers		= array();
+			$buffers	= array();
 			
 			if(is_array($module_db) && count($module_db) != 0) {
 				
@@ -212,10 +212,10 @@ class ModuleLists Extends CI_Model {
 								$module_last_order	= $this->db->get()->result();
 
 								$i	= (isset($module_last_order[0])) ? $module_last_order[0]->order + 1 : 0;							
-								$params		= array('parent_id'		=> 0,
-													'module_name'	=> $row,
-													'module_link'	=> '#',
-													'order'			=> $i);
+								$params		= array('parent_id'	=> 0,
+                                                                                        'module_name'	=> $row,
+											'module_link'	=> '#',
+											'order'         => $i);
 
 								// Add module new
 								$this->db->insert($this->table,$params);
@@ -229,8 +229,8 @@ class ModuleLists Extends CI_Model {
 									$object_name	= ucfirst($val);
 																		
 									// Add to modules to model list
-									$params			= array('module_id'		=> $module_id,
-															'model'			=> $object_name);
+									$params			= array('module_id'	=> $module_id,
+                                                                                                        'model'		=> $object_name);
 																		
 									// Add new model lists
 									$this->db->insert('model_lists', $params);
@@ -246,10 +246,10 @@ class ModuleLists Extends CI_Model {
 									$menu_order		= 0;
 									foreach($module_menu as $menu => $menu_name) {
 										
-										$params		= array('parent_id'		=> $module_id,
-															'module_name'	=> $menu_name,
-															'module_link'	=> $menu,
-															'order'			=> $menu_order);
+										$params		= array('parent_id'	=> $module_id,
+                                                                                                        'module_name'	=> $menu_name,
+                                                                                                        'module_link'	=> $menu,
+                                                                                                        'order'		=> $menu_order);
 
 										// Add module
 										$this->db->insert($this->table,$params);
@@ -277,10 +277,10 @@ class ModuleLists Extends CI_Model {
 									$function_order	= $menu_order;
 									foreach($module_function as $function => $function_name) {
 										$this->db->select('*')->from($this->table)->where('module_name',$function_name);										if (!$this->db->get()->result()) {											
-										$params		= array('module_id'	 	 => $module_id,
-															'module_name'	 => $function_name,
-															'module_link'	 => $function,
-															'order'			 => $function_order);
+										$params		= array('module_id'	 => $module_id,
+                                                                                                        'module_name'	 => $function_name,
+                                                                                                        'module_link'	 => $function,
+                                                                                                        'order'          => $function_order);
 
 										// Adding action controller to module permission
 										$this->db->insert('module_permissions', $params);

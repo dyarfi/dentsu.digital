@@ -41,4 +41,4 @@
 $route['404_override'] = '';
 
 /* End of file routes.php */
-/* Location: ./application/modules/setting/config/routes.php */
+/* Location: ./application/modules/career/config/routes.php */

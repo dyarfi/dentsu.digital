@@ -123,17 +123,17 @@ class Settings Extends CI_Model {
 	}
 	public function setSetting($object=null){
 		
-		// Set User data
+		// Set Setting data
 		$data = array(			
-					'parameter' => $object['username'],
+					'parameter' => $object['parameter'],
 					'alias' => $object['alias'],
 					'value' => $object['value'],
-					'is_system' => $object['is_system'],
-					'added'		=> time(),	
+					'is_system' => 1,
+					'added'	=> time(),	
 					'status' => $object['status']
 				);
 		
-		// Insert User data
+		// Insert Setting data
 		$this->db->insert($this->table, $data);
 		
 		// Return last insert id primary
@@ -142,7 +142,28 @@ class Settings Extends CI_Model {
 		// Return last insert id primary
 		return $insert_id;
 		
-	}	
+	}
+        public function updateSetting($object=null){
+		
+		// Set Setting data
+		$data = array(			
+                                'parameter' => $object['parameter'],
+                                'alias' => $object['alias'],
+                                'value' => $object['value'],
+                                'modified'  => time(),	
+                                'status' => $object['status']
+                            );
+		
+		// Update Setting data             
+                $this->db->where('id', $object['id']);      
+
+		// Return last insert id primary
+		$update = $this->db->update($this->table, $data);					
+			
+		// Return last insert id primary
+		return $update;
+		
+	}
 	public function deleteSetting($id) {
 		
 		// Check Setting id

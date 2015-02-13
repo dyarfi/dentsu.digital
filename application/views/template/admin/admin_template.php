@@ -30,6 +30,10 @@ License: You must have a valid license purchased only from themeforest(the above
 <link href="<?=admin_theme()?>assets/admin/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
 <!-- END GLOBAL MANDATORY STYLES -->
 
+<?php if (!empty($css_files)) { foreach ($css_files as $file): ?>
+    <link type="text/css" rel="stylesheet" href="<?php echo $file; ?>" />
+<?php endforeach; }?>
+
 <!-- BEGIN PAGE LEVEL PLUGIN STYLES -->
 <link href="<?=admin_theme()?>assets/admin/plugins/gritter/css/jquery.gritter.css" rel="stylesheet" type="text/css"/>
 
@@ -39,11 +43,14 @@ License: You must have a valid license purchased only from themeforest(the above
 <link rel="stylesheet" type="text/css" href="<?=admin_theme()?>assets/admin/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css"/>
 <link rel="stylesheet" type="text/css" href="<?=admin_theme()?>assets/admin/plugins/bootstrap-datetimepicker/css/datetimepicker.css"/>
 
+<!--link rel="stylesheet" type="text/css" href="<?=admin_theme()?>assets/grocery_crud/css/jquery_plugins/fancybox/jquery.fancybox.css"/-->
+
 <link href="<?=admin_theme()?>assets/admin/plugins/fullcalendar/fullcalendar/fullcalendar.css" rel="stylesheet" type="text/css"/>
 <!--<link href="<?=admin_theme()?>assets/admin/plugins/jqvmap/jqvmap/jqvmap.css" rel="stylesheet" type="text/css"/>-->
 <link href="<?=admin_theme()?>assets/admin/plugins/jquery-easy-pie-chart/jquery.easy-pie-chart.css" rel="stylesheet" type="text/css"/>
 
 <!-- END PAGE LEVEL PLUGIN STYLES -->
+
 
 <!-- BEGIN PAGE LEVEL STYLES -->
 <link rel="stylesheet" type="text/css" href="<?=admin_theme()?>assets/admin/plugins/select2/select2.css"/>
@@ -225,6 +232,10 @@ License: You must have a valid license purchased only from themeforest(the above
 <script type="text/javascript" src="<?=admin_theme()?>assets/admin/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
 <script type="text/javascript" src="<?=admin_theme()?>assets/admin/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
 
+
+<!--script type="text/javascript" src="<?=admin_theme()?>assets/grocery_crud/js/jquery_plugins/jquery.numeric.min.js"></script>
+<script type="text/javascript" src="<?=admin_theme()?>assets/grocery_crud/js/jquery_plugins/jquery.fancybox.js"></script-->
+
 <script src="<?=admin_theme()?>assets/admin/plugins/bootbox/bootbox.min.js" type="text/javascript"></script>
 
 <!-- END PAGE LEVEL PLUGINS -->
@@ -242,6 +253,11 @@ License: You must have a valid license purchased only from themeforest(the above
 <script src="<?=admin_theme()?>assets/admin/scripts/custom/form-module.js" type="text/javascript"></script>
 <!-- END USER AJAX JAVASCRIPTS -->
 
+    
+ <?php if (!empty($js_files)) { foreach ($js_files as $file): ?>
+    <script src="<?php echo $file; ?>"></script>
+ <?php endforeach; } ?>
+    
 <script>
 jQuery(document).ready(function() {    
    App.init(); // initlayout and core plugins
@@ -270,6 +286,8 @@ jQuery(document).ready(function() {
 });
 </script>
 <!-- END JAVASCRIPTS -->
+
+
 </body>
 <!-- END BODY -->
 </html>

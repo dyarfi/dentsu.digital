@@ -3,67 +3,63 @@
 // Class for Users in Admin
 class User extends Admin_Controller {
 
-	public function __construct() {
-		parent::__construct();
-				
-		// Load user related model
-		$this->load->model('Users');
-		$this->load->model('UserProfiles');
-		$this->load->model('UserGroups');		
-		$this->load->model('Captcha');
-		//print_r($this->session->userdata);
-		// Set Pages that allowed in this class
-		//$this->is_authorized(array('forgot_password'));
-								
-	}		
+    public function __construct() {
+            parent::__construct();
+
+            // Load user related model
+            $this->load->model('Users');
+            $this->load->model('UserProfiles');
+            $this->load->model('UserGroups');		
+            $this->load->model('Captcha');
+    }		
+
+    public function index() {		
+
+            $rows = $this->Users->getAllUser();
+
+            $temp_rows = array();
+
+            if($rows) {
+                    $i = 0;
+                    foreach($rows as $row ){		
+                            $temp_rows[$i]->id = $row->id;
+                            $temp_rows[$i]->username = $row->username;
+                            $temp_rows[$i]->email = $row->email;
+                            $temp_rows[$i]->password = substr_replace($row->password, "********", 0, strlen($row->password));
+                            $temp_rows[$i]->status = $row->status;
+                            $temp_rows[$i]->group_id = $this->UserGroups->getGroupName_ById($row->group_id);
+                            $i++;
+                    }
+            }
+
+            if (@$temp_rows) $data['rows'] = $temp_rows;
+
+            $data['user_profiles'] = $this->UserProfiles->getUserProfile(Acl::user()->id);
+
+            // Set default statuses
+            $data['statuses'] = $this->configs['status'];
+
+            // Set main template
+            $data['main'] = 'users/users_index';
+
+            // Set module with URL request 
+            $data['module_title'] = $this->module;
+
+            // Set admin title page with module menu
+            $data['page_title'] = $this->module_menu;
+
+            // Load admin template
+            $this->load->view('template/admin/admin_template', $this->load->vars($data));
+
+    }	
 	
-	public function index() {		
-		
-		$rows = $this->Users->getAllUser();
-		
-		$temp_rows = array();
-		
-		if($rows) {
-			$i = 0;
-			foreach($rows as $row ){		
-				$temp_rows[$i]->id = $row->id;
-				$temp_rows[$i]->username = $row->username;
-				$temp_rows[$i]->email = $row->email;
-				$temp_rows[$i]->password = substr_replace($row->password, "********", 0, strlen($row->password));
-				$temp_rows[$i]->status = $row->status;
-				$temp_rows[$i]->group_id = $this->UserGroups->getGroupName_ById($row->group_id);
-				$i++;
-			}
-		}
-		
-		if (@$temp_rows) $data['rows'] = $temp_rows;
-				
-		$data['user_profiles'] = $this->UserProfiles->getUserProfile(Acl::user()->id);
-		
-		// Set default statuses
-		$data['statuses'] = $this->configs['status'];
-		
-		// Set main template
-		$data['main'] = 'users/users_index';
-		
-		// Set module with URL request 
-		$data['module_title'] = $this->module;
-		
-		// Set admin title page with module menu
-		$data['page_title'] = $this->module_menu;
-		
-		// Load admin template
-		$this->load->view('template/admin/admin_template', $this->load->vars($data));
-				
-	}	
-	
-	public function logout() {
+    public function logout() {
         // Destroy only user session
         $this->session->unset_userdata('user_session');
 		redirect('/', 'refresh');
     }
 	
-	public function add() {
+    public function add() {
 		
 		// Default data setup
 		$fields	= array(
@@ -129,7 +125,7 @@ class User extends Admin_Controller {
 				$this->session->set_flashdata('message','User created!');
 				
 				// Redirect after add
-				redirect('admin/user');
+				redirect(ADMIN. $this->controller . '/index');
 				
 			}
 			
@@ -170,13 +166,13 @@ class User extends Admin_Controller {
 				
 	}
 	
-	public function edit($id=0){
+    public function edit($id=0){
 				
 		// Check if param is given or not and check from database
 		if (empty($id) || !$this->Users->getUser($id)) {
 			$this->session->set_flashdata('message','Item not found!');
 			// Redirect to index
-			redirect(base_url().'admin/user');
+			redirect(ADMIN. $this->controller . '/index');
 		}	
 		
 		//Default data setup
@@ -233,7 +229,7 @@ class User extends Admin_Controller {
 				$this->session->set_flashdata('message','User updated');
 
 				// Redirect after add
-				redirect('admin/user');
+				redirect(ADMIN. $this->controller . '/index');
 
 			}
 		
@@ -285,394 +281,394 @@ class User extends Admin_Controller {
 		
 	}
 	
-	public function delete($id){
-		
-		// Delete user data
-		$this->Users->deleteUser($id);
-		
-		// Set flash message
-		$this->session->set_flashdata('message','Setting deleted');
-		
-		// Redirect after delete
-		redirect(ADMIN. $this->controller . '/index');
-		
-	}	
-	
-	public function view($id=null){
-		
-		// Load form validation library if not auto loaded
-		$this->load->library('form_validation');
+    public function delete($id){
 
-		// Check if data is found and redirect if false
-		if (empty($id) && (int) count($id) == 0) {
-			$this->session->set_flashdata('message',"Error submission.");
-			redirect(ADMIN. $this->controller . '/index');
-		}
+            // Delete user data
+            $this->Users->deleteUser($id);
 
-		// Check if user data ID is found and redirect if false
-		$user = $this->Users->getUser($id);
-		if (!count($user)){
-			$this->session->set_flashdata('message',"Data not found.");			
-			redirect(ADMIN. $this->controller . '/index');
-		}
-						
-		// BASE PATH for upload admin media
-		$data['upload_path']	= $this->config->item('upload_path');
-		
-		// URL for upload admin media
-		$data['upload_url']		= $this->config->item('upload_url');
-		
-		// Captcha data
-		$data['captcha']		= $this->Captcha->image();
-		
-		// User account data
-		$data['user']			= $this->Users->getUser($id);		
-		
-		// User profile data
-		$data['user_profile']	= $this->UserProfiles->getUserProfile($id);
-		
-		// Main template
-		$data['main']	= 'users/users_view';
-		
-		// Set module with URL request 
-		$data['module_title'] = $this->module;
-		
-		// Set admin title page with module menu
-		$data['page_title'] = $this->module_menu;
-		
-		// Load admin template
-		$this->load->view('template/admin/admin_template',$this->load->vars($data));
-	}
-	
-	// Ajax Methods for this controller and module
-	public function ajax($action='') {
-				
-		// Check if the request via AJAX
-		if (!$this->input->is_ajax_request()) {
-			exit('No direct script access allowed');		
-		}	
-		
-		// Define initialize result
-		$result['result'] = '';
-		
-		// Action Update User Profile via Ajax
-		if ($action === 'update') {			
-						
-			// Set validation config
-			$config = array(
-               array('field' => 'first_name', 
-                     'label' => 'First Name', 
-                     'rules' => 'trim|required|xss_clean|max_length[25]'),	
-               array('field' => 'last_name', 
-                     'label' => 'Last Name', 
-                     'rules' => 'trim|xss_clean|max_length[25]'),
-               array('field' => 'captcha', 
-                     'label' => 'Captcha', 
-                     'rules' => 'trim|xss_clean|max_length[6]|callback_match_captcha'),
-               array('field' => 'phone', 
-                     'label' => 'Phone', 
-                     'rules' => 'trim|is_natural|xss_clean|max_length[25]'),
-			   array('field' => 'mobile_phone', 
-                     'label' => 'Mobile Phone', 
-                     'rules' => 'trim|is_natural|xss_clean|max_length[25]'),
-			   array('field' => 'website', 
-                     'label' => 'Website', 
-                     'rules' => 'trim|prep_url|xss_clean|max_length[35]'),
-			   array('field' => 'about', 
-                     'label' => 'About', 
-                     'rules' => 'trim|xss_clean|max_length[1000]'),
-			   array('field' => 'division', 
-                     'label' => 'Division', 
-                     'rules' => 'trim|xss_clean|max_length[55]')
-            );
-			
-			// Set rules to form validation
-			$this->form_validation->set_rules($config);
-			
-			// Run validation for checking
-			if ($this->form_validation->run() === FALSE) {
-				
-				// Send errors to JSON text
-				$result['result']['code'] = 0;
-				$result['result']['text'] = validation_errors();
-				
-			} else {
-				
-				// Unset captcha post
-				unset($_POST['captcha']); 
-				
-				// Set User Data
-				$user_profile = $this->UserProfiles->setUserProfiles($this->input->post());			
+            // Set flash message
+            $this->session->set_flashdata('message','User deleted');
 
-				// Check data if user is exists and status is active
-				if (!empty($user_profile) && $user_profile->status == 1) {
-					
-					// Send message if true 
-					$result['result']['code'] = 1;
-					$result['result']['text'] = 'Changes saved !';
-					
-				} else if (!empty($user_profile) && $user->status != 1) { 
-					
-					// Send message if account is not active
-					$result['result']['code'] = 2;
-					$result['result']['text'] = 'Your account profile is not active';			
-					
-				} else {
-					
-					// Send message if account not found					
-					$result['result']['code'] = 0;
-					$result['result']['text'] = 'Profile not found';			
-				}
-			}
-										
-		// Checking Action via Ajax
-		} else if ($action === 'check') {			
-			
-			// Check Username users via Ajax
-			if ($this->uri->segments[5] === 'username') {
-				
-				// Set User Data
-				$user = $this->Users->getUserByUsername($this->input->post('username'));			
-				
-				// Check data
-				if (!empty($user) && $user->status == 1) {
-					
-					// Send message if true 
-					$result['result']['code'] = 1;
-					$result['result']['text'] = 'Username already exist!';
-					
-				} else if (!empty($user) && $user->status != 1) {
-					
-					// Send message if account is not active
-					$result['result']['code'] = 2;
-					$result['result']['text'] = 'Your account profile is not active';			
-					
-				} else {
-					
-					// Send message if account not found
-					$result['result']['code'] = 0;
-					$result['result']['text'] = 'Profile not found';			
-					
-				}	
-			
-			// Check Email users via Ajax	
-			} else if ($this->uri->segments[5] === 'email') {			
-				
-				// Set User Data
-				$user = $this->Users->getUserByEmail($this->input->post('email'));			
-				
-				// Check data
-				if (!empty($user) && $user->status == 1) {
-					
-					// Send message if true 
-					$result['result']['code'] = 1;
-					$result['result']['text'] = 'Email already exist!';
-					
-				} else if (!empty($user) && $user->status != 1) { 
-					
-					// Send message if account is not active
-					$result['result']['code'] = 2;
-					$result['result']['text'] = 'Your account profile is not active';		
-					
-				} else {
-					
-					// Send message if account not found
-					$result['result']['code'] = 0;
-					$result['result']['text'] = 'Email not found';			
-					
-				}	
-			
-			// Check Password users via Ajax	
-			} else if ($this->uri->segments[5] === 'password') {		
-				
-				// Default hash
-				$hash_password = '';
-						
-				// Change to Password hash from POST
-				if ($_POST['password'] !== '') {
-					$hash_password		= sha1($_POST['username'].$_POST['password']);
-					$_POST['password']	= $hash_password;								
-				}
-				
-				//print_r($this->Users->getUserPassword($this->input->post('password')));
-				
-				// Set validation config
-				$config = array(
-						array(
-							'field'   => 'password1', 
-							'label'   => 'New Password' ,
-							'rules'   => 'trim|required'),						
-						array(
-							'field'   => 'password2', 
-							'label'   => 'Re-type New Password', 
-							'rules'   => 'trim|required|matches[password1]'),
-						array(
-							'field'   => 'password', 
-							'label'   => 'Password', 
-							'rules'   => 'trim|required|max_length[255]|callback_match_password')						
-				);
+            // Redirect after delete
+            redirect(ADMIN. $this->controller . '/index');
 
-				// Set rules to form validation
-				$this->form_validation->set_rules($config);
-								
-				// Run validation for checking
-				if ($this->form_validation->run() === FALSE) {
+    }	
 
-					// Send errors to JSON text
-					$result['result']['code'] = 0;
-					$result['result']['text'] = validation_errors();
+    public function view($id=null){
 
-				} else {
-					
-					// Get user with the user id post
-					$user	= $this->Users->getUser($this->input->post('user_id'));					
-					$newp	= $this->Users->setPassword($user, $this->input->post('password1')); 
-										
-					// Check if the password is changed
-					if (!empty($newp)) {
-						
-						// Send success update password result
-						$result['result']['code'] = 1;
-						$result['result']['text'] = 'Password changed, new password is <b>'.$newp.'</b>';
-						
-					} else {
-						
-						// Send success update password result
-						$result['result']['code'] = 2;
-						$result['result']['text'] = 'Can not change password, please come back later';
+            // Load form validation library if not auto loaded
+            $this->load->library('form_validation');
 
-					}
-									
-				}
-			}		
-		} 		
-		// Check user data and Add via Ajax	
-		else if($action === 'add') {
-			
-			$result['result'] = '';
-			
-		}
-				
-		// Return data esult
-		$data['json'] = $result;
-		
-		// Load data into view		
-		$this->load->view('json', $this->load->vars($data));	
-	}
-	
-	public function forgot_password() {
-			
-		// Check if the request via AJAX
-		if (!$this->input->is_ajax_request()) {
-			exit('No direct script access allowed');		
-		}
-		
-		// Define initialize result
-		$result['result'] = '';
-		
-		// Get User Data
-		$user = $this->Users->getUserByEmail($this->input->post('email'));
-						
-		if (!empty($user) && $user->status === 1) {
-			
-			$password = $this->Users->setPassword($user);
-			
-			$result['result']['code'] = 1;
-			$result['result']['text'] = 'Your new password: <b>'. $password .'</b>';			
-			
-			$this->load->library('email');
+            // Check if data is found and redirect if false
+            if (empty($id) && (int) count($id) == 0) {
+                    $this->session->set_flashdata('message',"Error submission.");
+                    redirect(ADMIN. $this->controller . '/index');
+            }
 
-			$this->email->from('noreply');
-			$this->email->to($user->email);
-			$this->email->subject('Your new password');
-			$this->email->message('Hey <b>'.$user->username.'</b>, this is your new password: <b>'.$password.'</b>');
+            // Check if user data ID is found and redirect if false
+            $user = $this->Users->getUser($id);
+            if (!count($user)){
+                    $this->session->set_flashdata('message',"Data not found.");			
+                    redirect(ADMIN. $this->controller . '/index');
+            }
 
-			$this->email->send();
-			
-		} else if (!empty($user) && $user->status !== 1) { 
-			
-			// Account is not Active
-			$result['result']['code'] = 2;
-			$result['result']['text'] = 'Your account is not active';			
-			
-		} else {
-			
-			// Account is not existed
-			$result['result']['code'] = 0;
-			$result['result']['text'] = 'Email or User not found';			
-			
-		}
-				
-		$data['json'] = $result;				
-		$this->load->view('json', $this->load->vars($data));				
-		
-	}
-	
-	public function search() { }
-	
-	// -------------- CALLBACK METHODS -------------- //
+            // BASE PATH for upload admin media
+            $data['upload_path']	= $this->config->item('upload_path');
 
-	// Match Email post to Database
-	public function match_email($email) {		
-		
-		// Check email if empty
-		if ($email == '') {
-			$this->form_validation->set_message('match_email', 'The %s can not be empty.');
-			return false;
-		}
-		// Check email if match
-		else if ($this->Users->getUserEmail($email) == 1) {
-			$this->form_validation->set_message('match_email', 'The %s is already taken.');			
-			return false;
-		} else {
-			return true;
-		} 
-		
-	}
-	
-	// Match Captcha post to Database
-	public function match_captcha($captcha) {		
-		
-		// Check captcha if empty
-		if ($captcha == '') {
-			$this->form_validation->set_message('match_captcha', 'The %s code can not be empty.');
-			return false;
-		}
-		// Check captcha if match
-		else if ($this->Captcha->match($captcha)) {
-			return true;
-		} 
-		
-	}
-	
-	// Match Password post to Database
-	public function match_password($password) {
-		
-		// Check password if empty
-		if ($password == '') {
-			$this->form_validation->set_message('match_password', 'The %s can not be empty.');
-			return false;
-		}
-		// Check password if match
-		else if ($this->Users->getUserPassword($password) != 1) {
-			$this->form_validation->set_message('match_password', 'The %s not match with your current password.');			
-			return false;
-		// Match current password
-		} else {
-			return true;
-		}
-		 
-	}
-	
-	// Reload Captcha to the view
-	public function reload_captcha() {
-		
-		// Send image to display Captcha
-		$captcha = $this->Captcha->image();
-		
-		// Echo captcha Image
-		echo $captcha['image'];
-		exit;
-		
-	}
+            // URL for upload admin media
+            $data['upload_url']		= $this->config->item('upload_url');
+
+            // Captcha data
+            $data['captcha']		= $this->Captcha->image();
+
+            // User account data
+            $data['user']			= $this->Users->getUser($id);		
+
+            // User profile data
+            $data['user_profile']	= $this->UserProfiles->getUserProfile($id);
+
+            // Main template
+            $data['main']	= 'users/users_view';
+
+            // Set module with URL request 
+            $data['module_title'] = $this->module;
+
+            // Set admin title page with module menu
+            $data['page_title'] = $this->module_menu;
+
+            // Load admin template
+            $this->load->view('template/admin/admin_template',$this->load->vars($data));
+    }
+
+    // Ajax Methods for this controller and module
+    public function ajax($action='') {
+
+            // Check if the request via AJAX
+            if (!$this->input->is_ajax_request()) {
+                    exit('No direct script access allowed');		
+            }	
+
+            // Define initialize result
+            $result['result'] = '';
+
+            // Action Update User Profile via Ajax
+            if ($action === 'update') {			
+
+                    // Set validation config
+                    $config = array(
+           array('field' => 'first_name', 
+                 'label' => 'First Name', 
+                 'rules' => 'trim|required|xss_clean|max_length[25]'),	
+           array('field' => 'last_name', 
+                 'label' => 'Last Name', 
+                 'rules' => 'trim|xss_clean|max_length[25]'),
+           array('field' => 'captcha', 
+                 'label' => 'Captcha', 
+                 'rules' => 'trim|xss_clean|max_length[6]|callback_match_captcha'),
+           array('field' => 'phone', 
+                 'label' => 'Phone', 
+                 'rules' => 'trim|is_natural|xss_clean|max_length[25]'),
+                       array('field' => 'mobile_phone', 
+                 'label' => 'Mobile Phone', 
+                 'rules' => 'trim|is_natural|xss_clean|max_length[25]'),
+                       array('field' => 'website', 
+                 'label' => 'Website', 
+                 'rules' => 'trim|prep_url|xss_clean|max_length[35]'),
+                       array('field' => 'about', 
+                 'label' => 'About', 
+                 'rules' => 'trim|xss_clean|max_length[1000]'),
+                       array('field' => 'division', 
+                 'label' => 'Division', 
+                 'rules' => 'trim|xss_clean|max_length[55]')
+        );
+
+                    // Set rules to form validation
+                    $this->form_validation->set_rules($config);
+
+                    // Run validation for checking
+                    if ($this->form_validation->run() === FALSE) {
+
+                            // Send errors to JSON text
+                            $result['result']['code'] = 0;
+                            $result['result']['text'] = validation_errors();
+
+                    } else {
+
+                            // Unset captcha post
+                            unset($_POST['captcha']); 
+
+                            // Set User Data
+                            $user_profile = $this->UserProfiles->setUserProfiles($this->input->post());			
+
+                            // Check data if user is exists and status is active
+                            if (!empty($user_profile) && $user_profile->status == 1) {
+
+                                    // Send message if true 
+                                    $result['result']['code'] = 1;
+                                    $result['result']['text'] = 'Changes saved !';
+
+                            } else if (!empty($user_profile) && $user->status != 1) { 
+
+                                    // Send message if account is not active
+                                    $result['result']['code'] = 2;
+                                    $result['result']['text'] = 'Your account profile is not active';			
+
+                            } else {
+
+                                    // Send message if account not found					
+                                    $result['result']['code'] = 0;
+                                    $result['result']['text'] = 'Profile not found';			
+                            }
+                    }
+
+            // Checking Action via Ajax
+            } else if ($action === 'check') {			
+
+                    // Check Username users via Ajax
+                    if ($this->uri->segments[5] === 'username') {
+
+                            // Set User Data
+                            $user = $this->Users->getUserByUsername($this->input->post('username'));			
+
+                            // Check data
+                            if (!empty($user) && $user->status == 1) {
+
+                                    // Send message if true 
+                                    $result['result']['code'] = 1;
+                                    $result['result']['text'] = 'Username already exist!';
+
+                            } else if (!empty($user) && $user->status != 1) {
+
+                                    // Send message if account is not active
+                                    $result['result']['code'] = 2;
+                                    $result['result']['text'] = 'Your account profile is not active';			
+
+                            } else {
+
+                                    // Send message if account not found
+                                    $result['result']['code'] = 0;
+                                    $result['result']['text'] = 'Profile not found';			
+
+                            }	
+
+                    // Check Email users via Ajax	
+                    } else if ($this->uri->segments[5] === 'email') {			
+
+                            // Set User Data
+                            $user = $this->Users->getUserByEmail($this->input->post('email'));			
+
+                            // Check data
+                            if (!empty($user) && $user->status == 1) {
+
+                                    // Send message if true 
+                                    $result['result']['code'] = 1;
+                                    $result['result']['text'] = 'Email already exist!';
+
+                            } else if (!empty($user) && $user->status != 1) { 
+
+                                    // Send message if account is not active
+                                    $result['result']['code'] = 2;
+                                    $result['result']['text'] = 'Your account profile is not active';		
+
+                            } else {
+
+                                    // Send message if account not found
+                                    $result['result']['code'] = 0;
+                                    $result['result']['text'] = 'Email not found';			
+
+                            }	
+
+                    // Check Password users via Ajax	
+                    } else if ($this->uri->segments[5] === 'password') {		
+
+                            // Default hash
+                            $hash_password = '';
+
+                            // Change to Password hash from POST
+                            if ($_POST['password'] !== '') {
+                                    $hash_password		= sha1($_POST['username'].$_POST['password']);
+                                    $_POST['password']	= $hash_password;								
+                            }
+
+                            //print_r($this->Users->getUserPassword($this->input->post('password')));
+
+                            // Set validation config
+                            $config = array(
+                                            array(
+                                                    'field'   => 'password1', 
+                                                    'label'   => 'New Password' ,
+                                                    'rules'   => 'trim|required'),						
+                                            array(
+                                                    'field'   => 'password2', 
+                                                    'label'   => 'Re-type New Password', 
+                                                    'rules'   => 'trim|required|matches[password1]'),
+                                            array(
+                                                    'field'   => 'password', 
+                                                    'label'   => 'Password', 
+                                                    'rules'   => 'trim|required|max_length[255]|callback_match_password')						
+                            );
+
+                            // Set rules to form validation
+                            $this->form_validation->set_rules($config);
+
+                            // Run validation for checking
+                            if ($this->form_validation->run() === FALSE) {
+
+                                    // Send errors to JSON text
+                                    $result['result']['code'] = 0;
+                                    $result['result']['text'] = validation_errors();
+
+                            } else {
+
+                                    // Get user with the user id post
+                                    $user	= $this->Users->getUser($this->input->post('user_id'));					
+                                    $newp	= $this->Users->setPassword($user, $this->input->post('password1')); 
+
+                                    // Check if the password is changed
+                                    if (!empty($newp)) {
+
+                                            // Send success update password result
+                                            $result['result']['code'] = 1;
+                                            $result['result']['text'] = 'Password changed, new password is <b>'.$newp.'</b>';
+
+                                    } else {
+
+                                            // Send success update password result
+                                            $result['result']['code'] = 2;
+                                            $result['result']['text'] = 'Can not change password, please come back later';
+
+                                    }
+
+                            }
+                    }		
+            } 		
+            // Check user data and Add via Ajax	
+            else if($action === 'add') {
+
+                    $result['result'] = '';
+
+            }
+
+            // Return data esult
+            $data['json'] = $result;
+
+            // Load data into view		
+            $this->load->view('json', $this->load->vars($data));	
+    }
+
+    public function forgot_password() {
+
+            // Check if the request via AJAX
+            if (!$this->input->is_ajax_request()) {
+                    exit('No direct script access allowed');		
+            }
+
+            // Define initialize result
+            $result['result'] = '';
+
+            // Get User Data
+            $user = $this->Users->getUserByEmail($this->input->post('email'));
+
+            if (!empty($user) && $user->status === 1) {
+
+                    $password = $this->Users->setPassword($user);
+
+                    $result['result']['code'] = 1;
+                    $result['result']['text'] = 'Your new password: <b>'. $password .'</b>';			
+
+                    $this->load->library('email');
+
+                    $this->email->from('noreply');
+                    $this->email->to($user->email);
+                    $this->email->subject('Your new password');
+                    $this->email->message('Hey <b>'.$user->username.'</b>, this is your new password: <b>'.$password.'</b>');
+
+                    $this->email->send();
+
+            } else if (!empty($user) && $user->status !== 1) { 
+
+                    // Account is not Active
+                    $result['result']['code'] = 2;
+                    $result['result']['text'] = 'Your account is not active';			
+
+            } else {
+
+                    // Account is not existed
+                    $result['result']['code'] = 0;
+                    $result['result']['text'] = 'Email or User not found';			
+
+            }
+
+            $data['json'] = $result;				
+            $this->load->view('json', $this->load->vars($data));				
+
+    }
+
+    public function search() { }
+
+    // -------------- CALLBACK METHODS -------------- //
+
+    // Match Email post to Database
+    public function match_email($email) {		
+
+            // Check email if empty
+            if ($email == '') {
+                    $this->form_validation->set_message('match_email', 'The %s can not be empty.');
+                    return false;
+            }
+            // Check email if match
+            else if ($this->Users->getUserEmail($email) == 1) {
+                    $this->form_validation->set_message('match_email', 'The %s is already taken.');			
+                    return false;
+            } else {
+                    return true;
+            } 
+
+    }
+
+    // Match Captcha post to Database
+    public function match_captcha($captcha) {		
+
+            // Check captcha if empty
+            if ($captcha == '') {
+                    $this->form_validation->set_message('match_captcha', 'The %s code can not be empty.');
+                    return false;
+            }
+            // Check captcha if match
+            else if ($this->Captcha->match($captcha)) {
+                    return true;
+            } 
+
+    }
+
+    // Match Password post to Database
+    public function match_password($password) {
+
+            // Check password if empty
+            if ($password == '') {
+                    $this->form_validation->set_message('match_password', 'The %s can not be empty.');
+                    return false;
+            }
+            // Check password if match
+            else if ($this->Users->getUserPassword($password) != 1) {
+                    $this->form_validation->set_message('match_password', 'The %s not match with your current password.');			
+                    return false;
+            // Match current password
+            } else {
+                    return true;
+            }
+
+    }
+
+    // Reload Captcha to the view
+    public function reload_captcha() {
+
+            // Send image to display Captcha
+            $captcha = $this->Captcha->image();
+
+            // Echo captcha Image
+            echo $captcha['image'];
+            exit;
+
+    }
 }

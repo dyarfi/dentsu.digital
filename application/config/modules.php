@@ -15,7 +15,8 @@ $config['admin_list.module_menu']	= array(
 						'dashboard/index'	=> 'Dashboard Panel',
 						'user/index'		=> 'User Listings',
 						'usergroup/index'	=> 'User Group Listings',			
-						'modulelist/index'	=> 'Module Listing'	
+						'modulelist/index'	=> 'Module Listing',
+                                                'setting/index'         => 'Setting Listing'
 					);
 									
 /* MODULE FUNCTION
@@ -25,13 +26,13 @@ $config['admin_list.module_menu']	= array(
  */
 
 // Module Function Menu List
-$config['admin_list.module_function']	= array(							
-												'dashboard/add'		=> 'Add New Dashboard',
-												'dashboard/view'	=> 'View Dashboard Details',
-												'dashboard/edit'	=> 'Edit Dashboard Details',
-												'dashboard/delete'	=> 'Delete Dashboard',			
-												'modulelist/edit'	=> 'Edit Module Details'
-										);
+$config['admin_list.module_function']	= array(
+                                                'dashboard/add'		=> 'Add New Dashboard',
+						'dashboard/view'	=> 'View Dashboard Details',
+						'dashboard/edit'	=> 'Edit Dashboard Details',
+						'dashboard/delete'	=> 'Delete Dashboard',			
+						'modulelist/edit'	=> 'Edit Module Details'
+					);
 
 $config['module_list.models']			= array('ModuleLists');
 $config['module_list.module_menu']		= array('modulelist/index' => 'Module Listing');
@@ -49,7 +50,8 @@ $config['modulelist'] = array(
 							'UserGroups',
 							'UserProfiles',
 							'UserHistories',
-							'ModulePermissions'
+							'ModulePermissions',
+                                                        'Settings'
 						),
 		// Admin module menu
 		'module_menu'	=> array(
@@ -58,7 +60,9 @@ $config['modulelist'] = array(
 							// User index
 							'user/index'		=> 'User Listings',
 							// User Group index
-							'usergroup/index'	=> 'User Group Listings'
+							'usergroup/index'	=> 'User Group Listings',
+                                                        // Setting index
+							'setting/index'         => 'Setting Listings'
 						),
 		// Admin module function
 		'module_function'	=> array(
@@ -79,7 +83,13 @@ $config['modulelist'] = array(
 							'usergroup/view'	=> 'View User Group Details',
 							'usergroup/edit'	=> 'Edit User Group Details',
 							'usergroup/delete'	=> 'Delete User Group Details',
-							'usergroup/change'	=> 'Change User Group Status'	
+							'usergroup/change'	=> 'Change User Group Status',
+                                                        // Setting index
+                                                        'setting/add'	  => 'Add Setting Details',
+                                                        'setting/view'	  => 'View Setting Details',
+                                                        'setting/edit'    => 'Edit Setting Details',
+                                                        'setting/delete'  => 'Delete Setting Details',
+                                                        'setting/change'  => 'Change Setting Status'
 							)
 	),
 	// Page module
@@ -122,22 +132,6 @@ $config['modulelist'] = array(
 									'careerapplicant/delete' => 'Delete Career Division Listings',
 									'careerapplicant/change' => 'Change Career Division Listings'
 									),
-	),
-	// Setting module
-	'Setting' => array (
-		// Setting model list
-		'models'			=> array('Settings'),
-		// Setting module menu
-		'module_menu'		=> array('setting/index'	=> 'Setting Listings'),
-		// Setting module function
-		'module_function'	=> array(
-									// Setting index
-									'setting/add'	  => 'Add Setting Details',
-									'setting/view'	  => 'View Setting Details',
-									'setting/edit'    => 'Edit Setting Details',
-									'setting/delete'  => 'Delete Setting Details',
-									'setting/change'  => 'Change Setting Status'	
-									)
 	)
 );
 
