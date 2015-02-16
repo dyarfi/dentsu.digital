@@ -23,7 +23,7 @@ class Log extends Admin_Controller {
 		
 		// Load settings model
 		$this->load->model('ServerLogs');
-
+		
 	}
 	
 	public function index()

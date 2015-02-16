@@ -40,7 +40,6 @@ class Admin_Controller extends CI_Controller {
 		$this->module_request		= $this->controller . '/' .$this->action;	
 		$this->module_menu		= self::check_module_menu($this->module_request);
 		
-		
 		// Check if user data is true empty and redirect to authenticate
 		if (!$this->user 
 				&& strpos($this->uri->uri_string(), ADMIN) === 0 
