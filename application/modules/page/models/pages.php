@@ -35,7 +35,7 @@ class Pages Extends CI_Model {
 				. '`order` TINYINT(3) NULL, '
 				. '`user_id` TINYINT(3) NULL , '
 				. '`count` INT(11) NULL , '	
-				. '`status` tinyint(1) DEFAULT 1,'
+				. '`status` ENUM( \'publish\', \'unpublish\', \'deleted\' ) NULL DEFAULT \'publish\', '
 				. '`added` INT(11) NULL, '
 				. '`modified` INT(11) NULL, '
 				. 'INDEX (`category_id`, `name`, `publish_date`, `unpublish_date`, `allow_comment`, `order`) '

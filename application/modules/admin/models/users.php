@@ -28,26 +28,27 @@ class Users Extends CI_Model {
 		
 		$insert_data	= FALSE;
 
-		if (!$this->db->table_exists($this->table)) 
-                $insert_data	= TRUE;
-                
-                $sql            = 'CREATE TABLE IF NOT EXISTS `'.$this->table.'` ('
-                                    . '`id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,'
-                                    . '`email` VARCHAR(255) NOT NULL, '
-                                    . '`password` VARCHAR(100) NOT NULL, '
-                                    . '`username` VARCHAR(160) NOT NULL, '
-                                    . '`group_id` INT(11) UNSIGNED NOT NULL, '
-                                    . '`is_system` TINYINT(3) NOT NULL DEFAULT 0, '
-						            . '`last_login` INT(11) UNSIGNED NOT NULL, '
-									. '`logged_in` INT(1) UNSIGNED NOT NULL,'
-                                    . '`status` INT(1) UNSIGNED NOT NULL,'
-									. '`session` VARCHAR(160) NOT NULL, '
-                                    . '`added` INT(11) UNSIGNED NOT NULL, '
-                                    . '`modified` INT(11) UNSIGNED NOT NULL, '
-                                    . 'INDEX (`email`, `group_id`) '
-                                    . ') ENGINE=MYISAM';
+		if (!$this->db->table_exists($this->table)) {
+		    $insert_data	= TRUE;
 
-		$this->db->query($sql);
+		    $sql            = 'CREATE TABLE IF NOT EXISTS `'.$this->table.'` ('
+				    . '`id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,'
+				    . '`email` VARCHAR(255) NOT NULL, '
+				    . '`password` VARCHAR(100) NOT NULL, '
+				    . '`username` VARCHAR(160) NOT NULL, '
+				    . '`group_id` INT(11) UNSIGNED NOT NULL, '
+				    . '`is_system` TINYINT(3) NOT NULL DEFAULT 0, '
+				    . '`last_login` INT(11) UNSIGNED NOT NULL, '
+				    . '`logged_in` INT(1) UNSIGNED NOT NULL,'
+				    . '`status` INT(1) UNSIGNED NOT NULL,'
+				    . '`session` VARCHAR(160) NOT NULL, '
+				    . '`added` INT(11) UNSIGNED NOT NULL, '
+				    . '`modified` INT(11) UNSIGNED NOT NULL, '
+				    . 'INDEX (`email`, `group_id`) '
+				    . ') ENGINE=MYISAM';
+		    
+		    $this->db->query($sql);
+		}
 		
         if(!$this->db->query('SELECT * FROM `'.$this->table.'` LIMIT 0, 1;'))
 			$insert_data	= TRUE;

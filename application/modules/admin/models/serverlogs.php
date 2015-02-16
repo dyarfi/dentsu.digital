@@ -1,7 +1,7 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-// Model Class Object for Users
-class Users Extends CI_Model {
+// Model Class Object for ServerLogs
+class ServerLogs Extends CI_Model {
 	
 	public $table = 'tbl_server_logs';
 	
@@ -12,17 +12,17 @@ class Users Extends CI_Model {
 		parent::__construct();
 		
 		$this->_model_vars	= array('id'		  => 0,
-									'url'		  => '',
-									'user_id'	  => 0,
-									'status_code' => 0,
-									'bytes_served'  => 0,
-									'ip_address'	=> '',
-									'http_code'	  => '',
-									'referrer'	  => '',									
-									'user_agent'  => '',
-									'status'	  => '',	
-									'added'		  => 0,
-									'modified'	  => 0);
+						'url'		  => '',
+						'user_id'	  => 0,
+						'status_code' => 0,
+						'bytes_served'  => 0,
+						'ip_address'	=> '',
+						'http_code'	  => '',
+						'referrer'	  => '',									
+						'user_agent'  => '',
+						'status'	  => '',	
+						'added'		  => 0,
+						'modified'	  => 0);
 				
 		$this->db = $this->load->database('default', true);		
 				
@@ -31,26 +31,28 @@ class Users Extends CI_Model {
 		
 		$insert_data	= FALSE;
 
-		if (!$this->db->table_exists($this->table)) 
-                $insert_data	= TRUE;
-                
-                $sql            = 'CREATE TABLE IF NOT EXISTS `'.$this->table.'` ('
-                                    . '`id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,'
-                                    . '`url` VARCHAR(255) NULL, '
-                                    . '`user_id` INT(11) UNSIGNED NULL, '
-                                    . '`status_code` VARCHAR(160) NULL, '
-                                    . '`bytes_served` INT(11) UNSIGNED NOT NULL, '
-                                    . '`ip_address` INT(11) NULL DEFAULT 0, '
-						            . '`http_code` INT(11) UNSIGNED NOT NULL, '
-									. '`referrer` VARCHAR(255) NULL, '
-                                    . '`user_agent` VARCHAR(255) NULL, '
-									. '`status` INT(1) UNSIGNED NOT NULL,'
-                                    . '`added` INT(11) UNSIGNED NOT NULL, '
-                                    . '`modified` INT(11) UNSIGNED NOT NULL, '
-                                    . 'INDEX (`url`, `user_id`) '
-                                    . ') ENGINE=MYISAM';
+		if (!$this->db->table_exists($this->table)) {
+		    $insert_data	= TRUE;
 
-		$this->db->query($sql);
+		    $sql            = 'CREATE TABLE IF NOT EXISTS `'.$this->table.'` ('
+				    . '`id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,'
+				    . '`url` VARCHAR(255) NULL, '
+				    . '`user_id` INT(11) UNSIGNED NULL, '
+				    . '`status_code` VARCHAR(160) NULL, '
+				    . '`bytes_served` INT(11) UNSIGNED NOT NULL, '
+				    . '`ip_address` INT(11) NULL DEFAULT 0, '
+				    . '`http_code` INT(11) UNSIGNED NOT NULL, '
+				    . '`referrer` VARCHAR(255) NULL, '
+				    . '`user_agent` VARCHAR(255) NULL, '
+				    . '`status` INT(1) UNSIGNED NOT NULL,'
+				    . '`added` INT(11) UNSIGNED NOT NULL, '
+				    . '`modified` INT(11) UNSIGNED NOT NULL, '
+				    . 'INDEX (`url`, `user_id`) '
+				    . ') ENGINE=MYISAM';
+		    
+		    $this->db->query($sql);
+		}
+		
 		
         if(!$this->db->query('SELECT * FROM `'.$this->table.'` LIMIT 0, 1;'))
 			$insert_data	= TRUE;
@@ -136,7 +138,7 @@ class Users Extends CI_Model {
 		$returns	= array();
                 
 		foreach ($rows as $row) {
-			$object			= new Users;
+			$object			= new Logs;
 
 			$object_vars	= get_object_vars($row);
 			
@@ -163,7 +165,7 @@ class Users Extends CI_Model {
 		return $data;
 	}
 	
-	public function getUser($id = null){
+	public function getLog($id = null){
 		if(!empty($id)){
 			$data = array();
 			$options = array('id' => $id);
@@ -177,38 +179,10 @@ class Users Extends CI_Model {
 		}
 	}
 	
-	public function getUserByEmail($email = null){
-		if(!empty($email)){
-			$data = array();
-			$options = array('email' => $email);
-			$Q = $this->db->get_where('users',$options,1);
-			if ($Q->num_rows() > 0){
-				foreach ($Q->result_object() as $row)
-				$data = $row;
-			}
-			$Q->free_result();
-			return $data;
-		}
-	}
-	
-	public function getUserByUsername($username = null){
-		if(!empty($username)){
-			$data = array();
-			$options = array('username' => $username);
-			$Q = $this->db->get_where('users',$options,1);
-			if ($Q->num_rows() > 0){
-				foreach ($Q->result_object() as $row)
-				$data = $row;
-			}
-			$Q->free_result();
-			return $data;
-		}
-	}
-	
-	public function getAllUser($admin=null){
+	public function getAllLog($admin=null){
 		$data = array();
 		$this->db->order_by('added');
-		$Q = $this->db->get('users');
+		$Q = $this->db->get($this->table);
 			if ($Q->num_rows() > 0){
 				//foreach ($Q->result_object() as $row){
 					//$data[] = $row;
@@ -219,103 +193,9 @@ class Users Extends CI_Model {
 		return $data;
 	}
 	
-	// Get user's Email from posts 
-	public function getUserEmail($email=null){
-		if(!empty($email)){
-			$data = array();
-			
-			// Option and query result
-			$options = array('email' => $email);			
-			$Q = $this->db->get_where('users',$options,1);
-			
-			// Check result
-			if($Q->num_rows() > 0) {
-				// Return true if not exists
-				return true;
-			} else {
-				// Return false if exists
-				return false;
-			}		 
-		}
-	}
-	
-	// Get user's Password from hashed password 
-	public function getUserPassword($password=null){
-		if(!empty($password)){
-			$data = array();
-			
-			// Option and query result
-			$options = array('password' => $password);			
-			$Q = $this->db->get_where('users',$options,1);
-			
-			// Check result
-			if($Q->num_rows() > 0) {
-				// Return true if not exists
-				return true;
-			} else {
-				// Return false if exists
-				return false;
-			}		 
-		}
-	}
-	
-	public function login($object=null){		
-		if(!empty($object)){
-			$data = array();
-			$options = array(
-							'username' => $object['username'], 
-							'password' => sha1($object['username'].$object['password']),
-							'status' => 1);
-			
-			$Q = $this->db->get_where('users',$options,1);
-			if ($Q->num_rows() > 0){				
-				foreach ($Q->result_object() as $row) {
-					// Update login state to true
-					$this->setLoggedIn($row->id);
-					$data = $row;
-				}
-			} 			 
+	public function setLog($object=null){
 		
-			//print_r($data);
-			//exit;
-			//print_r(); exit();
-			//print_r($this->db->last_query()); exit();
-			
-			$Q->free_result();
-			return $data;
-		}
-	}
-	
-	public function setLastLogin($id=null) {
-		//Get user id
-		$this->db->where('id', $id);
-		//Return result
-		return $this->db->update('users', array('last_login'=>time()));
-	}
-	
-	public function setLoggedIn($id=null) {
-		//Get user id
-		$this->db->where('id', $id);
-		//Return result
-		return $this->db->update('users', array('logged_in'=>1));
-	}
-	
-	public function setPassword($user=null,$changed=''){
-		
-		$password = ($changed) ? $changed : random_string('alnum', 8);
-				
-		$data = array('password' => sha1($user->username.$password));
-
-		$this->db->where('id', $user->id);
-		$this->db->update('users', $data); 
-		
-		return $password;
-		
-	}	
-	
-	public function setUser($object=null){
-		
-		// Set User data
+		// Set Log data
 		$data = array(
 			'username'	=> $object['username'],
 			'email'		=> $object['email'],			
@@ -325,7 +205,7 @@ class Users Extends CI_Model {
 			'status'	=> $object['status']
 		);
 		
-		// Insert User data
+		// Insert Log data
 		$this->db->insert('users', $data);
 		
 		// Return last insert id primary
@@ -337,7 +217,7 @@ class Users Extends CI_Model {
 			// Unset previous data
 			unset($data);
 			
-			// Set User Profile data
+			// Set Log Profile data
 			$data = array(
 					'user_id'		=> $insert_id,
 					'gender'		=> !empty($object['gender']) ? $object['gender'] : NULL,
@@ -353,7 +233,7 @@ class Users Extends CI_Model {
 					'added'		=> time(),	
 					'status'	=> 1);
 			
-			// Insert User Profile 
+			// Insert Log Profile 
 			$this->db->insert('user_profiles', $data);
 					
 		}
@@ -363,7 +243,7 @@ class Users Extends CI_Model {
 		
 	}	
 	
-	public function deleteUser($id) {
+	public function deleteLog($id) {
 		
 		// Check user id
 		$this->db->where('id', $id);

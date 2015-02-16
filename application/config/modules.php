@@ -34,8 +34,8 @@ $config['admin_list.module_function']	= array(
 						'modulelist/edit'	=> 'Edit Module Details'
 					);
 
-$config['module_list.models']			= array('ModuleLists');
-$config['module_list.module_menu']		= array('modulelist/index' => 'Module Listing');
+$config['module_list.models']		= array('ModuleLists');
+$config['module_list.module_menu']	= array('modulelist/index' => 'Module Listing');
 $config['module_list.module_function']	= array('modulelist/edit' => 'Edit Module Details');
 
 //======================== Administrator Access - end config - ========================//
@@ -51,7 +51,8 @@ $config['modulelist'] = array(
 							'UserProfiles',
 							'UserHistories',
 							'ModulePermissions',
-                                                        'Settings'
+                                                        'Settings',
+							'ServerLogs'
 						),
 		// Admin module menu
 		'module_menu'	=> array(
@@ -62,7 +63,9 @@ $config['modulelist'] = array(
 							// User Group index
 							'usergroup/index'	=> 'User Group Listings',
                                                         // Setting index
-							'setting/index'         => 'Setting Listings'
+							'setting/index'         => 'Setting Listings',
+							// Log index
+							'log/index'		=> 'Log Listings'
 						),
 		// Admin module function
 		'module_function'	=> array(
@@ -72,24 +75,29 @@ $config['modulelist'] = array(
 							'dashboard/edit'	=> 'Edit Dashboard Details',
 							'dashboard/delete'	=> 'Delete Dashboard',
 							'dashboard/change'	=> 'Change Dashboard Status',
-							// User index
-							'user/add'			=> 'Add User Details',
-							'user/view'			=> 'View User Details',
-							'user/edit'			=> 'Edit User Details',
+							// User functions
+							'user/add'		=> 'Add User Details',
+							'user/view'		=> 'View User Details',
+							'user/edit'		=> 'Edit User Details',
 							'user/delete'		=> 'Delete User Details',
 							'user/change'		=> 'Change User Status',	
-							// User Group index
+							// User Group functions
 							'usergroup/add'		=> 'Add User Group Details',
 							'usergroup/view'	=> 'View User Group Details',
 							'usergroup/edit'	=> 'Edit User Group Details',
 							'usergroup/delete'	=> 'Delete User Group Details',
 							'usergroup/change'	=> 'Change User Group Status',
-                                                        // Setting index
+                                                        // Setting functions
                                                         'setting/add'	  => 'Add Setting Details',
                                                         'setting/view'	  => 'View Setting Details',
                                                         'setting/edit'    => 'Edit Setting Details',
                                                         'setting/delete'  => 'Delete Setting Details',
-                                                        'setting/change'  => 'Change Setting Status'
+                                                        'setting/change'  => 'Change Setting Status',
+							// Log functions
+							'log/view'	=> 'View Log Details',
+                                                        'log/edit'	=> 'Edit Log Details',
+							'log/delete'	=> 'Delete Log Details',
+							'log/empty'	=> 'Empty Log Details'
 							)
 	),
 	// Page module

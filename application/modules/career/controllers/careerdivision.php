@@ -40,7 +40,9 @@ class CareerDivision extends Admin_Controller {
             // Set CRUD subject
             $crud->set_subject('Division');                    
             // Set column
-            $crud->columns('subject','name','description','status');			
+            $crud->columns('subject','name','description','status');	
+	    // Sets the required fields of add and edit fields
+	    $crud->required_fields('subject','name','status');    
             // Set upload field
             //$crud->set_field_upload('file_name','uploads/careers_divisions');
 	    // Set load crud            

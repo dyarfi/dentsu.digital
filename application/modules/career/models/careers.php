@@ -54,7 +54,7 @@ class Careers Extends CI_Model {
 				. '`start_date` DATE NULL DEFAULT \'0000-00-00\', '
 				. '`end_date` DATE NULL DEFAULT \'0000-00-00\', '
 				. '`report_to` TINYTEXT NULL, '
-				. '`job_purpose` TINYTEXT NULL, '
+				. '`job_purpose` TEXT NULL, '
 				. '`responsibilities` TEXT NULL, '
 				. '`requirements` TEXT NULL, '
 				. '`location` VARCHAR(128) NULL, '
