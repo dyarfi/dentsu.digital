@@ -39,8 +39,6 @@ class ModuleLists Extends CI_Model {
 
 		$objects	= $this->db->get_where($this->table,$where_cond,1)->result();
 		
-		print_r($objects);
-		exit;
 		return !empty($objects[0]) ? $objects[0] : FALSE;
 	}
 	
@@ -70,26 +68,30 @@ class ModuleLists Extends CI_Model {
 		if($user_group == '')
 			return array();
 	
-		$modules			= array();
+		$modules		= array();
 	
 		// Check admin url
-		$where_cond			= array('id'	=> $user_group);
+		$where_cond		= array('id'	=> $user_group);
 		$user_permission	= $this->db->get_where('user_groups', $where_cond, 1)->result();
 				
 		// Check backend permission
 		if(!$user_permission[0]->backend_access) {
-			redirect(ADMIN . 'authenticate');
+			// Set flash message to disabled account
+			$this->session->set_flashdata('flashdata', 'Your account has no access!');
+			// Redirect back to login
+			redirect(ADMIN . 'authenticate/login');
 		}
 		// Load user admin menu modules
 		$item = $this->load->config('modules', TRUE);	
 		$modules['Admin'] = $item['admin_list.module_menu'];
-				
+		
 		// Check full backend permission
 		if ($user_permission[0]->full_backend_access) { 
 			// Load user module menu function
-			$modules['Module'] = $item['module_list.module_menu'];			
+			$modules['Module'] = $item['module_list.module_menu'];	
+			
 		}
-										
+		//print_r($modules);								
 		$modules_perm		= $this->load->model('UserGroupPermissions')->getModuleFunction($user_group);		
 		$modules_cols		= array_keys($modules_perm);
 		
@@ -104,7 +106,6 @@ class ModuleLists Extends CI_Model {
 			$where_in		= $buffers;	
 			
 		}
-		
 		//$where_cond	  = (is_array($where_cond)) ? array_merge($where_cond,array('parent_id' => 0)) : array('parent_id' => 0);
 		
 		//$order_by	  = array('order' => 'ASC');
@@ -135,8 +136,9 @@ class ModuleLists Extends CI_Model {
 						$buffers[$menu->module_link]	= $menu->module_name;
 					}
 				}
-										
+				
 				$modules[ucfirst($class_name)] = $buffers;
+				
 				unset($buffers);
 				
 			}

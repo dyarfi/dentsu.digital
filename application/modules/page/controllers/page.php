@@ -56,7 +56,7 @@ class Page extends Admin_Controller {
 	    // This callback escapes the default auto field output of the field name at the edit form
 	    $crud->callback_edit_field('modified',array($this,'_callback_time_modified'));
 	    // This callback escapes the default auto field output of the field name at the add/edit form. 
-	   // $crud->callback_field('status',array($this,'_callback_dropdown'));
+	    // $crud->callback_field('status',array($this,'_callback_dropdown'));
 	    // This callback escapes the default auto column output of the field name at the add form
 	    $crud->callback_column('added',array($this,'_callback_time'));
 	    $crud->callback_column('modified',array($this,'_callback_time'));  

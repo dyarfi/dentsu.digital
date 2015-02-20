@@ -14,8 +14,7 @@ $config['admin_list.module_menu']	= array(
 						'userhistory/index'	=> 'User History Listings',
 						'dashboard/index'	=> 'Dashboard Panel',
 						'user/index'		=> 'User Listings',
-						'usergroup/index'	=> 'User Group Listings',			
-						'modulelist/index'	=> 'Module Listing',
+						'usergroup/index'	=> 'User Group Listings',
                                                 'setting/index'         => 'Setting Listing'
 					);
 									
@@ -30,8 +29,7 @@ $config['admin_list.module_function']	= array(
                                                 'dashboard/add'		=> 'Add New Dashboard',
 						'dashboard/view'	=> 'View Dashboard Details',
 						'dashboard/edit'	=> 'Edit Dashboard Details',
-						'dashboard/delete'	=> 'Delete Dashboard',			
-						'modulelist/edit'	=> 'Edit Module Details'
+						'dashboard/delete'	=> 'Delete Dashboard',
 					);
 
 $config['module_list.models']		= array('ModuleLists');
@@ -109,12 +107,17 @@ $config['modulelist'] = array(
 						 'pagemenu/index' => 'Page Menu Listings'),
 		// Page module function
 		'module_function'	=> array(
-						// Page index
-						'page/add'	=> 'Add Page Details',									
-						'page/view'	=> 'View Page Details',
-						'page/edit'	=> 'Edit Page Details',
-						'page/delete'	=> 'Delete Page Details',
-						'page/change'	=> 'Change Page Status'	
+						// Page functions
+						'page/index/add'	=> 'Add Page Details',							
+						'page/index/view'	=> 'View Page Details',
+						'page/index/edit'	=> 'Edit Page Details',
+						'page/index/delete'	=> 'Delete Page Details',
+						'page/index/change'	=> 'Change Page Status'	,
+						// Page Menu functions
+						'pagemenu/index/view'	=> 'View Page Details',
+						'pagemenu/index/edit'	=> 'Edit Page Details',
+						'pagemenu/index/delete'	=> 'Delete Page Details',
+						'pagemenu/index/change'	=> 'Change Page Status'	
 					    ),
 	),
 	// Career module
@@ -129,17 +132,18 @@ $config['modulelist'] = array(
 						),
 		// Career module function
 		'module_function'	=> array(
-						// Career index
-						'career/add'		=> 'Add Career Details',
-						'career/view'		=> 'View Career Details',
-						'career/edit'		=> 'Edit Career Details',
-						'career/delete'		=> 'Delete Career Details',
-						'career/change'		=> 'Change Career Status',	
-						'careerapplicant/add'	 => 'Add Career Division Listings',
-						'careerapplicant/view'	 => 'View Career Division Listings',			
-						'careerapplicant/edit'	 => 'Edit Career Division Listings',			
-						'careerapplicant/delete' => 'Delete Career Division Listings',
-						'careerapplicant/change' => 'Change Career Division Listings'
+						// Career functions
+						'career/index/add'		=> 'Add Career Details',
+						'career/index/view'		=> 'View Career Details',
+						'career/index/edit'		=> 'Edit Career Details',
+						'career/index/delete'		=> 'Delete Career Details',
+						'career/index/change'		=> 'Change Career Status',	
+						// Career Applicant functions
+						'careerapplicant/index/add'	 => 'Add Career Division Listings',
+						'careerapplicant/index/view'	 => 'View Career Division Listings',			
+						'careerapplicant/index/edit'	 => 'Edit Career Division Listings',			
+						'careerapplicant/index/delete' => 'Delete Career Division Listings',
+						'careerapplicant/index/change' => 'Change Career Division Listings'
 						),
 	)
 );

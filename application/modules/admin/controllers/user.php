@@ -52,13 +52,7 @@ class User extends Admin_Controller {
             $this->load->view('template/admin/admin_template', $this->load->vars($data));
 
     }	
-	
-    public function logout() {
-        // Destroy only user session
-        $this->session->unset_userdata('user_session');
-		redirect('/', 'refresh');
-    }
-	
+    
     public function add() {
 		
 		// Default data setup
@@ -568,8 +562,8 @@ class User extends Admin_Controller {
 
             // Get User Data
             $user = $this->Users->getUserByEmail($this->input->post('email'));
-
-            if (!empty($user) && $user->status === 1) {
+	    
+            if (!empty($user) && $user->status == 1) {
 
                     $password = $this->Users->setPassword($user);
 
@@ -585,7 +579,7 @@ class User extends Admin_Controller {
 
                     $this->email->send();
 
-            } else if (!empty($user) && $user->status !== 1) { 
+            } else if (!empty($user) && $user->status != 1) { 
 
                     // Account is not Active
                     $result['result']['code'] = 2;

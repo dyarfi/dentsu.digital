@@ -206,6 +206,21 @@ class UserGroupPermissions Extends CI_Model {
 		
 	}
 	
+	public function updateUserGroupPermission($array=null) {	
+	    if (!empty($array) && !empty($array['value'])) {
+		// Update Setting data             
+		$this->db->where('id', $array['id']);      
+		// Return last insert id primary
+		$update = $this->db->update($this->table, $array);					
+		// Return last insert id primary
+		return $update;
+	    } else {
+		// Return nothing
+		return false;
+	    }
+	    
+	}
+	
 	public function setUserGroupPages($pages=null,$allowed_groups=null) {
 		if (is_array($allowed_groups) && is_array($pages)) {
 			$user_group = $allowed_groups;
@@ -259,7 +274,7 @@ class UserGroupPermissions Extends CI_Model {
 		// Check backend permission
 		if(!$user_permission[0]->backend_access) {
 			// Set flash alert to session
-			$this->session->set_flashdata('message', 'You have no access');
+			$this->session->set_flashdata('flashdata', 'You have no access');
 			// Redirect if have no access to backend / admin-panel
 			redirect(ADMIN . 'authenticate/noaccess');
 		}

@@ -27,12 +27,12 @@
 <h5>Role Based Access Control :</h5>
 <table class="listing_data table table-bordered table-striped">
 	<thead>
-		<tr>
-			<th><strong>#</strong></th>
-			<?php foreach ($table_headers as $key => $value) : ?>
-			<th><?php echo $value; ?></th>
-			<?php endforeach; ?>
-		</tr>
+	    <tr>
+		<th><strong>#</strong></th>
+		<?php foreach ($table_headers as $key => $value) : ?>
+		<th><?php echo $value; ?></th>
+		<?php endforeach; ?>
+	    </tr>
 	</thead>
 	<tbody>
 		<?php
@@ -99,11 +99,11 @@
 	?>
 	</tbody>
 	<tfoot>
-		<tr>
-			<td colspan="<?php echo (count($table_headers) + 1); ?>">
-				<div id="table_pagination"><input type="submit" class="btn btn-primary" value="Save" /></div>
-			</td>
-		</tr>
+	    <tr>
+		<td colspan="<?php echo (count($table_headers) + 1); ?>">
+		    <div id="table_pagination"><input type="submit" class="btn btn-primary" value="Save" /></div>
+		</td>
+	    </tr>
 	</tfoot>
 </table>
 <?php echo form_close(); ?>

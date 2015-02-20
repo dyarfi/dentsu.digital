@@ -141,96 +141,186 @@
 					</div>
 				</div>				  						  
 			  </div>
-			  <div class="item">				  
-					<div class="row box-team">
-						<div class="col-xs-3 col-sm-3 col-md-3">
-							<div class="wow bounceInUp" data-wow-delay="0.2s">
-								<div class="team ch-item">
-									<div class="inner ch-info-wrap">
-										<div class="ch-info">
-											<div class="avatar">
-												<img src="<?=base_url();?>assets/public/img/team/1.jpg" alt="" class="img-responsive img-circle" />
-											</div>				
-											<div class="ch-info-back">
-												<h5>Anna Hanaceck</h5>
-												<p class="subtitle">Pixel Crafter</p>
-												<!--ul class="team-social margin-top-20">
-													<li class="social-facebook"><a href="#" class="fa fa-facebook"></a></li>
-													<li class="social-twitter"><a href="#" class="fa fa-twitter"></a></li>
-													<li class="social-google"><a href="#" class="fa fa-google-plus"></a></li>
-												</ul-->
-											</div>
-										</div>
-									</div>
-
-								</div>
+			    <div class="item">				  
+				<div class="row box-team">
+				    <div class="col-xs-3 col-sm-3 col-md-3">
+					<div class="wow bounceInUp" data-wow-delay="0.2s">
+					    <div class="team ch-item">
+						<div class="inner ch-info-wrap">
+						    <div class="ch-info">
+							<div class="avatar">
+							    <img src="<?=base_url();?>assets/public/img/team/d3_wulan.jpg" alt="" class="img-responsive img-circle" />
+							</div>				
+							<div class="ch-info-back">
+							    <h5>Dyah Wulandari</h5>
+							    <p class="subtitle">Senior Copywriter</p>
+							    <!--ul class="team-social margin-top-20">
+								    <li class="social-facebook"><a href="#" class="fa fa-facebook"></a></li>
+								    <li class="social-twitter"><a href="#" class="fa fa-twitter"></a></li>
+								    <li class="social-google"><a href="#" class="fa fa-google-plus"></a></li>
+							    </ul-->
 							</div>
+						    </div>
 						</div>
-						<div class="col-xs-3 col-sm-3 col-md-3">
-							<div class="wow bounceInUp" data-wow-delay="0.5s">
-							<div class="team ch-item">
-								<div class="inner ch-info-wrap">
-									<div class="ch-info">
-										<div class="avatar">
-											<img src="<?=base_url();?>assets/public/img/team/2.jpg" alt="" class="img-responsive img-circle" />
-										</div>
-										<div class="ch-info-back">
-											<h5>Maura Daniels</h5>
-											<p class="subtitle">Ruby on Rails</p>
-											<!--ul class="team-social margin-top-20">
-												<li class="social-facebook"><a href="#" class="fa fa-facebook"></a></li>
-												<li class="social-twitter"><a href="#" class="fa fa-twitter"></a></li>
-												<li class="social-google"><a href="#" class="fa fa-google-plus"></a></li>
-											</ul-->
-										</div>
-									</div>
-								</div>
+					    </div>
+					</div>
+				    </div>
+				    <div class="col-xs-3 col-sm-3 col-md-3">
+					<div class="wow bounceInUp" data-wow-delay="0.5s">
+					    <div class="team ch-item">
+						<div class="inner ch-info-wrap">
+						    <div class="ch-info">
+							<div class="avatar">
+							    <img src="<?=base_url();?>assets/public/img/team/d3_jessy.jpg" alt="" class="img-responsive img-circle" />
 							</div>
+							<div class="ch-info-back">
+							    <h5>Jessy Christina</h5>
+							    <p class="subtitle">Project Manager</p>
+							    <!--ul class="team-social margin-top-20">
+								    <li class="social-facebook"><a href="#" class="fa fa-facebook"></a></li>
+								    <li class="social-twitter"><a href="#" class="fa fa-twitter"></a></li>
+								    <li class="social-google"><a href="#" class="fa fa-google-plus"></a></li>
+							    </ul-->
 							</div>
+						    </div>
 						</div>
-						<div class="col-xs-3 col-sm-3 col-md-3">
-							<div class="wow bounceInUp" data-wow-delay="0.8s">
-							<div class="team ch-item">
-								<div class="inner ch-info-wrap">
-									<div class="ch-info">
-										<div class="avatar"><img src="<?=base_url();?>assets/public/img/team/3.jpg" alt="" class="img-responsive img-circle" /></div>
-
-										<div class="ch-info-back">
-											<h5>Jack Briane</h5>
-											<p class="subtitle">jQuery Ninja</p>
-											<!--ul class="team-social margin-top-20">
-												<li class="social-facebook"><a href="#" class="fa fa-facebook"></a></li>
-												<li class="social-twitter"><a href="#" class="fa fa-twitter"></a></li>
-												<li class="social-google"><a href="#" class="fa fa-google-plus"></a></li>
-											</ul-->
-										</div>
-									</div>
-								</div>
+					    </div>
+					</div>
+				    </div>
+				    <div class="col-xs-3 col-sm-3 col-md-3">
+					<div class="wow bounceInUp" data-wow-delay="0.8s">
+					    <div class="team ch-item">
+						<div class="inner ch-info-wrap">
+						    <div class="ch-info">
+							<div class="avatar">
+							    <img src="<?=base_url();?>assets/public/img/team/d3_ziza.jpg" alt="" class="img-responsive img-circle" />
 							</div>
+							<div class="ch-info-back">
+							    <h5>Malcallysta Sadira Azizah</h5>
+							    <p class="subtitle">Position</p>
+							    <!--ul class="team-social margin-top-20">
+								    <li class="social-facebook"><a href="#" class="fa fa-facebook"></a></li>
+								    <li class="social-twitter"><a href="#" class="fa fa-twitter"></a></li>
+								    <li class="social-google"><a href="#" class="fa fa-google-plus"></a></li>
+							    </ul-->
 							</div>
+						    </div>
 						</div>
-						<div class="col-xs-3 col-sm-3 col-md-3">
-							<div class="wow bounceInUp" data-wow-delay="1s">
-							<div class="team ch-item">
-								<div class="inner ch-info-wrap">
-									<div class="ch-info">
-									<div class="avatar"><img src="<?=base_url();?>assets/public/img/team/4.jpg" alt="" class="img-responsive img-circle" /></div>
-									<div class="ch-info-back">
-										<h5>Tom Petterson</h5>
-										<p class="subtitle">Typographer</p>
-										<!--ul class="team-social margin-top-20">
-											<li class="social-facebook"><a href="#" class="fa fa-facebook"></a></li>
-											<li class="social-twitter"><a href="#" class="fa fa-twitter"></a></li>
-											<li class="social-google"><a href="#" class="fa fa-google-plus"></a></li>
-										</ul-->
-									</div>
-</div>
-								</div>
+					    </div>
+					</div>
+				    </div>
+				    <div class="col-xs-3 col-sm-3 col-md-3">
+					<div class="wow bounceInUp" data-wow-delay="1.2s">
+					    <div class="team ch-item">
+						<div class="inner ch-info-wrap">
+						    <div class="ch-info">
+							<div class="avatar">
+							    <img src="<?=base_url();?>assets/public/img/team/d3_ica.jpg" alt="" class="img-responsive img-circle" />
 							</div>
+							<div class="ch-info-back">
+							    <h5>Annisa Gemala Dewi</h5>
+							    <p class="subtitle">Account Executive</p>
+							    <!--ul class="team-social margin-top-20">
+								    <li class="social-facebook"><a href="#" class="fa fa-facebook"></a></li>
+								    <li class="social-twitter"><a href="#" class="fa fa-twitter"></a></li>
+								    <li class="social-google"><a href="#" class="fa fa-google-plus"></a></li>
+							    </ul-->
 							</div>
-						</div>						
-					</div>					  
-				</div>
+						    </div>
+						</div>
+					    </div>
+					</div>
+				    </div>
+				    <div class="col-xs-3 col-sm-3 col-md-3">
+					<div class="wow bounceInUp" data-wow-delay="1.5s">
+					    <div class="team ch-item">
+						<div class="inner ch-info-wrap">
+						    <div class="ch-info">
+							<div class="avatar">
+							    <img src="<?=base_url();?>assets/public/img/team/d3_denny.jpg" alt="" class="img-responsive img-circle" />
+							</div>
+							<div class="ch-info-back">
+							    <h5>Denny Tjeris</h5>
+							    <p class="subtitle">Position</p>
+							    <!--ul class="team-social margin-top-20">
+								    <li class="social-facebook"><a href="#" class="fa fa-facebook"></a></li>
+								    <li class="social-twitter"><a href="#" class="fa fa-twitter"></a></li>
+								    <li class="social-google"><a href="#" class="fa fa-google-plus"></a></li>
+							    </ul-->
+							</div>
+						    </div>
+						</div>
+					    </div>
+					</div>
+				    </div>
+				    <div class="col-xs-3 col-sm-3 col-md-3">
+					<div class="wow bounceInUp" data-wow-delay="1.8s">
+					    <div class="team ch-item">
+						<div class="inner ch-info-wrap">
+						    <div class="ch-info">
+							<div class="avatar">
+							    <img src="<?=base_url();?>assets/public/img/team/d3_deil.jpg" alt="" class="img-responsive img-circle" />
+							</div>
+							<div class="ch-info-back">
+							    <h5>Deilika Chairina</h5>
+							    <p class="subtitle">Digital Media Implementer</p>
+							    <!--ul class="team-social margin-top-20">
+								    <li class="social-facebook"><a href="#" class="fa fa-facebook"></a></li>
+								    <li class="social-twitter"><a href="#" class="fa fa-twitter"></a></li>
+								    <li class="social-google"><a href="#" class="fa fa-google-plus"></a></li>
+							    </ul-->
+							</div>
+						    </div>
+						</div>
+					    </div>
+					</div>
+				    </div>
+				    <div class="col-xs-3 col-sm-3 col-md-3">
+					<div class="wow bounceInUp" data-wow-delay="2.3s">
+					    <div class="team ch-item">
+						<div class="inner ch-info-wrap">
+						    <div class="ch-info">
+							<div class="avatar">
+							    <img src="<?=base_url();?>assets/public/img/team/d3_wisnu.jpg" alt="" class="img-responsive img-circle" />
+							</div>
+							<div class="ch-info-back">
+							    <h5>Mandala Wisnu</h5>
+							    <p class="subtitle">Junior Art Director</p>
+							    <!--ul class="team-social margin-top-20">
+								    <li class="social-facebook"><a href="#" class="fa fa-facebook"></a></li>
+								    <li class="social-twitter"><a href="#" class="fa fa-twitter"></a></li>
+								    <li class="social-google"><a href="#" class="fa fa-google-plus"></a></li>
+							    </ul-->
+							</div>
+						    </div>
+						</div>
+					    </div>
+					</div>
+				    </div>
+				    <div class="col-xs-3 col-sm-3 col-md-3">
+					<div class="wow bounceInUp" data-wow-delay="2.8s">
+					    <div class="team ch-item">
+						<div class="inner ch-info-wrap">
+						    <div class="ch-info">
+							<div class="avatar">
+							    <img src="<?=base_url();?>assets/public/img/team/d3_erpe.jpg" alt="" class="img-responsive img-circle" />
+							</div>
+							<div class="ch-info-back">
+							    <h5>Rangga Pandji</h5>
+							    <p class="subtitle">Position</p>
+							    <!--ul class="team-social margin-top-20">
+								    <li class="social-facebook"><a href="#" class="fa fa-facebook"></a></li>
+								    <li class="social-twitter"><a href="#" class="fa fa-twitter"></a></li>
+								    <li class="social-google"><a href="#" class="fa fa-google-plus"></a></li>
+							    </ul-->
+							</div>
+						    </div>
+						</div>
+					    </div>
+					</div>
+				    </div>
+				</div>					  
+			    </div>
 			</div>
 			<!-- Carousel nav -->
 			<a class="carousel-control left" href="#myCarousel" data-slide="prev"><i class="fa fa-2x fa-chevron-left"></i></a>

@@ -61,8 +61,7 @@ a:focus {
 
 .navbar {
     margin-bottom: 0;
-    border-bottom: 1px solid rgba(255,255,255,.3);
-	
+    border-bottom: 1px solid rgba(255,255,255,.3);	
 }
 
 .navbar-brand {
@@ -752,6 +751,10 @@ hr {
 
 .box-team .col-xs-3.col-sm-3.col-md-2 {
 	margin: 0 15px;
+}
+
+.box-team .col-xs-3:nth-child(1n + 5) {
+    margin-top: 240px !important;
 }
 
 .ch-info-back {

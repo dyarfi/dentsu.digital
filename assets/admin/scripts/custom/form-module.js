@@ -28,10 +28,10 @@ var FormModule = function () {
 		// --------------------- end --- Used in Module Listing
 		
 		 $('input[type="checkbox"]#ipt_checkall').click(function(){
-			var value = $(this).attr('checked');
+			var value = $(this).prop('checked');
 			if (value==true){
 				$('input[type="checkbox"].ipt_tocheck').each(function(){
-				   $(this).attr('checked','true').addClass('activecheck'); 
+				   $(this).prop('checked','checked').addClass('activecheck'); 
 				});
 			}else{
 				$('input[type="checkbox"].ipt_tocheck').each(function(){
@@ -43,7 +43,7 @@ var FormModule = function () {
 		$('input[type="checkbox"].ipt_tocheck').click(function(){
 			var value = $(this).attr('checked');
 			if (value==true){
-				$(this).attr('checked','true').addClass('activecheck');     
+				$(this).prop('checked','checked').addClass('activecheck');     
 			}else{
 				$(this).removeAttr('checked').removeClass('activecheck');
 			}

@@ -161,7 +161,7 @@ class Users Extends CI_Model {
 		$data = array();
 		$options = array('status' => $status);
 		$this->db->where($options,1);
-		$this->db->from('users');
+		$this->db->from($this->table);
 		$data = $this->db->count_all_results();
 		return $data;
 	}
@@ -170,7 +170,7 @@ class Users Extends CI_Model {
 		if(!empty($id)){
 			$data = array();
 			$options = array('id' => $id);
-			$Q = $this->db->get_where('users',$options,1);
+			$Q = $this->db->get_where($this->table,$options,1);
 			if ($Q->num_rows() > 0){
 				foreach ($Q->result_object() as $row)
 				$data = $row;
@@ -184,7 +184,7 @@ class Users Extends CI_Model {
 		if(!empty($email)){
 			$data = array();
 			$options = array('email' => $email);
-			$Q = $this->db->get_where('users',$options,1);
+			$Q = $this->db->get_where($this->table,$options,1);
 			if ($Q->num_rows() > 0){
 				foreach ($Q->result_object() as $row)
 				$data = $row;
@@ -198,7 +198,7 @@ class Users Extends CI_Model {
 		if(!empty($username)){
 			$data = array();
 			$options = array('username' => $username);
-			$Q = $this->db->get_where('users',$options,1);
+			$Q = $this->db->get_where($this->table,$options,1);
 			if ($Q->num_rows() > 0){
 				foreach ($Q->result_object() as $row)
 				$data = $row;
@@ -229,7 +229,7 @@ class Users Extends CI_Model {
 			
 			// Option and query result
 			$options = array('email' => $email);			
-			$Q = $this->db->get_where('users',$options,1);
+			$Q = $this->db->get_where($this->table,$options,1);
 			
 			// Check result
 			if($Q->num_rows() > 0) {
@@ -249,7 +249,7 @@ class Users Extends CI_Model {
 			
 			// Option and query result
 			$options = array('password' => $password);			
-			$Q = $this->db->get_where('users',$options,1);
+			$Q = $this->db->get_where($this->table,$options,1);
 			
 			// Check result
 			if($Q->num_rows() > 0) {
@@ -263,44 +263,42 @@ class Users Extends CI_Model {
 	}
 	
 	public function login($object=null){		
-		if(!empty($object)){
-			$data = array();
-			$options = array(
-							'username' => $object['username'], 
-							'password' => sha1($object['username'].$object['password']),
-							'status' => 1);
-			
-			$Q = $this->db->get_where('users',$options,1);
-			if ($Q->num_rows() > 0){				
-				foreach ($Q->result_object() as $row) {
-					// Update login state to true
-					$this->setLoggedIn($row->id);
-					$data = $row;
-				}
-			} 			 
-		
-			//print_r($data);
-			//exit;
-			//print_r(); exit();
-			//print_r($this->db->last_query()); exit();
-			
-			$Q->free_result();
-			return $data;
-		}
+	    if(!empty($object)){
+		$data = array();
+		$options = array(
+				'username' => $object['username'], 
+				'password' => sha1($object['username'].$object['password']));
+
+		$Q = $this->db->get_where($this->table,$options,1);
+		if ($Q->num_rows() > 0){				
+		    foreach ($Q->result_object() as $row) {
+			if (intval($row->status) === 1) {
+			    // Update login state to true
+			    $this->setLoggedIn($row->id);
+			    $data = $row;
+			} else {
+			    $data = 'disabled';
+			}
+		    }
+		} 			 
+
+		$Q->free_result();
+		return $data;
+	    }
 	}
 	
 	public function setLastLogin($id=null) {
 		//Get user id
 		$this->db->where('id', $id);
 		//Return result
-		return $this->db->update('users', array('last_login'=>time()));
+		return $this->db->update($this->table, array('last_login'=>time(),'logged_in'=>0));
 	}
 	
 	public function setLoggedIn($id=null) {
 		//Get user id
 		$this->db->where('id', $id);
 		//Return result
-		return $this->db->update('users', array('logged_in'=>1));
+		return $this->db->update($this->table, array('logged_in'=>1));
 	}
 	
 	public function setPassword($user=null,$changed=''){
@@ -310,7 +308,7 @@ class Users Extends CI_Model {
 		$data = array('password' => sha1($user->username.$password));
 
 		$this->db->where('id', $user->id);
-		$this->db->update('users', $data); 
+		$this->db->update($this->table, $data); 
 		
 		return $password;
 		
@@ -329,7 +327,7 @@ class Users Extends CI_Model {
 		);
 		
 		// Insert User data
-		$this->db->insert('users', $data);
+		$this->db->insert($this->table, $data);
 		
 		// Return last insert id primary
 		$insert_id = $this->db->insert_id();
@@ -372,7 +370,7 @@ class Users Extends CI_Model {
 		$this->db->where('id', $id);
 		
 		// Delete user form database
-		if ($this->db->delete('users')) {
+		if ($this->db->delete($this->table)) {
 			
 			// Check user profile id
 			$this->db->where('user_id', $id);

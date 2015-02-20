@@ -32,7 +32,7 @@ class Authenticate extends Admin_Controller {
 		//if (ACL::user() != '') {
 			//redirect(ADMIN.'dashboard/index');
 		//}
-		
+	    
 		if($_SERVER['REQUEST_METHOD'] === 'POST'){
 			
 			$userObj = $_POST;
@@ -71,18 +71,34 @@ class Authenticate extends Admin_Controller {
 			$this->Captcha->install();				
 				
 			//Check User login info
-			$user			= $this->Users->login($userObj);					
+			$user	= $this->Users->login($userObj);
 			
+			// User data checking
 			if(!empty($user)) {
 				
-				// Check User Level from User ID given
-				$user_group		= $this->UserGroups->getUserGroup($user->group_id);																												
-				if (intval($user_group->full_backend_access) === 1) {
-					$this->ModuleLists->module_check();
-				}
+				// Set return default
+				$return	    = '';
 				
+				if ($user == 'disabled') {
+				    // Set flash message to disabled account
+				    $this->session->set_flashdata('flashdata', 'Your account is disabled!');
+				    // Redirect to login
+				    redirect(ADMIN.'authenticate/login');
+				}
+			    
+				// Check User Level from User ID given
+				$user_group = $this->UserGroups->getUserGroup($user->group_id);
+
+				// Checking for full backend access
+				if (intval($user_group->full_backend_access) === 1) {
+				    // Checking module access for ADMINISTRATOR Level
+				    $this->ModuleLists->module_check();
+				} 
+			
+				// Get module list by user
 				$module_list	= $this->ModuleLists->getModules($user->group_id);
 				
+				// Get function list by user
 				$function_list	= $this->UserGroupPermissions->getModuleFunction($user->group_id);
 					
 				$user_session->id = $user->id;
@@ -96,43 +112,27 @@ class Authenticate extends Admin_Controller {
 				$user_session->name = $this->UserProfiles->getName($user->id);
 					
 				$ci_session = array(
-					'module_list'			=> json_encode($module_list),
+					'module_list'		=> json_encode($module_list),
 					'module_function_list'	=> json_encode($function_list),
-					'user_session'			=> $user_session,
+					'user_session'		=> $user_session,
 				);
-				
-				// Set Module List for All Access
-				//$this->session->set_userdata('module_list', json_encode($module_list));
-
-				// Set Module List Function for All Access
-				//$this->session->set_userdata('module_function_list', json_encode($function_list));
-																	
 				
 				//Set session data
 				$this->session->set_userdata($ci_session);
 				
-				//print_r($this->session->userdata);
-				//exit;
-				//Set logged_in to true
-				//$this->session->set_userdata(array('logged_in' => true));
-				
-				//Set logged_in to true
-				//$this->session->set_userdata(array('user_id' => true));
-				
-				//Login was successful
-				//return true;
-				
+				// Redirect to dashboard
 				redirect(ADMIN.'dashboard/index');
 				
 			} else {
-				//$userObj = 'Error Submission';
+				
 				$userObj = 'No user with that account';				
-				//$this->session->set_flashdata('message', $userObj);
 				$this->session->set_flashdata('flashdata', $userObj);				
-				$this->session->set_flashdata("error", "Sorry, your username or password is incorrect!");
+				
+				//$this->session->set_flashdata("error", "Sorry, your username or password is incorrect!");
 				//$this->form_validation->set_message('email', 'The %s field can not be the word "test"');
 				//print_r($this->session->set_flashdata('Error', $userObj)); //exit();
 				//return false;
+				
 				redirect(ADMIN.'authenticate/login');
 			}
 		}
@@ -147,9 +147,9 @@ class Authenticate extends Admin_Controller {
 	public function logout() {
 		
 		//Set user's last login 
-		//$this->Users->setLastLogin(Acl::user()->id);		
+		$this->Users->setLastLogin(@Acl::user()->id);		
 		
-        //Destroy user session		
+		//Destroy user session		
 		$this->session->unset_userdata('module_list');
 		$this->session->unset_userdata('module_function_list');
 		$this->session->unset_userdata('user_data');		

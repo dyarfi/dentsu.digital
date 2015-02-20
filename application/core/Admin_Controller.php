@@ -20,7 +20,6 @@ class Admin_Controller extends CI_Controller {
 		$this->load->helper('Acl');
 		
 		//session_destroy();
-		//print_r($this->session->userdata);
 		//exit;
 		
 		// Load Admin config
@@ -38,6 +37,7 @@ class Admin_Controller extends CI_Controller {
 		$this->param			= @$this->uri->segments[4];											
 								
 		$this->module_request		= $this->controller . '/' .$this->action;	
+		
 		$this->module_menu		= self::check_module_menu($this->module_request);
 		
 		// Check if user data is true empty and redirect to authenticate
@@ -130,18 +130,18 @@ class Admin_Controller extends CI_Controller {
 		if (empty($module_menu)) {
 			return;
 		}
-						
 		$menu_name = '';
+		
 		// Check if module list is available
 		if (!empty($this->module_function_list)) {
 			foreach ($this->module_function_list as $modules => $module) {
 				$name = $modules;
+				
 				if (!empty($module[$module_menu])) {
 					$menu_name = $module[$module_menu];
 				}			
 			}
 		}
-		
 		return $menu_name;
 		
 	}		

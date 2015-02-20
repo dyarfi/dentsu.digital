@@ -4358,3 +4358,6 @@ UI Loading
   line-height:20px;
   vertical-align: middle;
 }
+.even_row, .odd_row {
+    font-size: 0.920em;
+}
