@@ -27,7 +27,8 @@ License: You must have a valid license purchased only from themeforest(the above
 <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css"/>
 <link href="<?=admin_theme()?>assets/admin/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
 <link href="<?=admin_theme()?>assets/admin/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-<link href="<?=admin_theme()?>assets/admin/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
+<!--<link href="<?=admin_theme()?>assets/admin/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>-->
+
 <!-- END GLOBAL MANDATORY STYLES -->
 
 <?php if (!empty($css_files)) { foreach ($css_files as $file): ?>
@@ -50,7 +51,6 @@ License: You must have a valid license purchased only from themeforest(the above
 <link href="<?=admin_theme()?>assets/admin/plugins/jquery-easy-pie-chart/jquery.easy-pie-chart.css" rel="stylesheet" type="text/css"/>
 
 <!-- END PAGE LEVEL PLUGIN STYLES -->
-
 
 <!-- BEGIN PAGE LEVEL STYLES -->
 <link rel="stylesheet" type="text/css" href="<?=admin_theme()?>assets/admin/plugins/select2/select2.css"/>
@@ -76,107 +76,105 @@ License: You must have a valid license purchased only from themeforest(the above
 <body class="page-header-fixed">
 <!-- BEGIN HEADER -->
 <div class="header navbar navbar-fixed-top">
-	<!-- BEGIN TOP NAVIGATION BAR -->
-	<div class="header-inner">
-		<!-- BEGIN LOGO -->
-		<a class="navbar-brand" href="<?=base_url();?>" target="_blank">
-			<img src="<?=admin_theme()?>assets/admin/img/logo_small.png" alt="logo" class="img-responsive col-md-7 col-lg-7"/>
+    <!-- BEGIN TOP NAVIGATION BAR -->
+    <div class="header-inner">
+	<!-- BEGIN LOGO -->
+	<a class="navbar-brand" href="<?=base_url();?>" target="_blank">
+		<img src="<?=admin_theme()?>assets/admin/img/logo_small.png" alt="logo" class="img-responsive col-md-7 col-lg-7"/>
+	</a>
+	<!-- END LOGO -->
+	<!-- BEGIN RESPONSIVE MENU TOGGLER -->
+	<a href="javascript:;" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<img src="<?=admin_theme()?>assets/admin/img/menu-toggler.png" alt=""/>
+	</a>
+	<!-- END RESPONSIVE MENU TOGGLER -->		
+	<!-- BEGIN TOP NAVIGATION MENU -->
+	<ul class="nav navbar-nav pull-right">
+	    <!-- BEGIN NOTIFICATION DROPDOWN -->
+
+	    <!-- END NOTIFICATION DROPDOWN -->
+
+	    <!-- BEGIN USER LOGIN DROPDOWN -->
+	    <li class="dropdown user">
+		<a href="<?=base_url();?>admin/user/view/<?=Acl::user()->id;?>" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+		    <img alt="" src="<?=base_url()?>assets/admin/img/avatar1_small.jpg"/>&nbsp;
+		    <span class="username">
+			    <?=Acl::user()->name;?>
+		    </span>
+		    <i class="fa fa-angle-down"></i>
 		</a>
-		<!-- END LOGO -->
-		<!-- BEGIN RESPONSIVE MENU TOGGLER -->
-		<a href="javascript:;" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-			<img src="<?=admin_theme()?>assets/admin/img/menu-toggler.png" alt=""/>
-		</a>
-		<!-- END RESPONSIVE MENU TOGGLER -->		
-		<!-- BEGIN TOP NAVIGATION MENU -->
-		<ul class="nav navbar-nav pull-right">
-			<!-- BEGIN NOTIFICATION DROPDOWN -->
-		
-			<!-- END NOTIFICATION DROPDOWN -->
-			
-			<!-- BEGIN USER LOGIN DROPDOWN -->
-			<li class="dropdown user">
-				<a href="<?=base_url();?>admin/user/view/<?=Acl::user()->id;?>" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-					<img alt="" src="<?=base_url()?>assets/admin/img/avatar1_small.jpg"/>&nbsp;
-					<span class="username">
-						<?=Acl::user()->name;?>
-					</span>
-					<i class="fa fa-angle-down"></i>
-				</a>
-				<ul class="dropdown-menu">				
-					<li>
-						<a href="<?=base_url();?>admin/user/view/<?=Acl::user()->id;?>"><i class="fa fa-user"></i> Profile</a>
-					</li>
-					<li>
-						<a href="javascript:;">
-							<i class="fa fa-lock"></i> Last Login <?php echo date('Y-m-d, H:i:s',Acl::user()->last_login);?>
-						</a>
-					</li>
-					<li>
-						<a href="<?=base_url()?>admin/authenticate/logout">
-							<i class="fa fa-key"></i> Log Out
-						</a>
-					</li>
-				</ul>
-			</li>
-			<!-- END USER LOGIN DROPDOWN -->
+		<ul class="dropdown-menu">				
+		    <li>
+			<a href="<?=base_url();?>admin/user/view/<?=Acl::user()->id;?>"><i class="fa fa-user"></i> Profile</a>
+		    </li>
+		    <li>
+			<a href="javascript:;">
+			    <i class="fa fa-lock"></i> Last Login <?php echo date('Y-m-d, H:i:s',Acl::user()->last_login);?>
+			</a>
+		    </li>
+		    <li>
+			<a href="<?=base_url()?>admin/authenticate/logout">
+			    <i class="fa fa-key"></i> Log Out
+			</a>
+		    </li>
 		</ul>
-		<!-- END TOP NAVIGATION MENU -->
-	</div>
-		
-	<!-- END TOP NAVIGATION BAR -->
+	    </li>
+	    <!-- END USER LOGIN DROPDOWN -->
+	</ul>
+	<!-- END TOP NAVIGATION MENU -->
+    </div>
+    <!-- END TOP NAVIGATION BAR -->
 </div>
 <!-- END HEADER -->
-<div class="clearfix">
-</div>
+<div class="clearfix"></div>
 <!-- BEGIN CONTAINER -->
 <div class="page-container">
 
-	<!-- BEGIN SIDEBAR -->
-	<div class="page-sidebar-wrapper">
-		<div class="page-sidebar navbar-collapse collapse">
-			<!-- add "navbar-no-scroll" class to disable the scrolling of the sidebar menu -->
-			<!-- BEGIN SIDEBAR MENU -->
-			<ul class="page-sidebar-menu" data-auto-scroll="true" data-slide-speed="200">
-				<li class="sidebar-toggler-wrapper">
-					<!-- BEGIN SIDEBAR TOGGLER BUTTON -->
-					<div class="sidebar-toggler hidden-phone"></div>
-					<!-- BEGIN SIDEBAR TOGGLER BUTTON -->
-				</li>
-				<li class="sidebar-search-wrapper">
-					<!-- BEGIN RESPONSIVE QUICK SEARCH FORM -->					
-					<!-- END RESPONSIVE QUICK SEARCH FORM -->
-				</li>						
-				<?php				
-				$k = 0;
-				foreach (Acl::admin_system_modules() as $name => $functions) { 
-					if (is_array($functions) && count($functions) != 0) { ?>
-					<li class="<?if(preg_match('/\b'.$this->uri->segment(2).'\b/i', strtolower($name))){ ?>activ e<?}?>">
-						<a class="" href="#collapse<?php echo $k;?>">
-							<span class="title"><?php echo $name; ?></span><span class="arrow "></span>
-						</a>					
-						<ul class="sub-menu"> 
-							<?php foreach ($functions as $row_function => $row_label) { ?>
-								<?php if(Acl::user()->group_id != 1 && $row_label == 'Groups') continue; ?>
-								<li class="<?php echo preg_match('/\b'.$this->uri->segment(2).'\b/i', substr($row_function, 0, strpos($row_function, '/'))) ? 'active' : ''; ?>">
-									<a href="<?php echo base_url(ADMIN . $row_function); ?>"><?php echo $row_label; ?></a>
-								</li>
-							<?php } ?>
-						</ul>				
-					</li>
-				<?php } 
-				$k++;
-				} 
-				?>
-			</ul>
-			<!-- END SIDEBAR MENU -->
-		</div>
+    <!-- BEGIN SIDEBAR -->
+    <div class="page-sidebar-wrapper">
+	<div class="page-sidebar navbar-collapse collapse">
+	    <!-- add "navbar-no-scroll" class to disable the scrolling of the sidebar menu -->
+	    <!-- BEGIN SIDEBAR MENU -->
+	    <ul class="page-sidebar-menu" data-auto-scroll="true" data-slide-speed="200">
+		<li class="sidebar-toggler-wrapper">
+			<!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+			<div class="sidebar-toggler hidden-phone"></div>
+			<!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+		</li>
+		<li class="sidebar-search-wrapper">
+		    <!-- BEGIN RESPONSIVE QUICK SEARCH FORM -->					
+		    <!-- END RESPONSIVE QUICK SEARCH FORM -->
+		</li>						
+		<?php				
+		$k = 0;
+		foreach (Acl::admin_system_modules() as $name => $functions) { 
+			if (is_array($functions) && count($functions) != 0) { ?>
+			<li class="<?if(preg_match('/\b'.$this->uri->segment(2).'\b/i', strtolower($name))){ ?>activ e<?}?>">
+			    <a class="" href="#collapse<?php echo $k;?>">
+				<span class="title"><?php echo $name; ?></span><span class="arrow "></span>
+			    </a>					
+			    <ul class="sub-menu"> 
+			    <?php foreach ($functions as $row_function => $row_label) { ?>
+				    <?php if(Acl::user()->group_id != 1 && $row_label == 'Groups') continue; ?>
+				    <li class="<?php echo preg_match('/\b'.$this->uri->segment(2).'\b/i', substr($row_function, 0, strpos($row_function, '/'))) ? 'active' : ''; ?>">
+					    <a href="<?php echo base_url(ADMIN . $row_function); ?>"><?php echo $row_label; ?></a>
+				    </li>
+			    <?php } ?>
+			    </ul>				
+			</li>
+		<?php } 
+		$k++;
+		} 
+		?>
+	    </ul>
+	    <!-- END SIDEBAR MENU -->
 	</div>
-	<!-- END SIDEBAR -->
+    </div>
+    <!-- END SIDEBAR -->
 	
-	<!-- BEGIN CONTENT -->
-		<?=$this->load->view($main);?>
-	<!-- END CONTENT -->
+    <!-- BEGIN CONTENT -->
+	    <?=$this->load->view($main);?>
+    <!-- END CONTENT -->
 	
 </div>
 <!-- END CONTAINER -->
@@ -198,7 +196,8 @@ License: You must have a valid license purchased only from themeforest(the above
 <script src="<?=admin_theme()?>assets/admin/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
 <script src="<?=admin_theme()?>assets/admin/plugins/jquery.blockui.min.js" type="text/javascript"></script>
 <script src="<?=admin_theme()?>assets/admin/plugins/jquery.cokie.min.js" type="text/javascript"></script>
-<script src="<?=admin_theme()?>assets/admin/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+<!--<script src="<?=admin_theme()?>assets/admin/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>-->
+
 <!-- END CORE PLUGINS -->
 <!-- BEGIN PAGE LEVEL PLUGINS -->
 
@@ -232,7 +231,6 @@ License: You must have a valid license purchased only from themeforest(the above
 <script type="text/javascript" src="<?=admin_theme()?>assets/admin/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
 <script type="text/javascript" src="<?=admin_theme()?>assets/admin/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
 
-
 <!--script type="text/javascript" src="<?=admin_theme()?>assets/grocery_crud/js/jquery_plugins/jquery.numeric.min.js"></script>
 <script type="text/javascript" src="<?=admin_theme()?>assets/grocery_crud/js/jquery_plugins/jquery.fancybox.js"></script-->
 
@@ -252,7 +250,6 @@ License: You must have a valid license purchased only from themeforest(the above
 <script src="<?=admin_theme()?>assets/admin/scripts/custom/form-user.js" type="text/javascript"></script>
 <script src="<?=admin_theme()?>assets/admin/scripts/custom/form-module.js" type="text/javascript"></script>
 <!-- END USER AJAX JAVASCRIPTS -->
-
     
  <?php if (!empty($js_files)) { foreach ($js_files as $file): ?>
     <script src="<?php echo $file; ?>"></script>
@@ -286,7 +283,6 @@ jQuery(document).ready(function() {
 });
 </script>
 <!-- END JAVASCRIPTS -->
-
 
 </body>
 <!-- END BODY -->
