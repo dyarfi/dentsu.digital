@@ -201,23 +201,16 @@ class UserGroupPermissions Extends CI_Model {
 		return $result;
 	}
 	
-	public function setUserGroupPermissions($object=null) {
+	public function setUserGroupPermissions($object=null) { }
 	
-		
-	}
-	
-	public function updateUserGroupPermission($array=null) {	
-	    if (!empty($array) && !empty($array['value'])) {
-		// Update Setting data             
-		$this->db->where('id', $array['id']);      
-		// Return last insert id primary
-		$update = $this->db->update($this->table, $array);					
-		// Return last insert id primary
-		return $update;
-	    } else {
-		// Return nothing
-		return false;
-	    }
+	public function updateUserGroupPermission($array) {	
+	    
+	    // Update Setting data             
+	    $this->db->where('id', $array['id']);
+	    // Return last insert id primary	    
+	    $update = $this->db->update($this->table, $array);					
+	    // Return last insert id primary
+	    return $update;
 	    
 	}
 	

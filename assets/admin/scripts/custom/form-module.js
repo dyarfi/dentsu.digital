@@ -18,26 +18,26 @@ var FormModule = function () {
 		});
 
 		$('input[class^="check_hidden_mplr"]').change( function () {
-			if ($(this).prop('checked') == true) {
-				$(this).closest("table").parent("td").find('input[name^="module_menu[group_id]"]').prop('checked','checked');
-			} else {
-				$(this).closest("table").parent("td").find('input[name^="module_menu[group_id]"]').prop('checked','');				
-			}
+		    if ($(this).prop('checked') == true) {
+			$(this).closest("table").parent("td").find('input[name^="module_menu[group_id]"]').prop('checked','checked');
+		    } else {
+			$(this).closest("table").parent("td").find('input[name^="module_menu[group_id]"]').prop('checked','');
+		    }
 		});	
 		$('.fadeOut').fadeOut(3000);
 		// --------------------- end --- Used in Module Listing
 		
 		 $('input[type="checkbox"]#ipt_checkall').click(function(){
-			var value = $(this).prop('checked');
-			if (value==true){
-				$('input[type="checkbox"].ipt_tocheck').each(function(){
-				   $(this).prop('checked','checked').addClass('activecheck'); 
-				});
-			}else{
-				$('input[type="checkbox"].ipt_tocheck').each(function(){
-				   $(this).removeAttr('checked').removeClass('activecheck');
-				});
-			}
+		    var value = $(this).prop('checked');
+		    if (value==true){
+			$('input[type="checkbox"].ipt_tocheck').each(function(){
+			   $(this).prop('checked','checked').addClass('activecheck'); 
+			});
+		    }else{
+			$('input[type="checkbox"].ipt_tocheck').each(function(){
+			   $(this).prop('checked','').removeClass('activecheck');
+			});
+		    }
 		});
 
 		$('input[type="checkbox"].ipt_tocheck').click(function(){

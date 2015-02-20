@@ -165,18 +165,19 @@ class ModuleList extends Admin_Controller {
 			    //$array['modified']  = time(); 
 			    
 			    $data = array(
+				    'id'    => $k,
 				    'value' => $v,
 				    'modified' => time()
 				 );
 
 			    // Update Setting data             
-			    $this->db->where('id', $k);   
+			    //$this->db->where('id', $k);   
 			    
 			    // Return last insert id primary
-			    $this->db->update('tbl_group_permissions', $data);
+			    //$this->db->update('tbl_group_permissions', $data);
 			    
 			    // Load Class to update data
-			    //$this->UserGroupPermissions->updateUserGroupPermission($array);
+			    $this->UserGroupPermissions->updateUserGroupPermission($data);
 			}
 		    }
 		}
