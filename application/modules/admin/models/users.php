@@ -2,28 +2,20 @@
 
 // Model Class Object for Users
 class Users Extends CI_Model {
-	
-	public $table = 'tbl_users';
-	
-	protected $_model_vars;
+	// Table name for this model
+	public $table = 'users';
 	
 	public function __construct(){
-		// Call the Model constructor
-		parent::__construct();
-		
-		$this->_model_vars	= array('id'		 => 0,
-									'email'		 => '',
-									'username'	 => '',
-									'group_id'	 => 0,
-									'is_system'	 => 0,
-									'last_login' => 0,
-									'status'	 => '',
-									'added'		 => 0,
-									'modified'	 => 0);
-				
-		$this->db = $this->load->database('default', true);		
+	    // Call the Model constructor
+	    parent::__construct();
+
+	    // Set default db
+	    $this->db = $this->load->database('default', true);		
+	    // Set default table
+	    $this->table = $this->db->dbprefix($this->table);			
 				
 	}
+	
 	public function install() {
 		
 		$insert_data	= FALSE;
@@ -55,11 +47,11 @@ class Users Extends CI_Model {
 		
 		if ($insert_data) {
 			$sql	= 'INSERT INTO `'.$this->table.'` '
-					. '(`id`, `email`, `password`, `username`, `group_id`, `is_system`, `last_login`, `status`, `added`, `modified`) '
-					. 'VALUES '
-					. '(NULL, \'superadmin\', \'356a192b7913b04c54574d18c28d46e6395428ab\', \'Super Administrator\', 1, 1, 1, '.time().', \'1\', '.time().', 0), '
-					. '(NULL, \'administrator\', \'12506e739378348ec662bb015bfd2288362dcc1c\', \'Administrator\', 2, 1, 1, '.time().', \'1\', '.time().', 0), '
-					. '(NULL, \'user@testing.com\', \'12506e739378348ec662bb015bfd2288362dcc1c\', \'User\', 99, 0, 1, '.time().', \'1\', '.time().', 0)';
+				. '(`id`, `email`, `password`, `username`, `group_id`, `is_system`, `last_login`, `status`, `added`, `modified`) '
+				. 'VALUES '
+				. '(NULL, \'superadmin\', \'356a192b7913b04c54574d18c28d46e6395428ab\', \'Super Administrator\', 1, 1, 1, '.time().', \'1\', '.time().', 0), '
+				. '(NULL, \'administrator\', \'12506e739378348ec662bb015bfd2288362dcc1c\', \'Administrator\', 2, 1, 1, '.time().', \'1\', '.time().', 0), '
+				. '(NULL, \'user@testing.com\', \'12506e739378348ec662bb015bfd2288362dcc1c\', \'User\', 99, 0, 1, '.time().', \'1\', '.time().', 0)';
 
 			$this->db->query($sql);
 		}
@@ -68,198 +60,109 @@ class Users Extends CI_Model {
 		
 	}
 	
-	public function find ($where_cond = '', $order_by = '', $limit = '', $offset = '') {
-		/** Build where query **/
-
-		if ($where_cond != '') {
-			if (is_array($where_cond) && count($where_cond) != 0) {
-				$buffers	= array();
-
-				$operators	= array('LIKE',
-									'IN',
-									'!=',
-									'>=',
-									'<=',
-									'>',
-									'<',
-									'=');
-                                
-				foreach ($where_cond as $field => $value) {
-					$operator	= '=';
-
-					if (strpos($field, ' ') != 0)
-						list($field, $operator)	= explode(' ', $field);
-
-					if (in_array($operator, $operators)) {
-						$field		= '`'.$field.'`';
-
-						if ($operator == 'IN' && is_array($value))
-							$buffers[]	= $field.' '.$operator.' (\''.implode('\', \'', $value).'\')';
-						else
-							$buffers[]	= $field.' '.$operator.' \''.$value.'\'';
-					} else if (is_numeric($field)) {
-						$buffers[]	= $value;
-					} else {
-						$buffers[]	= $field.' '.$operator.' \''.$value.'\'';
-					}
-				}                
-				$where_cond	= implode(' AND ', $buffers);                   
-			}
-		}
-
-		$sql_order = ''; 
-		if ($order_by != '') {
-			$sql_order = ' ORDER BY '; 
-			$i 	   = 1;
-			foreach ($order_by as $order => $val) {
-				$split = ($i > 1) ? ', ' : ''; 
-				$sql_order .= ' '. $split .' `'. $order.'` '.$val.' ';
-				$i++;
-			}
-			$order_by  = $sql_order;
-		}
-		
-		$sql_limit = ''; 
-		if ($limit != '' && $offset != '') {
-			$offset    = $offset . ','; 
-			$sql_limit = 'LIMIT '. $offset . $limit; 
-		}
-		else if ($limit != '') {
-			$sql_limit = 'LIMIT '. $limit; 
-		}
-		$limit = $sql_limit;
-		
-		if ($where_cond != '') {
-			$rows = $this->db->query('SELECT * FROM `'.$this->table.'` WHERE '. $where_cond . $order_by . $limit, TRUE)->result();
-		}
-		else {
-			$rows = $this->db->query('SELECT * FROM `'.$this->table.'`' . $order_by . $limit, TRUE)->result();
-		}
-
-		$returns	= array();
-                
-		foreach ($rows as $row) {
-			$object			= new Users;
-
-			$object_vars	= get_object_vars($row);
-			
-			foreach ($object_vars as $var => $val) {
-				$object->$var	= $val;
-			}
-
-			unset($object->table,$object->_model_vars,$object->db);
-
-			$returns[]		= $object;
-
-			unset($object, $vars);
-		}
-				
-		return $returns;
-	}
-	
 	public function getCount($status = null){
-		$data = array();
-		$options = array('status' => $status);
-		$this->db->where($options,1);
-		$this->db->from($this->table);
-		$data = $this->db->count_all_results();
-		return $data;
+	    $data = array();
+	    $options = array('status' => $status);
+	    $this->db->where($options,1);
+	    $this->db->from($this->table);
+	    $data = $this->db->count_all_results();
+	    return $data;
 	}
 	
 	public function getUser($id = null){
-		if(!empty($id)){
-			$data = array();
-			$options = array('id' => $id);
-			$Q = $this->db->get_where($this->table,$options,1);
-			if ($Q->num_rows() > 0){
-				foreach ($Q->result_object() as $row)
-				$data = $row;
-			}
-			$Q->free_result();
-			return $data;
+	    if(!empty($id)){
+		$data = array();
+		$options = array('id' => $id);
+		$Q = $this->db->get_where($this->table,$options,1);
+		if ($Q->num_rows() > 0){
+			foreach ($Q->result_object() as $row)
+			$data = $row;
 		}
+		$Q->free_result();
+		return $data;
+	    }
 	}
 	
 	public function getUserByEmail($email = null){
-		if(!empty($email)){
-			$data = array();
-			$options = array('email' => $email);
-			$Q = $this->db->get_where($this->table,$options,1);
-			if ($Q->num_rows() > 0){
-				foreach ($Q->result_object() as $row)
-				$data = $row;
-			}
-			$Q->free_result();
-			return $data;
+	    if(!empty($email)){
+		$data = array();
+		$options = array('email' => $email);
+		$Q = $this->db->get_where($this->table,$options,1);
+		if ($Q->num_rows() > 0){
+			foreach ($Q->result_object() as $row)
+			$data = $row;
 		}
+		$Q->free_result();
+		return $data;
+	    }
 	}
 	
 	public function getUserByUsername($username = null){
-		if(!empty($username)){
-			$data = array();
-			$options = array('username' => $username);
-			$Q = $this->db->get_where($this->table,$options,1);
-			if ($Q->num_rows() > 0){
-				foreach ($Q->result_object() as $row)
-				$data = $row;
-			}
-			$Q->free_result();
-			return $data;
+	    if(!empty($username)){
+		$data = array();
+		$options = array('username' => $username);
+		$Q = $this->db->get_where($this->table,$options,1);
+		if ($Q->num_rows() > 0){
+			foreach ($Q->result_object() as $row)
+			$data = $row;
 		}
+		$Q->free_result();
+		return $data;
+	    }
 	}
 	
 	public function getAllUser($admin=null){
-		$data = array();
-		$this->db->order_by('added');
-		$Q = $this->db->get($this->table);
-			if ($Q->num_rows() > 0){
-				//foreach ($Q->result_object() as $row){
-					//$data[] = $row;
-				//}
-				$data = $Q->result_object();
-			}
-		$Q->free_result();
-		return $data;
+	    $data = array();
+	    $this->db->order_by('added');
+	    $Q = $this->db->get($this->table);
+		if ($Q->num_rows() > 0){
+			//foreach ($Q->result_object() as $row){
+				//$data[] = $row;
+			//}
+			$data = $Q->result_object();
+		}
+	    $Q->free_result();
+	    return $data;
 	}
 	
 	// Get user's Email from posts 
 	public function getUserEmail($email=null){
-		if(!empty($email)){
-			$data = array();
-			
-			// Option and query result
-			$options = array('email' => $email);			
-			$Q = $this->db->get_where($this->table,$options,1);
-			
-			// Check result
-			if($Q->num_rows() > 0) {
-				// Return true if not exists
-				return true;
-			} else {
-				// Return false if exists
-				return false;
-			}		 
-		}
+	    if(!empty($email)){
+		$data = array();
+
+		// Option and query result
+		$options = array('email' => $email);			
+		$Q = $this->db->get_where($this->table,$options,1);
+
+		// Check result
+		if($Q->num_rows() > 0) {
+			// Return true if not exists
+			return true;
+		} else {
+			// Return false if exists
+			return false;
+		}		 
+	    }
 	}
 	
 	// Get user's Password from hashed password 
 	public function getUserPassword($password=null){
-		if(!empty($password)){
-			$data = array();
-			
-			// Option and query result
-			$options = array('password' => $password);			
-			$Q = $this->db->get_where($this->table,$options,1);
-			
-			// Check result
-			if($Q->num_rows() > 0) {
-				// Return true if not exists
-				return true;
-			} else {
-				// Return false if exists
-				return false;
-			}		 
-		}
+	    if(!empty($password)){
+		$data = array();
+
+		// Option and query result
+		$options = array('password' => $password);			
+		$Q = $this->db->get_where($this->table,$options,1);
+
+		// Check result
+		if($Q->num_rows() > 0) {
+			// Return true if not exists
+			return true;
+		} else {
+			// Return false if exists
+			return false;
+		}		 
+	    }
 	}
 	
 	public function login($object=null){		
@@ -355,7 +258,7 @@ class Users Extends CI_Model {
 					'status'	=> 1);
 			
 			// Insert User Profile 
-			$this->db->insert('user_profiles', $data);
+			$this->db->insert('tbl_user_profiles', $data);
 					
 		}
 			
@@ -376,7 +279,7 @@ class Users Extends CI_Model {
 			$this->db->where('user_id', $id);
 			
 			// Delete user profile form database		
-			return $this->db->delete('user_profiles');
+			return $this->db->delete('tbl_user_profiles');
 			
 		}		
 	}	

@@ -2,29 +2,17 @@
 
 // Model Class Object for ServerLogs
 class ServerLogs Extends CI_Model {
-	
-	public $table = 'tbl_server_logs';
-	
-	protected $_model_vars;
+	// Table name for this model
+	public $table = 'server_logs';
 	
 	public function __construct(){
-		// Call the Model constructor
-		parent::__construct();
-		
-		$this->_model_vars	= array('id'		  => 0,
-						'url'		  => '',
-						'user_id'	  => 0,
-						'status_code' => 0,
-						'bytes_served'  => 0,
-						'ip_address'	=> '',
-						'http_code'	  => '',
-						'referrer'	  => '',									
-						'user_agent'  => '',
-						'status'	  => '',	
-						'added'		  => 0,
-						'modified'	  => 0);
-				
-		$this->db = $this->load->database('default', true);		
+	    // Call the Model constructor
+	    parent::__construct();
+			
+	    // Set default db
+	    $this->db = $this->load->database('default', true);		
+	    // Set default table
+	    $this->table = $this->db->dbprefix($this->table);			
 				
 	}
 	public function install() {
@@ -138,7 +126,7 @@ class ServerLogs Extends CI_Model {
 		$returns	= array();
                 
 		foreach ($rows as $row) {
-			$object			= new Logs;
+			$object			= new ServerLogs;
 
 			$object_vars	= get_object_vars($row);
 			
@@ -165,7 +153,7 @@ class ServerLogs Extends CI_Model {
 		return $data;
 	}
 	
-	public function getLog($id = null){
+	public function getServerLog($id = null){
 		if(!empty($id)){
 			$data = array();
 			$options = array('id' => $id);
@@ -179,7 +167,7 @@ class ServerLogs Extends CI_Model {
 		}
 	}
 	
-	public function getAllLog($admin=null){
+	public function getAllServerLog($admin=null){
 		$data = array();
 		$this->db->order_by('added');
 		$Q = $this->db->get($this->table);
@@ -193,9 +181,9 @@ class ServerLogs Extends CI_Model {
 		return $data;
 	}
 	
-	public function setLog($object=null){
+	public function setServerLog($object=null){
 		
-		// Set Log data
+		// Set ServerLog data
 		$data = array(
 			'username'	=> $object['username'],
 			'email'		=> $object['email'],			
@@ -205,7 +193,7 @@ class ServerLogs Extends CI_Model {
 			'status'	=> $object['status']
 		);
 		
-		// Insert Log data
+		// Insert ServerLog data
 		$this->db->insert('users', $data);
 		
 		// Return last insert id primary
@@ -217,23 +205,23 @@ class ServerLogs Extends CI_Model {
 			// Unset previous data
 			unset($data);
 			
-			// Set Log Profile data
+			// Set ServerLog Profile data
 			$data = array(
-					'user_id'		=> $insert_id,
-					'gender'		=> !empty($object['gender']) ? $object['gender'] : NULL,
+					'user_id'	=> $insert_id,
+					'gender'	=> !empty($object['gender']) ? $object['gender'] : NULL,
 					'first_name'	=> !empty($object['first_name']) ? $object['first_name'] : NULL,
-					'last_name'		=> !empty($object['last_name']) ? $object['last_name'] : NULL,
-					'birthday'		=> !empty($object['birthday']) ? $object['birthday'] : NULL,
-					'phone'			=> !empty($object['phone']) ? $object['phone'] : NULL,	
+					'last_name'	=> !empty($object['last_name']) ? $object['last_name'] : NULL,
+					'birthday'	=> !empty($object['birthday']) ? $object['birthday'] : NULL,
+					'phone'		=> !empty($object['phone']) ? $object['phone'] : NULL,	
 					'mobile_phone'	=> !empty($object['mobile_phone']) ? $object['mobile_phone'] : NULL,
-					'fax'			=> !empty($object['fax']) ? $object['fax'] : NULL,
-					'website'		=> !empty($object['website']) ? $object['website'] : NULL,
-					'about'			=> !empty($object['about']) ? $object['about'] : NULL,
-					'division'		=> !empty($object['division']) ? $object['division'] : NULL,
+					'fax'		=> !empty($object['fax']) ? $object['fax'] : NULL,
+					'website'	=> !empty($object['website']) ? $object['website'] : NULL,
+					'about'		=> !empty($object['about']) ? $object['about'] : NULL,
+					'division'	=> !empty($object['division']) ? $object['division'] : NULL,
 					'added'		=> time(),	
 					'status'	=> 1);
 			
-			// Insert Log Profile 
+			// Insert ServerLog Profile 
 			$this->db->insert('user_profiles', $data);
 					
 		}
@@ -243,20 +231,10 @@ class ServerLogs Extends CI_Model {
 		
 	}	
 	
-	public function deleteLog($id) {
+	public function deleteServerLog($id) {
 		
-		// Check user id
-		$this->db->where('id', $id);
+		// Check log id
+		return $this->db->where('id', $id);
 		
-		// Delete user form database
-		if ($this->db->delete('users')) {
-			
-			// Check user profile id
-			$this->db->where('user_id', $id);
-			
-			// Delete user profile form database		
-			return $this->db->delete('user_profiles');
-			
-		}		
 	}	
 }

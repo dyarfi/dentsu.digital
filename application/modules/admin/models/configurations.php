@@ -3,14 +3,16 @@
 // Model Class Object for Configurations
 class Configurations Extends CI_Model {
 	
-	public $table = 'tbl_configurations';
+	public $table = 'configurations';
 	
 	public function __construct(){
-		// Call the Model constructor
-		parent::__construct();
-		
-		$this->db = $this->load->database('default', true);		
-				
+	    // Call the Model constructor
+	    parent::__construct();		
+
+	    // Set default db
+	    $this->db = $this->load->database('default', true);		
+	    // Set default table
+	    $this->table = $this->db->dbprefix($this->table);		
 	}
 	
 	public function install () {

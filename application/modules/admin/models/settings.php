@@ -2,15 +2,17 @@
 
 // Model Class Object for Settings
 class Settings Extends CI_Model {
-	
-	protected $table = 'tbl_settings';
+	// Table name for this model
+	public $table = 'settings';
 	
 	public function __construct(){
-		// Call the Model constructor
-		parent::__construct();
+	    // Call the Model constructor
+	    parent::__construct();
 		
-		$this->db = $this->load->database('default', true);		
-				
+	    // Set default db
+	    $this->db = $this->load->database('default', true);		
+	    // Set default table
+	    $this->table = $this->db->dbprefix($this->table);		
 	}
 	
 	public function install() {

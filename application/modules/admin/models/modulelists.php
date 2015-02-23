@@ -2,36 +2,39 @@
 
 // Model Class Object for Model lists
 class ModuleLists Extends CI_Model {
-	
-	public $table = 'tbl_module_lists';
+	// Table name for this model
+	public $table = 'module_lists';
 
 	public function __construct(){
-		// Call the Model constructor
-		parent::__construct();		
-		
-		$this->db = $this->load->database('default', true);		
+	    // Call the Model constructor
+	    parent::__construct();		
+
+	    // Set default db
+	    $this->db = $this->load->database('default', true);		
+	    // Set default table
+	    $this->table = $this->db->dbprefix($this->table);
 		
 	}
 	
 	public function install () {
-		$insert_data	= FALSE;
+	    $insert_data	= FALSE;
 
-		if (!$this->db->table_exists($this->table)) {
-			$insert_data	= TRUE;
+	    if (!$this->db->table_exists($this->table)) {
+		    $insert_data	= TRUE;
 
-			$sql	= 'CREATE TABLE IF NOT EXISTS `'. $this->table .'` ('
-					. '`id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,'
-					. '`parent_id` INT(11) NOT NULL,'
-					. '`module_name` VARCHAR(255) NOT NULL, '
-					. '`module_link` VARCHAR(255) default NULL, '
-					. '`order` INT(11) NOT NULL,'
-					. 'INDEX (`id`) '
-					. ') ENGINE=MYISAM';
-	
-			$this->db->query($sql);
-		}
+		    $sql	= 'CREATE TABLE IF NOT EXISTS `'. $this->table .'` ('
+				    . '`id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,'
+				    . '`parent_id` INT(11) NOT NULL,'
+				    . '`module_name` VARCHAR(255) NOT NULL, '
+				    . '`module_link` VARCHAR(255) default NULL, '
+				    . '`order` INT(11) NOT NULL,'
+				    . 'INDEX (`id`) '
+				    . ') ENGINE=MYISAM';
+
+		    $this->db->query($sql);
+	    }
 		
-        return $this->db->table_exists($this->table);
+	    return $this->db->table_exists($this->table);
 	}
 	
 	public function load_by_name ($name) {
@@ -72,7 +75,7 @@ class ModuleLists Extends CI_Model {
 	
 		// Check admin url
 		$where_cond		= array('id'	=> $user_group);
-		$user_permission	= $this->db->get_where('user_groups', $where_cond, 1)->result();
+		$user_permission	= $this->db->get_where($this->db->dbprefix('user_groups'), $where_cond, 1)->result();
 				
 		// Check backend permission
 		if(!$user_permission[0]->backend_access) {
@@ -168,7 +171,7 @@ class ModuleLists Extends CI_Model {
 			
 			$module_db	= $this->db->get_where($this->table, array('parent_id' => 0))->result();
 			
-			$user_groups	= $this->db->get_where('user_groups', array('status' => 1))->result();
+			$user_groups	= $this->db->get_where($this->db->dbprefix('user_groups'), array('status' => 1))->result();
 			
 			$buffers	= array();
 			

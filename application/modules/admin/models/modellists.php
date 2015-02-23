@@ -2,14 +2,17 @@
 
 // Model Class Object for Model lists
 class ModelLists Extends CI_Model {
-	
-	public $table = 'tbl_model_lists';
+	// Table name for this model
+	public $table = 'model_lists';
 	
 	public function __construct(){
-		// Call the Model constructor
-		parent::__construct();
-		
-		$this->db = $this->load->database('default', true);		
+	    // Call the Model constructor
+	    parent::__construct();
+
+	    // Set default db
+	    $this->db = $this->load->database('default', true);		
+	    // Set default table
+	    $this->table = $this->db->dbprefix($this->table);		
 		
 	}
 	

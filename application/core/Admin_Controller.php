@@ -9,18 +9,12 @@ class Admin_Controller extends CI_Controller {
 	protected $action = '';
 	
 	public $user = '';
-	public $is_authorized = '';
 		
 	public function __construct() {
 		parent::__construct();				
-		// With that done, load settings
-		//$this->load->library(array('session'));
-		// Load Administrator Helper
-		//$this->load->library('Acl');
-		$this->load->helper('Acl');
 		
-		//session_destroy();
-		//exit;
+		// Load Administrator Helper
+		$this->load->helper('Acl');
 		
 		// Load Admin config
 		$this->configs			= $this->load->config('admin/admin',true);																	
@@ -34,8 +28,7 @@ class Admin_Controller extends CI_Controller {
 		$this->module			= @$this->uri->segments[1];
 		$this->controller		= @$this->uri->segments[2];
 		$this->action			= @$this->uri->segments[3];
-		$this->param			= @$this->uri->segments[4];											
-								
+		$this->param			= @$this->uri->segments[4];																		
 		$this->module_request		= $this->controller . '/' .$this->action;	
 		
 		$this->module_menu		= self::check_module_menu($this->module_request);
@@ -144,23 +137,6 @@ class Admin_Controller extends CI_Controller {
 		}
 		return $menu_name;
 		
-	}		
-	
-	/**
-	* Load the current page that can be authorized via controller access
-	*
-	* @access	public
-	* @param	array
-	* @return	array
-	*/	
-	public function is_authorized ($pages=array()) {
-				
-		if (!is_array($pages)) {
-			return array();
-		}	
-		
-		$this->is_authorized = $pages;
-		
-		return $pages;
 	}
+	
 }

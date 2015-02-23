@@ -13,6 +13,7 @@ class Public_Controller extends MY_Controller
 
         // If the user is using a mobile, use a mobile theme
         $this->load->library('user_agent');
+	
         if( $this->agent->is_mobile() )
         {
             /*

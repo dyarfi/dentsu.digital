@@ -2,14 +2,17 @@
 
 // Model Class Object for Users
 class UserProfiles Extends CI_Model {
-	
-	public $table = 'tbl_user_profiles';
+	// Table name for this model
+	public $table = 'user_profiles';
 	
 	public function __construct() {
-		// Call the Model constructor
-		parent::__construct();
+	    // Call the Model constructor
+	    parent::__construct();
 		
-		$this->db = $this->load->database('default', true);		
+	    // Set default db
+	    $this->db = $this->load->database('default', true);		
+	    // Set default table
+	    $this->table = $this->db->dbprefix($this->table);			
 	}
 	public function install(){
 		$insert_data		= FALSE;
@@ -137,7 +140,7 @@ class UserProfiles Extends CI_Model {
 		$returns	= array();
                 
 		foreach ($rows as $row) {
-			$object			= new UserProfiles;
+			$object		= new UserProfiles;
 
 			$object_vars	= get_object_vars($row);
 			
@@ -194,4 +197,3 @@ class UserProfiles Extends CI_Model {
 	
 	
 }
-?>

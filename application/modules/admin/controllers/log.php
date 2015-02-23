@@ -6,57 +6,57 @@ class Log extends Admin_Controller {
 	 * Index Page for this controller.
 	 *
 	 * Maps to the following URL
-	 * 		http://example.com/index.php/setting
+	 * 		http://example.com/index.php/log
 	 *	- or -  
-	 * 		http://example.com/index.php/setting/index
+	 * 		http://example.com/index.php/log/index
 	 *	- or -
 	 * Since this controller is set as the default controller in 
 	 * config/routes.php, it's displayed at http://example.com/
 	 *
 	 * So any other public methods not prefixed with an underscore will
-	 * map to /index.php/setting/<method_name>
+	 * map to /index.php/log/<method_name>
 	 * @see http://codeigniter.com/user_guide/general/urls.html
 	 */
 	
 	public function __construct() {
-		parent::__construct();
-		
-		// Load settings model
-		$this->load->model('ServerLogs');
+	    parent::__construct();
+
+	    // Load logs model
+	    $this->load->model('ServerLogs');
 		
 	}
 	
 	public function index()
 	{
-		// Set default statuses
-		$data['statuses'] = $this->configs['status'];
-		
-		// Set data rows
-		$data['rows']	= $this->ServerLogs->getAllLog();
-				
-		// Set main template
-		$data['main']		= 'settings/setting_index';
-		
-		// Set module with URL request 
-		$data['module_title'] = $this->module;
-		
-		// Set admin title page with module menu
-		$data['page_title'] = $this->module_menu;
-						
-		// Set default statuses
-		$data['statuses'] = $this->configs['status'];
-									
-		// Set default system
-		$data['is_system'] = $this->configs['is_system'];
-		
-		// Load admin template
-		$this->load->view('template/admin/admin_template', $this->load->vars($data));
+	    // Set default statuses
+	    $data['statuses'] = $this->configs['status'];
+
+	    // Set data rows
+	    $data['rows']	= $this->ServerLogs->getAllServerLog();
+
+	    // Set main template
+	    $data['main']	= 'users/log_index';
+
+	    // Set module with URL request 
+	    $data['module_title'] = $this->module;
+
+	    // Set admin title page with module menu
+	    $data['page_title'] = $this->module_menu;
+
+	    // Set default statuses
+	    $data['statuses'] = $this->configs['status'];
+
+	    // Set default system
+	    $data['is_system'] = $this->configs['is_system'];
+
+	    // Load admin template
+	    $this->load->view('template/admin/admin_template', $this->load->vars($data));
 	}
         
         public function edit($id=0){
 				
 		// Check if param is given or not and check from database
-		if (empty($id) || !$this->Settings->getSetting($id)) {
+		if (empty($id) || !$this->ServerLogs->getServerLog($id)) {
 			$this->session->set_flashdata('message','Item not found!');
 			// Redirect to index
 			redirect(ADMIN. $this->controller . '/index');
@@ -102,10 +102,10 @@ class Log extends Admin_Controller {
 				);
 				
 				// Set data to add to database
-				$this->Settings->updateSetting($posts);
+				$this->ServerLogs->updateServerLog($posts);
 
 				// Set message
-				$this->session->set_flashdata('message','Setting updated');
+				$this->session->set_flashdata('message','ServerLog updated');
 
 				// Redirect after add
 				redirect(ADMIN. $this->controller . '/index');
@@ -115,7 +115,7 @@ class Log extends Admin_Controller {
 		} else {	
 			
 			// Set fields from database
-			$fields         = (object) $this->Settings->getSetting($id);
+			$fields         = (object) $this->ServerLogs->getServerLog($id);
 			
 		}
 	
@@ -131,11 +131,11 @@ class Log extends Admin_Controller {
 		// Set field data to view
 		$data['fields']     = $fields;		
 			
-		// Setting Status Data
+		// ServerLog Status Data
 		$data['statuses']   = $this->configs['status'];		
 		
 		// Set form to view
-		$data['main']       = 'settings/setting_form';			
+		$data['main']       = 'logs/log_form';			
 		
 		// Set module with URL request 
 		$data['module_title'] = $this->module;
@@ -183,10 +183,10 @@ class Log extends Admin_Controller {
 			{
 
 				// Set data to add to database
-				$this->Settings->setSetting($this->input->post());
+				$this->ServerLogs->setServerLog($this->input->post());
 				
 				// Set message
-				$this->session->set_flashdata('message','Setting created!');
+				$this->session->set_flashdata('message','ServerLog created!');
 				
 				// Redirect after add
 				redirect(ADMIN. $this->controller . '/index');
@@ -204,14 +204,14 @@ class Log extends Admin_Controller {
 		// Set error data to view
 		$data['errors'] = $errors;
 				
-		// Setting Status Data
+		// ServerLog Status Data
 		$data['statuses']	= @$this->configs['status'];
 		
 		// Post Fields
 		$data['fields']		= (object) $fields;
 
 		// Main template
-		$data['main']		= 'settings/setting_form';		
+		$data['main']		= 'logs/log_form';		
 	
 		// Set module with URL request 
 		$data['module_title'] = $this->module;
@@ -235,18 +235,18 @@ class Log extends Admin_Controller {
                     redirect(ADMIN. $this->controller . '/index');
             }
 
-            // Check if Setting data ID is found and redirect if false
-            $user = $this->Settings->getSetting($id);
+            // Check if ServerLog data ID is found and redirect if false
+            $user = $this->ServerLogs->getServerLog($id);
             if (!count($user)){
                     $this->session->set_flashdata('message',"Data not found.");			
                     redirect(ADMIN. $this->controller . '/index');
             }
 
-            // Setting account data
-            $data['setting']			= $this->Settings->getSetting($id);		
+            // ServerLog account data
+            $data['log']			= $this->ServerLogs->getServerLog($id);		
 
             // Main template
-            $data['main']	= 'settings/setting_view';
+            $data['main']	= 'logs/log_view';
 
             // Set module with URL request 
             $data['module_title'] = $this->module;
@@ -261,10 +261,10 @@ class Log extends Admin_Controller {
     public function delete($id){
 
             // Delete user data
-            $this->Settings->deleteSetting($id);
+            $this->ServerLogs->deleteServerLog($id);
 
             // Set flash message
-            $this->session->set_flashdata('message','Setting deleted');
+            $this->session->set_flashdata('message','ServerLog deleted');
 
             // Redirect after delete
             redirect(ADMIN. $this->controller . '/index');
@@ -273,5 +273,5 @@ class Log extends Admin_Controller {
     
 }
 
-/* End of file setting.php */
-/* Location: ./application/setting/controllers/setting.php */
+/* End of file log.php */
+/* Location: ./application/log/controllers/log.php */

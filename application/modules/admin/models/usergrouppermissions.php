@@ -2,18 +2,21 @@
 
 // Class for User Permission
 class UserGroupPermissions Extends CI_Model {
-	
-	public $table = 'tbl_group_permissions';
+	// Table name for this model
+	public $table = 'group_permissions';
 	public $permission;
 	
 	public function __construct(){
-		// Call the Model constructor
-		parent::__construct();
-		
-		$this->load->model('Users');
-		$this->load->model('UserGroups');
-		
-		$this->db = $this->load->database('default', true);		
+	    // Call the Model constructor
+	    parent::__construct();
+
+	    $this->load->model('Users');
+	    $this->load->model('UserGroups');
+
+	    // Set default db
+	    $this->db = $this->load->database('default', true);		
+	    // Set default table
+	    $this->table = $this->db->dbprefix($this->table);			
 
 	}
 	public function install () {
@@ -54,95 +57,7 @@ class UserGroupPermissions Extends CI_Model {
 			$this->db->query('INSERT',$sql);
 		}
 		*/
-        return $this->db->table_exists($this->table);
-	}
-	public function find ($where_cond = '', $order_by = '', $limit = '', $offset = '') {
-		/** Build where query **/
-
-		if ($where_cond != '') {
-			if (is_array($where_cond) && count($where_cond) != 0) {
-				$buffers	= array();
-
-				$operators	= array('LIKE',
-									'IN',
-									'!=',
-									'>=',
-									'<=',
-									'>',
-									'<',
-									'=');
-                                
-				foreach ($where_cond as $field => $value) {
-					$operator	= '=';
-
-					if (strpos($field, ' ') != 0)
-						list($field, $operator)	= explode(' ', $field);
-
-					if (in_array($operator, $operators)) {
-						$field		= '`'.$field.'`';
-
-						if ($operator == 'IN' && is_array($value))
-							$buffers[]	= $field.' '.$operator.' (\''.implode('\', \'', $value).'\')';
-						else
-							$buffers[]	= $field.' '.$operator.' \''.$value.'\'';
-					} else if (is_numeric($field)) {
-						$buffers[]	= $value;
-					} else {
-						$buffers[]	= $field.' '.$operator.' \''.$value.'\'';
-					}
-				}                
-				$where_cond	= implode(' AND ', $buffers);                   
-			}
-		}
-
-		$sql_order = ''; 
-		if ($order_by != '') {
-			$sql_order = ' ORDER BY '; 
-			$i 	   = 1;
-			foreach ($order_by as $order => $val) {
-				$split = ($i > 1) ? ', ' : ''; 
-				$sql_order .= ' '. $split .' `'. $order.'` '.$val.' ';
-				$i++;
-			}
-			$order_by  = $sql_order;
-		}
-		
-		$sql_limit = ''; 
-		if ($limit != '' && $offset != '') {
-			$offset    = $offset . ','; 
-			$sql_limit = 'LIMIT '. $offset . $limit; 
-		}
-		else if ($limit != '') {
-			$sql_limit = 'LIMIT '. $limit; 
-		}
-		$limit = $sql_limit;
-		
-		if ($where_cond != '') {
-			$rows = $this->db->query('SELECT * FROM `'.$this->table.'` WHERE '. $where_cond . $order_by . $limit, TRUE)->result();
-		}
-		else {
-			$rows = $this->db->query('SELECT * FROM `'.$this->table.'`' . $order_by . $limit, TRUE)->result();
-		}
-
-		$returns	= array();
-                
-		foreach ($rows as $row) {
-			$object			= new UserGroupPermissions;
-
-			$object_vars	= get_object_vars($row);
-			
-			foreach ($object_vars as $var => $val) {
-				$object->$var	= $val;
-			}
-
-			unset($object->table,$object->_model_vars,$object->db);
-
-			$returns[]		= $object;
-
-			unset($object, $vars);
-		}
-				
-		return $returns;
+	    return $this->db->table_exists($this->table);
 	}
 	
 	public function getModuleList($id=null){
@@ -262,7 +177,7 @@ class UserGroupPermissions Extends CI_Model {
 		$where_cond			= array('id'	=> $group_id);
 		
 		// Set user permissions
-		$user_permission	= $this->db->get_where('user_groups', $where_cond, 1)->result();
+		$user_permission	= $this->db->get_where($this->db->dbprefix('user_groups'), $where_cond, 1)->result();
 
 		// Check backend permission
 		if(!$user_permission[0]->backend_access) {

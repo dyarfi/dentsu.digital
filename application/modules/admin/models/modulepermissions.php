@@ -2,16 +2,17 @@
 
 // Model Class Object for Modulel Permission
 class ModulePermissions Extends CI_Model {
-	
-	public $table = 'tbl_module_permissions';
+	// Table name for this model
+	public $table = 'module_permissions';
 	
 	public function __construct(){
-		// Call the Model constructor
-		parent::__construct();
-		
-		$this->load->dbforge();
-		
-		$this->db = $this->load->database('default', true);		
+	    // Call the Model constructor
+	    parent::__construct();
+
+	    // Set default db
+	    $this->db = $this->load->database('default', true);		
+	    // Set default table
+	    $this->table = $this->db->dbprefix($this->table);		
 		
 	}
 	
@@ -33,7 +34,7 @@ class ModulePermissions Extends CI_Model {
 			$this->db->query($sql);
 		}
 		
-        return $this->db->table_exists($this->table);
+		return $this->db->table_exists($this->table);
 	}
 	
 	public function find ($where_cond = '', $order_by = '', $limit = '', $offset = '') {

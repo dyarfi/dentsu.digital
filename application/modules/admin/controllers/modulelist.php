@@ -16,7 +16,7 @@ class ModuleList extends Admin_Controller {
 		$this->modules			= $this->db->where('parent_id',0)->get('module_lists')->result();
 		
 		// Load User Group
-		$this->user_group		= $this->db->where('id !=',1)->where('id !=',99)->where('status',1)->get('user_groups')->result();
+		$this->user_group		= $this->db->where('id !=',1)->where('id !=',99)->where('status',1)->get($this->db->dbprefix('user_groups'))->result();
 		
 		// Load User Group Permission
 		$_user_group_permission		= $this->db->where('group_id !=',1)->where('group_id !=', 99)->get('group_permissions')->result();
@@ -68,7 +68,7 @@ class ModuleList extends Admin_Controller {
 		// Set admin title page with module menu
 		$data['page_title'] = $this->module_menu;
 		
-		$this->load->view('template/admin/admin_template', $data);
+		$this->load->view('template/admin/admin_template', $this->load->vars($data));
 				
 	}
 	
