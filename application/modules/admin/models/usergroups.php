@@ -112,6 +112,16 @@ class UserGroups Extends CI_Model {
 		
 	}
 	
+	public function setStatus($id=null,$status=null) {
+	   
+	    //Get user id
+	    $this->db->where('id', $id);
+	    
+	    //Return result
+	    return $this->db->update($this->table, array('status'=>$status,'modified'=>time()));
+
+	}
+	
 	public function updateUserGroup($object=null){
 		$data = array(
 		'name' => $object['name'],

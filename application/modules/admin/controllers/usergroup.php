@@ -2,11 +2,15 @@
 
 // Class for User Groups
 class UserGroup extends Admin_Controller {
-	var $auth_message = '';
+	
+	public $_class_name;
 	
 	public function __construct() {
 	    parent::__construct();
 
+	    // Set class name
+	    $this->_class_name = $this->controller;
+	    
 	    //Load user related model
 	    $this->load->model('Users');
 	    $this->load->model('UserProfiles');
@@ -20,10 +24,15 @@ class UserGroup extends Admin_Controller {
 
 	    if (@$rows) $data['rows'] = $rows;
 
+	    // User Profiles
 	    $data['user_profiles'] = $this->UserProfiles->getUserProfile(ACL::user()->id);
 	    
-	    $data['statuses']	= array('Active'=>'active','Inactive'=>'inactive');
+	    // Data statutes value
+	    $data['statuses']	= $this->configs['status'];
 
+	    // Set class name to view
+	    $data['class_name'] = $this->_class_name;
+	    
 	    // Main template
 	    $data['main'] = 'users/usergroups_index';
 
@@ -249,8 +258,26 @@ class UserGroup extends Admin_Controller {
 	    $this->load->view('template/admin/admin_template', $this->load->vars($data));
 	}
 	
+	// Action for update item status
+	public function change() {	
+	    if ($this->input->post('check') !='') {
+		$rows	= $this->input->post('check');
+		foreach ($rows as $row) {
+		    // Set id for load and change status
+		    $this->UserGroups->setStatus($row,$this->input->post('select_action'));
+		}
+		// Set message
+		$this->session->set_flashdata('message','Status changed!');
+		redirect(ADMIN.$this->_class_name.'/index');
+	    } else {	
+		// Set message
+		$this->session->set_flashdata('message','Data not Available');
+		redirect(ADMIN.$this->_class_name.'/index');			
+	    }
+	}
+
 	public function ajax($action='') {
-				
+
 	    //Check if the request via AJAX
 	    if (!$this->input->is_ajax_request()) {
 		    exit('No direct script access allowed');		

@@ -23,6 +23,19 @@ class Authenticate extends Admin_Controller {
 	    $this->load->model('Captcha');			
 	}
 
+	public function index() {
+	
+	    // Check if user is logged in or not
+	    if ($this->user == '') {
+		/** Redirect to authentication **/
+		redirect(ADMIN . 'authenticate/login');
+	    } else {
+		/** Redirect to dashboards **/
+		redirect(str_replace('{admin_id}', $this->user->id,$this->configs['default_page']));
+	    }
+	    
+	}
+	
 	public function login () {		
 	    // POST checking
 	    if($_SERVER['REQUEST_METHOD'] === 'POST'){

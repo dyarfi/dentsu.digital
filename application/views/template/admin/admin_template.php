@@ -249,6 +249,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <!-- BEGIN USER AJAX JAVASCRIPTS -->
 <script src="<?=admin_theme()?>assets/admin/scripts/custom/form-user.js" type="text/javascript"></script>
 <script src="<?=admin_theme()?>assets/admin/scripts/custom/form-module.js" type="text/javascript"></script>
+<script src="<?=admin_theme()?>assets/admin/scripts/custom/form-status.js" type="text/javascript"></script>
 <!-- END USER AJAX JAVASCRIPTS -->
     
  <?php if (!empty($js_files)) { foreach ($js_files as $file): ?>
@@ -273,6 +274,8 @@ jQuery(document).ready(function() {
    Index.initIntro();
    Tasks.initDashboardWidget();   
    
+   // Custom in admin pages
+   FormStatus.init();
    FormUser.init();
    FormModule.init();
    

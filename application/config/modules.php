@@ -43,60 +43,60 @@ $config['modulelist'] = array(
 	// Admin module
 	'Admin' => array(
 		// Admin Model list
-		'models'		=> array(
-							'Users',
-							'UserGroups',
-							'UserProfiles',
-							'UserHistories',
-							'ModulePermissions',
-                                                        'Settings',
-							'ServerLogs'
-						),
+		'models'	=> array(
+					    'Users',
+					    'UserGroups',
+					    'UserProfiles',
+					    'UserHistories',
+					    'ModulePermissions',
+					    'Settings',
+					    'ServerLogs'
+					),
 		// Admin module menu
 		'module_menu'	=> array(
-							// Dashboard index
-							'dashboard/index'	=> 'Dashboard Panel',
-							// User index
-							'user/index'		=> 'User Listings',
-							// User Group index
-							'usergroup/index'	=> 'User Group Listings',
-                                                        // Setting index
-							'setting/index'         => 'Setting Listings',
-							// Log index
-							'log/index'		=> 'Log Listings'
-						),
+					    // Dashboard index
+					    'dashboard/index'	=> 'Dashboard Panel',
+					    // User index
+					    'user/index'		=> 'User Listings',
+					    // User Group index
+					    'usergroup/index'	=> 'User Group Listings',
+					    // Setting index
+					    'setting/index'         => 'Setting Listings',
+					    // Log index
+					    'log/index'		=> 'Log Listings'
+					),
 		// Admin module function
 		'module_function'	=> array(
-							// Dashboard functions
-							'dashboard/add'		=> 'Add New Dashboard',
-							'dashboard/view'	=> 'View Dashboard Details',
-							'dashboard/edit'	=> 'Edit Dashboard Details',
-							'dashboard/delete'	=> 'Delete Dashboard',
-							'dashboard/change'	=> 'Change Dashboard Status',
-							// User functions
-							'user/add'		=> 'Add User Details',
-							'user/view'		=> 'View User Details',
-							'user/edit'		=> 'Edit User Details',
-							'user/delete'		=> 'Delete User Details',
-							'user/change'		=> 'Change User Status',	
-							// User Group functions
-							'usergroup/add'		=> 'Add User Group Details',
-							'usergroup/view'	=> 'View User Group Details',
-							'usergroup/edit'	=> 'Edit User Group Details',
-							'usergroup/delete'	=> 'Delete User Group Details',
-							'usergroup/change'	=> 'Change User Group Status',
-                                                        // Setting functions
-                                                        'setting/add'	  => 'Add Setting Details',
-                                                        'setting/view'	  => 'View Setting Details',
-                                                        'setting/edit'    => 'Edit Setting Details',
-                                                        'setting/delete'  => 'Delete Setting Details',
-                                                        'setting/change'  => 'Change Setting Status',
-							// Log functions
-							'log/view'	=> 'View Log Details',
-                                                        'log/edit'	=> 'Edit Log Details',
-							'log/delete'	=> 'Delete Log Details',
-							'log/empty'	=> 'Empty Log Details'
-							)
+						    // Dashboard functions
+						    'dashboard/add'		=> 'Add New Dashboard',
+						    'dashboard/view'	=> 'View Dashboard Details',
+						    'dashboard/edit'	=> 'Edit Dashboard Details',
+						    'dashboard/delete'	=> 'Delete Dashboard',
+						    'dashboard/change'	=> 'Change Dashboard Status',
+						    // User functions
+						    'user/add'		=> 'Add User Details',
+						    'user/view'		=> 'View User Details',
+						    'user/edit'		=> 'Edit User Details',
+						    'user/delete'		=> 'Delete User Details',
+						    'user/change'		=> 'Change User Status',	
+						    // User Group functions
+						    'usergroup/add'		=> 'Add User Group Details',
+						    'usergroup/view'	=> 'View User Group Details',
+						    'usergroup/edit'	=> 'Edit User Group Details',
+						    'usergroup/delete'	=> 'Delete User Group Details',
+						    'usergroup/change'	=> 'Change User Group Status',
+						    // Setting functions
+						    'setting/add'	  => 'Add Setting Details',
+						    'setting/view'	  => 'View Setting Details',
+						    'setting/edit'    => 'Edit Setting Details',
+						    'setting/delete'  => 'Delete Setting Details',
+						    'setting/change'  => 'Change Setting Status',
+						    // Server Log functions
+						    'log/view'	=> 'View Server Log Details',
+						    'log/edit'	=> 'Edit Server Log Details',
+						    'log/delete'	=> 'Delete Server Log Details',
+						    'log/empty'	=> 'Empty Server Log Details'
+						    )
 	),
 	// Page module
 	'Page' => array (

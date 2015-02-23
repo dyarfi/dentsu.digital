@@ -3,9 +3,14 @@
 // Class for Users in Admin
 class User extends Admin_Controller {
 
+    public $_class_name; 
+	    
     public function __construct() {
             parent::__construct();
 
+	    // Set class name
+	    $this->_class_name = $this->controller;
+		    
             // Load user related model
             $this->load->model('Users');
             $this->load->model('UserProfiles');
@@ -20,25 +25,31 @@ class User extends Admin_Controller {
             $temp_rows = array();
 
             if($rows) {
-                    $i = 0;
-                    foreach($rows as $row ){		
-                            $temp_rows[$i]->id = $row->id;
-                            $temp_rows[$i]->username = $row->username;
-                            $temp_rows[$i]->email = $row->email;
-                            $temp_rows[$i]->password = substr_replace($row->password, "********", 0, strlen($row->password));
-                            $temp_rows[$i]->status = $row->status;
-                            $temp_rows[$i]->group_id = $this->UserGroups->getGroupName_ById($row->group_id);
-                            $i++;
-                    }
+		$i = 0;
+		foreach($rows as $row ){		
+		    $temp_rows[$i]->id = $row->id;
+		    $temp_rows[$i]->username = $row->username;
+		    $temp_rows[$i]->email = $row->email;
+		    $temp_rows[$i]->password = substr_replace($row->password, "********", 0, strlen($row->password));
+		    $temp_rows[$i]->added = $row->added;
+		    $temp_rows[$i]->modified = $row->modified;
+		    $temp_rows[$i]->status = $row->status;
+		    $temp_rows[$i]->group_id = $this->UserGroups->getGroupName_ById($row->group_id);
+		    $i++;
+		}
             }
 
             if (@$temp_rows) $data['rows'] = $temp_rows;
 
+	    // User profiles
             $data['user_profiles'] = $this->UserProfiles->getUserProfile(Acl::user()->id);
 
             // Set default statuses
             $data['statuses'] = $this->configs['status'];
 
+	    // Set class name to view
+	    $data['class_name'] = $this->_class_name;
+	    
             // Set main template
             $data['main'] = 'users/users_index';
 
@@ -598,6 +609,26 @@ class User extends Admin_Controller {
 
     }
 
+    
+    // Action for update item status
+    public function change() {	
+	if ($this->input->post('check') !='') {
+	    $rows	= $this->input->post('check');
+	    foreach ($rows as $row) {
+		// Set id for load and change status
+		$this->Users->setStatus($row,$this->input->post('select_action'));
+		$this->UserProfiles->setStatus($row,$this->input->post('select_action'));
+	    }
+	    // Set message
+	    $this->session->set_flashdata('message','Status changed!');
+	    redirect(ADMIN.$this->_class_name.'/index');
+	} else {	
+	    // Set message
+	    $this->session->set_flashdata('message','Data not Available');
+	    redirect(ADMIN.$this->_class_name.'/index');			
+	}
+    }
+	
     public function search() { }
 
     // -------------- CALLBACK METHODS -------------- //

@@ -173,27 +173,36 @@ class UserProfiles Extends CI_Model {
 	}	
 	
 	public function getName($id=''){
-		if(!empty($id)) {
-			$data = array();
-			$options = array('user_id' => $id);
-			$Q = $this->db->get_where($this->table,$options,1);
-			if ($Q->num_rows() > 0){
-				foreach ($Q->result_object() as $row) {
-					$data = ucfirst($row->first_name).' '.ucfirst($row->last_name);
-				}
+	    if(!empty($id)) {
+		$data = array();
+		$options = array('user_id' => $id);
+		$Q = $this->db->get_where($this->table,$options,1);
+		if ($Q->num_rows() > 0){
+			foreach ($Q->result_object() as $row) {
+				$data = ucfirst($row->first_name).' '.ucfirst($row->last_name);
 			}
-			$Q->free_result();
-			return $data;
 		}
+		$Q->free_result();
+		return $data;
+	    }
 	}
 	
 	public function setUserProfiles($profile=''){
-		if (!empty($profile)) {
-			$this->db->where('user_id', $profile['user_id']);		
-			$this->db->update($this->table, $profile);
-			return $this->getUserProfile($profile['user_id']);			
-		}		
+	    if (!empty($profile)) {
+		$this->db->where('user_id', $profile['user_id']);		
+		$this->db->update($this->table, $profile);
+		return $this->getUserProfile($profile['user_id']);			
+	    }		
 	}
 	
+	public function setStatus($id=null,$status=null) {
+	   
+	    //Get user id
+	    $this->db->where('user_id', $id);
+	    
+	    //Return result
+	    return $this->db->update($this->table, array('status'=>$status,'modified'=>time()));
+
+	}
 	
 }

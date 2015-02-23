@@ -221,12 +221,12 @@ class Users Extends CI_Model {
 		
 		// Set User data
 		$data = array(
-			'username'	=> $object['username'],
-			'email'		=> $object['email'],			
-			'password'	=> sha1($object['username'].$object['password']),	
-			'group_id'	=> @$object['group_id'],			
-			'added'		=> time(),	
-			'status'	=> $object['status']
+		    'username'	=> $object['username'],
+		    'email'	=> $object['email'],			
+		    'password'	=> sha1($object['username'].$object['password']),	
+		    'group_id'	=> @$object['group_id'],			
+		    'added'	=> time(),	
+		    'status'	=> $object['status']
 		);
 		
 		// Insert User data
@@ -243,17 +243,17 @@ class Users Extends CI_Model {
 			
 			// Set User Profile data
 			$data = array(
-					'user_id'		=> $insert_id,
-					'gender'		=> !empty($object['gender']) ? $object['gender'] : NULL,
+					'user_id'	=> $insert_id,
+					'gender'	=> !empty($object['gender']) ? $object['gender'] : NULL,
 					'first_name'	=> !empty($object['first_name']) ? $object['first_name'] : NULL,
-					'last_name'		=> !empty($object['last_name']) ? $object['last_name'] : NULL,
-					'birthday'		=> !empty($object['birthday']) ? $object['birthday'] : NULL,
-					'phone'			=> !empty($object['phone']) ? $object['phone'] : NULL,	
+					'last_name'	=> !empty($object['last_name']) ? $object['last_name'] : NULL,
+					'birthday'	=> !empty($object['birthday']) ? $object['birthday'] : NULL,
+					'phone'		=> !empty($object['phone']) ? $object['phone'] : NULL,	
 					'mobile_phone'	=> !empty($object['mobile_phone']) ? $object['mobile_phone'] : NULL,
-					'fax'			=> !empty($object['fax']) ? $object['fax'] : NULL,
-					'website'		=> !empty($object['website']) ? $object['website'] : NULL,
-					'about'			=> !empty($object['about']) ? $object['about'] : NULL,
-					'division'		=> !empty($object['division']) ? $object['division'] : NULL,
+					'fax'		=> !empty($object['fax']) ? $object['fax'] : NULL,
+					'website'	=> !empty($object['website']) ? $object['website'] : NULL,
+					'about'		=> !empty($object['about']) ? $object['about'] : NULL,
+					'division'	=> !empty($object['division']) ? $object['division'] : NULL,
 					'added'		=> time(),	
 					'status'	=> 1);
 			
@@ -266,6 +266,16 @@ class Users Extends CI_Model {
 		return $insert_id;
 		
 	}	
+	
+	public function setStatus($id=null,$status=null) {
+	   
+	    //Get user id
+	    $this->db->where('id', $id);
+	    
+	    //Return result
+	    return $this->db->update($this->table, array('status'=>$status,'modified'=>time()));
+
+	}
 	
 	public function deleteUser($id) {
 		
