@@ -47,6 +47,7 @@ $route['404_override'] = '';
 $admin = (ADMIN) ? str_replace('/', '', ADMIN) : '';
 
 $route[$admin]				= "admin/authenticate";
+$route[$admin.'/authenticate']		= "admin/authenticate/index";
 $route[$admin.'/authenticate/(:any)']	= "admin/authenticate/$1";
 
 $route[$admin.'/dashboard/(:any)']	= 'admin/dashboard/$1';

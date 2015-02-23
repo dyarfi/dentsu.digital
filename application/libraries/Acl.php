@@ -9,25 +9,24 @@ class ACL {
 	
 	public function __construct () {
 		
-		//$this->CI =& get_instance();
-        //$this->CI->load->library('session');
-						
-		if (strpos($this->CI->session->userdata('prev_url'), ADMIN) !== FALSE 
-				&& $this->CI->session->userdata('prev_url') != $this->CI->session->userdata('curr_url')) {
-			// Set Previous URL to current URL
-			$this->CI->session->set_userdata('prev_url', $this->CI->session->userdata('curr_url'));
-		} else {
-			// Set current URL from current url
-			$this->CI->session->set_userdata('curr_url', $this->CI->uri->uri_string());
-		}
-		
-		$this->user		= self::user($this->user);			
-	
-		// Set previous URL from previous url session		
-		$this->previous_url	= $this->CI->session->userdata('prev_url');
-	
-		
-		$this->user		= $this->CI->session->userdata('user_session');
+	    //$this->CI =& get_instance();
+	    //$this->CI->load->library('session');
+
+	    if (strpos($this->CI->session->userdata('prev_url'), ADMIN) !== FALSE 
+			    && $this->CI->session->userdata('prev_url') != $this->CI->session->userdata('curr_url')) {
+		    // Set Previous URL to current URL
+		    $this->CI->session->set_userdata('prev_url', $this->CI->session->userdata('curr_url'));
+	    } else {
+		    // Set current URL from current url
+		    $this->CI->session->set_userdata('curr_url', $this->CI->uri->uri_string());
+	    }
+
+	    $this->user		= self::user($this->user);			
+
+	    // Set previous URL from previous url session		
+	    $this->previous_url	= $this->CI->session->userdata('prev_url');
+
+	    $this->user		= $this->CI->session->userdata('user_session');
 		
 	}
 	

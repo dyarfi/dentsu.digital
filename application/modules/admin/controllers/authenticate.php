@@ -26,12 +26,12 @@ class Authenticate extends Admin_Controller {
 	public function index() {
 	
 	    // Check if user is logged in or not
-	    if ($this->user == '') {
+	    if ($this->session->userdata('user_session') == '') {
 		/** Redirect to authentication **/
 		redirect(ADMIN . 'authenticate/login');
 	    } else {
 		/** Redirect to dashboards **/
-		redirect(str_replace('{admin_id}', $this->user->id,$this->configs['default_page']));
+		redirect(str_replace('{admin_id}', $this->user->id, $this->configs['default_page']));
 	    }
 	    
 	}

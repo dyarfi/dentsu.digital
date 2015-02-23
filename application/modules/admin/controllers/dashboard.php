@@ -5,9 +5,6 @@ class Dashboard extends Admin_Controller {
 	public function __construct() {
 		parent::__construct();
 		
-		//print_r($this->session->userdata);
-		//exit;
-		
 		//Load user
 		$this->load->model('Users');
 		

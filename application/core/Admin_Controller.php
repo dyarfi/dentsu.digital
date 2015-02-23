@@ -20,7 +20,7 @@ class Admin_Controller extends CI_Controller {
 		$this->configs			= $this->load->config('admin/admin',true);																	
 		// Set user data lists from login session		
 		$this->user			= Acl::user();
-															
+		
 		// Load user module and function lists
 		$this->module_list		= json_decode($this->session->userdata('module_list'),TRUE);
 		$this->module_function_list	= json_decode($this->session->userdata('module_function_list'),TRUE);		

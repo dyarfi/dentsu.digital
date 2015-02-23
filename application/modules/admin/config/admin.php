@@ -12,9 +12,7 @@ $config['gender']		= array('male'=>'Male','female'=>'Female');
 $config['status']		= array(1=>'Active',0=>'Inactive');
 $config['is_system']		= array(1=>'Yes',0=>'No');
 
-
-
-$config['default_page']   = ADMIN . 'user/view/{admin_id}';
+$config['default_page']		= ADMIN . 'user/view/{admin_id}';
 
 /* End of file admin.php */
 

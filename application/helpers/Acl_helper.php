@@ -7,8 +7,8 @@ class ACL {
 	public $session = '';
 	
 	public function __construct () {
-		parent::__construct();		
-					
+		parent::__construct();
+		
 		if (strpos($this->session->userdata('prev_url'), ADMIN) !== FALSE 
 				&& $this->session->userdata('prev_url') != $this->session->userdata('curr_url')) {
 			// Set Previous URL to current URL
