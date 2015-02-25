@@ -50,7 +50,8 @@ class UserGroups Extends CI_Model {
 					. 'VALUES '
 					. '(1 , \'Super Administrator\', \'1\', \'1\', \'1\', \'1\', '.time().' , 0), '
 					. '(2 , \'Administrator\', \'1\', \'0\', \'1\', \'1\', '.time().' , 0), '
-					. '(99 , \'User\', \'0\', \'0\', \'1\', \'1\', '.time().' , 0)';
+					. '(99 , \'User\', \'0\', \'0\', \'1\', \'1\', '.time().' , 0), '
+					. '(100 , \'Employee\', \'0\', \'0\', \'1\', \'1\', '.time().' , 0)';
 
 			$this->db->query($sql);
 		}

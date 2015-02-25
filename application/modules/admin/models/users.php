@@ -51,7 +51,8 @@ class Users Extends CI_Model {
 				. 'VALUES '
 				. '(NULL, \'superadmin\', \'356a192b7913b04c54574d18c28d46e6395428ab\', \'Super Administrator\', 1, 1, 1, '.time().', \'1\', '.time().', 0), '
 				. '(NULL, \'administrator\', \'12506e739378348ec662bb015bfd2288362dcc1c\', \'Administrator\', 2, 1, 1, '.time().', \'1\', '.time().', 0), '
-				. '(NULL, \'user@testing.com\', \'12506e739378348ec662bb015bfd2288362dcc1c\', \'User\', 99, 0, 1, '.time().', \'1\', '.time().', 0)';
+				. '(NULL, \'user@testing.com\', \'12506e739378348ec662bb015bfd2288362dcc1c\', \'User\', 99, 0, 1, '.time().', \'1\', '.time().', 0), '
+				. '(NULL, \'employee@employee.com\', \'12506e739378348ec662bb015bfd2288362dcc1c\', \'Employee Staff\', 100, 0, 1, '.time().', \'1\', '.time().', 0)';
 
 			$this->db->query($sql);
 		}
