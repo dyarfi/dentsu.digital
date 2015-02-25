@@ -3,13 +3,17 @@
 // Model Class Object for PageMenus
 class PageMenus Extends CI_Model {
 	
-	protected $table = 'tbl_page_menus';
+	// Table name for this model
+	public $table = 'page_menus';
 	
 	public function __construct(){
 		// Call the Model constructor
 		parent::__construct();
 		
-		$this->db = $this->load->database('default', true);		
+		$this->db = $this->load->database('default', true);	
+		
+		// Set default table
+		$this->table = $this->db->dbprefix($this->table);
 				
 	}
 	public function install() {

@@ -269,12 +269,64 @@ class Users Extends CI_Model {
 	
 	public function setStatus($id=null,$status=null) {
 	   
-	    //Get user id
+	    // Get user id
 	    $this->db->where('id', $id);
 	    
-	    //Return result
+	    // Return result
 	    return $this->db->update($this->table, array('status'=>$status,'modified'=>time()));
 
+	}
+	
+	public function updateUser($object=null){
+	    
+	    // Set User data
+	    $data = array(
+		'username'  => $object['username'],
+		'email'	    => $object['email'],			
+		'group_id'  => @$object['group_id'],			
+		'added'	    => time(),	
+		'status'    => $object['status']
+	    );
+
+	    // Update User data             
+	    $this->db->where('id', $object['id']);      
+
+	    // Return last insert id primary
+	    $update = $this->db->update($this->table, $data);	
+
+	    // Check if last is existed
+	    if ($update) {
+
+		    // Unset previous data
+		    unset($data);
+
+		    // Set User Profile data
+		    $data = array(
+				    'user_id'	=> $object['id'],
+				    'gender'	=> !empty($object['gender']) ? $object['gender'] : NULL,
+				    'first_name'    => !empty($object['first_name']) ? $object['first_name'] : NULL,
+				    'last_name'	    => !empty($object['last_name']) ? $object['last_name'] : NULL,
+				    'birthday'	    => !empty($object['birthday']) ? $object['birthday'] : NULL,
+				    'phone'	    => !empty($object['phone']) ? $object['phone'] : NULL,	
+				    'mobile_phone'  => !empty($object['mobile_phone']) ? $object['mobile_phone'] : NULL,
+				    'fax'	=> !empty($object['fax']) ? $object['fax'] : NULL,
+				    'website'	=> !empty($object['website']) ? $object['website'] : NULL,
+				    'about'	=> !empty($object['about']) ? $object['about'] : NULL,
+				    'division'	=> !empty($object['division']) ? $object['division'] : NULL,
+				    'added'	=> time(),	
+				    'status'	=> $object['status']);
+		    
+		    // Get User Profile ID
+		    $this->db->where('user_id', $object['id']); 
+	    
+		    // Update User Profile 
+		    $this->db->update('tbl_user_profiles', $data);
+
+	    }
+
+	    // Return last id
+	    return $update;
+		
 	}
 	
 	public function deleteUser($id) {

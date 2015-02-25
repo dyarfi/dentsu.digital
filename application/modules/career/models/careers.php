@@ -2,38 +2,41 @@
 
 // Model Class Object for Careers
 class Careers Extends CI_Model {
-	
-	protected $table = 'tbl_careers';
+	// Table name for this model
+	public $table = 'careers';
 	
 	public function __construct(){
 		// Call the Model constructor
 		parent::__construct();
 		
 		$this->_model_vars	= array(
-							'id'				=> 0,
-							'division_id'		=> 0,
-							'name'				=> '',
-							'subject'			=> '',
-							'ref_no'			=> '',
-							'sent_to'			=> '',
-							'start_date'		=> '',
-							'end_date'			=> '',
-							'report_to'			=> '',
-							'job_purpose'		=> '',
-							'responsibilities'	=> '',
-							'requirements'		=> '',
-							'location'			=> '',
-							'company'			=> '',
-							'ext_link1'			=> '',
-							'ext_link2'			=> '',
-							'allow_comment'		=> '',
-							'user_id'			=> 0,
-							'count'				=> 0,
-							'status'			=> '',
-							'added'				=> 0,
-							'modified'			=> 0);
+						    'id'		=> 0,
+						    'division_id'	=> 0,
+						    'name'		=> '',
+						    'subject'		=> '',
+						    'ref_no'		=> '',
+						    'sent_to'		=> '',
+						    'start_date'	=> '',
+						    'end_date'		=> '',
+						    'report_to'		=> '',
+						    'job_purpose'	=> '',
+						    'responsibilities'	=> '',
+						    'requirements'	=> '',
+						    'location'		=> '',
+						    'company'		=> '',
+						    'ext_link1'		=> '',
+						    'ext_link2'		=> '',
+						    'allow_comment'	=> '',
+						    'user_id'		=> 0,
+						    'count'		=> 0,
+						    'status'		=> '',
+						    'added'		=> 0,
+						    'modified'		=> 0);
 		
-		$this->db = $this->load->database('default', true);		
+		$this->db = $this->load->database('default', true);	
+		
+		// Set default table
+		$this->table = $this->db->dbprefix($this->table);
 				
 	}
 	
@@ -141,13 +144,13 @@ class Careers Extends CI_Model {
 		
 		// Set User data
 		$data = array(			
-					'parameter' => $object['username'],
-					'alias' => $object['alias'],
-					'value' => $object['value'],
-					'is_system' => $object['is_system'],
-					'added'		=> time(),	
-					'status' => $object['status']
-				);
+				'parameter' => $object['username'],
+				'alias' => $object['alias'],
+				'value' => $object['value'],
+				'is_system' => $object['is_system'],
+				'added'		=> time(),	
+				'status' => $object['status']
+			    );
 		
 		// Insert User data
 		$this->db->insert($this->table, $data);

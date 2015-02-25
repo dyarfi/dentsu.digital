@@ -56,7 +56,7 @@ class ACL {
 		// ------- If User is Login set available data --- start
 		if ($this->user != '') {
 			//$this->userhistory		= Model_UserHistory::instance();
-			$this->module_list			= json_decode($this->session->userdata('module_list'),TRUE);
+			$this->module_list		= json_decode($this->session->userdata('module_list'),TRUE);
 			$this->module_function_list	= json_decode($this->session->userdata('module_function_list'),TRUE);
 		}
 		

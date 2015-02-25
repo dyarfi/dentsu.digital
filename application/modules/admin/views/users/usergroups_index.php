@@ -201,7 +201,10 @@
 					<span class="label label-sm label-<?php if($row->backend_access) { echo 'success'; } else { echo 'warning'; } ?>">						<?php if($row->backend_access) { echo 'Yes'; } else { echo 'No'; } ?>
 					</span>
 				    </td>
-				    <td class="col-md-4"><?php echo $statuses[$row->status];?></td>
+				    <td class="col-md-4">
+					<span class="label label-sm label-<?php if($statuses[$row->status]) { echo 'success'; } else { echo 'warning'; } ?>">						<?php if($statuses[$row->status]) { echo 'Active'; } else { echo 'Inactive'; } ?>
+					</span>
+				    </td>
 				    <td class="col-md-4">
 					<ul class="list-inline">
 					    <li>
@@ -226,7 +229,7 @@
 				<tfoot>
 				    <tr>
 					<td id="corner"><span class="glyphicon glyphicon-minus"></span></td>
-					<td colspan="6">
+					<td colspan="4">
 					    <div id="selection" class="input-group">
 						<div class="form-group form-group-sm">
 						    <label class="col-xs-6 control-label small" for="select_action"> Change status : </label>

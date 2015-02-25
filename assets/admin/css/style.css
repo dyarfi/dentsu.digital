@@ -4361,3 +4361,9 @@ UI Loading
 .even_row, .odd_row {
     font-size: 0.920em;
 }
+
+.cb_holder {
+    padding: 0 5px 0 0px;
+}
+.mod_func { margin: 0; padding: 0 }
+.select_holder { margin: 0; padding: 0}

@@ -18,9 +18,14 @@ class Setting extends Admin_Controller {
 	 * @see http://codeigniter.com/user_guide/general/urls.html
 	 */
 	
+	public $_class_name; 
+	    
 	public function __construct() {
 		parent::__construct();
-		
+
+		// Set class name
+		$this->_class_name = $this->controller;
+
 		// Load settings model
 		$this->load->model('Settings');
 
@@ -34,6 +39,12 @@ class Setting extends Admin_Controller {
 		// Set data rows
 		$data['rows']	= $this->Settings->getAllSetting();
 				
+		// Set default statuses
+		$data['statuses'] = $this->configs['status'];
+
+		// Set class name to view
+		$data['class_name'] = $this->_class_name;
+	    
 		// Set main template
 		$data['main']		= 'settings/setting_index';
 		
@@ -269,6 +280,24 @@ class Setting extends Admin_Controller {
             // Redirect after delete
             redirect(ADMIN. $this->controller . '/index');
 
+    }
+    
+    // Action for update item status
+    public function change() {	
+	if ($this->input->post('check') !='') {
+	    $rows	= $this->input->post('check');
+	    foreach ($rows as $row) {
+		// Set id for load and change status
+		$this->Settings->setStatus($row,$this->input->post('select_action'));
+	    }
+	    // Set message
+	    $this->session->set_flashdata('message','Status changed!');
+	    redirect(ADMIN.$this->_class_name.'/index');
+	} else {	
+	    // Set message
+	    $this->session->set_flashdata('message','Data not Available');
+	    redirect(ADMIN.$this->_class_name.'/index');			
+	}
     }
     
 }

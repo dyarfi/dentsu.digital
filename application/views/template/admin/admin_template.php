@@ -27,7 +27,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css"/>
 <link href="<?=admin_theme()?>assets/admin/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
 <link href="<?=admin_theme()?>assets/admin/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-<!--<link href="<?=admin_theme()?>assets/admin/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>-->
+<link href="<?=admin_theme()?>assets/admin/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
 
 <!-- END GLOBAL MANDATORY STYLES -->
 
@@ -36,7 +36,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <?php endforeach; }?>
 
 <!-- BEGIN PAGE LEVEL PLUGIN STYLES -->
-<link href="<?=admin_theme()?>assets/admin/plugins/gritter/css/jquery.gritter.css" rel="stylesheet" type="text/css"/>
+<!--<link href="<?=admin_theme()?>assets/admin/plugins/gritter/css/jquery.gritter.css" rel="stylesheet" type="text/css"/>-->
 
 <link rel="stylesheet" type="text/css" href="<?=admin_theme()?>assets/admin/plugins/clockface/css/clockface.css"/>
 <link rel="stylesheet" type="text/css" href="<?=admin_theme()?>assets/admin/plugins/bootstrap-datepicker/css/datepicker.css"/>
@@ -44,7 +44,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <link rel="stylesheet" type="text/css" href="<?=admin_theme()?>assets/admin/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css"/>
 <link rel="stylesheet" type="text/css" href="<?=admin_theme()?>assets/admin/plugins/bootstrap-datetimepicker/css/datetimepicker.css"/>
 
-<!--link rel="stylesheet" type="text/css" href="<?=admin_theme()?>assets/grocery_crud/css/jquery_plugins/fancybox/jquery.fancybox.css"/-->
+<link rel="stylesheet" type="text/css" href="<?=admin_theme()?>assets/admin/plugins/fancybox/source/jquery.fancybox.css"/>
 
 <link href="<?=admin_theme()?>assets/admin/plugins/fullcalendar/fullcalendar/fullcalendar.css" rel="stylesheet" type="text/css"/>
 <!--<link href="<?=admin_theme()?>assets/admin/plugins/jqvmap/jqvmap/jqvmap.css" rel="stylesheet" type="text/css"/>-->
@@ -137,31 +137,31 @@ License: You must have a valid license purchased only from themeforest(the above
 	    <!-- BEGIN SIDEBAR MENU -->
 	    <ul class="page-sidebar-menu" data-auto-scroll="true" data-slide-speed="200">
 		<li class="sidebar-toggler-wrapper">
-			<!-- BEGIN SIDEBAR TOGGLER BUTTON -->
-			<div class="sidebar-toggler hidden-phone"></div>
-			<!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+		    <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+		    <div class="sidebar-toggler hidden-phone"></div>
+		    <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
 		</li>
 		<li class="sidebar-search-wrapper">
-		    <!-- BEGIN RESPONSIVE QUICK SEARCH FORM -->					
-		    <!-- END RESPONSIVE QUICK SEARCH FORM -->
+		<!-- BEGIN RESPONSIVE QUICK SEARCH FORM -->					
+		<!-- END RESPONSIVE QUICK SEARCH FORM -->
 		</li>						
 		<?php				
 		$k = 0;
 		foreach (Acl::admin_system_modules() as $name => $functions) { 
-			if (is_array($functions) && count($functions) != 0) { ?>
-			<li class="<?if(preg_match('/\b'.$this->uri->segment(2).'\b/i', strtolower($name))){ ?>activ e<?}?>">
-			    <a class="" href="#collapse<?php echo $k;?>">
-				<span class="title"><?php echo $name; ?></span><span class="arrow "></span>
-			    </a>					
-			    <ul class="sub-menu"> 
-			    <?php foreach ($functions as $row_function => $row_label) { ?>
-				    <?php if(Acl::user()->group_id != 1 && $row_label == 'Groups') continue; ?>
-				    <li class="<?php echo preg_match('/\b'.$this->uri->segment(2).'\b/i', substr($row_function, 0, strpos($row_function, '/'))) ? 'active' : ''; ?>">
-					    <a href="<?php echo base_url(ADMIN . $row_function); ?>"><?php echo $row_label; ?></a>
-				    </li>
-			    <?php } ?>
-			    </ul>				
-			</li>
+		    if (is_array($functions) && count($functions) != 0) { ?>
+		    <li class="<?if(preg_match('/\b'.$this->uri->segment(2).'\b/i', strtolower($name))){ ?>activ e<?}?>">
+			<a class="" href="#collapse<?php echo $k;?>">
+			    <span class="title"><?php echo $name; ?></span><span class="arrow "></span>
+			</a>					
+			<ul class="sub-menu"> 
+			<?php foreach ($functions as $row_function => $row_label) { ?>
+			    <?php if(Acl::user()->group_id != 1 && $row_label == 'Groups') continue; ?>
+			    <li class="<?php echo preg_match('/\b'.$this->uri->segment(2).'\b/i', substr($row_function, 0, strpos($row_function, '/'))) ? 'active' : ''; ?>">
+				<a href="<?php echo base_url(ADMIN . $row_function); ?>"><?php echo $row_label; ?></a>
+			    </li>
+			<?php } ?>
+			</ul>				
+		    </li>
 		<?php } 
 		$k++;
 		} 
@@ -184,19 +184,26 @@ License: You must have a valid license purchased only from themeforest(the above
 <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
 <!-- BEGIN CORE PLUGINS -->
 <!--[if lt IE 9]>
-<script src="assets/admin/plugins/respond.min.js"></script>
-<script src="assets/admin/plugins/excanvas.min.js"></script> 
+<script src="<?=admin_theme()?>assets/admin/plugins/respond.min.js"></script>
+<script src="<?=admin_theme()?>assets/admin/plugins/excanvas.min.js"></script> 
 <![endif]-->
+    
 <script src="<?=admin_theme()?>assets/admin/plugins/jquery-1.10.2.min.js" type="text/javascript"></script>
 <script src="<?=admin_theme()?>assets/admin/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
 <!-- IMPORTANT! Load jquery-ui-1.10.3.custom.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
 <script src="<?=admin_theme()?>assets/admin/plugins/jquery-ui/jquery-ui-1.10.3.custom.min.js" type="text/javascript"></script>
-<script src="<?=admin_theme()?>assets/admin/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="<?=admin_theme()?>assets/admin/plugins/bootstrap/js/bootstrap.js" type="text/javascript"></script>
 <script src="<?=admin_theme()?>assets/admin/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
 <script src="<?=admin_theme()?>assets/admin/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
 <script src="<?=admin_theme()?>assets/admin/plugins/jquery.blockui.min.js" type="text/javascript"></script>
 <script src="<?=admin_theme()?>assets/admin/plugins/jquery.cokie.min.js" type="text/javascript"></script>
-<!--<script src="<?=admin_theme()?>assets/admin/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>-->
+<script src="<?=admin_theme()?>assets/admin/plugins/bootbox/bootbox.min.js" type="text/javascript"></script>
+<script src="<?=admin_theme()?>assets/admin/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+<!--<script src="<?=admin_theme()?>assets/admin/plugins/fancybox/source/jquery.fancybox.js" type="text/javascript"></script>-->
+
+ <?php if (!empty($js_files)) { foreach ($js_files as $file): ?>
+    <script src="<?php echo $file; ?>"></script>
+ <?php endforeach; } ?>
 
 <!-- END CORE PLUGINS -->
 <!-- BEGIN PAGE LEVEL PLUGINS -->
@@ -208,33 +215,29 @@ License: You must have a valid license purchased only from themeforest(the above
 <script src="<?=admin_theme()?>assets/admin/plugins/jqvmap/jqvmap/maps/jquery.vmap.germany.js" type="text/javascript"></script>
 <script src="<?=admin_theme()?>assets/admin/plugins/jqvmap/jqvmap/maps/jquery.vmap.usa.js" type="text/javascript"></script>
 <script src="<?=admin_theme()?>assets/admin/plugins/jqvmap/jqvmap/data/jquery.vmap.sampledata.js" type="text/javascript"></script-->
-<script src="<?=admin_theme()?>assets/admin/plugins/flot/jquery.flot.min.js" type="text/javascript"></script>
+
+<!--script src="<?=admin_theme()?>assets/admin/plugins/flot/jquery.flot.min.js" type="text/javascript"></script>
 <script src="<?=admin_theme()?>assets/admin/plugins/flot/jquery.flot.resize.min.js" type="text/javascript"></script>
-<script src="<?=admin_theme()?>assets/admin/plugins/flot/jquery.flot.categories.min.js" type="text/javascript"></script>
-<script src="<?=admin_theme()?>assets/admin/plugins/jquery.pulsate.min.js" type="text/javascript"></script>
-<script src="<?=admin_theme()?>assets/admin/plugins/gritter/js/jquery.gritter.js" type="text/javascript"></script>
+<script src="<?=admin_theme()?>assets/admin/plugins/flot/jquery.flot.categories.min.js" type="text/javascript"></script-->
+
+<!--<script src="<?=admin_theme()?>assets/admin/plugins/jquery.pulsate.min.js" type="text/javascript"></script>-->
+<!--<script src="<?=admin_theme()?>assets/admin/plugins/gritter/js/jquery.gritter.js" type="text/javascript"></script>-->
+
 <!-- IMPORTANT! fullcalendar depends on jquery-ui-1.10.3.custom.min.js for drag & drop support -->
 <script src="<?=admin_theme()?>assets/admin/plugins/fullcalendar/fullcalendar/fullcalendar.min.js" type="text/javascript"></script>
 <script src="<?=admin_theme()?>assets/admin/plugins/jquery-easy-pie-chart/jquery.easy-pie-chart.js" type="text/javascript"></script>
 <script src="<?=admin_theme()?>assets/admin/plugins/jquery.sparkline.min.js" type="text/javascript"></script>
-
-<script src="<?=admin_theme()?>assets/admin/plugins/jquery-validation/dist/jquery.validate.min.js" type="text/javascript"></script>
-
+<script type="text/javascript" src="<?=admin_theme()?>assets/admin/plugins/jquery.cookie.js"></script>
 <script type="text/javascript" src="<?=admin_theme()?>assets/admin/plugins/select2/select2.min.js"></script>
 <script type="text/javascript" src="<?=admin_theme()?>assets/admin/plugins/data-tables/jquery.dataTables.js"></script>
 <script type="text/javascript" src="<?=admin_theme()?>assets/admin/plugins/data-tables/DT_bootstrap.js"></script>
-
 <script type="text/javascript" src="<?=admin_theme()?>assets/admin/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 <script type="text/javascript" src="<?=admin_theme()?>assets/admin/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js"></script>
 <script type="text/javascript" src="<?=admin_theme()?>assets/admin/plugins/clockface/js/clockface.js"></script>
 <script type="text/javascript" src="<?=admin_theme()?>assets/admin/plugins/bootstrap-daterangepicker/moment.min.js"></script>
 <script type="text/javascript" src="<?=admin_theme()?>assets/admin/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
 <script type="text/javascript" src="<?=admin_theme()?>assets/admin/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
-
-<!--script type="text/javascript" src="<?=admin_theme()?>assets/grocery_crud/js/jquery_plugins/jquery.numeric.min.js"></script>
-<script type="text/javascript" src="<?=admin_theme()?>assets/grocery_crud/js/jquery_plugins/jquery.fancybox.js"></script-->
-
-<script src="<?=admin_theme()?>assets/admin/plugins/bootbox/bootbox.min.js" type="text/javascript"></script>
+<script src="<?=admin_theme()?>assets/admin/plugins/jquery-validation/dist/jquery.validate.min.js" type="text/javascript"></script>
 
 <!-- END PAGE LEVEL PLUGINS -->
 
@@ -252,41 +255,37 @@ License: You must have a valid license purchased only from themeforest(the above
 <script src="<?=admin_theme()?>assets/admin/scripts/custom/form-status.js" type="text/javascript"></script>
 <!-- END USER AJAX JAVASCRIPTS -->
     
- <?php if (!empty($js_files)) { foreach ($js_files as $file): ?>
-    <script src="<?php echo $file; ?>"></script>
- <?php endforeach; } ?>
-    
 <script>
 jQuery(document).ready(function() {    
-   App.init(); // initlayout and core plugins
+    App.init(); // initlayout and core plugins
    
-   TableManaged.init();
+    TableManaged.init();
    
-   ComponentsPickers.init();   
+    ComponentsPickers.init();      
    
-   Index.init();
-   //Index.initJQVMAP(); // init index page's custom scripts
-   Index.initCalendar(); // init index page's custom scripts
-   Index.initCharts(); // init index page's custom scripts
-   Index.initChat();
-   Index.initMiniCharts();
-   Index.initDashboardDaterange();
-   Index.initIntro();
-   Tasks.initDashboardWidget();   
+    //Index.init();
+    //Index.initJQVMAP(); // init index page's custom scripts
    
-   // Custom in admin pages
-   FormStatus.init();
-   FormUser.init();
-   FormModule.init();
+    //Index.initCalendar(); // init index page's custom scripts
+    //Index.initCharts(); // init index page's custom scripts
+    //Index.initChat();
+    //Index.initMiniCharts();
+    //Index.initDashboardDaterange();
+    //Index.initIntro();
+    //Tasks.initDashboardWidget();   
+   
+    // Custom in admin pages
+    FormStatus.init();
+    FormUser.init();
+    FormModule.init();
    
 <?php if ($this->session->flashdata('message')) { ?>
-		bootbox.alert('<h3><?php echo $this->session->flashdata('message');?></h3>');
+	bootbox.alert('<h3><?php echo $this->session->flashdata('message');?></h3>');
 <?php } ?>
 	
 });
 </script>
 <!-- END JAVASCRIPTS -->
-
 </body>
 <!-- END BODY -->
 </html>

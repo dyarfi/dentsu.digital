@@ -49,7 +49,11 @@
 		<!-- END PAGE HEADER-->
 		<!-- BEGIN PAGE CONTENT-->
 		<div class="row">
-		    <div class="col-md-12">			
+		    <div class="col-md-12">	
+			<!-- BEGIN EXAMPLE TABLE PORTLET-->
+			<?php
+			// Data checking
+			if(!empty($rows)) { ?>
 			<div class="portlet-body">
 			    <div class="table-toolbar">
 				<div class="btn-group">
@@ -109,7 +113,10 @@
 						    <td class=" "><a href="mailto:<?php echo $row->email;?>"><?php echo $row->email;?></a></td>
 						    <td class=" "><?php echo $row->password;?></td>
 						    <td class="center "><?php echo $row->group_id;?></td>
-						    <td class="center "><?php echo $statuses[$row->status];?></td>
+						    <td class="center ">
+							<span class="label label-sm label-<?php if($statuses[$row->status]) { echo 'success'; } else { echo 'warning'; } ?>">								<?php if($statuses[$row->status]) { echo 'Active'; } else { echo 'Inactive'; } ?>
+							</span>
+						    </td>
 						    <td class="center "><?php echo date('D, d-m-Y', $row->added);?></td>
 						    <td class="center "><?php echo date('D, d-m-Y', $row->modified);?></td>
 						    <td class=" ">
@@ -136,7 +143,7 @@
 					    <tfoot>
 						<tr>
 						    <td id="corner"><span class="glyphicon glyphicon-minus"></span></td>
-						    <td colspan="6">
+						    <td colspan="8">
 							<div id="selection" class="input-group">
 							    <div class="form-group form-group-sm">
 								<label class="col-xs-6 control-label small" for="select_action"> Change status : </label>
@@ -159,8 +166,14 @@
 				    <?php echo form_close();?>
 				    </div>
 				</div>
-			    </div>
 			</div>
+			<?php } else { ?>
+			<div class="alert alert-warning alert-dismissible" role="alert">
+			    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			    Data not available.
+			</div>
+			<?php }?>
+		    </div>
 		</div>
 		<!-- END PAGE CONTENT-->
 	</div>

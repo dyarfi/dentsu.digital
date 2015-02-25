@@ -43,7 +43,12 @@ $route['download/(:num)'] = 'download';
 $route['404_override'] = '';
 
 
-/*** Admin Related Routes - start - **/
+/*
+| -------------------------------------------------------------------------
+| MODULE ADMIN PANEL ROUTING
+| ------------------------------------------------------------------------- 
+*/
+
 $admin = (ADMIN) ? str_replace('/', '', ADMIN) : '';
 
 $route[$admin]				= "admin/authenticate";
@@ -55,23 +60,17 @@ $route[$admin.'/user/(:any)']		= 'admin/user/$1';
 $route[$admin.'/usergroup/(:any)']	= 'admin/usergroup/$1';
 $route[$admin.'/modulelist/(:any)']	= 'admin/modulelist/$1';
 $route[$admin.'/setting/(:any)']	= 'admin/setting/$1';
-$route[$admin.'/log/(:any)']		= 'admin/log/$1';
+$route[$admin.'/serverlog/(:any)']	= 'admin/serverlog/$1';
 
 $route[$admin.'/career/(:any)']		= 'career/$1';
-$route[$admin.'/careerdivision/(:any)'] = 'career/careerdivision/$1';
-$route[$admin.'/careerapplicant/(:any)']    = 'career/careerapplicant/$1';
+$route[$admin.'/division/(:any)']	= 'career/division/$1';
+$route[$admin.'/applicant/(:any)']	= 'career/applicant/$1';
+$route[$admin.'/employee/(:any)']	= 'career/employee/$1';
 
-$route[$admin.'/page/(:any)']		    = 'page/$1';
-$route[$admin.'/pagemenu/(:any)']	    = 'page/pagemenu/$1';
+$route[$admin.'/page/(:any)']		= 'page/$1';
+$route[$admin.'/pagemenu/(:any)']	= 'page/pagemenu/$1';
 
-$route[$admin.'/(:any)'] = '$1';
-
-//$route['admin/authenticate']	 = "admin/authenticate";
-//$route['admin/(:any)'] = 'admin/$1';
-//$route['admin/login'] = 'admin/login';
-//$route['admin/logout'] = 'admin/logout';
-//$route['admin/([a-zA-Z_-]+)'] = '$1/admin/index';
-//$route['admin'] = 'modules';
+//$route[$admin.'/(:any)'] = '$1';
 
 /*** Admin Related Routes - end - **/
 

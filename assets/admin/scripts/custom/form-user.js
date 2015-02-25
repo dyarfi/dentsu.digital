@@ -1,6 +1,6 @@
 var FormUser = function () {
 	
-	var handleUserForm = function () {		
+	var handleUserForm = function () {
 		$('#user-form').validate({
 			focusInvalid: false, // do not focus the last invalid input
 			ignore: "",
@@ -332,10 +332,10 @@ var FormUser = function () {
         //main function to initiate the module
         init: function () {
         	
-			handleUserForm();
-			handleUserFormInput();
-			handleUserFormPost();
-            
+	    handleUserForm();
+	    handleUserFormInput();
+	    handleUserFormPost();
+
         }
 
     };

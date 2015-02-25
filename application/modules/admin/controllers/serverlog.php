@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Log extends Admin_Controller {
+class ServerLog extends Admin_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -265,6 +265,19 @@ class Log extends Admin_Controller {
 
             // Set flash message
             $this->session->set_flashdata('message','ServerLog deleted');
+
+            // Redirect after delete
+            redirect(ADMIN. $this->controller . '/index');
+
+    }
+    
+    public function trash(){
+
+            // Delete user data
+            $this->ServerLogs->truncate();
+
+            // Set flash message
+            $this->session->set_flashdata('message','Log Trashed');
 
             // Redirect after delete
             redirect(ADMIN. $this->controller . '/index');

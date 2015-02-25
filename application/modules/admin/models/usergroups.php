@@ -59,56 +59,56 @@ class UserGroups Extends CI_Model {
 	}
 	
 	public function getUserGroup($id = null){
-		if(!empty($id)) {
-			$data = array();
-			$options = array('id' => $id);
-			$Q = $this->db->get_where($this->table,$options,1);
-			if ($Q->num_rows() > 0){
-				foreach ($Q->result_object() as $row)
-				$data = $row;
-			}
-			$Q->free_result();
-			return $data;
+	    if(!empty($id)) {
+		$data = array();
+		$options = array('id' => $id);
+		$Q = $this->db->get_where($this->table,$options,1);
+		if ($Q->num_rows() > 0){
+			foreach ($Q->result_object() as $row)
+			$data = $row;
 		}
+		$Q->free_result();
+		return $data;
+	    }
 	}
 	
 	public function getAllUserGroup(){
-		$data = array();
-		$this->db->order_by('added');
-		$Q = $this->db->get($this->table);
-			if ($Q->num_rows() > 0){
-				//foreach ($Q->result_array() as $row){
-					//$data[] = $row;
-				//}
-				$data = $Q->result_object();
-			}
-		$Q->free_result();
-		return $data;
+	    $data = array();
+	    $this->db->order_by('added');
+	    $Q = $this->db->get($this->table);
+		if ($Q->num_rows() > 0){
+		    //foreach ($Q->result_array() as $row){
+			    //$data[] = $row;
+		    //}
+		    $data = $Q->result_object();
+		}
+	    $Q->free_result();
+	    return $data;
 	}
 	
 	public function getGroupName_ById($id = null){
-		$data = '';
-		$options = array('id' => $id);
-		$Q = $this->db->get_where($this->table,$options,1);
-		
-		if ($Q->num_rows() > 0){
-			foreach ($Q->result_object() as $row)
-				$data = $row->name;
-		}
-		$Q->free_result();
-		return $data;
+	    $data = '';
+	    $options = array('id' => $id);
+	    $Q = $this->db->get_where($this->table,$options,1);
+
+	    if ($Q->num_rows() > 0){
+		    foreach ($Q->result_object() as $row)
+			    $data = $row->name;
+	    }
+	    $Q->free_result();
+	    return $data;
 	}
 	
 	public function setUserGroup($object=null){
 				
-		$data = array(
-		'name' => $object['name'],
-		'backend_access' => @$object['backend_access'],	
-		'full_backend_access' => @$object['full_backend_access'],			
-		'status' => $object['status']
-		);
-		
-		$this->db->insert($this->table, $data);
+	    $data = array(
+	    'name' => $object['name'],
+	    'backend_access' => @$object['backend_access'],	
+	    'full_backend_access' => @$object['full_backend_access'],			
+	    'status' => $object['status']
+	    );
+
+	    $this->db->insert($this->table, $data);
 		
 	}
 	
@@ -123,19 +123,19 @@ class UserGroups Extends CI_Model {
 	}
 	
 	public function updateUserGroup($object=null){
-		$data = array(
-		'name' => $object['name'],
-		'backend_access' => @$object['backend_access'],	
-		'full_backend_access' => @$object['full_backend_access'],			
-		'status' => $object['status'],
-		'id' => $object['id']
-		);
-		$this->db->where('id', $object['id']);
-		return $this->db->update($this->table, $data);
+	    $data = array(
+	    'name' => $object['name'],
+	    'backend_access' => @$object['backend_access'],	
+	    'full_backend_access' => @$object['full_backend_access'],			
+	    'status' => $object['status'],
+	    'id' => $object['id']
+	    );
+	    $this->db->where('id', $object['id']);
+	    return $this->db->update($this->table, $data);
 	}
 	
 	public function deleteUserGroup($id){
-		$this->db->where('id', $id);
-		return $this->db->delete($this->table);
+	    $this->db->where('id', $id);
+	    return $this->db->delete($this->table);
 	}
 }

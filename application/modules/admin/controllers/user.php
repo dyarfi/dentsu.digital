@@ -104,7 +104,6 @@ class User extends Admin_Controller {
 		$this->form_validation->set_rules('division', 'Division','trim|xss_clean|max_length[55]');				
 		$this->form_validation->set_rules('status', 'Status','required');
 		
-		
 		// Check if post is requested
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			
@@ -134,7 +133,7 @@ class User extends Admin_Controller {
 				
 			}
 			
-		}	
+		} 	
 			
 		// Set Action
 		$data['action'] = 'add';
@@ -146,7 +145,7 @@ class User extends Admin_Controller {
 		$data['errors'] = $errors;
 		
 		// User Groups Data
-		$data['user_groups'] = $this->UserGroups->getAllUserGroup();
+		$data['user_groups']	= $this->UserGroups->getAllUserGroup();
 				
 		// User Status Data
 		$data['statuses']	= @$this->configs['status'];
@@ -200,7 +199,23 @@ class User extends Admin_Controller {
 				'status'		=> '');
 		
 		$errors	= $fields;
-			
+		
+		$this->form_validation->set_rules('username', 'Username', 'trim|required|min_length[5]|max_length[24]|xss_clean');
+		//$this->form_validation->set_rules('email', 'Email','trim|valid_email|required|min_length[5]|max_length[24]|callback_match_email|xss_clean');
+		//$this->form_validation->set_rules('password', 'Password','trim|required');
+		//$this->form_validation->set_rules('password1', 'Retype Password','trim|required|matches[password]');
+		$this->form_validation->set_rules('gender', 'Gender','required');		
+		$this->form_validation->set_rules('group_id', 'Group','required');
+		$this->form_validation->set_rules('first_name', 'First Name','trim');
+		$this->form_validation->set_rules('last_name', 'Last Name','required');
+		$this->form_validation->set_rules('birthday', 'Birthday','required');
+		$this->form_validation->set_rules('phone', 'Phone','trim|is_natural|xss_clean|max_length[25]');
+		$this->form_validation->set_rules('mobile_phone', 'Mobile Phone','trim');		
+		$this->form_validation->set_rules('fax', 'Fax','trim|is_natural|xss_clean|max_length[25]');
+		$this->form_validation->set_rules('website', 'Website','trim|prep_url|xss_clean|max_length[35]');
+		$this->form_validation->set_rules('about', 'About','trim|xss_clean|max_length[1000]');
+		$this->form_validation->set_rules('division', 'Division','trim|xss_clean|max_length[55]');				
+		$this->form_validation->set_rules('status', 'Status','required');
 		
 		// Check if post is requested		
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -209,22 +224,38 @@ class User extends Admin_Controller {
 			if ($this->form_validation->run() == FALSE) {
 
 				// Set error fields
-				$error = array();
+				$errors = array();
 				foreach(array_keys($fields) as $error) {
 					$errors[$error] = form_error($error);
 				}
 
 				// Set previous post merge to default
-				$fields = array_merge($fields, $this->input->post());						
+				$fields = array_merge($fields, $this->input->post());	
+				
+				print_r($this->input->post());
 
 			} else {
 
 				$posts = array(
-					'id'=>$id,
-					'name' => $this->input->post('name'),
+					// Primary Accounts
+					'id' => $id,
+					'group_id' => $this->input->post('group_id'),
+					'username' => $this->input->post('username'),
+					'email' => $this->input->post('email'),
 					'backend_access' => $this->input->post('backend_access'),
 					'full_backend_access' => $this->input->post('full_backend_access'),
-					'status' => $this->input->post('status')
+					'status' => $this->input->post('status'),
+					// Profile Accounts
+					'gender'	=> $this->input->post('gender'),				
+					'first_name'	=> $this->input->post('first_name'),
+					'last_name'	=> $this->input->post('last_name'),				
+					'birthday'	=> $this->input->post('birthday'),
+					'phone'		=> $this->input->post('phone'),	
+					'mobile_phone'	=> $this->input->post('mobile_phone'),				
+					'fax'		=> $this->input->post('fax'),
+					'website'	=> $this->input->post('website'),
+					'about'		=> $this->input->post('about'),
+					'division'	=> $this->input->post('division')
 				);
 				
 				// Set data to add to database
@@ -240,17 +271,17 @@ class User extends Admin_Controller {
 		
 		} else {	
 			
-			// Set fields from database
-			$fields					= (array) $this->Users->getUser($id);
-			
+			// Set password1 to null
 			$fields['password1']	= '';
 			
-			$profile	= (array) $this->UserProfiles->getUserProfile($id);
-												
-			$fields		= (object) array_merge($fields,$profile);
+			// Set fields from database
+			$_fields		= array_merge($fields,(array) $this->Users->getUser($id));
+			
+			$profile	= (array) $this->UserProfiles->getUserProfile($id);									
+			$fields		= (object) array_merge($_fields,$profile);
 
 		}
-	
+		
 		// Set Action
 		$data['action'] = 'edit';
 				
@@ -261,13 +292,13 @@ class User extends Admin_Controller {
 		$data['errors'] = $errors;
 
 		// Set field data to view
-		$data['fields'] = $fields;		
+		$data['fields'] = (object) $fields;		
 			
 		// User Status Data
-		$data['statuses']	= $this->configs['status'];
+		$data['statuses']   = $this->configs['status'];
 		
 		// User Gender Data
-		$data['genders']	= $this->configs['gender'];
+		$data['genders']    = $this->configs['gender'];
 		
 		// User Groups Data
 		$data['user_groups'] = $this->UserGroups->getAllUserGroup();

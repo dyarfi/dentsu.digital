@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Career extends Admin_Controller {
+class Division extends Admin_Controller {
 
     /**
      * Index Page for this controller.
@@ -17,19 +17,18 @@ class Career extends Admin_Controller {
      * map to /index.php/welcome/<method_name>
      * @see http://codeigniter.com/user_guide/general/urls.html
      */
-	
+
     public function __construct() {
-            parent::__construct();
+	    parent::__construct();
 
-            // Load Careers model
-            $this->load->model('Careers');
+	    // Load Careers model
+	    $this->load->model('Careers');
 
-            // Load Division model
-            $this->load->model('Divisions');
+	    // Load Division model
+	    $this->load->model('Divisions');
 
-            // Load Grocery CRUD
-            $this->load->library('grocery_CRUD');
-
+	    // Load Grocery CRUD
+	    $this->load->library('grocery_CRUD');
     }
 	
     public function index() {
@@ -37,24 +36,17 @@ class Career extends Admin_Controller {
 	    // Set our Grocery CRUD
             $crud = new grocery_CRUD();
             // Set tables
-            $crud->set_table('tbl_careers');
+            $crud->set_table('tbl_divisions');
             // Set CRUD subject
-            $crud->set_subject('Career');                            
-            // Set table relation
-            $crud->set_relation('division_id', 'tbl_divisions', 'subject');
+            $crud->set_subject('Division');                    
             // Set column
-            $crud->columns('subject', 'name','division_id','sent_to','status');   
-	    // Unsets the fields at the add form.
-	    $crud->unset_add_fields('count','added','modified');
-	    // Unsets the fields at the edit form.
-	    $crud->unset_edit_fields('count','added','modified');
+            $crud->columns('subject','name','description','status');	
 	    // Sets the required fields of add and edit fields
-	    $crud->required_fields('subject','name','status');          
-	    // Set column display 
-            $crud->display_as('division_id', 'Division');
+	    $crud->required_fields('subject','name','status');    
             // Set upload field
-            $crud->set_field_upload('file_name','uploads/careers');
-            $this->load($crud, 'career');
+            //$crud->set_field_upload('file_name','uploads/careers_divisions');
+	    // Set load crud            
+            $this->load($crud, 'divisions');
         } catch (Exception $e) {
             show_error($e->getMessage() . ' --- ' . $e->getTraceAsString());
         }
@@ -70,7 +62,7 @@ class Career extends Admin_Controller {
         $output->nav = $nav;
         if ($crud->getState() == 'list') {
             // Set Page Title 
-            $output->page_title = 'Career Listings';
+            $output->page_title = 'Division Listings';
             // Set Main Template
             $output->main       = 'template/admin/metronix';
             // Set Primary Template
@@ -81,5 +73,5 @@ class Career extends Admin_Controller {
     }
 }
 
-/* End of file career.php */
-/* Location: ./application/module/career/controllers/career.php */
+/* End of file division.php */
+/* Location: ./application/module/career/controllers/division.php */

@@ -1016,7 +1016,7 @@ var App = function () {
             //core handlers
             handleInit(); // initialize core variables
             handleResponsiveOnResize(); // set and handle responsive    
-            handleUniform(); // hanfle custom radio & checkboxes
+	    //handleUniform(); // hanfle custom radio & checkboxes
             handleBootstrapSwitch(); // handle bootstrap switch plugin
             handleScrollers(); // handles slim scrolling contents 
             handleResponsiveOnInit(); // handler responsive elements on page load
@@ -1039,7 +1039,7 @@ var App = function () {
             handleDropdowns(); // handle dropdowns
             handleTabs(); // handle tabs
             handleTooltips(); // handle bootstrap tooltips
-            handlePopovers(); // handles bootstrap popovers
+            //handlePopovers(); // handles bootstrap popovers
             handleAccordions(); //handles accordions 
             handleModals(); // handle modals
             handleFullScreenMode(); // handles full screen
@@ -1054,7 +1054,7 @@ var App = function () {
             handleSelect2(); // handle custom Select2 dropdowns
             handleDropdowns(); // handle dropdowns
             handleTooltips(); // handle bootstrap tooltips
-            handlePopovers(); // handles bootstrap popovers
+            //handlePopovers(); // handles bootstrap popovers
             handleAccordions(); //handles accordions 
             handleUniform(); // hanfle custom radio & checkboxes     
             handleBootstrapSwitch(); // handle bootstrap switch plugin

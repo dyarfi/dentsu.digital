@@ -1,46 +1,49 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-// Model Class Object for CareerApplicants
-class CareerApplicants Extends CI_Model {
-	
-	protected $table = 'tbl_career_applicants';
+// Model Class Object for Applicants
+class Applicants Extends CI_Model {
+	// Table name for this model
+	public $table = 'applicants';
 	
 	public function __construct(){
 		// Call the Model constructor
 		parent::__construct();
 		
-		$this->_model_vars	= array('id'				=> 0,
-									'career_id'			=> 0,
-									'name'				=> '',
-									'email'				=> '',
-									'gender'			=> '',
-									'marital_status'	=> '',
-									'id_number'			=> '',
-									'phone'				=> '',
-									'address'			=> '',
-									'birth_date'		=> '',
-									'birth_place'		=> '',
-									'education_grade'	=> '',
-									'education_name'	=> '',
-									'education_major'	=> '',
-									'education_from'	=> 0,
-									'education_to'		=> 0,
-									'employment_name'	=> '',
-									'employment_position' => '',
-									'employment_from'	=> 0,
-									'employment_to'		=> 0,
-									'photo'				=> '',
-									'cv_file'			=> '',
-									'is_located'		=> 0,
-									'is_related'		=> 0,
-									'messages'			=> '',
-									'available_date'	=> '',
-									'expected_salary'	=> '',
-									'status'			=> '',
-									'added'				=> 0,
-									'modified'			=> 0);
+		$this->_model_vars	= array('id'			=> 0,
+						'career_id'		=> 0,
+						'name'			=> '',
+						'email'			=> '',
+						'gender'		=> '',
+						'marital_status'	=> '',
+						'id_number'		=> '',
+						'phone'			=> '',
+						'address'		=> '',
+						'birth_date'		=> '',
+						'birth_place'		=> '',
+						'education_grade'	=> '',
+						'education_name'	=> '',
+						'education_major'	=> '',
+						'education_from'	=> 0,
+						'education_to'		=> 0,
+						'employment_name'	=> '',
+						'employment_position'	=> '',
+						'employment_from'	=> 0,
+						'employment_to'		=> 0,
+						'photo'			=> '',
+						'cv_file'		=> '',
+						'is_located'		=> 0,
+						'is_related'		=> 0,
+						'messages'		=> '',
+						'available_date'	=> '',
+						'expected_salary'	=> '',
+						'status'		=> '',
+						'added'			=> 0,
+						'modified'		=> 0);
 		
-		$this->db = $this->load->database('default', true);		
+		$this->db = $this->load->database('default', true);
+		
+		// Set default table
+		$this->table = $this->db->dbprefix($this->table);
 				
 	}
 	
@@ -114,7 +117,7 @@ class CareerApplicants Extends CI_Model {
 		$data = $this->db->count_all_results();
 		return $data;
 	}
-	public function getCareerApplicant($id = null){
+	public function getApplicant($id = null){
 		if(!empty($id)){
 			$data = array();
 			$options = array('id' => $id);
@@ -140,7 +143,7 @@ class CareerApplicants Extends CI_Model {
 			return $data;
 		}
 	}
-	public function getAllCareerApplicant($status=null){
+	public function getAllApplicant($status=null){
 		$data = array();
 		$this->db->order_by('added');
 		$Q = $this->db->get($this->table);
@@ -153,17 +156,17 @@ class CareerApplicants Extends CI_Model {
 		$Q->free_result();
 		return $data;
 	}
-	public function setCareerApplicant($object=null){
+	public function setApplicant($object=null){
 		
 		// Set User data
 		$data = array(			
-					'parameter' => $object['username'],
-					'alias' => $object['alias'],
-					'value' => $object['value'],
-					'is_system' => $object['is_system'],
-					'added'		=> time(),	
-					'status' => $object['status']
-				);
+				'parameter' => $object['username'],
+				'alias' => $object['alias'],
+				'value' => $object['value'],
+				'is_system' => $object['is_system'],
+				'added'		=> time(),	
+				'status' => $object['status']
+			    );
 		
 		// Insert User data
 		$this->db->insert($this->table, $data);
@@ -175,9 +178,9 @@ class CareerApplicants Extends CI_Model {
 		return $insert_id;
 		
 	}	
-	public function deleteCareerApplicant($id) {
+	public function deleteApplicant($id) {
 		
-		// Check CareerApplicant id
+		// Check Applicant id
 		$this->db->where('id', $id);
 		
 		// Delete setting form database

@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class CareerDivision extends Admin_Controller {
+class Applicant extends Admin_Controller {
 
     /**
      * Index Page for this controller.
@@ -24,11 +24,15 @@ class CareerDivision extends Admin_Controller {
 	    // Load Careers model
 	    $this->load->model('Careers');
 
-	    // Load CareerDivision model
-	    $this->load->model('CareerDivisions');
+	    // Load Division model
+	    $this->load->model('Divisions');
 
-	    // Load Grocery CRUD
-	    $this->load->library('grocery_CRUD');
+	    // Load Applicant model
+	    $this->load->model('Applicants');
+
+             // Load Grocery CRUD
+            $this->load->library('grocery_CRUD');
+
     }
 	
     public function index() {
@@ -36,20 +40,30 @@ class CareerDivision extends Admin_Controller {
 	    // Set our Grocery CRUD
             $crud = new grocery_CRUD();
             // Set tables
-            $crud->set_table('tbl_career_divisions');
+            $crud->set_table('tbl_applicants');
             // Set CRUD subject
-            $crud->set_subject('Division');                    
+            $crud->set_subject('Applicant');                            
+            // Set table relation
+            $crud->set_relation('career_id', 'tbl_careers', 'subject');
+	    // Set new action
+	    $crud->add_action('Set To Employee', '', '','fa fa-arrow-circle-left',array($this,'_callback_set_applicant_to_employee'));
             // Set column
-            $crud->columns('subject','name','description','status');	
-	    // Sets the required fields of add and edit fields
-	    $crud->required_fields('subject','name','status');    
+            $crud->columns('name','email','gender','photo','cv_file','career_id','status');			
+            // Set column display 
+            $crud->display_as('career_id','Career Applied');
+            // Set custom field display for gender
+            $crud->field_type('gender','dropdown',array('1' => 'Male', '0' => 'Female'));  
             // Set upload field
-            //$crud->set_field_upload('file_name','uploads/careers_divisions');
-	    // Set load crud            
-            $this->load($crud, 'divisions');
+	    $crud->set_field_upload('cv_file','uploads/applicants');
+	    $crud->set_field_upload('photo','uploads/applicants');
+            $this->load($crud, 'applicants');
         } catch (Exception $e) {
             show_error($e->getMessage() . ' --- ' . $e->getTraceAsString());
         }
+    }
+    
+    public function _callback_set_applicant_to_employee($primary_key , $row) {
+	return base_url(ADMIN).'/employee/set/'.$row->id;
     }
     
     public function _callback_total_image($value, $row) {
@@ -62,7 +76,7 @@ class CareerDivision extends Admin_Controller {
         $output->nav = $nav;
         if ($crud->getState() == 'list') {
             // Set Page Title 
-            $output->page_title = 'Division Listings';
+            $output->page_title = 'Applicant Listings';
             // Set Main Template
             $output->main       = 'template/admin/metronix';
             // Set Primary Template
@@ -73,5 +87,5 @@ class CareerDivision extends Admin_Controller {
     }
 }
 
-/* End of file division.php */
-/* Location: ./application/module/career/controllers/careerdivision.php */
+/* End of file applicant.php */
+/* Location: ./application/module/career/controllers/applicant.php */

@@ -17,14 +17,14 @@ $(function() {
         $('.image-thumbnail').fancybox({
             'transitionIn': 'elastic',
             'transitionOut': 'elastic',
-            'speedIn': 600,
+            'speedIn': 300,
             'speedOut': 200,
             'overlayShow': false
         });
         $('.fancyframe').fancybox({
             'transitionIn': 'elastic',
             'transitionOut': 'elastic',
-            'speedIn': 600,
+            'speedIn': 300,
             'speedOut': 200,
             'overlayShow': false,
             'height': 500,

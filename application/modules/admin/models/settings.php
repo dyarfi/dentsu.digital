@@ -145,6 +145,7 @@ class Settings Extends CI_Model {
 		return $insert_id;
 		
 	}
+	
         public function updateSetting($object=null){
 		
 		// Set Setting data
@@ -166,6 +167,17 @@ class Settings Extends CI_Model {
 		return $update;
 		
 	}
+	
+	public function setStatus($id=null,$status=null) {
+	   
+	    //Get user id
+	    $this->db->where('id', $id);
+	    
+	    //Return result
+	    return $this->db->update($this->table, array('status'=>$status,'modified'=>time()));
+
+	}
+	
 	public function deleteSetting($id) {
 		
 		// Check Setting id

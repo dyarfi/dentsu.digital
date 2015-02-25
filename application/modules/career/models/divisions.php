@@ -1,25 +1,28 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-// Model Class Object for CareerDivisions
-class CareerDivisions Extends CI_Model {
-	
-	protected $table = 'tbl_career_divisions';
+// Model Class Object for Divisions
+class Divisions Extends CI_Model {
+	// Table name for this model
+	public $table = 'divisions';
 	
 	public function __construct(){
 		// Call the Model constructor
 		parent::__construct();
 		
 		$this->_model_vars	= array(
-									'id'		=> '',
-									'name'			=> '',
-									'subject'		=> '',
-									'description'	=> '',
-									'is_system' => '',
-									'status'	=> '',
-									'added'		=> '',
-									'modified'	=> '');
+						    'id'	=> '',
+						    'name'	=> '',
+						    'subject'	=> '',
+						    'description'	=> '',
+						    'is_system' => '',
+						    'status'	=> '',
+						    'added'	=> '',
+						    'modified'	=> '');
 		
-		$this->db = $this->load->database('default', true);		
+		$this->db = $this->load->database('default', true);	
+		
+		// Set default table
+		$this->table = $this->db->dbprefix($this->table);
 				
 	}
 	
@@ -68,7 +71,7 @@ class CareerDivisions Extends CI_Model {
 		$data = $this->db->count_all_results();
 		return $data;
 	}
-	public function getCareerDivision($id = null){
+	public function getDivision($id = null){
 		if(!empty($id)){
 			$data = array();
 			$options = array('id' => $id);
@@ -94,7 +97,7 @@ class CareerDivisions Extends CI_Model {
 			return $data;
 		}
 	}
-	public function getAllCareerDivision($status=null){
+	public function getAllDivision($status=null){
 		$data = array();
 		$this->db->order_by('added');
 		$Q = $this->db->get($this->table);
@@ -107,17 +110,17 @@ class CareerDivisions Extends CI_Model {
 		$Q->free_result();
 		return $data;
 	}
-	public function setCareerDivision($object=null){
+	public function setDivision($object=null){
 		
 		// Set User data
 		$data = array(			
-					'parameter' => $object['username'],
-					'alias' => $object['alias'],
-					'value' => $object['value'],
-					'is_system' => $object['is_system'],
-					'added'		=> time(),	
-					'status' => $object['status']
-				);
+				'parameter' => $object['username'],
+				'alias' => $object['alias'],
+				'value' => $object['value'],
+				'is_system' => $object['is_system'],
+				'added'		=> time(),	
+				'status' => $object['status']
+			    );
 		
 		// Insert User data
 		$this->db->insert($this->table, $data);
@@ -129,7 +132,7 @@ class CareerDivisions Extends CI_Model {
 		return $insert_id;
 		
 	}	
-	public function deleteCareerDivision($id) {
+	public function deleteDivision($id) {
 		
 		// Check CareerDivision id
 		$this->db->where('id', $id);

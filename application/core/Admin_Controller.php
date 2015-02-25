@@ -101,9 +101,9 @@ class Admin_Controller extends CI_Controller {
 				 * Send permission message to client via session
 				 * Set session 'acl_error' if action not accessible for users
 				 */
-				$this->session->set_flashdata('message', 'You do not have permission to '.$action.'');
-				//redirect(ADMIN . $controller);
-				redirect(ADMIN . 'dashboard/index');
+				$this->session->set_flashdata('message', 'You do not have permission to '.$action.'!');
+				redirect(ADMIN . $this->controller. '/index');
+				//redirect(ADMIN . 'dashboard/index');
 
 			} 
 

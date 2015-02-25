@@ -12,7 +12,7 @@
 /*
 $hook['pre_controller'] = array(
                                 'class'    => 'Acl',
-								'function' => 'access_control',
+				'function' => 'access_control',
                                 'filename' => 'acl.php',
                                 'filepath' => 'hooks',
                                 //'params'   => array('beer', 'wine', 'snacks')

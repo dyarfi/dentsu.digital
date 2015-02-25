@@ -2,14 +2,18 @@
 
 // Model Class Object for Pages
 class Pages Extends CI_Model {
-	
-	protected $table = 'tbl_pages';
+    
+	// Table name for this model
+	public $table = 'pages';
 	
 	public function __construct(){
 		// Call the Model constructor
 		parent::__construct();
 		
-		$this->db = $this->load->database('default', true);		
+		$this->db = $this->load->database('default', true);
+		
+		// Set default table
+		$this->table = $this->db->dbprefix($this->table);
 				
 	}
 	

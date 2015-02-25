@@ -236,5 +236,13 @@ class ServerLogs Extends CI_Model {
 		// Check log id
 		return $this->db->where('id', $id);
 		
-	}	
+	}
+	
+	public function truncate(){
+	    // Set data to be emptied
+	    $result = $this->db->query("TRUNCATE TABLE `".$this->table."`");
+
+	    // Data emptied return will be 0 zero
+	    return !$result;
+	}
 }

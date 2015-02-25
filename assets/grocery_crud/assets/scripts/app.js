@@ -559,7 +559,7 @@ var App = function () {
     }
 
     var handlePopovers = function () {
-        jQuery('.popovers').popover();
+	jQuery('.popovers').popover();
 
         // close last poped popover
 
