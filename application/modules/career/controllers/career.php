@@ -52,6 +52,8 @@ class Career extends Admin_Controller {
 	    $crud->required_fields('subject','name','status');          
 	    // Set column display 
             $crud->display_as('division_id', 'Division');
+	    // Set custom field display for status
+            $crud->field_type('status','dropdown',array('1' => 'Active', '0' => 'Inactive')); 
             // Set upload field
             $crud->set_field_upload('file_name','uploads/careers');
             $this->load($crud, 'career');

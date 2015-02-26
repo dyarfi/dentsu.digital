@@ -167,6 +167,7 @@ $config['modulelist'] = array(
 						'employee/index/view'	=> 'View Employee',			
 						'employee/index/edit'	=> 'Edit Employee',			
 						'employee/index/delete' => 'Delete Employee',
+						'employee/set'		=> 'Set to Employee',
 						'employee/index/change' => 'Change Employee',
 						'employee/index/export' => 'Export Employee',
 						'employee/index/print'	=> 'Print Employee'

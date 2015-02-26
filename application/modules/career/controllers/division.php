@@ -43,6 +43,8 @@ class Division extends Admin_Controller {
             $crud->columns('subject','name','description','status');	
 	    // Sets the required fields of add and edit fields
 	    $crud->required_fields('subject','name','status');    
+	    // Set custom field display for status
+            $crud->field_type('status','dropdown',array('1' => 'Active', '0' => 'Inactive')); 
             // Set upload field
             //$crud->set_field_upload('file_name','uploads/careers_divisions');
 	    // Set load crud            

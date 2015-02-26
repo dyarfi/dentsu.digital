@@ -52,7 +52,9 @@ class Applicant extends Admin_Controller {
             // Set column display 
             $crud->display_as('career_id','Career Applied');
             // Set custom field display for gender
-            $crud->field_type('gender','dropdown',array('1' => 'Male', '0' => 'Female'));  
+            $crud->field_type('gender','dropdown',array('1' => 'Male', '0' => 'Female')); 
+	    // Set custom field display for status
+            $crud->field_type('status','dropdown',array('1' => 'Active', '0' => 'Inactive')); 
             // Set upload field
 	    $crud->set_field_upload('cv_file','uploads/applicants');
 	    $crud->set_field_upload('photo','uploads/applicants');

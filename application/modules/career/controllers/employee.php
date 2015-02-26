@@ -74,8 +74,43 @@ class Employee extends Admin_Controller {
         }
     }
     
-    public function set() {
-	
+    public function set($id=null) {
+	if (!empty($id)) {
+	    $objects = $this->Applicants->getApplicant($id);
+	    if($objects) {
+		
+		$objects->password = '';
+		$objects->password = 'Password1';
+		
+		/*
+		 * 'username'	=> $object['username'],
+		    'email'	=> $object['email'],			
+		    'password'	=> sha1($object['username'].$object['password']),	
+		    'group_id'	=> @$object['group_id'],			
+		    'added'	=> time(),	
+		    'status'	=> $object['status']
+		  
+		 * 
+		    'user_id'	=> $insert_id,
+		    'gender'	=> !empty($object['gender']) ? $object['gender'] : NULL,
+		    'first_name'	=> !empty($object['first_name']) ? $object['first_name'] : NULL,
+		    'last_name'	=> !empty($object['last_name']) ? $object['last_name'] : NULL,
+		    'birthday'	=> !empty($object['birthday']) ? $object['birthday'] : NULL,
+		    'phone'		=> !empty($object['phone']) ? $object['phone'] : NULL,	
+		    'mobile_phone'	=> !empty($object['mobile_phone']) ? $object['mobile_phone'] : NULL,
+		    'fax'		=> !empty($object['fax']) ? $object['fax'] : NULL,
+		    'website'	=> !empty($object['website']) ? $object['website'] : NULL,
+		    'about'		=> !empty($object['about']) ? $object['about'] : NULL,
+		    'division'	=> !empty($object['division']) ? $object['division'] : NULL,
+		    'added'		=> time(),	
+		    'status'	=> 1)
+		 */
+		
+		print_r($objects);
+		
+		//$this->Users->setUser($object);
+	    }
+	}
     }
     
     public function _callback_total_image($value, $row) {
