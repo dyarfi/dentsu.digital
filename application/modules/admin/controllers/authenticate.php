@@ -36,7 +36,7 @@ class Authenticate extends Admin_Controller {
 	    
 	}
 	
-	public function login () {		
+	public function login () {	
 	    // POST checking
 	    if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
@@ -126,9 +126,15 @@ class Authenticate extends Admin_Controller {
 
 			    //Set session data
 			    $this->session->set_userdata($ci_session);
-
-			    // Redirect to dashboard
-			    redirect(ADMIN.'dashboard/index');
+			    
+			    // Check referrer if admin already visited a page 
+			    if (strstr($this->previous_url, ADMIN.'authenticate/login')=='') {
+				// Redirect to referrer
+				redirect(base_url($this->previous_url));
+			    } else {
+				// Redirect to dashboard
+				redirect(ADMIN.'dashboard/index');
+			    }
 
 		    } else {
 

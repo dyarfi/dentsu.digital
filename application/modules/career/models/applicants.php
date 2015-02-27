@@ -11,6 +11,7 @@ class Applicants Extends CI_Model {
 		
 		$this->_model_vars	= array('id'			=> 0,
 						'career_id'		=> 0,
+						'user_id'		=> 0,
 						'name'			=> '',
 						'email'			=> '',
 						'gender'		=> '',
@@ -57,6 +58,7 @@ class Applicants Extends CI_Model {
 		$sql	= 'CREATE TABLE IF NOT EXISTS `'.$this->table.'` ('
 				.'`id` int(11) NOT NULL AUTO_INCREMENT, '
 				.'`career_id` int(11) NOT NULL, '
+				.'`user_id` int(11) NOT NULL, '
 				.'`name` varchar(128) NOT NULL, '
 				.'`email` varchar(64) NOT NULL, '
 				.'`gender` tinyint(1) NOT NULL, '
@@ -177,7 +179,22 @@ class Applicants Extends CI_Model {
 		// Return last insert id primary
 		return $insert_id;
 		
-	}	
+	}
+	public function setEmployeeId($object=null){
+		
+		// Set User data
+		$data = array(			
+				'user_id' => $object->user_id,
+				'modified'=> time(),	
+			    );
+		
+		// Check Applicant id
+		$this->db->where('id', $object->id);
+		
+		// Update User data
+		return $this->db->update($this->table, $data);
+		
+	}
 	public function deleteApplicant($id) {
 		
 		// Check Applicant id

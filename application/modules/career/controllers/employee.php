@@ -79,8 +79,47 @@ class Employee extends Admin_Controller {
 	    $objects = $this->Applicants->getApplicant($id);
 	    if($objects) {
 		
-		$objects->password = '';
+		/*
+		[id] => 2
+		[career_id] => 6
+		[name] => Defrian Yarfi
+		[email] => defrian.yarfi@gmail.com
+		[gender] => 1
+		[marital_status] => 1
+		[id_number] => ASDAD12312312313
+		[phone] => 647474747
+		[address] => 45745747
+		[birth_date] => 4567457
+		[birth_place] => 
+		[education_grade] => 1
+		[education_name] => 
+		[education_major] => 
+		[education_from] => 
+		[education_to] => 
+		[employment_name] => 
+		[employment_position] => 
+		[employment_from] => 
+		[employment_to] => 
+		[photo] => 3b394-1513781_10205610488526266_3600135193534162242_n.jpg
+		[cv_file] => 976bd-export-2015-02-13_14_37_25.xls
+		[is_located] => 0
+		[is_related] => 0
+		[messages] => <p>457457457</p>
+		[available_date] => 0
+		[expected_salary] => 0
+		[status] => 1
+		[added] => 0
+		[modified] => 0
+		 */
+		
+		// Set default username from email
+		$objects->username = $objects->email;
+		// Set default password from 'Password1'
 		$objects->password = 'Password1';
+		// Set default group id for 'Employee' group
+		$objects->group_id = '100';
+		// Set default file_name if existed
+		$objects->file_name = !empty($objects->photo) ? $objects->photo : NULL;
 		
 		/*
 		 * 'username'	=> $object['username'],
@@ -106,9 +145,12 @@ class Employee extends Admin_Controller {
 		    'status'	=> 1)
 		 */
 		
-		print_r($objects);
+		$user_id = $this->Users->setUser((array) $objects);
 		
-		//$this->Users->setUser($object);
+		if ($user_id) {
+		    $objects->user_id = $user_id;
+		    $this->Applicants->setEmployeeId($objects);
+		}
 	    }
 	}
     }

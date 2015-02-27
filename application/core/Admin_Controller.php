@@ -9,12 +9,15 @@ class Admin_Controller extends CI_Controller {
 	protected $action = '';
 	
 	public $user = '';
+	public $previous_url = '';
 		
 	public function __construct() {
 		parent::__construct();				
 		
 		// Load Administrator Helper
 		$this->load->helper('Acl');
+		// Load Session library
+		$this->load->library('session');
 		
 		// Load Admin config
 		$this->configs			= $this->load->config('admin/admin',true);																	
@@ -42,9 +45,22 @@ class Admin_Controller extends CI_Controller {
 			redirect(ADMIN.'authenticate/logout');
 		}
 		
+		// Check for previous url from referrer
+		if (strstr($this->agent->referrer(), ADMIN) !== '' 
+				&& $this->session->userdata('prev_url') != $this->session->userdata('curr_url')) {
+			// Set Previous URL to current URL
+			$this->session->set_userdata('prev_url', strstr($this->agent->referrer(), ADMIN));
+		} else {
+			// Set current URL from current url
+			$this->session->set_userdata('curr_url', $this->uri->uri_string());
+		}	
+
+		// Set previous URL from previous url session		
+		$this->previous_url	= $this->session->userdata('prev_url');
+		
 		// Check user access list
-		self::check_module_permission($this->controller, $this->action, $this->param);
-	
+		self::check_module_permission($this->controller, $this->action, $this->param);				
+		
 	}
 
 	public function check_module_permission ($controller='',$action='', $param='') {

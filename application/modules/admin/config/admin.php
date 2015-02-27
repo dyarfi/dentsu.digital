@@ -8,7 +8,7 @@ $config['developer_url']	= 'http://dentsudigitaldivision.com/';
 $config['upload_path']		= BASEPATH.'uploads/users/';
 $config['upload_url']		= 'uploads/users/';
 
-$config['gender']		= array('male'=>'Male','female'=>'Female');
+$config['gender']		= array(1=>'Male',0=>'Female');
 $config['status']		= array(1=>'Active',0=>'Inactive');
 $config['is_system']		= array(1=>'Yes',0=>'No');
 

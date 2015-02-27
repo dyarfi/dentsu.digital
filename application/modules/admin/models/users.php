@@ -255,6 +255,7 @@ class Users Extends CI_Model {
 					'website'	=> !empty($object['website']) ? $object['website'] : NULL,
 					'about'		=> !empty($object['about']) ? $object['about'] : NULL,
 					'division'	=> !empty($object['division']) ? $object['division'] : NULL,
+					'file_name'	=> !empty($object['file_name']) ? $object['file_name'] : NULL,
 					'added'		=> time(),	
 					'status'	=> 1);
 			
@@ -285,7 +286,7 @@ class Users Extends CI_Model {
 		'username'  => $object['username'],
 		'email'	    => $object['email'],			
 		'group_id'  => @$object['group_id'],			
-		'added'	    => time(),	
+		'modified'  => time(),	
 		'status'    => $object['status']
 	    );
 
@@ -314,7 +315,7 @@ class Users Extends CI_Model {
 				    'website'	=> !empty($object['website']) ? $object['website'] : NULL,
 				    'about'	=> !empty($object['about']) ? $object['about'] : NULL,
 				    'division'	=> !empty($object['division']) ? $object['division'] : NULL,
-				    'added'	=> time(),	
+				    'modified'	=> time(),	
 				    'status'	=> $object['status']);
 		    
 		    // Get User Profile ID
