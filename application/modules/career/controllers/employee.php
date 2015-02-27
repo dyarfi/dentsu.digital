@@ -45,29 +45,35 @@ class Employee extends Admin_Controller {
         try {
 	    // Set our Grocery CRUD
             $crud = new grocery_CRUD();
-	    //$crud->set_theme('flexigrid');
-	    //$crud->unset_jquery();
 	    // Set query for employee
-	    $crud->where('group_id','100');
-	    $crud->where('tbl_users.status','1');
+	    //$crud->where('tbl_users.group_id','100');
+	    //$crud->where('tbl_users.status','1');
+	    //$crud->where('tbl_user_profiles.status',1);
             // Set tables
-            $crud->set_table('tbl_users');
+            $crud->set_table('tbl_user_profiles');
             // Set CRUD subject
-            $crud->set_subject('Employee'); 
+            //$crud->set_subject('Employee'); 
 	    // Set table relation	    
-	    $crud->set_relation('group_id', 'tbl_user_groups', 'name');
+	    //$crud->set_relation('user_id', 'tbl_users', 'username');
+            // Set table relation	    
+	    //$crud->set_relation('user_id', 'tbl_user_profiles', 'first_name');
             // Set column
-            $crud->columns('username','group_id','email','profile_id','gender');			
+            //$crud->columns('username','group_id','email','profile_id','gender');			
             // Set column display 
-            $crud->display_as('group_id','Group');
+            //$crud->display_as('profile_id','Profile');
 	    // Set column display 
-            $crud->display_as('profile_id','Full Name');
-	    
+            //$crud->display_as('group_id','Group');
+	    // Set column display 
+            //$crud->display_as('profile_id','Full Name');
 	    // Set custom field display for gender
-            $crud->field_type('gender','dropdown',array('1' => 'Male', '0' => 'Female'));  
-            // Set upload field
-	    $crud->set_field_upload('cv_file','uploads/applicants');
-	    $crud->set_field_upload('photo','uploads/applicants');
+            //$crud->field_type('gender','dropdown',array('1' => 'Male', '0' => 'Female'));  
+            // Unset Add
+	    //$crud->unset_add();
+            // Unset Edit
+	    //$crud->unset_edit();
+	    // Set upload field
+	    //$crud->set_field_upload('cv_file','uploads/applicants');
+	    //$crud->set_field_upload('photo','uploads/applicants');
             $this->load($crud, 'employees');
         } catch (Exception $e) {
             show_error($e->getMessage() . ' --- ' . $e->getTraceAsString());

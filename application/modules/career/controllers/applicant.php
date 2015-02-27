@@ -39,6 +39,9 @@ class Applicant extends Admin_Controller {
         try {
 	    // Set our Grocery CRUD
             $crud = new grocery_CRUD();
+	    // Set query for Applicants that doesn't have user id
+	    // $crud->where('tbl_applicants.user_id',NULL);
+	    $crud->where('tbl_applicants.status','1');
             // Set tables
             $crud->set_table('tbl_applicants');
             // Set CRUD subject
@@ -46,12 +49,16 @@ class Applicant extends Admin_Controller {
             // Set table relation
             $crud->set_relation('career_id', 'tbl_careers', 'subject');
 	    // Set new action
-	    $crud->add_action('Set To Employee', '', '','fa fa-arrow-circle-left',array($this,'_callback_set_applicant_to_employee'));
-            // Set column
-            $crud->columns('name','email','gender','photo','cv_file','career_id','status');			
+	    //$crud->add_action('Set To Employee', '', '','fa fa-arrow-circle-left',array($this,'_callback_set_applicant_to_employee'));
+	    // Callback_column set to
+            $crud->callback_column('set_to',array($this,'_callback_set_link'));
+	    // Set column
+            $crud->columns('name','email','gender','photo','cv_file','career_id','status','set_to');			
             // Set column display 
             $crud->display_as('career_id','Career Applied');
-            // Set custom field display for gender
+	    // Set column display 
+            $crud->display_as('set_to','Set to Employee');
+	    // Set custom field display for gender
             $crud->field_type('gender','dropdown',array('1' => 'Male', '0' => 'Female')); 
 	    // Set custom field display for status
             $crud->field_type('status','dropdown',array('1' => 'Active', '0' => 'Inactive')); 
@@ -63,9 +70,19 @@ class Applicant extends Admin_Controller {
             show_error($e->getMessage() . ' --- ' . $e->getTraceAsString());
         }
     }
-    
+    /*
     public function _callback_set_applicant_to_employee($primary_key , $row) {
-	return base_url(ADMIN).'/employee/set/'.$row->id;
+	if ($row->user_id !== NULL) { return base_url(ADMIN).'/employee/set/'.$row->id; } else { return 'sdfgdsfg'; }
+    }
+     * 
+     */
+    
+    public function _callback_set_link ($value, $row) {
+	if ($row->user_id === NULL) { 
+	    return '<a href="'.base_url(ADMIN).'/employee/set/'.$row->id.'" class="fa fa-arrow-circle-left">&nbsp;</a>'; 
+	} else { 
+	    return 'Already Employed';
+	}
     }
     
     public function _callback_total_image($value, $row) {
