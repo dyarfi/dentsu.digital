@@ -101,8 +101,8 @@
 					    </th>
 					</tr>
 					</thead>							
-					<tbody role="alert" aria-live="polite" aria-relevant="all">								
-						<?php 
+					<tbody role="alert" aria-live="polite" aria-relevant="all">						
+					    <?php 
 						$i = 1;
 						foreach ($rows as $row) { ?>
 						<tr class="odd gradeX <?php echo ($i % 2) ? 'even' : 'odd'; ?>">

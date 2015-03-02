@@ -107,10 +107,10 @@ class UserGroup extends Admin_Controller {
 	    $data['statuses']	= array('Active'=>1,'Inactive'=>0);	
 
 	    // Post Fields
-	    $data['fields']		= (object) $fields;
+	    $data['fields']	= (object) $fields;
 
 	    // Main template
-	    $data['main']		= 'users/usergroups_form';		
+	    $data['main']	= 'users/usergroups_form';		
 
 	    // Set module with URL request 
 	    $data['module_title'] = $this->module;
