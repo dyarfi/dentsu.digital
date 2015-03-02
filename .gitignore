@@ -6,3 +6,4 @@ assets/admin/captcha/image/*
 */cache/!index.html
 */cache/!.htaccess
 */uploads/*
+.DS_Store
