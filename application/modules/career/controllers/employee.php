@@ -50,7 +50,7 @@ class Employee extends Admin_Controller {
 	    //$crud->where('tbl_users.status','1');
 	    //$crud->where('tbl_user_profiles.status',1);
             // Set tables
-            $crud->set_table('tbl_user_profiles');
+            $crud->set_table('tbl_users');
             // Set CRUD subject
             //$crud->set_subject('Employee'); 
 	    // Set table relation	    
