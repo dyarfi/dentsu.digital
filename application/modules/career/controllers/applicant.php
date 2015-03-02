@@ -40,7 +40,7 @@ class Applicant extends Admin_Controller {
 	    // Set our Grocery CRUD
             $crud = new grocery_CRUD();
 	    // Set query for Applicants that doesn't have user id
-	    // $crud->where('tbl_applicants.user_id',NULL);
+	    $crud->where('tbl_applicants.user_id',NULL);
 	    $crud->where('tbl_applicants.status','1');
             // Set tables
             $crud->set_table('tbl_applicants');

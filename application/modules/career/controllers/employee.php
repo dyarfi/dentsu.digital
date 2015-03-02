@@ -46,27 +46,33 @@ class Employee extends Admin_Controller {
 	    // Set our Grocery CRUD
             $crud = new grocery_CRUD();
 	    // Set query for employee
-	    //$crud->where('tbl_users.group_id','100');
+	    $crud->where('group_id',100);
 	    //$crud->where('tbl_users.status','1');
-	    //$crud->where('tbl_user_profiles.status',1);
+	    $crud->where('tbl_user_profiles.status',1);
             // Set tables
-            $crud->set_table('tbl_users');
+            $crud->set_table('tbl_user_profiles');
+	    // Handles the default primary key for a specific table. 
+	    $crud->set_primary_key('user_id','tbl_user_profiles');
             // Set CRUD subject
-            //$crud->set_subject('Employee'); 
+            $crud->set_subject('Employee'); 
+	    // Set table relation	
+	    // set_relation_n_n( $field_name, $relation_table, $selection_table, $primary_key_alias_to_this_table, $primary_key_alias_to_selection_table, $title_field_selection_table [ , string $priority_field_relation )    
+	    // $crud->set_relation_n_n('category', 'film_category', 'category', 'film_id', 'category_id', 'name');
+	    // $crud->set_relation_n_n('actors', 'film_actor', 'actor', 'film_id', 'actor_id', 'fullname','priority');
+	    // $crud->set_relation_n_n('user_id', 'tbl_users', 'tbl_user_groups','id','group_id','name');
+            $crud->set_relation('user_id', 'tbl_users', 'username','group_id');
+            // Set column display 
+            $crud->display_as('user_id','Username');
 	    // Set table relation	    
-	    //$crud->set_relation('user_id', 'tbl_users', 'username');
-            // Set table relation	    
 	    //$crud->set_relation('user_id', 'tbl_user_profiles', 'first_name');
             // Set column
-            //$crud->columns('username','group_id','email','profile_id','gender');			
+            $crud->columns('user_id','first_name','last_name','about','phone','birthday','gender');			
             // Set column display 
             //$crud->display_as('profile_id','Profile');
 	    // Set column display 
-            //$crud->display_as('group_id','Group');
-	    // Set column display 
-            //$crud->display_as('profile_id','Full Name');
+            $crud->display_as('group_id','Group');
 	    // Set custom field display for gender
-            //$crud->field_type('gender','dropdown',array('1' => 'Male', '0' => 'Female'));  
+            $crud->field_type('gender','dropdown',array('1' => 'Male', '0' => 'Female'));  
             // Unset Add
 	    //$crud->unset_add();
             // Unset Edit
@@ -126,6 +132,9 @@ class Employee extends Admin_Controller {
 		$objects->group_id = '100';
 		// Set default file_name if existed
 		$objects->file_name = !empty($objects->photo) ? $objects->photo : NULL;
+		
+		// Set default username from email
+		$objects->first_name = $objects->name;
 		
 		/*
 		 * 'username'	=> $object['username'],
