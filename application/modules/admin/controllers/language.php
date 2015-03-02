@@ -1,7 +1,7 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 // Class for User Groups
-class UserGroup extends Admin_Controller {
+class Language extends Admin_Controller {
 	
 	public $_class_name;
 	
@@ -14,13 +14,13 @@ class UserGroup extends Admin_Controller {
 	    //Load user related model
 	    $this->load->model('Users');
 	    $this->load->model('UserProfiles');
-	    $this->load->model('UserGroups');		
+	    $this->load->model('Languages');		
 
 	}
 	
 	public function index() {		
 		
-	    $rows = $this->UserGroups->getAllUserGroup();
+	    $rows = $this->Languages->getAllLanguage();
 
 	    if (@$rows) $data['rows'] = $rows;
 
@@ -80,7 +80,7 @@ class UserGroup extends Admin_Controller {
 		} else {
 
 		    // Set data to add to database
-		    $this->UserGroups->setUserGroup($this->input->post());
+		    $this->Languages->setLanguage($this->input->post());
 
 		    // Set message
 		    $this->session->set_flashdata('message','User Group created!');
@@ -126,7 +126,7 @@ class UserGroup extends Admin_Controller {
 	public function edit($id=0){
 		
 	    // Check if param is given or not and check from database
-	    if (empty($id) || !$this->UserGroups->getUserGroup($id)) {
+	    if (empty($id) || !$this->Languages->getLanguage($id)) {
 		    $this->session->set_flashdata('message','Item not found!');
 		    // Redirect to index
 		    redirect(base_url().'admin/usergroup');
@@ -171,7 +171,7 @@ class UserGroup extends Admin_Controller {
 			    );
 
 			    // Set data to add to database
-			    $this->UserGroups->updateUserGroup($posts);
+			    $this->Languages->updateLanguage($posts);
 
 			    // Set message
 			    $this->session->set_flashdata('message','User Group updated');
@@ -184,7 +184,7 @@ class UserGroup extends Admin_Controller {
 	    } else {	
 
 		    // Set fields from database
-		    $fields = $this->UserGroups->getUserGroup($id);		
+		    $fields = $this->Languages->getLanguage($id);		
 	    }
 
 	    // Set Action
@@ -217,7 +217,7 @@ class UserGroup extends Admin_Controller {
 	}
 	public function delete($id){
 	    // Set delete method in model
-	    $this->UserGroups->deleteUserGroup($id);
+	    $this->Languages->deleteLanguage($id);
 	    // Set flash message to display
 	    $this->session->set_flashdata('message','User Group deleted');
 	    // Redirect to index
@@ -225,13 +225,16 @@ class UserGroup extends Admin_Controller {
 	}	
 	public function view($id=null){
 		
+	    //Load form validation library if not auto loaded
+	    $this->load->library('form_validation');
+
 	    if (empty($id) && (int) $id == 0) {
 		    $this->session->set_flashdata('message',"Error submission.");
 		    redirect("users","refresh");
 	    }
 
-	    $usergroups = $this->UserGroups->getUserGroup($id);
-	    if (!count($usergroups)){
+	    $user = $this->Users->getUser($id);
+	    if (!count($user)){
 		    redirect(ADMIN.'dashboard/index');
 	    }
 
@@ -239,10 +242,12 @@ class UserGroup extends Admin_Controller {
 
 	    $data['upload_url']		= $this->config->item('upload_url');
 
-	    $data['usergroup']		= $this->UserGroups->getUserGroup($id);
-	    
+	    $data['user']			= $this->Users->getUser($id);
+
+	    $data['user_profile']	= $this->UserProfiles->getUserProfile($id);
+
 	    // Main template
-	    $data['main']	= 'users/usergroups_view';
+	    $data['main']	= 'users/users_view';
 
 	    // Set module with URL request 
 	    $data['module_title'] = $this->module;
@@ -259,7 +264,7 @@ class UserGroup extends Admin_Controller {
 		$rows	= $this->input->post('check');
 		foreach ($rows as $row) {
 		    // Set id for load and change status
-		    $this->UserGroups->setStatus($row,$this->input->post('select_action'));
+		    $this->Languages->setStatus($row,$this->input->post('select_action'));
 		}
 		// Set message
 		$this->session->set_flashdata('message','Status changed!');

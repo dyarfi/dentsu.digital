@@ -21,22 +21,23 @@ class User extends Admin_Controller {
     public function index() {		
 
             $rows = $this->Users->getAllUser();
-
+            //print_r($rows);
+            //exit;
             $temp_rows = array();
 
             if($rows) {
-		$i = 0;
-		foreach($rows as $row ){		
-		    $temp_rows[$i]->id = $row->id;
-		    $temp_rows[$i]->username = $row->username;
-		    $temp_rows[$i]->email = $row->email;
-		    $temp_rows[$i]->password = substr_replace($row->password, "********", 0, strlen($row->password));
-		    $temp_rows[$i]->added = $row->added;
-		    $temp_rows[$i]->modified = $row->modified;
-		    $temp_rows[$i]->status = $row->status;
-		    $temp_rows[$i]->group_id = $this->UserGroups->getGroupName_ById($row->group_id);
-		    $i++;
-		}
+		         $i = 0;
+				foreach($rows as $row ){		
+				    $temp_rows[$i]->id = $row->id;
+				    $temp_rows[$i]->username = $row->username;
+				    $temp_rows[$i]->email = $row->email;
+				    $temp_rows[$i]->password = substr_replace($row->password, "********", 0, strlen($row->password));
+				    $temp_rows[$i]->added = $row->added;
+				    $temp_rows[$i]->modified = $row->modified;
+				    $temp_rows[$i]->status = $row->status;
+				    $temp_rows[$i]->group_id = $this->UserGroups->getGroupName_ById($row->group_id);
+				    $i++;
+				}
             }
 
             if (@$temp_rows) $data['rows'] = $temp_rows;

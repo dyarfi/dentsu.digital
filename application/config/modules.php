@@ -19,6 +19,7 @@ $config['admin_list.module_menu']	= array(
 						'dashboard/index'   => 'Dashboard Panel',
 						'user/index'	    => 'Users',
 						'usergroup/index'   => 'User Groups',
+                                                'language/index'    => 'Languages',
                                                 'setting/index'	    => 'Settings'
 						);
 									
@@ -49,6 +50,7 @@ $config['modulelist'] = array(
 					'UserProfiles',
 					'UserHistories',
 					'ModulePermissions',
+                                        'Language',
 					'Settings',
 					'ServerLogs'
 					),
@@ -60,7 +62,9 @@ $config['modulelist'] = array(
 					'user/index'	    => 'Users',
 					// User Group index
 					'usergroup/index'   => 'User Groups',
-					// Setting index
+					// Language index
+					'language/index'     => 'Languages',
+                                        // Setting index
 					'setting/index'     => 'Settings',
 					// Server Log index
 					'serverlog/index'   => 'Server Logs'
@@ -85,6 +89,12 @@ $config['modulelist'] = array(
 						'usergroup/edit'    => 'Edit User Group',
 						'usergroup/delete'  => 'Delete User Group',
 						'usergroup/change'  => 'Change User Group Status',
+                                                // Language functions
+						'language/add'	    => 'Add Language',
+						'language/view'	    => 'View Language',
+						'language/edit'	    => 'Edit Language',
+						'language/delete'    => 'Delete Language',
+						'language/change'    => 'Change Language Status',
 						// Setting functions
 						'setting/add'	    => 'Add Setting',
 						'setting/view'	    => 'View Setting',
