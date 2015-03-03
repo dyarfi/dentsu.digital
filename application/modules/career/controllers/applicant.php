@@ -40,7 +40,7 @@ class Applicant extends Admin_Controller {
 	    // Set our Grocery CRUD
             $crud = new grocery_CRUD();
 	    // Set query for Applicants that doesn't have user id
-	    $crud->where('tbl_applicants.user_id','');
+	    $crud->where('tbl_applicants.user_id',NULL);
 	    $crud->where('tbl_applicants.status','1');
             // Set tables
             $crud->set_table('tbl_applicants');
@@ -78,7 +78,7 @@ class Applicant extends Admin_Controller {
      */
     
     public function _callback_set_link ($value, $row) {
-	if ($row->user_id === NULL) { 
+	if ($row->user_id == NULL) { 
 	    return '<a href="'.base_url(ADMIN).'/employee/set/'.$row->id.'" class="fa fa-arrow-circle-left">&nbsp;</a>'; 
 	} else { 
 	    return 'Already Employed';
