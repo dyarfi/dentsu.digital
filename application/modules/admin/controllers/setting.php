@@ -33,8 +33,6 @@ class Setting extends Admin_Controller {
 	
 	public function index()
 	{
-		// Set default statuses
-		$data['statuses'] = $this->configs['status'];
 		
 		// Set data rows
 		$data['rows']	= $this->Settings->getAllSetting();
@@ -53,9 +51,6 @@ class Setting extends Admin_Controller {
 		
 		// Set admin title page with module menu
 		$data['page_title'] = $this->module_menu;
-						
-		// Set default statuses
-		$data['statuses'] = $this->configs['status'];
 									
 		// Set default system
 		$data['is_system'] = $this->configs['is_system'];
@@ -145,6 +140,9 @@ class Setting extends Admin_Controller {
 		// Setting Status Data
 		$data['statuses']   = $this->configs['status'];		
 		
+		// Set class name to view
+		$data['class_name'] = $this->_class_name;
+	    
 		// Set form to view
 		$data['main']       = 'settings/setting_form';			
 		
@@ -221,6 +219,9 @@ class Setting extends Admin_Controller {
 		// Post Fields
 		$data['fields']		= (object) $fields;
 
+		// Set class name to view
+		$data['class_name']	= $this->_class_name;
+	    
 		// Main template
 		$data['main']		= 'settings/setting_form';		
 	

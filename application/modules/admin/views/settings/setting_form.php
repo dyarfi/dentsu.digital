@@ -23,7 +23,7 @@
 						<i class="fa fa-angle-right"></i>
 					</li>
 					<li>
-						<a href="<?=base_url(ADMIN);?>/setting/<?=($action) ? $action .'/'. $param :'';?>">
+						<a href="<?=base_url(ADMIN.$class_name);?>/<?=($action) ? $action .'/'. $param :'';?>">
                                                     <?=$page_title;?>
 						</a>
 					</li>
@@ -32,7 +32,7 @@
 			</div>
 		</div>	
 		<!-- BEGIN FORM-->
-		<form class="form-horizontal user-form-add" method="POST" action="<?=base_url(ADMIN);?>/setting/<?=($action) ? $action .'/'. $param :'';?>" id="user-form-add">
+		<form class="form-horizontal <?=$class_name;?>-form" method="POST" action="<?=base_url(ADMIN);?>/<?=$class_name;?>/<?=($action) ? $action .'/'. $param :'';?>" id="<?=$class_name;?>-form">
 			<div class="form-body">
 				<!--/row-->
 				<div class="row">

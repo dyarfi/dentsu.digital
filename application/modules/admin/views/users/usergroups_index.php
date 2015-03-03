@@ -102,7 +102,7 @@
 		<!-- BEGIN PAGE TITLE & BREADCRUMB-->
 		<h3 class="page-title">Manage <?=$page_title;?></h3>
 		<ul class="page-breadcrumb breadcrumb">
-		    <li class="btn-group">
+		    <!--li class="btn-group">
 			<button data-close-others="true" data-delay="1000" data-hover="dropdown" data-toggle="dropdown" class="btn blue dropdown-toggle" type="button">
 			<span>
 				Modules
@@ -111,12 +111,12 @@
 			</button>
 			<ul role="menu" class="dropdown-menu pull-right">
 			    <li>
-				<a href="<?=base_url(ADMIN.'modulelist/index');?>">
-					User Group Modules
+				<a href="<?=base_url(ADMIN.$class_name.'/index');?>">
+					<?php echo $page_title;?>
 				</a>
 			    </li>
 			</ul>
-		    </li>
+		    </li-->
 		    <li>
 			<i class="fa fa-home"></i>
 			<a href="<?=base_url(ADMIN.'dashboard/index')?>">
@@ -125,7 +125,7 @@
 			<i class="fa fa-angle-right"></i>
 		    </li>
 		    <li>
-			<a href="<?=base_url(ADMIN.'usergroup/index');?>">
+			<a href="<?=base_url(ADMIN.$class_name.'/index');?>">
 				<?=$page_title;?>
 			</a>
 		    </li>
@@ -140,7 +140,7 @@
 		<div class="portlet-body">
 		    <div class="table-toolbar">
 			<div class="btn-group">
-			    <a class="btn green" id="sample_editable_1_new" href="<?=base_url(ADMIN.'usergroup/add');?>">
+			    <a class="btn green" id="sample_editable_1_new" href="<?=base_url(ADMIN.$class_name.'/add');?>">
 			    Add New <i class="fa fa-plus"></i>
 			    </a>
 			</div>	

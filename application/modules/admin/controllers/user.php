@@ -157,6 +157,9 @@ class User extends Admin_Controller {
 		// Post Fields
 		$data['fields']		= (object) $fields;
 
+		// Set class name to view
+		$data['class_name'] = $this->_class_name;
+	    
 		// Main template
 		$data['main']		= 'users/users_form';		
 	
@@ -233,7 +236,7 @@ class User extends Admin_Controller {
 				// Set previous post merge to default
 				$fields = array_merge($fields, $this->input->post());	
 				
-				print_r($this->input->post());
+				//print_r($this->input->post());
 
 			} else {
 
@@ -304,6 +307,9 @@ class User extends Admin_Controller {
 		// User Groups Data
 		$data['user_groups'] = $this->UserGroups->getAllUserGroup();
 		
+		// Set class name to view
+		$data['class_name'] = $this->_class_name;
+	    
 		// Set form to view
 		$data['main'] = 'users/users_form';			
 		

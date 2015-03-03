@@ -36,6 +36,18 @@ class Admin_Controller extends CI_Controller {
 		
 		$this->module_menu		= self::check_module_menu($this->module_request);
 		
+		// Add array of data to perform
+		$data->css_files		= array('asdf'=>'asdf');
+		
+		//print_r($this);
+		//exit;
+		// Load data variables
+		//;
+		// Load admin template
+		//$this->parser->parse('template/admin/admin_template', $data);
+		
+		//$this->load->view('template/admin/admin_template', $this->load->vars($data));
+		//
 		// Check if user data is true empty and redirect to authenticate
 		if (!$this->user 
 				&& strpos($this->uri->uri_string(), ADMIN) === 0 

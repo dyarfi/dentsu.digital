@@ -14,8 +14,10 @@ class Language extends Admin_Controller {
 	    //Load user related model
 	    $this->load->model('Users');
 	    $this->load->model('UserProfiles');
-	    $this->load->model('Languages');		
-
+	    $this->load->model('Languages');	    
+	    
+	    //$this->css_files = array('asdf'=>'asd');
+	    //print_r($this->css_files);
 	}
 	
 	public function index() {		
@@ -24,17 +26,20 @@ class Language extends Admin_Controller {
 
 	    if (@$rows) $data['rows'] = $rows;
 
-	    // User Profiles
-	    $data['user_profiles'] = $this->UserProfiles->getUserProfile(ACL::user()->id);
-	    
 	    // Data statutes value
 	    $data['statuses']	= $this->configs['status'];
+	    
+	    // Default options
+	    $data['options']	= $this->configs['enum_default'];
+	    
+	     // Default options
+	    $data['is_system']	= $this->configs['enum_default'];
 
 	    // Set class name to view
 	    $data['class_name'] = $this->_class_name;
 	    
 	    // Main template
-	    $data['main'] = 'users/usergroups_index';
+	    $data['main'] = 'language/language_index';
 
 	    // Set module with URL request 
 	    $data['module_title'] = $this->module;
@@ -52,14 +57,16 @@ class Language extends Admin_Controller {
 	    //Default data setup
 	    $fields = array(
 			    'name'=>'',
-			    'backend_access'=>'',
-			    'full_backend_access'=>'',
+			    'prefix'=>'',
+			    'default'=>'',
+			    'is_system'=>'',
 			    'status'=>'');
 
 	    $errors = $fields;
 
 	    // Set form validation rules
 	    $this->form_validation->set_rules('name', 'Name', 'trim|required|xss_clean');
+	    $this->form_validation->set_rules('prefix', 'Prefix', 'trim|required|xss_clean');
 	    $this->form_validation->set_rules('status', 'Status','trim|required|xss_clean');
 
 	    // Check if post is requested
@@ -83,10 +90,10 @@ class Language extends Admin_Controller {
 		    $this->Languages->setLanguage($this->input->post());
 
 		    // Set message
-		    $this->session->set_flashdata('message','User Group created!');
+		    $this->session->set_flashdata('message','Language created!');
 
 		    // Redirect after add
-		    redirect('admin/usergroup');
+		    redirect('admin/language');
 
 		}
 	    }	
@@ -95,7 +102,7 @@ class Language extends Admin_Controller {
 	    $data['action'] = 'add';
 
 	    // Set Param
-	    $data['param']	= '';
+	    $data['param']  = '';
 
 	    // Set error data to view
 	    $data['errors'] = $errors;
@@ -104,13 +111,16 @@ class Language extends Admin_Controller {
 	    $data['fields'] = $fields;
 
 	    // Group Status Data
-	    $data['statuses']	= array('Active'=>1,'Inactive'=>0);	
+	    $data['statuses']	= $this->configs['status'];	
 
 	    // Post Fields
 	    $data['fields']	= (object) $fields;
+	    
+	    // Set class name to view
+	    $data['class_name'] = $this->_class_name;
 
 	    // Main template
-	    $data['main']	= 'users/usergroups_form';		
+	    $data['main']	= 'language/language_form';		
 
 	    // Set module with URL request 
 	    $data['module_title'] = $this->module;
@@ -129,62 +139,61 @@ class Language extends Admin_Controller {
 	    if (empty($id) || !$this->Languages->getLanguage($id)) {
 		    $this->session->set_flashdata('message','Item not found!');
 		    // Redirect to index
-		    redirect(base_url().'admin/usergroup');
+		    redirect(base_url().'admin/language');
 	    }				
 
 	    // Default data setup
 	    $fields = array(
 			    'name' => '',
-			    'backend_access' => '',
-			    'full_backend_access' => '',
+			    'prefix' => '',
 			    'status' => '');
 
 	    $errors = $fields;
 
 	    // Set form validation rules
 	    $this->form_validation->set_rules('name', 'Name', 'trim|required|xss_clean');
+	    $this->form_validation->set_rules('prefix', 'Prefix', 'trim|required|xss_clean');
 	    $this->form_validation->set_rules('status', 'Status','trim|required|xss_clean');
 
 	    // Check if post is requested		
 	    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-		    // Validation form checks
-		    if ($this->form_validation->run() == FALSE) {
+		// Validation form checks
+		if ($this->form_validation->run() == FALSE) {
 
-			    // Set error fields
-			    $error = array();
-			    foreach(array_keys($fields) as $error) {
-				    $errors[$error] = form_error($error);
-			    }
-
-			    // Set previous post merge to default
-			    $fields = array_merge($fields, $this->input->post());						
-
-		    } else {
-
-			    $posts = array(
-				    'id'=>$id,
-				    'name' => $this->input->post('name'),
-				    'backend_access' => $this->input->post('backend_access'),
-				    'full_backend_access' => $this->input->post('full_backend_access'),
-				    'status' => $this->input->post('status')
-			    );
-
-			    // Set data to add to database
-			    $this->Languages->updateLanguage($posts);
-
-			    // Set message
-			    $this->session->set_flashdata('message','User Group updated');
-
-			    // Redirect after add
-			    redirect('admin/usergroup');
-
+		    // Set error fields
+		    $error = array();
+		    foreach(array_keys($fields) as $error) {
+			    $errors[$error] = form_error($error);
 		    }
+
+		    // Set previous post merge to default
+		    $fields = array_merge($fields, $this->input->post());						
+
+		} else {
+
+		    $posts = array(
+			    'id'=>$id,
+			    'name' => $this->input->post('name'),
+			    'prefix' => $this->input->post('prefix'),
+			    'status' => $this->input->post('status')
+		    );
+
+		    // Set data to add to database
+		    $this->Languages->updateLanguage($posts);
+
+		    // Set message
+		    $this->session->set_flashdata('message','User Group updated');
+
+		    // Redirect after add
+		    redirect('admin/language');
+
+		}
 
 	    } else {	
 
-		    // Set fields from database
-		    $fields = $this->Languages->getLanguage($id);		
+		// Set fields from database
+		$fields = $this->Languages->getLanguage($id);		
 	    }
 
 	    // Set Action
@@ -199,11 +208,20 @@ class Language extends Admin_Controller {
 	    // Set field data to view
 	    $data['fields'] = $fields;		
 
-	    // Set user group status
-	    $data['statuses'] = array('Active'=>1,'Inactive'=>0);							
+	    // Data statutes value
+	    $data['statuses']	= $this->configs['status'];
+	    
+	    // Default options
+	    $data['options']	= $this->configs['enum_default'];
+	    
+	    // Default system options
+	    $data['is_system']	= $this->configs['is_system'];							
 
+	    // Set class name to view
+	    $data['class_name'] = $this->_class_name;
+	    
 	    // Set form to view
-	    $data['main'] = 'users/usergroups_form';			
+	    $data['main'] = 'language/language_form';			
 
 	    // Set module with URL request 
 	    $data['module_title'] = $this->module;
@@ -219,35 +237,42 @@ class Language extends Admin_Controller {
 	    // Set delete method in model
 	    $this->Languages->deleteLanguage($id);
 	    // Set flash message to display
-	    $this->session->set_flashdata('message','User Group deleted');
+	    $this->session->set_flashdata('message','Language deleted');
 	    // Redirect to index
-	    redirect('admin/usergroup');
+	    redirect('admin/language');
 	}	
 	public function view($id=null){
-		
-	    //Load form validation library if not auto loaded
-	    $this->load->library('form_validation');
 
 	    if (empty($id) && (int) $id == 0) {
 		    $this->session->set_flashdata('message',"Error submission.");
-		    redirect("users","refresh");
+		    redirect("language","refresh");
 	    }
 
-	    $user = $this->Users->getUser($id);
+	    $user = $this->Languages->getLanguage($id);
 	    if (!count($user)){
 		    redirect(ADMIN.'dashboard/index');
 	    }
+  
+	    // Set Param
+	    $data['param']	= $id;
 
-	    $data['upload_path']	= $this->config->item('upload_path');
+            // Listing data
+	    $data['listing']  = $this->Languages->getLanguage($id);
+            
+            // Set default statuses
+            $data['statuses'] = $this->configs['status'];
+                        
+            // Set default enum
+            $data['options'] = $this->configs['enum_default'];
+	    
+	    // Default system options
+	    $data['is_system']	= $this->configs['is_system'];
 
-	    $data['upload_url']		= $this->config->item('upload_url');
-
-	    $data['user']			= $this->Users->getUser($id);
-
-	    $data['user_profile']	= $this->UserProfiles->getUserProfile($id);
-
+	    // Set class name to view
+	    $data['class_name'] = $this->_class_name;
+	    
 	    // Main template
-	    $data['main']	= 'users/users_view';
+	    $data['main']	= 'language/language_view';
 
 	    // Set module with URL request 
 	    $data['module_title'] = $this->module;

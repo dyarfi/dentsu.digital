@@ -36,7 +36,7 @@
 			<i class="fa fa-angle-right"></i>
 		    </li>
 		    <li>
-			<a href="<?=base_url(ADMIN.'log/index');?>">
+			<a href="<?=base_url(ADMIN.$class_name.'/index');?>">
 				<?=$page_title;?>
 			</a>
 		    </li>

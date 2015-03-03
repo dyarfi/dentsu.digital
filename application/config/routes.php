@@ -55,12 +55,15 @@ $route[$admin]				= "admin/authenticate";
 $route[$admin.'/authenticate']		= "admin/authenticate/index";
 $route[$admin.'/authenticate/(:any)']	= "admin/authenticate/$1";
 
+/***** Administrator module menu mandatory [start] *****/
 $route[$admin.'/dashboard/(:any)']	= 'admin/dashboard/$1';
 $route[$admin.'/user/(:any)']		= 'admin/user/$1';
 $route[$admin.'/usergroup/(:any)']	= 'admin/usergroup/$1';
+$route[$admin.'/language/(:any)']	= 'admin/language/$1';
 $route[$admin.'/modulelist/(:any)']	= 'admin/modulelist/$1';
-$route[$admin.'/setting/(:any)']	= 'admin/setting/$1';
+$route[$admin.'/setting/(:any)']	= 'admin/setting/$1'; 
 $route[$admin.'/serverlog/(:any)']	= 'admin/serverlog/$1';
+/***** Administrator module menu mandatory [end] *****/
 
 $route[$admin.'/career/(:any)']		= 'career/$1';
 $route[$admin.'/division/(:any)']	= 'career/division/$1';

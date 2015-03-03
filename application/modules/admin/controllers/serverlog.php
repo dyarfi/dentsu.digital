@@ -34,8 +34,11 @@ class ServerLog extends Admin_Controller {
 	    // Set data rows
 	    $data['rows']	= $this->ServerLogs->getAllServerLog();
 
+	    // Set class name to view
+	    $data['class_name'] = $this->_class_name;
+	    
 	    // Set main template
-	    $data['main']	= 'users/log_index';
+	    $data['main']	= 'users/serverlog_index';
 
 	    // Set module with URL request 
 	    $data['module_title'] = $this->module;
@@ -134,6 +137,9 @@ class ServerLog extends Admin_Controller {
 		// ServerLog Status Data
 		$data['statuses']   = $this->configs['status'];		
 		
+		// Set class name to view
+		$data['class_name'] = $this->_class_name;
+		
 		// Set form to view
 		$data['main']       = 'logs/log_form';			
 		
@@ -210,6 +216,9 @@ class ServerLog extends Admin_Controller {
 		// Post Fields
 		$data['fields']		= (object) $fields;
 
+		// Set class name to view
+		$data['class_name'] = $this->_class_name;
+	    
 		// Main template
 		$data['main']		= 'logs/log_form';		
 	
@@ -225,9 +234,6 @@ class ServerLog extends Admin_Controller {
 	}
         
         public function view($id=null){
-
-            // Load form validation library if not auto loaded
-            $this->load->library('form_validation');
 
             // Check if data is found and redirect if false
             if (empty($id) && (int) count($id) == 0) {
@@ -245,6 +251,9 @@ class ServerLog extends Admin_Controller {
             // ServerLog account data
             $data['log']			= $this->ServerLogs->getServerLog($id);		
 
+	     // Set class name to view
+	    $data['class_name'] = $this->_class_name;
+	    
             // Main template
             $data['main']	= 'logs/log_view';
 

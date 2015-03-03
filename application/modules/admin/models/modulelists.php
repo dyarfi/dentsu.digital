@@ -229,19 +229,26 @@ class ModuleLists Extends CI_Model {
 								unset($params);		
 								
 								foreach ($models as $model => $val) {
-														
-									// Get object class
-									$object_name	= ucfirst($val);
-																		
-									// Add to modules to model list
-									$params			= array('module_id'	=> $module_id,
-                                                                                                        'model'		=> $object_name);
-																		
-									// Add new model lists
-									$this->db->insert('model_lists', $params);
-									$new_module_list[] = $this->db->insert_id();
-									
-									unset($object, $params);
+
+								    // Get class name for pre install
+								    $objects		= $this->load->model($val);
+								   
+								    // Check if install method is exists
+								    if (method_exists($objects, 'install')) {
+
+									    // Install all available modules
+									    $objects->install();
+
+									    // Add to modules to model list
+									    $params = array('module_id' => $module_id,
+											    'model'	=> $val);
+
+									    // Add new model lists
+									    $this->db->insert($this->db->dbprefix('model_lists'), $params);
+									    $new_module_list[] = $this->db->insert_id();
+								    }
+
+								    unset($objects, $params);
 								}
 															
 								// Module Menu Check
@@ -267,7 +274,7 @@ class ModuleLists Extends CI_Model {
 										unset($params['parent_id']);
 
 										// Adding initial controller index to module permission
-										$this->db->insert('module_permissions', $params);
+										$this->db->insert($this->db->dbprefix('module_permissions'), $params);
 										$new_module_perm_idx[] = $this->db->insert_id();
 
 										$menu_order++;
@@ -288,7 +295,7 @@ class ModuleLists Extends CI_Model {
                                                                                                         'order'          => $function_order);
 
 										// Adding action controller to module permission
-										$this->db->insert('module_permissions', $params);
+										$this->db->insert($this->db->dbprefix('module_permissions'), $params);
 										$new_module_perm_fnc[] = $this->db->insert_id();
 
 										$function_order++;
@@ -324,13 +331,13 @@ class ModuleLists Extends CI_Model {
 							unset($params);
 							
 							$params		= array('permission_id'	=> $new_permission,
-												'group_id'		=> $groups->id,
-												'value'			=> $value,
-												'added'			=> time(),
-												'modified'		=> 0);
+										'group_id'		=> $groups->id,
+										'value'			=> $value,
+										'added'			=> time(),
+										'modified'		=> 0);
 
 							// Adding user group permission to database
-							$this->db->insert('group_permissions', $params);
+							$this->db->insert($this->db->dbprefix('group_permissions'), $params);
 							$user_group_permission = $this->db->insert_id();
 
 						}

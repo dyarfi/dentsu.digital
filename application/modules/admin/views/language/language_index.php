@@ -92,9 +92,9 @@
 					</th>
 					<th class="sorting" role="columnheader" tabindex="1" aria-controls="sample_2" rowspan="1" colspan="1" style="width: 150px;" aria-label="Email : activate to sort column ascending">Name
 					</th>
-					<th class="sorting" role="columnheader" tabindex="0" aria-controls="sample_2" rowspan="1" colspan="1" style="width: 120px;" aria-label="Username : activate to sort column ascending">Parameter
+					<th class="sorting" role="columnheader" tabindex="0" aria-controls="sample_2" rowspan="1" colspan="1" style="width: 120px;" aria-label="Username : activate to sort column ascending">Prefix
 					</th>
-					<th class="sorting_disabled" role="columnheader" tabindex="2" aria-controls="sample_2" rowspan="1" colspan="1" style="width: 90px;">Value
+					<th class="sorting_disabled" role="columnheader" tabindex="2" aria-controls="sample_2" rowspan="1" colspan="1" style="width: 90px;">Default
 					</th><th class="sorting" role="columnheader" tabindex="3" aria-controls="sample_2" rowspan="1" colspan="1" style="width: 142px;" aria-label="Groups : activate to sort column ascending">Is System
 					</th><th class="sorting_disabled" role="columnheader" aria-controls="sample_2" tabindex="4" rowspan="1" colspan="1" style="width: 120px;" aria-label="Status : activate to sort column ascending">Status
 					</th>
@@ -110,9 +110,9 @@
 					    <td class=" sorting_1">
 						<input type="checkbox" class="checkboxes" name="check[]" id="check_<?php echo $row->id; ?>" value="<?php echo $row->id; ?>" />
 					    </td>
-					    <td class=" "><?php echo $row->alias;?></td>
-					    <td class=" "><?php echo $row->parameter;?></td>
-					    <td class=" "><?php echo strip_tags(character_limiter($row->value, 40));?></td>
+					    <td class=" "><?php echo $row->name;?></td>
+					    <td class=" "><?php echo $row->prefix;?></td>
+					    <td class=" "><?php echo $options[$row->default];?></td>
 					    <td class="center ">
 						<?php //echo $is_system[$row->is_system];?>
 						<span class="label label-sm label-<?php if($is_system[$row->is_system]) { echo 'success'; } else { echo 'warning'; } ?>">							<?php if($is_system[$row->is_system]) { echo 'Yes'; } else { echo 'No'; } ?>
@@ -124,15 +124,15 @@
 						</span-->
 						<ul class="list-inline">
 						    <li>
-							<a class="btn default btn-xs blue" href="<?=base_url(ADMIN.'setting/view/'.$row->id);?>" title="View"><i class="fa fa-check"></i>View
+							<a class="btn default btn-xs blue" href="<?=base_url(ADMIN.$class_name.'/view/'.$row->id);?>" title="View"><i class="fa fa-check"></i>View
 							</a>
 						    </li>
 						    <li>
-							<a class="btn default btn-xs purple" href="<?=base_url(ADMIN.'setting/edit/'.$row->id);?>" title="Edit"><i class="fa fa-edit"></i>Edit
+							<a class="btn default btn-xs purple" href="<?=base_url(ADMIN.$class_name.'/edit/'.$row->id);?>" title="Edit"><i class="fa fa-edit"></i>Edit
 							</a>
 						    </li>
 						    <li>
-							<a class="btn default btn-xs red" href="<?=base_url(ADMIN.'setting/delete/'.$row->id);?>" title="Delete"><i class="fa fa-trash-o"></i>Delete
+							<a class="btn default btn-xs red" href="<?=base_url(ADMIN.$class_name.'/delete/'.$row->id);?>" title="Delete"><i class="fa fa-trash-o"></i>Delete
 							</a>
 						    </li>
 						</ul>

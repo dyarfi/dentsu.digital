@@ -145,7 +145,7 @@ License: You must have a valid license purchased only from themeforest(the above
 		<!-- BEGIN RESPONSIVE QUICK SEARCH FORM -->					
 		<!-- END RESPONSIVE QUICK SEARCH FORM -->
 		</li>						
-		<?php				
+		<?php		
 		$k = 0;
 		foreach (Acl::admin_system_modules() as $name => $functions) { 
 		    if (is_array($functions) && count($functions) != 0) { ?>

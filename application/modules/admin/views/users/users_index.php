@@ -38,7 +38,7 @@
 				<i class="fa fa-angle-right"></i>
 			    </li>
 			    <li>
-				<a href="<?=base_url(ADMIN.'user/index');?>">
+				<a href="<?=base_url(ADMIN.$class_name.'/index');?>">
 					<?=$page_title;?>
 				</a>
 			    </li>
@@ -57,7 +57,7 @@
 			<div class="portlet-body">
 			    <div class="table-toolbar">
 				<div class="btn-group">
-				    <a class="btn green" id="sample_editable_1_new" href="<?=base_url(ADMIN.'user/add');?>">
+				    <a class="btn green" id="sample_editable_1_new" href="<?=base_url(ADMIN.$class_name.'/add');?>">
 				    Add New <i class="fa fa-plus"></i>
 				    </a>
 				</div>
@@ -124,13 +124,13 @@
 							    <?php echo $row->status;?>
 							</span-->
 							<ul class="list-inline">
-							    <li><a class="btn default btn-xs blue" href="<?=base_url(ADMIN.'user/view/'.$row->id);?>" title="View">
+							    <li><a class="btn default btn-xs blue" href="<?=base_url(ADMIN.$class_name.'/view/'.$row->id);?>" title="View">
 								<i class="fa fa-check"></i>View</a>
 							    </li>
-							    <li><a class="btn default btn-xs purple" href="<?=base_url(ADMIN.'user/edit/'.$row->id);?>" title="Edit">
+							    <li><a class="btn default btn-xs purple" href="<?=base_url(ADMIN.$class_name.'/edit/'.$row->id);?>" title="Edit">
 								<i class="fa fa-edit"></i>Edit</a>
 							    </li>
-							    <li><a class="btn default btn-xs red" href="<?=base_url(ADMIN.'user/delete/'.$row->id);?>" title="Delete">
+							    <li><a class="btn default btn-xs red" href="<?=base_url(ADMIN.$class_name.'/delete/'.$row->id);?>" title="Delete">
 								<i class="fa fa-trash-o"></i>Delete</a>
 							    </li>
 							</ul>

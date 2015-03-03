@@ -2,7 +2,7 @@
 				
 //======================== Administrator Access - start config - ========================//
 
-$config['module_list.models']		= array('ModuleLists');
+$config['module_list.models']		= array('admin/ModuleLists');
 $config['module_list.module_menu']	= array('modulelist/index'  => 'Modules');
 $config['module_list.module_function']	= array('modulelist/edit'   => 'Edit Module');
 
@@ -45,14 +45,14 @@ $config['modulelist'] = array(
 	'Admin' => array(
 		// Admin Models list
 		'models'	=> array(
-					'Users',
-					'UserGroups',
-					'UserProfiles',
-					'UserHistories',
-					'ModulePermissions',
-                                        'Language',
-					'Settings',
-					'ServerLogs'
+					'admin/Users',
+					'admin/UserGroups',
+					'admin/UserProfiles',
+					'admin/UserHistories',
+					'admin/ModulePermissions',
+                                        'admin/Languages',
+					'admin/Settings',
+					'admin/ServerLogs'
 					),
 		// Admin module menus
 		'module_menu'	=> array(
@@ -111,7 +111,7 @@ $config['modulelist'] = array(
 	// Page module
 	'Page' => array (
 		// Page Models list
-		'models'		=> array('Pages','PageMenus'),
+		'models'		=> array('page/Pages','page/PageMenus'),
 		// Page module menus
 		'module_menu'		=> array('page/index'	  => 'Pages',
 						 'pagemenu/index' => 'Page Menus'),
@@ -138,7 +138,7 @@ $config['modulelist'] = array(
 	// Career module
 	'Career' => array (
 		// Career Models list
-		'models'		=> array('Careers','Divisions','Applicants','Employees'),
+		'models'		=> array('career/Careers','career/Divisions','career/Applicants'),
 		// Career module menus
 		'module_menu'		=> array(
 						'career/index'		=> 'Careers',

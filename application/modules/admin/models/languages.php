@@ -25,8 +25,8 @@ class Languages Extends CI_Model {
 					. '`id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT, '
 					. '`name` VARCHAR(64) NOT NULL, '
 					. '`prefix` VARCHAR(6) NULL, '
-					. '`default` TINYINT(1) NULL, '
-					. '`status` TINYINT(1) NOT NULL, '
+					. '`default` TINYINT(1) NULL DEFAULT 0, '
+					. '`status` TINYINT(1) NOT NULL DEFAULT 1, '
 					. '`is_system` TINYINT(1) NOT NULL DEFAULT 0, '
 					. '`added` INT(11) UNSIGNED NOT NULL, '
 					. '`modified` INT(11) UNSIGNED NOT NULL, '
@@ -114,7 +114,8 @@ class Languages Extends CI_Model {
 				
 	    $data = array(
 	    'name' => $object['name'],
-	    'prefix' => @$object['prefix'],			
+	    'prefix' => @$object['prefix'],
+	    'added' => time(),
 	    'status' => $object['status']
 	    );
 

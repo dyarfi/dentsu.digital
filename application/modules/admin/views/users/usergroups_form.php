@@ -28,7 +28,7 @@
 	    </div>
 	</div>	
 	<!-- BEGIN FORM-->
-	<form class="form-horizontal usergroup-form-add" action="<?=base_url(ADMIN);?>/<?=$class_name?>/<?=($action) ? $action .'/'. $param :'';?>" method="POST" id="usergroup-form-add">
+	<form class="form-horizontal <?=$class_name;?>-form" action="<?=base_url(ADMIN);?>/<?=$class_name?>/<?=($action) ? $action .'/'. $param :'';?>" method="POST" id="<?=$class_name;?>-form">
 	    <div class="form-body">
 	    <!--/row-->
 	    <div class="row">

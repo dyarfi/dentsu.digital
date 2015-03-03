@@ -103,8 +103,8 @@ class UserGroup extends Admin_Controller {
 	    // Set field data to view
 	    $data['fields'] = $fields;
 
-	    // Group Status Data
-	    $data['statuses']	= array('Active'=>1,'Inactive'=>0);	
+	    // Data statutes value
+	    $data['statuses']	= $this->configs['status'];	
 
 	    // Post Fields
 	    $data['fields']	= (object) $fields;
