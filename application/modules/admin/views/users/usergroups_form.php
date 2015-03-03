@@ -28,15 +28,14 @@
 	    </div>
 	</div>	
 	<!-- BEGIN FORM-->
-	<form class="form-horizontal usergroup-form-add" action="<?=base_url(ADMIN);?>/usergroup/<?=($action) ? $action .'/'. $param :'';?>" method="POST" id="usergroup-form-add">
+	<form class="form-horizontal usergroup-form-add" action="<?=base_url(ADMIN);?>/<?=$class_name?>/<?=($action) ? $action .'/'. $param :'';?>" method="POST" id="usergroup-form-add">
 	    <div class="form-body">
-		<h3 class="form-section">Group Info</h3>
 	    <!--/row-->
 	    <div class="row">
 		<div class="col-md-8">
 		    <div class="form-group">
 			<label class="control-label col-md-3">Group Name</label>
-			<div class="col-md-6">
+			<div class="col-md-8">
 			    <div class="input-group">
 				<span class="input-group-addon">
 					<i class="fa fa-user"></i>
@@ -46,14 +45,11 @@
 			    <span class="help-block"><?php echo $errors['name'];?></span>
 			</div>
 		    </div>
-		</div>					
-	    </div>
-	    <div class="row">
-		<div class="col-md-8">
-		    <div class="form-group">
+                    <div class="form-group">
 			<label class="control-label col-md-3">Backend Access</label>
 			<div class="col-md-1">								
-			    <div class="checkbox-list">
+			    <!--<div class="checkbox-list">-->
+                            <div>
 				<label><input value="1" <?php echo ($fields->backend_access == 1 ? 'checked' :'');?> class="form-control left" name="backend_access" type="checkbox">&nbsp;</label>
 			    </div>								
 			</div>
@@ -61,18 +57,13 @@
 		    <div class="form-group">
 			<label class="control-label col-md-3">Full Backend Access</label>
 			<div class="col-md-1">								
-			    <div class="checkbox-list">
-				<label><input value="1" <?php echo ($fields->full_backend_access == 1 ? 'checked' :'');?> class="form-control left" name="full_backend_access" type="checkbox">&nbsp;</label>
+                            <!--<div class="checkbox-list">-->
+                            <div>	
+                                <label><input value="1" <?php echo ($fields->full_backend_access == 1 ? 'checked' :'');?> class="form-control left" name="full_backend_access" type="checkbox">&nbsp;</label>
 			    </div>								
 			</div>
 		    </div>
-		</div>
-	    </div>				
-	    <!--/row-->
-	    <div class="row">
-		<!--/span-->
-		<div class="col-md-8">
-		    <div class="form-group">
+                    <div class="form-group">
 			<label class="control-label col-md-3">Status</label>
 			<div class="col-md-6">
 			    <select class="form-control" name="status">
@@ -83,8 +74,7 @@
 			    <span class="help-block"><?php echo $errors['status'];?></span>
 			</div>
 		    </div>
-		</div>
-		<!--/span-->
+		</div>					
 	    </div>
 	    <!--/row-->
 	    </div>

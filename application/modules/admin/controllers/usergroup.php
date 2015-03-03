@@ -112,6 +112,9 @@ class UserGroup extends Admin_Controller {
 	    // Main template
 	    $data['main']	= 'users/usergroups_form';		
 
+            // Set class name to view
+	    $data['class_name'] = $this->_class_name;
+	    
 	    // Set module with URL request 
 	    $data['module_title'] = $this->module;
 
@@ -199,13 +202,16 @@ class UserGroup extends Admin_Controller {
 	    // Set field data to view
 	    $data['fields'] = $fields;		
 
-	    // Set user group status
-	    $data['statuses'] = array('Active'=>1,'Inactive'=>0);							
+            // Set default statuses
+            $data['statuses'] = $this->configs['status'];
 
 	    // Set form to view
 	    $data['main'] = 'users/usergroups_form';			
 
-	    // Set module with URL request 
+	    // Set class name to view
+	    $data['class_name'] = $this->_class_name;
+	    
+            // Set module with URL request 
 	    $data['module_title'] = $this->module;
 
 	    // Set admin title page with module menu
@@ -234,12 +240,21 @@ class UserGroup extends Admin_Controller {
 	    if (!count($usergroups)){
 		    redirect(ADMIN.'dashboard/index');
 	    }
+            
+            // Set Param
+	    $data['param']	= $id;
 
-	    $data['upload_path']	= $this->config->item('upload_path');
+            // Listing data
+	    $data['listing']  = $this->UserGroups->getUserGroup($id);
+            
+            // Set default statuses
+            $data['statuses'] = $this->configs['status'];
+                        
+            // Set default enum
+            $data['options'] = $this->configs['enum_default'];
 
-	    $data['upload_url']		= $this->config->item('upload_url');
-
-	    $data['usergroup']		= $this->UserGroups->getUserGroup($id);
+	    // Set class name to view
+	    $data['class_name'] = $this->_class_name;
 	    
 	    // Main template
 	    $data['main']	= 'users/usergroups_view';

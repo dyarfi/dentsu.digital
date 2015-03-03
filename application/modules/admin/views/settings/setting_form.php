@@ -6,7 +6,7 @@
 			<div class="col-md-12">
 				<!-- BEGIN PAGE TITLE & BREADCRUMB-->
 				<h3 class="page-title">
-				<?php print_r($page_title);?> <!--small>managed data users</small-->
+				<?php echo $page_title;?> <!--small>managed data users</small-->
 				</h3>
 				<ul class="page-breadcrumb breadcrumb">					
 					<li>
@@ -34,7 +34,6 @@
 		<!-- BEGIN FORM-->
 		<form class="form-horizontal user-form-add" method="POST" action="<?=base_url(ADMIN);?>/setting/<?=($action) ? $action .'/'. $param :'';?>" id="user-form-add">
 			<div class="form-body">
-				<h3 class="form-section">Setting Info</h3>
 				<!--/row-->
 				<div class="row">
 					<div class="col-md-6">

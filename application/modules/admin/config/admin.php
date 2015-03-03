@@ -11,6 +11,7 @@ $config['upload_url']		= 'uploads/users/';
 $config['gender']		= array(1=>'Male',0=>'Female');
 $config['status']		= array(1=>'Active',0=>'Inactive');
 $config['is_system']		= array(1=>'Yes',0=>'No');
+$config['enum_default']		= array(1=>'Yes',0=>'No');
 
 $config['default_page']		= ADMIN . 'user/view/{admin_id}';
 

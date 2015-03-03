@@ -236,10 +236,7 @@ class Setting extends Admin_Controller {
 	}
         
         public function view($id=null){
-
-            // Load form validation library if not auto loaded
-            $this->load->library('form_validation');
-
+            
             // Check if data is found and redirect if false
             if (empty($id) && (int) count($id) == 0) {
                     $this->session->set_flashdata('message',"Error submission.");
@@ -253,11 +250,20 @@ class Setting extends Admin_Controller {
                     redirect(ADMIN. $this->controller . '/index');
             }
 
-            // Setting account data
-            $data['setting']			= $this->Settings->getSetting($id);		
+            // Set Param
+	    $data['param']	= $id;
+
+            // Listing data
+            $data['listing']    = $this->Settings->getSetting($id);		
 
             // Main template
             $data['main']	= 'settings/setting_view';
+
+            // Set default statuses
+            $data['statuses'] = $this->configs['status'];
+
+            // Set class name to view
+	    $data['class_name'] = $this->_class_name;
 
             // Set module with URL request 
             $data['module_title'] = $this->module;

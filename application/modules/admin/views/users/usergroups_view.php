@@ -98,7 +98,7 @@
 			<div class="col-md-12">
 				<!-- BEGIN PAGE TITLE & BREADCRUMB-->
 				<h3 class="page-title">
-					User Groups
+                                    <?php echo $page_title;?>
 				</h3>
 				<ul class="page-breadcrumb breadcrumb">
 					<!--li class="btn-group">
@@ -148,7 +148,7 @@
 					</li>
 					<li>
 						<a href="#">
-							User Groups Edit
+							<?php echo $page_title;?>
 						</a>
 					</li>
 				</ul>
@@ -159,82 +159,65 @@
 		<!-- BEGIN PAGE CONTENT-->
                 <div class="portlet-body form">
                     <!-- BEGIN FORM-->
-                    <form class="form-horizontal" role="form">
+                    <form class="form-horizontal" role="form" action="<?php echo base_url(ADMIN.$class_name.'/edit/'.$param);?>">
                             <div class="form-body">
-                                    <h3 class="form-section">User Group Info</h3>
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-lg-6">
                                             <div class="form-group">
-                                                <label class="control-label col-md-3">First Name:</label>
-                                                <div class="col-md-9">
+                                                <label class="control-label col-md-4">Name:</label>
+                                                <div class="col-md-8">
                                                     <p class="form-control-static">
-                                                             Bob
+                                                        <?php echo $listing->name;?>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4">Backend Access:</label>
+                                                <div class="col-md-8">
+                                                    <p class="form-control-static">
+                                                        <?php echo $options[$listing->backend_access];?>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4">Full Backend Access:</label>
+                                                <div class="col-md-8">
+                                                    <p class="form-control-static">
+                                                        <?php echo $options[$listing->backend_access];?>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4">Added:</label>
+                                                <div class="col-md-8">
+                                                    <p class="form-control-static">
+                                                        <?php echo date('Y-m-d', $listing->added);?>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4">Modified:</label>
+                                                <div class="col-md-8">
+                                                    <p class="form-control-static">
+                                                        <?php echo date('Y-m-d', $listing->modified);?>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4">Status:</label>
+                                                <div class="col-md-8">
+                                                    <p class="form-control-static">
+                                                        <?php echo $statuses[$listing->status];?>
                                                     </p>
                                                 </div>
                                             </div>
                                         </div>
                                         <!--/span-->
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label class="control-label col-md-3">Last Name:</label>
-                                                <div class="col-md-9">
-                                                    <p class="form-control-static">
-                                                             Nilson
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!--/span-->
-                                    </div>
-                                    <!--/row-->
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label class="control-label col-md-3">Gender:</label>
-                                                <div class="col-md-9">
-                                                    <p class="form-control-static">
-                                                             Male
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!--/span-->
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label class="control-label col-md-3">Date of Birth:</label>
-                                                <div class="col-md-9">
-                                                    <p class="form-control-static">
-                                                             20.01.1984
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!--/span-->
-                                    </div>
-                                    <!--/row-->
-                                    <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-3">Category:</label>
-                                                    <div class="col-md-9">
-                                                            <p class="form-control-static">
-                                                                     Category1
-                                                            </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--/span-->
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-3">Membership:</label>
-                                                    <div class="col-md-9">
-                                                        <p class="form-control-static">
-                                                                 Free
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--/span-->
                                     </div>
                                     <!--/row-->
                             </div>

@@ -1,20 +1,22 @@
 <div class="page-content-wrapper">
     <div class="page-content">
-    <h2>
-	Module Listings
-	<?php
-	//print_r($module_permission);
-	/*
-	    // Alert users if module is updated
-	    if(Session::instance()->get('modulelist_edit') != '') {
-	    ?>
-		<small class="red fadeOut"> - <?php echo Session::instance()->get_once('modulelist_edit');?></small>
-	    <?php
-	    }
-	 * 
-	 */
-	?>
-    </h2>
+        <div class="row-fluid">
+            <div class="table">
+                <h2>
+                    Module Listings
+                    <?php
+                    //print_r($module_permission);
+                    /*
+                        // Alert users if module is updated
+                        if(Session::instance()->get('modulelist_edit') != '') {
+                        ?>
+                            <small class="red fadeOut"> - <?php echo Session::instance()->get_once('modulelist_edit');?></small>
+                        <?php
+                        }
+                     * 
+                     */
+                    ?>
+                </h2>
 <div class="bar"></div>
 <?php if (count($listings) == 0) :?>
     <div class="ls15 clear"></div>
@@ -23,12 +25,13 @@
 <?php else : ?>
     <?php echo form_open_multipart(ADMIN.'modulelist/edit'); ?> 
     <h5>Role Based Access Control :</h5>
-    <table class="listing_data table table-bordered table-striped">
+    <div class="table-scrollable">
+    <table class="listing_data table table-striped table-bordered table-hover dataTable" style="overflow: auto; width: 100%; max-width: 100%">
 	<thead>
 	    <tr>
 		<th><strong>#</strong></th>
 		<?php foreach ($table_headers as $key => $value) : ?>
-		<th><?php echo $value; ?></th>
+                <th><small><?php echo $value; ?></small></th>
 		<?php endforeach; ?>
 	    </tr>
 	</thead>
@@ -99,8 +102,11 @@
 		</td>
 	    </tr>
 	</tfoot>
-    </table>
+    </table>    
+    </div>    
     <?php echo form_close(); ?>
 <?php endif; ?>
-	</div>
-</div>	
+            </div>
+        </div>
+    </div>	
+</div>    

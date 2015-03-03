@@ -144,14 +144,12 @@ class Admin_Controller extends CI_Controller {
 		// Check if module list is available
 		if (!empty($this->module_function_list)) {
 			foreach ($this->module_function_list as $modules => $module) {
-				$name = $modules;
-				
-				if (!empty($module[$module_menu])) {
-					$menu_name = $module[$module_menu];
-				}			
+                            if (!empty($module[$module_menu])) {
+                                $menu_name = $module[$module_menu];
+                            }			
 			}
 		}
-		return $menu_name;
+                return $menu_name;
 		
 	}
 	
