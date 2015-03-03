@@ -1,22 +1,22 @@
 <div class="page-content-wrapper">
     <div class="page-content">
+	<h2>
+	    Module Listings
+	    <?php
+	    //print_r($module_permission);
+	    /*
+		// Alert users if module is updated
+		if(Session::instance()->get('modulelist_edit') != '') {
+		?>
+		    <small class="red fadeOut"> - <?php echo Session::instance()->get_once('modulelist_edit');?></small>
+		<?php
+		}
+	     * 
+	     */
+	    ?>
+	</h2>
         <div class="row-fluid">
             <div class="table">
-                <h2>
-                    Module Listings
-                    <?php
-                    //print_r($module_permission);
-                    /*
-                        // Alert users if module is updated
-                        if(Session::instance()->get('modulelist_edit') != '') {
-                        ?>
-                            <small class="red fadeOut"> - <?php echo Session::instance()->get_once('modulelist_edit');?></small>
-                        <?php
-                        }
-                     * 
-                     */
-                    ?>
-                </h2>
 <div class="bar"></div>
 <?php if (count($listings) == 0) :?>
     <div class="ls15 clear"></div>
