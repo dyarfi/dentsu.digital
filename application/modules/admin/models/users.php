@@ -32,8 +32,8 @@ class Users Extends CI_Model {
 				    . '`is_system` TINYINT(3) NOT NULL DEFAULT 0, '
 				    . '`last_login` INT(11) UNSIGNED NOT NULL, '
 				    . '`logged_in` INT(1) UNSIGNED NOT NULL,'
-				    . '`status` INT(1) UNSIGNED NOT NULL,'
 				    . '`session` VARCHAR(160) NOT NULL, '
+				    . '`status` INT(1) UNSIGNED NOT NULL,'
 				    . '`added` INT(11) UNSIGNED NOT NULL, '
 				    . '`modified` INT(11) UNSIGNED NOT NULL, '
 				    . 'INDEX (`email`, `group_id`) '
@@ -42,19 +42,19 @@ class Users Extends CI_Model {
 		    $this->db->query($sql);
 		}
 		
-        if(!$this->db->query('SELECT * FROM `'.$this->table.'` LIMIT 0, 1;'))
-			$insert_data	= TRUE;
+                if(!$this->db->query('SELECT * FROM `'.$this->table.'` LIMIT 0, 1;'))
+                        $insert_data	= TRUE;
 		
 		if ($insert_data) {
 			$sql	= 'INSERT INTO `'.$this->table.'` '
-				. '(`id`, `email`, `password`, `username`, `group_id`, `is_system`, `last_login`, `status`, `added`, `modified`) '
+				. '(`id`,`email`,`password`,`username`,`group_id`,`is_system`,`last_login`,`logged_in`,`session`,`status`,`added`,`modified`) '
 				. 'VALUES '
-				. '(NULL, \'superadmin\', \'356a192b7913b04c54574d18c28d46e6395428ab\', \'Super Administrator\', 1, 1, 1, '.time().', \'1\', '.time().', 0), '
-				. '(NULL, \'administrator\', \'12506e739378348ec662bb015bfd2288362dcc1c\', \'Administrator\', 2, 1, 1, '.time().', \'1\', '.time().', 0), '
-				. '(NULL, \'user@testing.com\', \'12506e739378348ec662bb015bfd2288362dcc1c\', \'User\', 99, 0, 1, '.time().', \'1\', '.time().', 0), '
-				. '(NULL, \'employee@employee.com\', \'12506e739378348ec662bb015bfd2288362dcc1c\', \'Employee Staff\', 100, 0, 1, '.time().', \'1\', '.time().', 0)';
+				. '(NULL, \'admin@admin.com\', \'dd94709528bb1c83d08f3088d4043f4742891f4f\', \'admin\', 1, 1, 0, '.time().', NULL, 1, '.time().', 0), '
+				. '(NULL, \'administrator\', \'12506e739378348ec662bb015bfd2288362dcc1c\', \'Administrator\', 2, 1, 0, '.time().', NULL, 1, '.time().', 0), '
+				. '(NULL, \'user@testing.com\', \'12506e739378348ec662bb015bfd2288362dcc1c\', \'User\', 99, 0, 0, '.time().', NULL, 1, '.time().', 0), '
+				. '(NULL, \'employee@employee.com\', \'12506e739378348ec662bb015bfd2288362dcc1c\', \'Employee Staff\', 100, 0, 0, '.time().', NULL, 1, '.time().', 0);';
 
-			$this->db->query($sql);
+			if ($sql) $this->db->query($sql);
 		}
 
 		return $this->db->table_exists($this->table);

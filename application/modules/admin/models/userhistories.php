@@ -41,7 +41,7 @@ class UserHistories Extends CI_Model {
 					. '(NULL, \'user\', \'1\', \'history\', \'index\', '.time().'), '
 					. '(NULL, \'user\', \'1\', \'history\', \'index\', '.time().')';
 
-			$this->db->query($sql);
+			if ($sql) $this->db->query($sql);
 		}
 
 		return $this->db->table_exists($this->table);

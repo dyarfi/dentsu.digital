@@ -37,7 +37,7 @@ class Admin_Controller extends CI_Controller {
 		$this->module_menu		= self::check_module_menu($this->module_request);
 		
 		// Add array of data to perform
-		$data->css_files		= array('asdf'=>'asdf');
+		//$data->css_files		= array('asdf'=>'asdf');
 		
 		//print_r($this);
 		//exit;

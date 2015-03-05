@@ -54,7 +54,7 @@ class UserGroupPermissions Extends CI_Model {
 					. '(NULL, \'administrator\', \'12506e739378348ec662bb015bfd2288362dcc1c\', \'Administrator\', 2, 1, '.time().', \'active\', '.time().', 0), '
 					. '(NULL, \'user@testing.com\', \'12506e739378348ec662bb015bfd2288362dcc1c\', \'User\', 99, 0, '.time().', \'active\', '.time().', 0)';
 
-			$this->db->query('INSERT',$sql);
+			if ($sql) $this->db->query($sql);
 		}
 		*/
 	    return $this->db->table_exists($this->table);

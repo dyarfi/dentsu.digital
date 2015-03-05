@@ -31,15 +31,15 @@ class Configurations Extends CI_Model {
 		}
 		
 		if ($insert_data) {
-			$sql	= 'INSERT INTO `'.$this->table.'` '
-					. '(`parameter`, `value`) '
-					. 'VALUES '
-					. '(\'install\', \'0\'),'
-					. '(\'maintenance\', \'0\'),'
-					. '(\'environment\', \'0\'),'
-					. '(\'theme\', \'0\')';
+                    $sql	= 'INSERT INTO `'.$this->table.'` '
+                                    . '(`parameter`, `value`) '
+                                    . 'VALUES '
+                                    . '(\'install\', \'0\'),'
+                                    . '(\'maintenance\', \'0\'),'
+                                    . '(\'environment\', \'0\'),'
+                                    . '(\'theme\', \'0\')';
 
-			$this->db->query($sql);
+                    if ($sql) $this->db->query($sql);
 		}
 
 		return $this->db->table_exists($this->table);

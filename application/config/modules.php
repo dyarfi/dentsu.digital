@@ -46,13 +46,14 @@ $config['modulelist'] = array(
 		// Admin Models list
 		'models'	=> array(
 					'admin/Users',
-					'admin/UserGroups',
 					'admin/UserProfiles',
 					'admin/UserHistories',
 					'admin/ModulePermissions',
+                                        'admin/UserGroupPermissions',
                                         'admin/Languages',
 					'admin/Settings',
-					'admin/ServerLogs'
+					'admin/ServerLogs',
+                                        'admin/Sessions'
 					),
 		// Admin module menus
 		'module_menu'	=> array(

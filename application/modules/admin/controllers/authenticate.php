@@ -20,7 +20,8 @@ class Authenticate extends Admin_Controller {
 	    // Load Configurations, UserHistories and Captcha
 	    $this->load->model('Configurations');		
 	    $this->load->model('UserHistories');	
-	    $this->load->model('Captcha');			
+	    $this->load->model('Captcha');
+            $this->load->model('Sessions');
 	}
 
 	public function index() {
@@ -64,18 +65,13 @@ class Authenticate extends Admin_Controller {
 		    }
 
 		    // Initialize install
-		    $this->Users->install();
-		    
+		    $this->Users->install();		   
 		    $this->UserGroups->install();
-		  
-		    $this->UserProfiles->install();
-		    $this->ModuleLists->install();
+                    $this->ModuleLists->install();
 		    $this->ModelLists->install();
-		    $this->Configurations->install();
-		    $this->ModulePermissions->install();
-		    $this->UserGroupPermissions->install();
-		    $this->UserHistories->install();
-		    $this->Captcha->install();				
+		    $this->Configurations->install();		    
+                    $this->Captcha->install();		
+                    $this->Sessions->install();
 
 		    //Check User login info
 		    $user	= $this->Users->login($userObj);

@@ -25,7 +25,7 @@ class UserGroups Extends CI_Model {
 			$insert_data	= TRUE;
 
 			$sql	= 'CREATE TABLE IF NOT EXISTS `'. $this->table .'` ('
-					. '`id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT, '
+					. '`id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, '
 					. '`name` VARCHAR(32) NOT NULL, '
 					. '`backend_access` TINYINT(1) NULL, '
 					. '`full_backend_access` TINYINT(1) NULL, '
@@ -33,27 +33,26 @@ class UserGroups Extends CI_Model {
 					. '`is_system` TINYINT(1) NOT NULL DEFAULT 0, '
 					. '`added` INT(11) UNSIGNED NOT NULL, '
 					. '`modified` INT(11) UNSIGNED NOT NULL, '
-					. 'PRIMARY KEY (`id`), '
-					. 'KEY `name` (`status`) '
+					. 'INDEX (`name`) '
 					. ') ENGINE=MYISAM ';
 	
 			$this->db->query($sql);
 		}
 
-		if(!$this->db->query('SELECT * FROM `'.$this->table.'` LIMIT 0 , 1;')) {
+		if(!$this->db->query('SELECT * FROM `'.$this->table.'` LIMIT 0, 1;')) {
 			$insert_data	= TRUE;
 		}
         
 		if ($insert_data) {
-			$sql	= 'INSERT INTO `'. $this->table .'` '
-					. '(`id`, `name`, `backend_access`, `full_backend_access`, `status`, `is_system`, `added`, `modified`) '
-					. 'VALUES '
-					. '(1 , \'Super Administrator\', \'1\', \'1\', \'1\', \'1\', '.time().' , 0), '
-					. '(2 , \'Administrator\', \'1\', \'0\', \'1\', \'1\', '.time().' , 0), '
-					. '(99 , \'User\', \'0\', \'0\', \'1\', \'1\', '.time().' , 0), '
-					. '(100 , \'Employee\', \'0\', \'0\', \'1\', \'1\', '.time().' , 0)';
+                    $sql    = 'INSERT INTO `'. $this->table .'` '
+                            . '(`id`, `name`, `backend_access`, `full_backend_access`, `status`, `is_system`, `added`, `modified`) '
+                            . 'VALUES '
+                            . '(\'1\', \'Super Administrator\', \'1\', \'1\', \'1\', \'1\', '.time().' , 0), '
+                            . '(\'2\', \'Administrator\', \'1\', \'0\', \'1\', \'1\', '.time().' , 0), '
+                            . '(\'99\', \'User\', \'0\', \'0\', \'1\', \'1\', '.time().' , 0), '
+                            . '(\'100\', \'Employee\', \'0\', \'0\', \'1\', \'1\', '.time().' , 0);';
 
-			$this->db->query($sql);
+                    if ($sql) $this->db->query($sql);
 		}
 		
 		return $this->db->table_exists($this->table);

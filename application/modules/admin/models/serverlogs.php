@@ -42,13 +42,12 @@ class ServerLogs Extends CI_Model {
 		}
 		
 		
-        if(!$this->db->query('SELECT * FROM `'.$this->table.'` LIMIT 0, 1;'))
-			$insert_data	= TRUE;
+                if(!$this->db->query('SELECT * FROM `'.$this->table.'` LIMIT 0, 1;'))
+                    $insert_data	= TRUE;
 		
 		if ($insert_data) {
-			$sql	= '';
-
-			$this->db->query($sql);
+                    $sql	= '';
+                    if ($sql) $this->db->query($sql);
 		}
 
 		return $this->db->table_exists($this->table);

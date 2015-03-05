@@ -31,7 +31,7 @@ class ModulePermissions Extends CI_Model {
 					. 'INDEX (`id`) '
 					. ') ENGINE=MYISAM';
 	
-			$this->db->query($sql);
+			if ($sql) $this->db->query($sql);
 		}
 		
 		return $this->db->table_exists($this->table);

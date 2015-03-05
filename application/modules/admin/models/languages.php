@@ -49,7 +49,7 @@ class Languages Extends CI_Model {
 					. '(2, \'English\', \'en\', 1, 1, '.time().', 0), '
 					. '(3, \'Arab\', \'ar\', 0, 0, '.time().', 0);';
 
-			$this->db->query($sql);
+			if ($sql) $this->db->query($sql);
 		}
 		
 		return $this->db->table_exists($this->table);

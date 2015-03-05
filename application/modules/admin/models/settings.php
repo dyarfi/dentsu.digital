@@ -70,7 +70,7 @@ class Settings Extends CI_Model {
 						.'(25, \'google_analytics\', \'Analytics\', \'Code Snippet\', \'1\', NULL, 1336118568), '
 						.'(26, \'ext_link\', \'Ext Link\', \'http://www.apb-career.net\', \'1\', NULL, 1336118568);';
 
-			$this->db->query($sql);
+			if ($sql) $this->db->query($sql);
 		}
 
 		return $this->db->table_exists($this->table);
