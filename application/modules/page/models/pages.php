@@ -42,7 +42,7 @@ class Pages Extends CI_Model {
 				. '`status` ENUM( \'publish\', \'unpublish\', \'deleted\' ) NULL DEFAULT \'publish\', '
 				. '`added` INT(11) NULL, '
 				. '`modified` INT(11) NULL, '
-				. 'INDEX (`category_id`, `name`, `publish_date`, `unpublish_date`, `allow_comment`, `order`) '
+				. 'INDEX (`menu_id`, `name`, `publish_date`, `unpublish_date`, `allow_comment`, `order`) '
 				. ') ENGINE=MYISAM';
 
 		$this->db->query($sql);

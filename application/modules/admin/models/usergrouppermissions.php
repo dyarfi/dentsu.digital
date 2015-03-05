@@ -28,7 +28,7 @@ class UserGroupPermissions Extends CI_Model {
 			$sql	= 'CREATE TABLE IF NOT EXISTS `'. $this->table .'` ('
 					. '`id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,'
 					. '`permission_id` INT(11) NOT NULL,'
-					. '`level_id` INT(11) NOT NULL,'
+					. '`group_id` INT(11) NOT NULL,'
 					. '`value` SMALLINT(1) NOT NULL,'
 					. '`added` INT(11) NOT NULL,'	
 					. '`modified` INT(11) NOT NULL,'	

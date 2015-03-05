@@ -20,8 +20,8 @@ class PageMenus Extends CI_Model {
 		
 		$insert_data	= FALSE;
 
-		if (!$this->db->table_exists($this->table)) 
-                $insert_data	= TRUE;
+		if (!$this->db->table_exists($this->table))
+                    $insert_data	= TRUE;
                 
                 $sql	= 'CREATE TABLE IF NOT EXISTS `'.$this->table.'` ('
 				. '`id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY , '
@@ -42,17 +42,16 @@ class PageMenus Extends CI_Model {
 				. '`added` INT(0) NULL , '
 				. '`modified` INT(0) NULL , '
 				. 'INDEX (`parent_id`, `name`, `sub_level`, `order`, `status`) '
-				. ') ENGINE=MYISAM ';
+				. ') ENGINE=MYISAM;';
 
 		$this->db->query($sql);
 		
-        if(!$this->db->query('SELECT * FROM `'.$this->table.'` LIMIT 0 , 1;'))
-			$insert_data	= TRUE;
+                if(!$this->db->query('SELECT * FROM `'.$this->table.'` LIMIT 0 , 1;'))
+                        $insert_data	= TRUE;
 		
 		if ($insert_data) {
-			$sql	= '';
-
-			$this->db->query($sql);
+                    $sql	= '';
+                    if($sql) $this->db->query($sql);
 		}
 
 		return $this->db->table_exists($this->table);

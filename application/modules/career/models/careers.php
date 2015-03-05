@@ -52,8 +52,8 @@ class Careers Extends CI_Model {
 				. '`division_id` INT(11) UNSIGNED NULL, '
 				. '`name` VARCHAR(255) NULL, '
 				. '`subject` VARCHAR(255) NULL, '
+                                . '`ref_no` VARCHAR(12) NULL, '
 				. '`sent_to` VARCHAR(32) NULL, '
-				. '`ref_no` VARCHAR(12) NULL, '
 				. '`start_date` DATE NULL DEFAULT \'0000-00-00\', '
 				. '`end_date` DATE NULL DEFAULT \'0000-00-00\', '
 				. '`report_to` TINYTEXT NULL, '
@@ -70,8 +70,8 @@ class Careers Extends CI_Model {
 				. '`status` TINYINT(1) NULL , '
 				. '`added` INT(11) UNSIGNED NULL, '
 				. '`modified` INT(11) UNSIGNED NULL, '
-				. 'INDEX (`name`, `ref_no`, `subject`) '
-				. ') ENGINE=MYISAM';
+				. 'INDEX (`name`, `ref_no`) '
+				. ') ENGINE=MYISAM;';
 				
 				
 		$this->db->query($sql);
