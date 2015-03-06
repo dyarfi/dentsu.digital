@@ -55,7 +55,7 @@
 		<div class="portlet-body">
 		    <div class="table-toolbar">
 			<div class="btn-group">
-			    <a class="btn red" id="sample_editable_1_new" href="<?=base_url(ADMIN.'log/trash');?>">
+			    <a class="btn red" id="sample_editable_1_new" href="<?=base_url(ADMIN.$class_name.'/trash');?>">
 			    Trash Log <i class="fa fa-trash-o"></i>
 			    </a>
 			</div>

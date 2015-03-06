@@ -6,9 +6,9 @@ class ServerLog extends Admin_Controller {
 	 * Index Page for this controller.
 	 *
 	 * Maps to the following URL
-	 * 		http://example.com/index.php/log
+	 * 		http://example.com/index.php/serverlog
 	 *	- or -  
-	 * 		http://example.com/index.php/log/index
+	 * 		http://example.com/index.php/serverlog/index
 	 *	- or -
 	 * Since this controller is set as the default controller in 
 	 * config/routes.php, it's displayed at http://example.com/
@@ -20,7 +20,10 @@ class ServerLog extends Admin_Controller {
 	
 	public function __construct() {
 	    parent::__construct();
-
+	    
+	    // Set class name
+	    $this->_class_name = $this->controller;
+	    
 	    // Load logs model
 	    $this->load->model('ServerLogs');
 		
@@ -295,5 +298,5 @@ class ServerLog extends Admin_Controller {
     
 }
 
-/* End of file log.php */
-/* Location: ./application/log/controllers/log.php */
+/* End of file serverlog.php */
+/* Location: ./application/log/controllers/serverlog.php */
