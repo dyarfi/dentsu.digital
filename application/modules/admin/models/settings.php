@@ -76,6 +76,7 @@ class Settings Extends CI_Model {
 		return $this->db->table_exists($this->table);
 		
 	}
+	
 	public function getCount($status = null){
 		$data = array();
 		$options = array('status' => $status);
@@ -84,6 +85,7 @@ class Settings Extends CI_Model {
 		$data = $this->db->count_all_results();
 		return $data;
 	}
+	
 	public function getSetting($id = null){
 		if(!empty($id)){
 			$data = array();
@@ -97,6 +99,7 @@ class Settings Extends CI_Model {
 			return $data;
 		}
 	}
+	
 	public function getByParameter($param = null){
 		if(!empty($param)){
 			$data = array();
@@ -110,6 +113,7 @@ class Settings Extends CI_Model {
 			return $data;
 		}
 	}
+	
 	public function getAllSetting($status=null){
 		$data = array();
 		$this->db->order_by('added');
@@ -123,6 +127,7 @@ class Settings Extends CI_Model {
 		$Q->free_result();
 		return $data;
 	}
+	
 	public function setSetting($object=null){
 		
 		// Set Setting data

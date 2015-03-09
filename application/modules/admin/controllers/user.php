@@ -67,262 +67,262 @@ class User extends Admin_Controller {
     
     public function add() {
 		
-		// Default data setup
-		$fields	= array(
-				'username'		=> '',
-				'email'			=> '',
-				'password'		=> '',
-				'password1'		=> '',
-				'gender'		=> '',				
-				'group_id'		=> '',
-				'first_name'	=> '',
-				'last_name'		=> '',				
-				'birthday'		=> '',
-				'phone'			=> '',	
-				'mobile_phone'	=> '',				
-				'fax'			=> '',
-				'website'		=> '',
-				'about'			=> '',
-				'division'		=> '',
-				'status'		=> '');
-		
-		$errors	= $fields;
-		
-		$this->form_validation->set_rules('username', 'Username', 'trim|required|min_length[5]|max_length[24]|xss_clean');
-		$this->form_validation->set_rules('email', 'Email','trim|valid_email|required|min_length[5]|max_length[36]|callback_match_email|xss_clean');
-		$this->form_validation->set_rules('password', 'Password','trim|required');
-		$this->form_validation->set_rules('password1', 'Retype Password','trim|required|matches[password]');
-		$this->form_validation->set_rules('gender', 'Gender','required');		
-		$this->form_validation->set_rules('group_id', 'Group','required');
-		$this->form_validation->set_rules('first_name', 'First Name','trim');
-		$this->form_validation->set_rules('last_name', 'Last Name','required');
-		$this->form_validation->set_rules('birthday', 'Birthday','required');
-		$this->form_validation->set_rules('phone', 'Phone','trim|is_natural|xss_clean|max_length[25]');
-		$this->form_validation->set_rules('mobile_phone', 'Mobile Phone','trim');		
-		$this->form_validation->set_rules('fax', 'Fax','trim|is_natural|xss_clean|max_length[25]');
-		$this->form_validation->set_rules('website', 'Website','trim|prep_url|xss_clean|max_length[35]');
-		$this->form_validation->set_rules('about', 'About','trim|xss_clean|max_length[1000]');
-		$this->form_validation->set_rules('division', 'Division','trim|xss_clean|max_length[55]');				
-		$this->form_validation->set_rules('status', 'Status','required');
-		
-		// Check if post is requested
-		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-			
-			// Validation form checks
-			if ($this->form_validation->run() == FALSE)
-			{
-				// Set error fields
-				$error = array();
-				foreach(array_keys($fields) as $error) {
-					$errors[$error] = form_error($error);
-				}
+	    // Default data setup
+	    $fields	= array(
+			    'username'		=> '',
+			    'email'		=> '',
+			    'password'		=> '',
+			    'password1'		=> '',
+			    'gender'		=> '',				
+			    'group_id'		=> '',
+			    'first_name'	=> '',
+			    'last_name'		=> '',				
+			    'birthday'		=> '',
+			    'phone'		=> '',	
+			    'mobile_phone'	=> '',				
+			    'fax'		=> '',
+			    'website'		=> '',
+			    'about'		=> '',
+			    'division'		=> '',
+			    'status'		=> '');
 
-				// Set previous post merge to default
-				$fields = array_merge($fields, $this->input->post());
-			}
-			else
-			{
+	    $errors	= $fields;
 
-				// Set data to add to database
-				$this->Users->setUser($this->input->post());
-				
-				// Set message
-				$this->session->set_flashdata('message','User created!');
-				
-				// Redirect after add
-				redirect(ADMIN. $this->controller . '/index');
-				
-			}
-			
-		} 	
-			
-		// Set Action
-		$data['action'] = 'add';
-				
-		// Set Param
-		$data['param']	= '';
-				
-		// Set error data to view
-		$data['errors'] = $errors;
-		
-		// User Groups Data
-		$data['user_groups']	= $this->UserGroups->getAllUserGroup();
-				
-		// User Status Data
-		$data['statuses']	= @$this->configs['status'];
-		
-		// User Gender Data
-		$data['genders']	= @$this->configs['gender'];
-		
-		// Post Fields
-		$data['fields']		= (object) $fields;
+	    $this->form_validation->set_rules('username', 'Username', 'trim|required|min_length[5]|max_length[24]|xss_clean');
+	    $this->form_validation->set_rules('email', 'Email','trim|valid_email|required|min_length[5]|max_length[36]|callback_match_email|xss_clean');
+	    $this->form_validation->set_rules('password', 'Password','trim|required');
+	    $this->form_validation->set_rules('password1', 'Retype Password','trim|required|matches[password]');
+	    $this->form_validation->set_rules('gender', 'Gender','required');		
+	    $this->form_validation->set_rules('group_id', 'Group','required');
+	    $this->form_validation->set_rules('first_name', 'First Name','trim');
+	    $this->form_validation->set_rules('last_name', 'Last Name','required');
+	    $this->form_validation->set_rules('birthday', 'Birthday','required');
+	    $this->form_validation->set_rules('phone', 'Phone','trim|is_natural|xss_clean|max_length[25]');
+	    $this->form_validation->set_rules('mobile_phone', 'Mobile Phone','trim');		
+	    $this->form_validation->set_rules('fax', 'Fax','trim|is_natural|xss_clean|max_length[25]');
+	    $this->form_validation->set_rules('website', 'Website','trim|prep_url|xss_clean|max_length[35]');
+	    $this->form_validation->set_rules('about', 'About','trim|xss_clean|max_length[1000]');
+	    $this->form_validation->set_rules('division', 'Division','trim|xss_clean|max_length[55]');				
+	    $this->form_validation->set_rules('status', 'Status','required');
 
-		// Set class name to view
-		$data['class_name'] = $this->_class_name;
-	    
-		// Main template
-		$data['main']		= 'users/users_form';		
-	
-		// Set module with URL request 
-		$data['module_title'] = $this->module;
-		
-		// Set admin title page with module menu
-		$data['page_title'] = $this->module_menu;
-		
-		// Admin view template
-		$this->load->view('template/admin/admin_template', $this->load->vars($data));
-				
-	}
+	    // Check if post is requested
+	    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+		    // Validation form checks
+		    if ($this->form_validation->run() == FALSE)
+		    {
+			    // Set error fields
+			    $error = array();
+			    foreach(array_keys($fields) as $error) {
+				    $errors[$error] = form_error($error);
+			    }
+
+			    // Set previous post merge to default
+			    $fields = array_merge($fields, $this->input->post());
+		    }
+		    else
+		    {
+
+			    // Set data to add to database
+			    $this->Users->setUser($this->input->post());
+
+			    // Set message
+			    $this->session->set_flashdata('message','User created!');
+
+			    // Redirect after add
+			    redirect(ADMIN. $this->controller . '/index');
+
+		    }
+
+	    } 	
+
+	    // Set Action
+	    $data['action'] = 'add';
+
+	    // Set Param
+	    $data['param']	= '';
+
+	    // Set error data to view
+	    $data['errors'] = $errors;
+
+	    // User Groups Data
+	    $data['user_groups']	= $this->UserGroups->getAllUserGroup();
+
+	    // User Status Data
+	    $data['statuses']	= @$this->configs['status'];
+
+	    // User Gender Data
+	    $data['genders']	= @$this->configs['gender'];
+
+	    // Post Fields
+	    $data['fields']		= (object) $fields;
+
+	    // Set class name to view
+	    $data['class_name'] = $this->_class_name;
+
+	    // Main template
+	    $data['main']		= 'users/users_form';		
+
+	    // Set module with URL request 
+	    $data['module_title'] = $this->module;
+
+	    // Set admin title page with module menu
+	    $data['page_title'] = $this->module_menu;
+
+	    // Admin view template
+	    $this->load->view('template/admin/admin_template', $this->load->vars($data));
+
+    }
 	
     public function edit($id=0){
 				
-		// Check if param is given or not and check from database
-		if (empty($id) || !$this->Users->getUser($id)) {
-			$this->session->set_flashdata('message','Item not found!');
-			// Redirect to index
-			redirect(ADMIN. $this->controller . '/index');
-		}	
-		
-		//Default data setup
-		$fields	= array(
-				'username'		=> '',
-				'email'			=> '',
-				//'password'		=> '',
-				//'password1'		=> '',
-				'gender'		=> '',				
-				'group_id'		=> '',
-				'first_name'	=> '',
-				'last_name'		=> '',				
-				'birthday'		=> '',
-				'phone'			=> '',	
-				'mobile_phone'	=> '',				
-				'fax'			=> '',
-				'website'		=> '',
-				'about'			=> '',
-				'division'		=> '',
-				'status'		=> '');
-		
-		$errors	= $fields;
-		
-		$this->form_validation->set_rules('username', 'Username', 'trim|required|min_length[5]|max_length[24]|xss_clean');
-		//$this->form_validation->set_rules('email', 'Email','trim|valid_email|required|min_length[5]|max_length[24]|callback_match_email|xss_clean');
-		//$this->form_validation->set_rules('password', 'Password','trim|required');
-		//$this->form_validation->set_rules('password1', 'Retype Password','trim|required|matches[password]');
-		$this->form_validation->set_rules('gender', 'Gender','required');		
-		$this->form_validation->set_rules('group_id', 'Group','required');
-		$this->form_validation->set_rules('first_name', 'First Name','trim');
-		$this->form_validation->set_rules('last_name', 'Last Name','required');
-		$this->form_validation->set_rules('birthday', 'Birthday','required');
-		$this->form_validation->set_rules('phone', 'Phone','trim|is_natural|xss_clean|max_length[25]');
-		$this->form_validation->set_rules('mobile_phone', 'Mobile Phone','trim');		
-		$this->form_validation->set_rules('fax', 'Fax','trim|is_natural|xss_clean|max_length[25]');
-		$this->form_validation->set_rules('website', 'Website','trim|prep_url|xss_clean|max_length[35]');
-		$this->form_validation->set_rules('about', 'About','trim|xss_clean|max_length[1000]');
-		$this->form_validation->set_rules('division', 'Division','trim|xss_clean|max_length[55]');				
-		$this->form_validation->set_rules('status', 'Status','required');
-		
-		// Check if post is requested		
-		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-			
-			// Validation form checks
-			if ($this->form_validation->run() == FALSE) {
+	    // Check if param is given or not and check from database
+	    if (empty($id) || !$this->Users->getUser($id)) {
+		    $this->session->set_flashdata('message','Item not found!');
+		    // Redirect to index
+		    redirect(ADMIN. $this->controller . '/index');
+	    }	
 
-				// Set error fields
-				$errors = array();
-				foreach(array_keys($fields) as $error) {
-					$errors[$error] = form_error($error);
-				}
+	    //Default data setup
+	    $fields	= array(
+			    'username'		=> '',
+			    'email'			=> '',
+			    //'password'		=> '',
+			    //'password1'		=> '',
+			    'gender'		=> '',				
+			    'group_id'		=> '',
+			    'first_name'	=> '',
+			    'last_name'		=> '',				
+			    'birthday'		=> '',
+			    'phone'			=> '',	
+			    'mobile_phone'	=> '',				
+			    'fax'			=> '',
+			    'website'		=> '',
+			    'about'			=> '',
+			    'division'		=> '',
+			    'status'		=> '');
 
-				// Set previous post merge to default
-				$fields = array_merge($fields, $this->input->post());	
-				
-				//print_r($this->input->post());
+	    $errors	= $fields;
 
-			} else {
+	    $this->form_validation->set_rules('username', 'Username', 'trim|required|min_length[5]|max_length[24]|xss_clean');
+	    //$this->form_validation->set_rules('email', 'Email','trim|valid_email|required|min_length[5]|max_length[24]|callback_match_email|xss_clean');
+	    //$this->form_validation->set_rules('password', 'Password','trim|required');
+	    //$this->form_validation->set_rules('password1', 'Retype Password','trim|required|matches[password]');
+	    $this->form_validation->set_rules('gender', 'Gender','required');		
+	    $this->form_validation->set_rules('group_id', 'Group','required');
+	    $this->form_validation->set_rules('first_name', 'First Name','trim');
+	    $this->form_validation->set_rules('last_name', 'Last Name','required');
+	    $this->form_validation->set_rules('birthday', 'Birthday','required');
+	    $this->form_validation->set_rules('phone', 'Phone','trim|is_natural|xss_clean|max_length[25]');
+	    $this->form_validation->set_rules('mobile_phone', 'Mobile Phone','trim');		
+	    $this->form_validation->set_rules('fax', 'Fax','trim|is_natural|xss_clean|max_length[25]');
+	    $this->form_validation->set_rules('website', 'Website','trim|prep_url|xss_clean|max_length[35]');
+	    $this->form_validation->set_rules('about', 'About','trim|xss_clean|max_length[1000]');
+	    $this->form_validation->set_rules('division', 'Division','trim|xss_clean|max_length[55]');				
+	    $this->form_validation->set_rules('status', 'Status','required');
 
-				$posts = array(
-					// Primary Accounts
-					'id' => $id,
-					'group_id' => $this->input->post('group_id'),
-					'username' => $this->input->post('username'),
-					'email' => $this->input->post('email'),
-					'backend_access' => $this->input->post('backend_access'),
-					'full_backend_access' => $this->input->post('full_backend_access'),
-					'status' => $this->input->post('status'),
-					// Profile Accounts
-					'gender'	=> $this->input->post('gender'),				
-					'first_name'	=> $this->input->post('first_name'),
-					'last_name'	=> $this->input->post('last_name'),				
-					'birthday'	=> $this->input->post('birthday'),
-					'phone'		=> $this->input->post('phone'),	
-					'mobile_phone'	=> $this->input->post('mobile_phone'),				
-					'fax'		=> $this->input->post('fax'),
-					'website'	=> $this->input->post('website'),
-					'about'		=> $this->input->post('about'),
-					'division'	=> $this->input->post('division')
-				);
-				
-				// Set data to add to database
-				$this->Users->updateUser($posts);
+	    // Check if post is requested		
+	    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-				// Set message
-				$this->session->set_flashdata('message','User updated');
+		    // Validation form checks
+		    if ($this->form_validation->run() == FALSE) {
 
-				// Redirect after add
-				redirect(ADMIN. $this->controller . '/index');
+			    // Set error fields
+			    $errors = array();
+			    foreach(array_keys($fields) as $error) {
+				    $errors[$error] = form_error($error);
+			    }
 
-			}
-		
-		} else {	
-			
-			// Set password1 to null
-			$fields['password1']	= '';
-			
-			// Set fields from database
-			$_fields		= array_merge($fields,(array) $this->Users->getUser($id));
-			
-			$profile	= (array) $this->UserProfiles->getUserProfile($id);									
-			$fields		= (object) array_merge($_fields,$profile);
+			    // Set previous post merge to default
+			    $fields = array_merge($fields, $this->input->post());	
 
-		}
-		
-		// Set Action
-		$data['action'] = 'edit';
-				
-		// Set Param
-		$data['param']	= $id;
-		
-		// Set error data to view
-		$data['errors'] = $errors;
+			    //print_r($this->input->post());
 
-		// Set field data to view
-		$data['fields'] = (object) $fields;		
-			
-		// User Status Data
-		$data['statuses']   = $this->configs['status'];
-		
-		// User Gender Data
-		$data['genders']    = $this->configs['gender'];
-		
-		// User Groups Data
-		$data['user_groups'] = $this->UserGroups->getAllUserGroup();
-		
-		// Set class name to view
-		$data['class_name'] = $this->_class_name;
-	    
-		// Set form to view
-		$data['main'] = 'users/users_form';			
-		
-		// Set module with URL request 
-		$data['module_title'] = $this->module;
-		
-		// Set admin title page with module menu
-		$data['page_title'] = $this->module_menu;
-		
-		// Set admin template
-		$this->load->view('template/admin/admin_template', $this->load->vars($data));
-		
-	}
+		    } else {
+
+			    $posts = array(
+				    // Primary Accounts
+				    'id' => $id,
+				    'group_id' => $this->input->post('group_id'),
+				    'username' => $this->input->post('username'),
+				    'email' => $this->input->post('email'),
+				    'backend_access' => $this->input->post('backend_access'),
+				    'full_backend_access' => $this->input->post('full_backend_access'),
+				    'status' => $this->input->post('status'),
+				    // Profile Accounts
+				    'gender'	=> $this->input->post('gender'),				
+				    'first_name'	=> $this->input->post('first_name'),
+				    'last_name'	=> $this->input->post('last_name'),				
+				    'birthday'	=> $this->input->post('birthday'),
+				    'phone'		=> $this->input->post('phone'),	
+				    'mobile_phone'	=> $this->input->post('mobile_phone'),				
+				    'fax'		=> $this->input->post('fax'),
+				    'website'	=> $this->input->post('website'),
+				    'about'		=> $this->input->post('about'),
+				    'division'	=> $this->input->post('division')
+			    );
+
+			    // Set data to add to database
+			    $this->Users->updateUser($posts);
+
+			    // Set message
+			    $this->session->set_flashdata('message','User updated');
+
+			    // Redirect after add
+			    redirect(ADMIN. $this->controller . '/index');
+
+		    }
+
+	    } else {	
+
+		    // Set password1 to null
+		    $fields['password1']	= '';
+
+		    // Set fields from database
+		    $_fields		= array_merge($fields,(array) $this->Users->getUser($id));
+
+		    $profile	= (array) $this->UserProfiles->getUserProfile($id);									
+		    $fields		= (object) array_merge($_fields,$profile);
+
+	    }
+
+	    // Set Action
+	    $data['action'] = 'edit';
+
+	    // Set Param
+	    $data['param']	= $id;
+
+	    // Set error data to view
+	    $data['errors'] = $errors;
+
+	    // Set field data to view
+	    $data['fields'] = (object) $fields;		
+
+	    // User Status Data
+	    $data['statuses']   = $this->configs['status'];
+
+	    // User Gender Data
+	    $data['genders']    = $this->configs['gender'];
+
+	    // User Groups Data
+	    $data['user_groups'] = $this->UserGroups->getAllUserGroup();
+
+	    // Set class name to view
+	    $data['class_name'] = $this->_class_name;
+
+	    // Set form to view
+	    $data['main'] = 'users/users_form';			
+
+	    // Set module with URL request 
+	    $data['module_title'] = $this->module;
+
+	    // Set admin title page with module menu
+	    $data['page_title'] = $this->module_menu;
+
+	    // Set admin template
+	    $this->load->view('template/admin/admin_template', $this->load->vars($data));
+
+    }
 	
     public function delete($id){
 
@@ -397,33 +397,33 @@ class User extends Admin_Controller {
             // Action Update User Profile via Ajax
             if ($action === 'update') {			
 
-                    // Set validation config
-                    $config = array(
-           array('field' => 'first_name', 
-                 'label' => 'First Name', 
-                 'rules' => 'trim|required|xss_clean|max_length[25]'),	
-           array('field' => 'last_name', 
-                 'label' => 'Last Name', 
-                 'rules' => 'trim|xss_clean|max_length[25]'),
-           array('field' => 'captcha', 
-                 'label' => 'Captcha', 
-                 'rules' => 'trim|xss_clean|max_length[6]|callback_match_captcha'),
-           array('field' => 'phone', 
-                 'label' => 'Phone', 
-                 'rules' => 'trim|is_natural|xss_clean|max_length[25]'),
-                       array('field' => 'mobile_phone', 
-                 'label' => 'Mobile Phone', 
-                 'rules' => 'trim|is_natural|xss_clean|max_length[25]'),
-                       array('field' => 'website', 
-                 'label' => 'Website', 
-                 'rules' => 'trim|prep_url|xss_clean|max_length[35]'),
-                       array('field' => 'about', 
-                 'label' => 'About', 
-                 'rules' => 'trim|xss_clean|max_length[1000]'),
-                       array('field' => 'division', 
-                 'label' => 'Division', 
-                 'rules' => 'trim|xss_clean|max_length[55]')
-        );
+		    // Set validation config
+		    $config = array(
+			array('field' => 'first_name', 
+			      'label' => 'First Name', 
+			      'rules' => 'trim|required|xss_clean|max_length[25]'),	
+			array('field' => 'last_name', 
+			      'label' => 'Last Name', 
+			      'rules' => 'trim|xss_clean|max_length[25]'),
+			array('field' => 'captcha', 
+			      'label' => 'Captcha', 
+			      'rules' => 'trim|xss_clean|max_length[6]|callback_match_captcha'),
+			array('field' => 'phone', 
+			      'label' => 'Phone', 
+			      'rules' => 'trim|is_natural|xss_clean|max_length[25]'),
+				    array('field' => 'mobile_phone', 
+			      'label' => 'Mobile Phone', 
+			      'rules' => 'trim|is_natural|xss_clean|max_length[25]'),
+				    array('field' => 'website', 
+			      'label' => 'Website', 
+			      'rules' => 'trim|prep_url|xss_clean|max_length[35]'),
+				    array('field' => 'about', 
+			      'label' => 'About', 
+			      'rules' => 'trim|xss_clean|max_length[1000]'),
+				    array('field' => 'division', 
+			      'label' => 'Division', 
+			      'rules' => 'trim|xss_clean|max_length[55]')
+		     );
 
                     // Set rules to form validation
                     $this->form_validation->set_rules($config);
@@ -601,49 +601,49 @@ class User extends Admin_Controller {
 
     public function forgot_password() {
 
-            // Check if the request via AJAX
-            if (!$this->input->is_ajax_request()) {
-                    exit('No direct script access allowed');		
-            }
+	// Check if the request via AJAX
+	if (!$this->input->is_ajax_request()) {
+		exit('No direct script access allowed');		
+	}
 
-            // Define initialize result
-            $result['result'] = '';
+	// Define initialize result
+	$result['result'] = '';
 
-            // Get User Data
-            $user = $this->Users->getUserByEmail($this->input->post('email'));
-	    
-            if (!empty($user) && $user->status == 1) {
+	// Get User Data
+	$user = $this->Users->getUserByEmail($this->input->post('email'));
 
-                    $password = $this->Users->setPassword($user);
+	if (!empty($user) && $user->status == 1) {
 
-                    $result['result']['code'] = 1;
-                    $result['result']['text'] = 'Your new password: <b>'. $password .'</b>';			
+		$password = $this->Users->setPassword($user);
 
-                    $this->load->library('email');
+		$result['result']['code'] = 1;
+		$result['result']['text'] = 'Your new password: <b>'. $password .'</b>';			
 
-                    $this->email->from('noreply');
-                    $this->email->to($user->email);
-                    $this->email->subject('Your new password');
-                    $this->email->message('Hey <b>'.$user->username.'</b>, this is your new password: <b>'.$password.'</b>');
+		$this->load->library('email');
 
-                    $this->email->send();
+		$this->email->from('noreply');
+		$this->email->to($user->email);
+		$this->email->subject('Your new password');
+		$this->email->message('Hey <b>'.$user->username.'</b>, this is your new password: <b>'.$password.'</b>');
 
-            } else if (!empty($user) && $user->status != 1) { 
+		$this->email->send();
 
-                    // Account is not Active
-                    $result['result']['code'] = 2;
-                    $result['result']['text'] = 'Your account is not active';			
+	} else if (!empty($user) && $user->status != 1) { 
 
-            } else {
+		// Account is not Active
+		$result['result']['code'] = 2;
+		$result['result']['text'] = 'Your account is not active';			
 
-                    // Account is not existed
-                    $result['result']['code'] = 0;
-                    $result['result']['text'] = 'Email or User not found';			
+	} else {
 
-            }
+		// Account is not existed
+		$result['result']['code'] = 0;
+		$result['result']['text'] = 'Email or User not found';			
 
-            $data['json'] = $result;				
-            $this->load->view('json', $this->load->vars($data));				
+	}
+
+	$data['json'] = $result;				
+	$this->load->view('json', $this->load->vars($data));				
 
     }
 

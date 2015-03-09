@@ -56,12 +56,12 @@ class Authenticate extends Admin_Controller {
 
 		    //Make sure login object was true
 		    if($userObj['username'] == '' OR $userObj['password'] == '') {
-			    //return false;
+			//return false;
 		    }
 		    //Check if already logged in
 		    if($this->session->userdata('username') == $userObj['username']) {
-			    //User is already logged in.				
-			    //return false;
+			//User is already logged in.				
+			//return false;
 		    }
 
 		    // Initialize install
@@ -136,11 +136,6 @@ class Authenticate extends Admin_Controller {
 
 			    $userObj = 'No user with that account';				
 			    $this->session->set_flashdata('flashdata', $userObj);				
-
-			    //$this->session->set_flashdata("error", "Sorry, your username or password is incorrect!");
-			    //$this->form_validation->set_message('email', 'The %s field can not be the word "test"');
-			    //print_r($this->session->set_flashdata('Error', $userObj)); //exit();
-			    //return false;
 
 			    redirect(ADMIN.'authenticate/login');
 		    }

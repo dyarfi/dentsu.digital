@@ -2,22 +2,6 @@
 
 class ServerLog extends Admin_Controller {
 
-	/**
-	 * Index Page for this controller.
-	 *
-	 * Maps to the following URL
-	 * 		http://example.com/index.php/serverlog
-	 *	- or -  
-	 * 		http://example.com/index.php/serverlog/index
-	 *	- or -
-	 * Since this controller is set as the default controller in 
-	 * config/routes.php, it's displayed at http://example.com/
-	 *
-	 * So any other public methods not prefixed with an underscore will
-	 * map to /index.php/log/<method_name>
-	 * @see http://codeigniter.com/user_guide/general/urls.html
-	 */
-	
 	public function __construct() {
 	    parent::__construct();
 	    
@@ -29,8 +13,8 @@ class ServerLog extends Admin_Controller {
 		
 	}
 	
-	public function index()
-	{
+	public function index() {
+	    
 	    // Set default statuses
 	    $data['statuses'] = $this->configs['status'];
 
@@ -57,9 +41,10 @@ class ServerLog extends Admin_Controller {
 
 	    // Load admin template
 	    $this->load->view('template/admin/admin_template', $this->load->vars($data));
+	    
 	}
         
-        public function edit($id=0){
+        public function edit($id=0) {
 				
 		// Check if param is given or not and check from database
 		if (empty($id) || !$this->ServerLogs->getServerLog($id)) {

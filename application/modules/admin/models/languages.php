@@ -113,10 +113,10 @@ class Languages Extends CI_Model {
 	public function setLanguage($object=null){
 				
 	    $data = array(
-	    'name' => $object['name'],
-	    'prefix' => @$object['prefix'],
-	    'added' => time(),
-	    'status' => $object['status']
+		'name' => $object['name'],
+		'prefix' => @$object['prefix'],
+		'added' => time(),
+		'status' => $object['status']
 	    );
 
 	    $this->db->insert($this->table, $data);
@@ -135,10 +135,10 @@ class Languages Extends CI_Model {
 	
 	public function updateLanguage($object=null){
 	    $data = array(
-	    'name' => $object['name'],
-	    'prefix' => @$object['prefix'],			
-	    'status' => $object['status'],
-	    'modified' => time(),
+		'name' => $object['name'],
+		'prefix' => @$object['prefix'],			
+		'status' => $object['status'],
+		'modified' => time(),
 	    );
 	    $this->db->where('id', $object['id']);
 	    return $this->db->update($this->table, $data);

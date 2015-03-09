@@ -150,31 +150,17 @@ class ModuleList extends Admin_Controller {
 		// Defined array to update
 		$array		= array();
 		
-		
-		//print_r($fields);
-		//exit;
-		
 		// Make sure it's all array from data module_permission field
 		if(is_array($fields['module_permission']['group_id'])) {
 		    // Loop data module_permission for update recursion
 		    foreach ($fields['module_permission']['group_id'] as $key => $val) {
 			foreach ($val as $k => $v) {
 			    
-			    // Set data for updated
-			    //$array['value']	= $v;
-			    //$array['modified']  = time(); 
-			    
 			    $data = array(
 				    'id'    => $k,
 				    'value' => $v,
 				    'modified' => time()
 				 );
-
-			    // Update Setting data             
-			    //$this->db->where('id', $k);   
-			    
-			    // Return last insert id primary
-			    //$this->db->update('tbl_group_permissions', $data);
 			    
 			    // Load Class to update data
 			    $this->UserGroupPermissions->updateUserGroupPermission($data);

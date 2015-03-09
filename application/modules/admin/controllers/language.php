@@ -16,8 +16,6 @@ class Language extends Admin_Controller {
 	    $this->load->model('UserProfiles');
 	    $this->load->model('Languages');	    
 	    
-	    //$this->css_files = array('asdf'=>'asd');
-	    //print_r($this->css_files);
 	}
 	
 	public function index() {		

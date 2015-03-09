@@ -194,7 +194,7 @@ class Users Extends CI_Model {
 	    return $query->result_object();
 	}
         
-	// Authentice function for user login
+	// Authenticate function for user login
 	public function login($object=null){		
 	    if(!empty($object)){
 		$data = array();
@@ -221,80 +221,80 @@ class Users Extends CI_Model {
 	}
 	
 	public function setLastLogin($id=null) {
-		//Get user id
-		$this->db->where('id', $id);
-		//Return result
-		return $this->db->update($this->table, array('last_login'=>time(),'logged_in'=>0));
+	    //Get user id
+	    $this->db->where('id', $id);
+	    //Return result
+	    return $this->db->update($this->table, array('last_login'=>time(),'logged_in'=>0));
 	}
 	
 	public function setLoggedIn($id=null) {
-		//Get user id
-		$this->db->where('id', $id);
-		//Return result
-		return $this->db->update($this->table, array('logged_in'=>1,'session'=>$this->session->userdata('session_id')));
+	    //Get user id
+	    $this->db->where('id', $id);
+	    //Return result
+	    return $this->db->update($this->table, array('logged_in'=>1,'session'=>$this->session->userdata('session_id')));
 	}
 	
 	public function setPassword($user=null,$changed=''){
 		
-		$password = ($changed) ? $changed : random_string('alnum', 8);
-				
-		$data = array('password' => sha1($user->username.$password));
+	    $password = ($changed) ? $changed : random_string('alnum', 8);
 
-		$this->db->where('id', $user->id);
-		$this->db->update($this->table, $data); 
-		
-		return $password;
+	    $data = array('password' => sha1($user->username.$password));
+
+	    $this->db->where('id', $user->id);
+	    $this->db->update($this->table, $data); 
+
+	    return $password;
 		
 	}	
 	
 	public function setUser($object=null){
 		
-		// Set User data
-		$data = array(
-		    'username'	=> $object['username'],
-		    'email'	=> $object['email'],			
-		    'password'	=> sha1($object['username'].$object['password']),	
-		    'group_id'	=> @$object['group_id'],			
-		    'added'	=> time(),	
-		    'status'	=> $object['status']
-		);
-		
-		// Insert User data
-		$this->db->insert($this->table, $data);
-		
-		// Return last insert id primary
-		$insert_id = $this->db->insert_id();
-			
-		// Check if last is existed
-		if ($insert_id) {
-				
-			// Unset previous data
-			unset($data);
-			
-			// Set User Profile data
-			$data = array(
-					'user_id'	=> $insert_id,
-					'gender'	=> !empty($object['gender']) ? $object['gender'] : NULL,
-					'first_name'	=> !empty($object['first_name']) ? $object['first_name'] : NULL,
-					'last_name'	=> !empty($object['last_name']) ? $object['last_name'] : NULL,
-					'birthday'	=> !empty($object['birthday']) ? $object['birthday'] : NULL,
-					'phone'		=> !empty($object['phone']) ? $object['phone'] : NULL,	
-					'mobile_phone'	=> !empty($object['mobile_phone']) ? $object['mobile_phone'] : NULL,
-					'fax'		=> !empty($object['fax']) ? $object['fax'] : NULL,
-					'website'	=> !empty($object['website']) ? $object['website'] : NULL,
-					'about'		=> !empty($object['about']) ? $object['about'] : NULL,
-					'division'	=> !empty($object['division']) ? $object['division'] : NULL,
-					'file_name'	=> !empty($object['file_name']) ? $object['file_name'] : NULL,
-					'added'		=> time(),	
-					'status'	=> 1);
-			
-			// Insert User Profile 
-			$this->db->insert('tbl_user_profiles', $data);
-					
-		}
-			
-		// Return last insert id primary
-		return $insert_id;
+	    // Set User data
+	    $data = array(
+		'username'	=> $object['username'],
+		'email'	=> $object['email'],			
+		'password'	=> sha1($object['username'].$object['password']),	
+		'group_id'	=> @$object['group_id'],			
+		'added'	=> time(),	
+		'status'	=> $object['status']
+	    );
+
+	    // Insert User data
+	    $this->db->insert($this->table, $data);
+
+	    // Return last insert id primary
+	    $insert_id = $this->db->insert_id();
+
+	    // Check if last is existed
+	    if ($insert_id) {
+
+		    // Unset previous data
+		    unset($data);
+
+		    // Set User Profile data
+		    $data = array(
+				    'user_id'	=> $insert_id,
+				    'gender'	=> !empty($object['gender']) ? $object['gender'] : NULL,
+				    'first_name'	=> !empty($object['first_name']) ? $object['first_name'] : NULL,
+				    'last_name'	=> !empty($object['last_name']) ? $object['last_name'] : NULL,
+				    'birthday'	=> !empty($object['birthday']) ? $object['birthday'] : NULL,
+				    'phone'		=> !empty($object['phone']) ? $object['phone'] : NULL,	
+				    'mobile_phone'	=> !empty($object['mobile_phone']) ? $object['mobile_phone'] : NULL,
+				    'fax'		=> !empty($object['fax']) ? $object['fax'] : NULL,
+				    'website'	=> !empty($object['website']) ? $object['website'] : NULL,
+				    'about'		=> !empty($object['about']) ? $object['about'] : NULL,
+				    'division'	=> !empty($object['division']) ? $object['division'] : NULL,
+				    'file_name'	=> !empty($object['file_name']) ? $object['file_name'] : NULL,
+				    'added'		=> time(),	
+				    'status'	=> 1);
+
+		    // Insert User Profile 
+		    $this->db->insert('tbl_user_profiles', $data);
+
+	    }
+
+	    // Return last insert id primary
+	    return $insert_id;
 		
 	}	
 	

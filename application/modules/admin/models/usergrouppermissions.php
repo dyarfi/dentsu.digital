@@ -19,6 +19,7 @@ class UserGroupPermissions Extends CI_Model {
 	    $this->table = $this->db->dbprefix($this->table);			
 
 	}
+	
 	public function install () {
 		$insert_data	= FALSE;
 
@@ -130,36 +131,36 @@ class UserGroupPermissions Extends CI_Model {
 	}
 	
 	public function setUserGroupPages($pages=null,$allowed_groups=null) {
-		if (is_array($allowed_groups) && is_array($pages)) {
-			$user_group = $allowed_groups;
-			$uri = array();
-			for($i=0;$i<$this->uri->total_segments();$i++) {
-				//print_r($this->uri->segment($i + 1)); //exit();
-				if(empty($uri[0])) $uri[0] = 'index';
-				$uri[$i] = $this->uri->segment($i + 1);
-				
-				//print_r($this->uri->segment($i + 1));
-				//print_r($uri[$i]);
+	    if (is_array($allowed_groups) && is_array($pages)) {
+		    $user_group = $allowed_groups;
+		    $uri = array();
+		    for($i=0;$i<$this->uri->total_segments();$i++) {
+			    //print_r($this->uri->segment($i + 1)); //exit();
+			    if(empty($uri[0])) $uri[0] = 'index';
+			    $uri[$i] = $this->uri->segment($i + 1);
 
-				if(in_array($uri[$i],$pages)){
-					//Checking user auth
-					$this->isAuthorized($user_group);
-				} else {
-					//Go to home if false
-					//$this->session->set_flashdata('auth_message', 'You do not have that authorization.');
-					//redirect($uri[0]);
-					//return false;
-				}
-			}
-		}
-		return true;
+			    //print_r($this->uri->segment($i + 1));
+			    //print_r($uri[$i]);
+
+			    if(in_array($uri[$i],$pages)){
+				    //Checking user auth
+				    $this->isAuthorized($user_group);
+			    } else {
+				    //Go to home if false
+				    //$this->session->set_flashdata('auth_message', 'You do not have that authorization.');
+				    //redirect($uri[0]);
+				    //return false;
+			    }
+		    }
+	    }
+	    return true;
 	}
 	
 	public function isAuthorized($user_group=null) {
-		if ($this->permission && in_array($this->permission, $user_group)) {
-			//Set true if exists
-			return true;
-		} 
+	    if ($this->permission && in_array($this->permission, $user_group)) {
+		    //Set true if exists
+		    return true;
+	    } 
 	}
 	
 	public function getModuleFunction($group_id = '') {
@@ -215,21 +216,17 @@ class UserGroupPermissions Extends CI_Model {
 		foreach ($user_permissions as $key) {
 			
 			// List all module_permissions based on permission id at user_level_permission
-			//$module_functions = Model_ModulePermission::instance()->find(array('id'=>$key->permission_id));
 			$module_functions = $this->db->get_where('module_permissions', array('id'=>$key->permission_id))->result();
 			
 			// Loops for module_functions data 
 			foreach ($module_functions as $val) {
 				// List all module_list based on module id at module_permission
-				//$class_names		= Model_ModuleList::instance()->find(array('id'=>$val->module_id));
 				$class_names		= $this->db->get_where('module_lists', array('id'=>$val->module_id))->result();
-	
 				// Loops for module_names data 
 				foreach($class_names as $module) {
 					// Set temporary data in place
 					$buffers[ucfirst($module->module_name)][$val->module_link] = $val->module_name;
-				}
-								
+				}				
 				// Return all computed data of array permissions and module lists available 
 				$modules	= array_merge($modules,$buffers);
 								
