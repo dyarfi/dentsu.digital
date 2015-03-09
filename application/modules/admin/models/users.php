@@ -32,7 +32,7 @@ class Users Extends CI_Model {
 				    . '`is_system` TINYINT(3) NOT NULL DEFAULT 0, '
 				    . '`last_login` INT(11) UNSIGNED NOT NULL, '
 				    . '`logged_in` INT(1) UNSIGNED NOT NULL,'
-				    . '`session` VARCHAR(160) NOT NULL, '
+				    . '`session` VARCHAR(40) NOT NULL, '
 				    . '`status` INT(1) UNSIGNED NOT NULL,'
 				    . '`added` INT(11) UNSIGNED NOT NULL, '
 				    . '`modified` INT(11) UNSIGNED NOT NULL, '
@@ -112,8 +112,12 @@ class Users Extends CI_Model {
 	    }
 	}
 	
-	public function getAllUser($admin=null){
+	public function getAllUser($status=''){
 	    $data = array();
+            if ($status) {
+                $options = array('status'=>$status);
+                $this->db->where($options,1);
+            }
 	    $this->db->order_by('added');
 	    $Q = $this->db->get($this->table);
 		if ($Q->num_rows() > 0){
@@ -165,7 +169,32 @@ class Users Extends CI_Model {
 		}		 
 	    }
 	}
-	
+        
+	// Get loggedin count for all user
+	public function getLoginCount() {
+            $data = array();
+	    $options = array('status' => $status);
+	    $this->db->where($options,1);
+	    $this->db->from($this->table);
+	    $data = $this->db->count_all_results();
+	    return $data;            
+        }
+        
+	// Get all users Login stats by login date
+	public function getLoginStats() {
+	    
+	    $sql = 'SELECT count(id) total_login, FROM_UNIXTIME(`last_login`, \'%Y/%m/%d\') last_login '
+                    .'FROM `'. $this->table .'`'
+                    .'WHERE FROM_UNIXTIME(`last_login`, \'%Y/%m/%d\') >= \''.date('Y/m/d',strtotime("-5 month", time())).'\' '
+                    .'AND FROM_UNIXTIME(`last_login`, \'%Y/%m/%d\') <= \''.date('Y/m/d').'\' '
+                    .'GROUP BY FROM_UNIXTIME(`last_login`, \'%Y/%m/%d\') ORDER BY `last_login` ASC';
+	    
+	    $query = $this->db->query($sql);
+            
+	    return $query->result_object();
+	}
+        
+	// Authentice function for user login
 	public function login($object=null){		
 	    if(!empty($object)){
 		$data = array();
@@ -202,7 +231,7 @@ class Users Extends CI_Model {
 		//Get user id
 		$this->db->where('id', $id);
 		//Return result
-		return $this->db->update($this->table, array('logged_in'=>1));
+		return $this->db->update($this->table, array('logged_in'=>1,'session'=>$this->session->userdata('session_id')));
 	}
 	
 	public function setPassword($user=null,$changed=''){
@@ -270,8 +299,8 @@ class Users Extends CI_Model {
 	}	
 	
 	public function setStatus($id=null,$status=null) {
-	   
-	    // Get user id
+            
+            // Get user id
 	    $this->db->where('id', $id);
 	    
 	    // Return result

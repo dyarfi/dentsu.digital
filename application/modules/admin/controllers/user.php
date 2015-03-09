@@ -20,36 +20,36 @@ class User extends Admin_Controller {
 
     public function index() {		
 
-            $rows = $this->Users->getAllUser();
-            //print_r($rows);
-            //exit;
-            $temp_rows = array();
+            // Set default statuses
+            $data['statuses'] = $this->configs['status'];
 
+	    // Set class name to view
+	    $data['class_name'] = $this->_class_name;
+
+            // Get users data
+            $rows = $this->Users->getAllUser();
+            
+            $temp_rows = array();
+            
             if($rows) {
-		         $i = 0;
-				foreach($rows as $row ){		
-				    $temp_rows[$i]->id = $row->id;
-				    $temp_rows[$i]->username = $row->username;
-				    $temp_rows[$i]->email = $row->email;
-				    $temp_rows[$i]->password = substr_replace($row->password, "********", 0, strlen($row->password));
-				    $temp_rows[$i]->added = $row->added;
-				    $temp_rows[$i]->modified = $row->modified;
-				    $temp_rows[$i]->status = $row->status;
-				    $temp_rows[$i]->group_id = $this->UserGroups->getGroupName_ById($row->group_id);
-				    $i++;
-				}
+		$i = 0;
+                foreach($rows as $row){		
+                    $temp_rows[$i]->id = $row->id;
+                    $temp_rows[$i]->username = $row->username;
+                    $temp_rows[$i]->email = $row->email;
+                    $temp_rows[$i]->password = substr_replace($row->password, "********", 0, strlen($row->password));
+                    $temp_rows[$i]->added = $row->added;
+                    $temp_rows[$i]->modified = $row->modified;
+                    $temp_rows[$i]->status = $data['statuses'][$row->status];
+                    $temp_rows[$i]->group_id = $this->UserGroups->getGroupName_ById($row->group_id);
+                    $i++;
+                }
             }
 
             if (@$temp_rows) $data['rows'] = $temp_rows;
 
 	    // User profiles
             $data['user_profiles'] = $this->UserProfiles->getUserProfile(Acl::user()->id);
-
-            // Set default statuses
-            $data['statuses'] = $this->configs['status'];
-
-	    // Set class name to view
-	    $data['class_name'] = $this->_class_name;
 	    
             // Set main template
             $data['main'] = 'users/users_index';
@@ -89,7 +89,7 @@ class User extends Admin_Controller {
 		$errors	= $fields;
 		
 		$this->form_validation->set_rules('username', 'Username', 'trim|required|min_length[5]|max_length[24]|xss_clean');
-		$this->form_validation->set_rules('email', 'Email','trim|valid_email|required|min_length[5]|max_length[24]|callback_match_email|xss_clean');
+		$this->form_validation->set_rules('email', 'Email','trim|valid_email|required|min_length[5]|max_length[36]|callback_match_email|xss_clean');
 		$this->form_validation->set_rules('password', 'Password','trim|required');
 		$this->form_validation->set_rules('password1', 'Retype Password','trim|required|matches[password]');
 		$this->form_validation->set_rules('gender', 'Gender','required');		

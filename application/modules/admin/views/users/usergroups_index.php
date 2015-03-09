@@ -202,7 +202,8 @@
 					</span>
 				    </td>
 				    <td class="col-md-4">
-					<span class="label label-sm label-<?php if($statuses[$row->status]) { echo 'success'; } else { echo 'warning'; } ?>">						<?php if($statuses[$row->status]) { echo 'Active'; } else { echo 'Inactive'; } ?>
+					<span class="label label-sm label-<?php if($statuses[$row->status]=='Active') { echo 'success'; } else { echo 'warning'; } ?>">
+                                              <?php echo $statuses[$row->status]; ?>
 					</span>
 				    </td>
 				    <td class="col-md-4">

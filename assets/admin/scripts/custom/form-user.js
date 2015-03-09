@@ -29,7 +29,7 @@ var FormUser = function () {
 			return false;	
 		});
 		
-		$('#user-form-add').validate({
+		$('#user-form-default').validate({
 			//errorElement: 'span', //default input error message container
 			errorClass: 'help-block', // default input error message class
 			focusInvalid: false, // do not focus the last invalid input
@@ -63,7 +63,7 @@ var FormUser = function () {
 				}*/
 			},					
 			invalidHandler: function (event, validator) { //display error alert on form submit   
-				$('.help-block', $('#user-form-add')).show();
+				$('.help-block', $('#user-form-default')).show();
 			},
 			highlight: function (element) { // hightlight error inputs
 				$(element)
@@ -90,7 +90,7 @@ var FormUser = function () {
 		var user_id = userform.find('input[name="user_id"]').val();
 		
 		userform.find('.msg').empty();
-		userform.find('.msg').html('<img src="'+base_URL + 'assets/img/input-spinner.gif"/>&nbsp;Saving profile');
+		userform.find('.msg').html('<img src="'+base_URL + 'assets/admin/img/input-spinner.gif"/>&nbsp;Saving profile');
 		$.ajax({
 			url: base_URL + 'admin/user/ajax/update/' + user_id,
 			type: 'POST',

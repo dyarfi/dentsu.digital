@@ -91,13 +91,13 @@
 					    </th><th class="sorting_disabled" role="columnheader" aria-controls="sample_2" tabindex="4" rowspan="1" colspan="1" style="width: 120px;" aria-label="Status : activate to sort column ascending">Status
 					    </th>
 					    
-					    </th><th class="sorting_disabled" role="columnheader" aria-controls="sample_2" tabindex="4" rowspan="1" colspan="1" style="width: 120px;" aria-label="Status : activate to sort column ascending">Added
+					    </th><th class="sorting_disabled" role="columnheader" aria-controls="sample_2" tabindex="4" rowspan="1" colspan="1" style="width: 120px;" aria-label="Added : activate to sort column ascending">Added
 					    </th>
 					    
-					    </th><th class="sorting_disabled" role="columnheader" aria-controls="sample_2" tabindex="4" rowspan="1" colspan="1" style="width: 120px;" aria-label="Status : activate to sort column ascending">Modified
+					    </th><th class="sorting_disabled" role="columnheader" aria-controls="sample_2" tabindex="4" rowspan="1" colspan="1" style="width: 120px;" aria-label="Modified : activate to sort column ascending">Modified
 					    </th>
 					    
-					    </th><th class="sorting_disabled" role="columnheader" aria-controls="sample_2" tabindex="4" rowspan="1" colspan="1" style="width: 120px;" aria-label="Status : activate to sort column ascending">Manage
+					    </th><th class="sorting_disabled" role="columnheader" aria-controls="sample_2" tabindex="4" rowspan="1" colspan="1" style="width: 120px;" aria-label="Manage : activate to sort column ascending">Manage
 					    </th>
 					</tr>
 					</thead>							
@@ -114,14 +114,15 @@
 						    <td class=" "><?php echo $row->password;?></td>
 						    <td class="center "><?php echo $row->group_id;?></td>
 						    <td class="center ">
-							<span class="label label-sm label-<?php if($statuses[$row->status]) { echo 'success'; } else { echo 'warning'; } ?>">								<?php if($statuses[$row->status]) { echo 'Active'; } else { echo 'Inactive'; } ?>
+							<span class="label label-sm label-<?php if($row->status=='Active') { echo 'success'; } else { echo 'warning'; } ?>">
+                                                            <?php if($row->status) { echo $row->status; } ?>
 							</span>
 						    </td>
 						    <td class="center "><?php echo date('D, d-m-Y', $row->added);?></td>
 						    <td class="center "><?php echo date('D, d-m-Y', $row->modified);?></td>
 						    <td class=" ">
-							<!--span class="label label-sm label-<?php if($row->status == 1) { echo 'success'; } else { echo 'warning'; }?>">
-							    <?php echo $row->status;?>
+							<!--span class="label label-sm label-<?php //if($row->status == 1) { echo 'success'; } else { echo 'warning'; }?>">
+							    <?php //echo $row->status;?>
 							</span-->
 							<ul class="list-inline">
 							    <li><a class="btn default btn-xs blue" href="<?=base_url(ADMIN.$class_name.'/view/'.$row->id);?>" title="View">
