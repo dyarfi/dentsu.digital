@@ -23,7 +23,7 @@ class Sessions Extends CI_Model {
 		$insert_data	= TRUE;
 
 		$sql            = 'CREATE TABLE IF NOT EXISTS `'.$this->table.'` ('
-				. '`session_id` INT(11) NOT NULL DEFAULT 0 PRIMARY KEY,'
+				. '`session_id` VARCHAR(42) NOT NULL DEFAULT 0 PRIMARY KEY,'
 				. '`ip_address` INT(11) NOT NULL DEFAULT 0, '
 				. '`user_agent` VARCHAR(255) NULL, '
 				. '`last_activity` INT(11) UNSIGNED NOT NULL,'

@@ -24,6 +24,7 @@ class ServerLogs Extends CI_Model {
 
 		    $sql            = 'CREATE TABLE IF NOT EXISTS `'.$this->table.'` ('
 				    . '`id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,'
+			   	    . '`session_id` VARCHAR(42) NULL, '
 				    . '`url` VARCHAR(255) NULL, '
 				    . '`user_id` INT(11) UNSIGNED NULL, '
 				    . '`status_code` VARCHAR(160) NULL, '
