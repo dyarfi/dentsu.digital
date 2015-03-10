@@ -10,20 +10,24 @@ class Admin_Controller extends CI_Controller {
 	
 	public $user = '';
 	public $previous_url = '';
+	
+	public $setting ='';
 		
 	public function __construct() {
-		parent::__construct();				
+		parent::__construct();	
 		
-		// Load Administrator Helper
-		$this->load->helper('Acl');
 		// Load Session library
 		$this->load->library('session');
 		
 		// Load Admin config
-		$this->configs			= $this->load->config('admin/admin',true);																	
+		$this->configs			= $this->load->config('admin/admin',true);			
+		
+		// Load Setting Model
+		//$this->load->model('admin/Settings');		
+		
 		// Set user data lists from login session		
 		$this->user			= Acl::user();
-		
+
 		// Load user module and function lists
 		$this->module_list		= json_decode($this->session->userdata('module_list'),TRUE);
 		$this->module_function_list	= json_decode($this->session->userdata('module_function_list'),TRUE);		
@@ -36,18 +40,6 @@ class Admin_Controller extends CI_Controller {
 		
 		$this->module_menu		= self::check_module_menu($this->module_request);
 		
-		// Add array of data to perform
-		//$data->css_files		= array('asdf'=>'asdf');
-		
-		//print_r($this);
-		//exit;
-		// Load data variables
-		//;
-		// Load admin template
-		//$this->parser->parse('template/admin/admin_template', $data);
-		
-		//$this->load->view('template/admin/admin_template', $this->load->vars($data));
-		//
 		// Check if user data is true empty and redirect to authenticate
 		if (!$this->user 
 				&& strpos($this->uri->uri_string(), ADMIN) === 0 
@@ -155,11 +147,11 @@ class Admin_Controller extends CI_Controller {
 		
 		// Check if module list is available
 		if (!empty($this->module_function_list)) {
-			foreach ($this->module_function_list as $modules => $module) {
-                            if (!empty($module[$module_menu])) {
-                                $menu_name = $module[$module_menu];
-                            }			
-			}
+		    foreach ($this->module_function_list as $modules => $module) {
+			if (!empty($module[$module_menu])) {
+			    $menu_name = $module[$module_menu];
+			}			
+		    }
 		}
                 return $menu_name;
 		

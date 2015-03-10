@@ -2,15 +2,28 @@
 
 class ACL {
 		
-	private $CI;
-	public $user = '';
+	private $_ci;
 	
 	public function __construct () {
-
-	    $this->user		= $this->CI->session->userdata('user_session');
-		
-	}
 	
+	    $this->_ci 	=& get_instance();
+
+	    $this->_ci->load->helper('url');
+	    $this->_ci->load->library('session');
+
+	    if (strpos($this->_ci->session->userdata('prev_url'), ADMIN) !== FALSE 
+			    && $this->_ci->session->userdata('prev_url') != $this->_ci->session->userdata('curr_url')) {
+		    // Set Previous URL to current URL
+		    $this->_ci->session->set_userdata('prev_url', $this->_ci->session->userdata('curr_url'));
+	    } else {
+		    // Set current URL from current url
+		    $this->_ci->session->set_userdata('curr_url', $this->_ci->uri->uri_string());
+	    }
+
+	    // Set previous URL from previous url session		
+	    $this->previous_url	= $this->_ci->session->userdata('prev_url');
+																			
+	}
 	/**
 	* Load the current users data
 	*
@@ -19,9 +32,10 @@ class ACL {
 	* @return	array object
 	*/		
 	public function user() {
-								
-		return $this->user;
+	
+	    $user		= !empty($this->session->userdata['user_session']) ? $this->session->userdata['user_session'] : '';
 		
+	    return $user;
 	}
 
 	/**
@@ -32,32 +46,27 @@ class ACL {
 	* @return	array
 	*/	
 	public function admin_system_modules () {
-				
-		if ($this->user === FALSE) {
-			return array();
-		}	
+			
+	    if ($this->user === FALSE) {
+		    return array();
+	    }	
 
-		// ------- If User is Login set available data --- start
-		if ($this->user != '') {
-			//$this->userhistory		= Model_UserHistory::instance();
-			$this->module_list		= json_decode($this->CI->session->userdata('module_list'),TRUE);
-			$this->module_function_list	= json_decode($this->CI->session->userdata('module_function_list'),TRUE);
-		}
-		
-		$modules				= array();
+	    // ------- If User is Login set available data --- start
+	    if ($this->user != '') {
+		    //$this->userhistory		= Model_UserHistory::instance();
+		    $this->module_list		= json_decode($this->session->userdata('module_list'),TRUE);
+		    $this->module_function_list	= json_decode($this->session->userdata('module_function_list'),TRUE);
+	    }
 
-		// Check admin url
-		if (strstr($this->CI->uri->uri_string, ADMIN) !== '') {	
-			// Get module listings
-			$modules	= $this->module_list;			
-		}
-		
-		return $modules;		
-	}
-	
-	
-	public function isAuthorized() {
+	    $modules				= array();
 
+	    // Check admin url
+	    if (strstr($this->uri->uri_string, ADMIN) !== '') {	
+		    // Get module listings
+		    $modules	= $this->module_list;			
+	    }
+
+	    return $modules;		
 	}
 	
 }
