@@ -171,6 +171,28 @@
 		    </div>
 		</div>
 	    </div>
+		
+	    <div class="row">
+		<div class="col-md-12">
+		    <h3>Maintenance Mode</h3>
+		    <?php echo form_open($action, array('class'=>'form-horizontal','id'=>'maintenance_form'), $hidden);?>
+			<div class="form-group">
+			    <div class="radio-list">
+				<div class="radio-inline">
+					<label class="col-md-12" for="maintenance_mode">Yes <span>&nbsp;<?php echo form_radio('maintenance_mode', 1, false, 'class="maintenance_mode"');?></span></label>
+				</div>
+				<div class="radio-inline">
+				    <label class="col-md-12" for="maintenance_mode">No <span>&nbsp;<?php echo form_radio('maintenance_mode', 1, false, 'class="maintenance_mode"');?></span></label>
+				</div>
+			    </div>
+			</div>
+			<div class="btn-group">
+			    <button class="btn btn-danger" type="submit" name="submit" value="submit">Submit</button>
+			</div>
+		    <?php echo form_close();?>
+		</div>
+	    </div>
+		
 	    <!-- END PAGE CONTENT-->
 	</div>
 </div>

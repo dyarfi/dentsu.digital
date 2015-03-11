@@ -195,6 +195,11 @@ License: You must have a valid license purchased only from themeforest(the above
 <script src="<?=admin_theme()?>assets/admin/plugins/bootstrap/js/bootstrap.js" type="text/javascript"></script>
 <script src="<?=admin_theme()?>assets/admin/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
 <script src="<?=admin_theme()?>assets/admin/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+
+<script type="text/javascript" src="<?=admin_theme()?>assets/admin/plugins/flot/jquery.flot.min.js"></script>
+<script type="text/javascript" src="<?=admin_theme()?>assets/admin/plugins/flot/jquery.flot.resize.min.js"></script>
+<script type="text/javascript" src="<?=admin_theme()?>assets/admin/plugins/flot/jquery.flot.categories.min.js"></script>
+	    
 <script src="<?=admin_theme()?>assets/admin/plugins/jquery.blockui.min.js" type="text/javascript"></script>
 <script src="<?=admin_theme()?>assets/admin/plugins/jquery.cokie.min.js" type="text/javascript"></script>
 <script src="<?=admin_theme()?>assets/admin/plugins/bootbox/bootbox.min.js" type="text/javascript"></script>
@@ -228,6 +233,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <script src="<?=admin_theme()?>assets/admin/plugins/jquery-easy-pie-chart/jquery.easy-pie-chart.js" type="text/javascript"></script>
 <script src="<?=admin_theme()?>assets/admin/plugins/jquery.sparkline.min.js" type="text/javascript"></script>
 <script type="text/javascript" src="<?=admin_theme()?>assets/admin/plugins/jquery.cookie.js"></script>
+<!--<script type="text/javascript" src="<?=admin_theme()?>assets/admin/plugins/jquery-easy-pie-chart/jquery.easy-pie-chart.js">-->
 <script type="text/javascript" src="<?=admin_theme()?>assets/admin/plugins/select2/select2.min.js"></script>
 <script type="text/javascript" src="<?=admin_theme()?>assets/admin/plugins/data-tables/jquery.dataTables.js"></script>
 <script type="text/javascript" src="<?=admin_theme()?>assets/admin/plugins/data-tables/DT_bootstrap.js"></script>
@@ -253,6 +259,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <script src="<?=admin_theme()?>assets/admin/scripts/custom/form-user.js" type="text/javascript"></script>
 <script src="<?=admin_theme()?>assets/admin/scripts/custom/form-module.js" type="text/javascript"></script>
 <script src="<?=admin_theme()?>assets/admin/scripts/custom/form-status.js" type="text/javascript"></script>
+<script src="<?=admin_theme()?>assets/admin/scripts/custom/form-setting.js" type="text/javascript"></script>
 <!-- END USER AJAX JAVASCRIPTS -->
     
 <script>
@@ -263,11 +270,11 @@ jQuery(document).ready(function() {
    
     ComponentsPickers.init();      
    
-    //Index.init();
+    Index.init();
     //Index.initJQVMAP(); // init index page's custom scripts
    
     //Index.initCalendar(); // init index page's custom scripts
-    //Index.initCharts(); // init index page's custom scripts
+    Index.initCharts(); // init index page's custom scripts
     //Index.initChat();
     //Index.initMiniCharts();
     //Index.initDashboardDaterange();
@@ -278,6 +285,7 @@ jQuery(document).ready(function() {
     FormStatus.init();
     FormUser.init();
     FormModule.init();
+    FormSetting.init();
    
 <?php if ($this->session->flashdata('message')) { ?>
 	bootbox.alert('<h3><?php echo $this->session->flashdata('message');?></h3>');
