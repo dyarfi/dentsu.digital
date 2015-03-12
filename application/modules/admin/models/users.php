@@ -32,7 +32,7 @@ class Users Extends CI_Model {
 				    . '`is_system` TINYINT(3) NOT NULL DEFAULT 0, '
 				    . '`last_login` INT(11) UNSIGNED NOT NULL, '
 				    . '`logged_in` INT(1) UNSIGNED NOT NULL,'
-				    . '`session` VARCHAR(40) NOT NULL, '
+				    . '`session_id` VARCHAR(40) NOT NULL, '
 				    . '`status` INT(1) UNSIGNED NOT NULL,'
 				    . '`added` INT(11) UNSIGNED NOT NULL, '
 				    . '`modified` INT(11) UNSIGNED NOT NULL, '
@@ -47,7 +47,7 @@ class Users Extends CI_Model {
 		
 		if ($insert_data) {
 			$sql	= 'INSERT INTO `'.$this->table.'` '
-				. '(`id`,`email`,`password`,`username`,`group_id`,`is_system`,`last_login`,`logged_in`,`session`,`status`,`added`,`modified`) '
+				. '(`id`,`email`,`password`,`username`,`group_id`,`is_system`,`last_login`,`logged_in`,`session_id`,`status`,`added`,`modified`) '
 				. 'VALUES '
 				. '(NULL, \'admin@admin.com\', \'dd94709528bb1c83d08f3088d4043f4742891f4f\', \'admin\', 1, 1, 0, '.time().', NULL, 1, '.time().', 0), '
 				. '(NULL, \'administrator\', \'12506e739378348ec662bb015bfd2288362dcc1c\', \'Administrator\', 2, 1, 0, '.time().', NULL, 1, '.time().', 0), '
@@ -231,7 +231,7 @@ class Users Extends CI_Model {
 	    //Get user id
 	    $this->db->where('id', $id);
 	    //Return result
-	    return $this->db->update($this->table, array('logged_in'=>1,'session'=>$this->session->userdata('session_id')));
+	    return $this->db->update($this->table, array('logged_in'=>1,'session_id'=>$this->session->userdata('session_id')));
 	}
 	
 	public function setPassword($user=null,$changed=''){
