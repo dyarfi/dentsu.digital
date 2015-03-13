@@ -3,7 +3,7 @@
 // Model Class Object for Configurations
 class Configurations Extends CI_Model {
 	
-	public $table = 'configurations';
+	protected $table = 'configurations';
 	
 	public function __construct(){
 	    // Call the Model constructor

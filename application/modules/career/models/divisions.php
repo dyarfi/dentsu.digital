@@ -3,7 +3,7 @@
 // Model Class Object for Divisions
 class Divisions Extends CI_Model {
 	// Table name for this model
-	public $table = 'divisions';
+	protected $table = 'divisions';
 	
 	public function __construct(){
 		// Call the Model constructor

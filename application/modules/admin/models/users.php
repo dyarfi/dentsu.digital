@@ -3,7 +3,7 @@
 // Model Class Object for Users
 class Users Extends CI_Model {
 	// Table name for this model
-	public $table = 'users';
+	protected $table = 'users';
 	
 	public function __construct(){
 	    // Call the Model constructor

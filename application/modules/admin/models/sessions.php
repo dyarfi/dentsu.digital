@@ -3,7 +3,7 @@
 // Model Class Object for Sessions
 class Sessions Extends CI_Model {
 	// Table name for this model
-	public $table = 'ci_sessions';
+	protected $table = 'ci_sessions';
 	
 	public function __construct(){
 	    // Call the Model constructor

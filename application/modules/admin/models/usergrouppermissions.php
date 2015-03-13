@@ -3,7 +3,7 @@
 // Class for User Permission
 class UserGroupPermissions Extends CI_Model {
 	// Table name for this model
-	public $table = 'group_permissions';
+	protected $table = 'group_permissions';
 	public $permission;
 	
 	public function __construct(){

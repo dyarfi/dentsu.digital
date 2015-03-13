@@ -4,7 +4,7 @@
 class Pages Extends CI_Model {
     
 	// Table name for this model
-	public $table = 'pages';
+	protected $table = 'pages';
 	
 	public function __construct(){
 		// Call the Model constructor

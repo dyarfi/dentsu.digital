@@ -3,7 +3,7 @@
 // Model Class Object for Modulel Permission
 class ModulePermissions Extends CI_Model {
 	// Table name for this model
-	public $table = 'module_permissions';
+	protected $table = 'module_permissions';
 	
 	public function __construct(){
 	    // Call the Model constructor

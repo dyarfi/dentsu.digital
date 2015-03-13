@@ -3,7 +3,7 @@
 // Model Class Object for Model lists
 class ModuleLists Extends CI_Model {
 	// Table name for this model
-	public $table = 'module_lists';
+	protected $table = 'module_lists';
 
 	public function __construct(){
 	    // Call the Model constructor

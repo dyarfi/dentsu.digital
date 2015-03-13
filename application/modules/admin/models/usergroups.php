@@ -3,7 +3,7 @@
 // Model Class Object for User Group
 class UserGroups Extends CI_Model {
 	// Table name for this model
-	public $table = 'user_groups'; 
+	protected $table = 'user_groups'; 
 	
 	public function __construct() {
 	    // Call the Model constructor

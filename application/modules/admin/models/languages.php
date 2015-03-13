@@ -3,7 +3,7 @@
 // Model Class Object for Language
 class Languages Extends CI_Model {
 	// Table name for this model
-	public $table = 'languages'; 
+	protected $table = 'languages'; 
 	
 	public function __construct() {
 	    // Call the Model constructor

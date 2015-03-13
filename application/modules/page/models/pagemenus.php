@@ -4,7 +4,7 @@
 class PageMenus Extends CI_Model {
 	
 	// Table name for this model
-	public $table = 'page_menus';
+	protected $table = 'page_menus';
 	
 	public function __construct(){
 		// Call the Model constructor

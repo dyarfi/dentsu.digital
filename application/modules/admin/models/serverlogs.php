@@ -3,7 +3,7 @@
 // Model Class Object for ServerLogs
 class ServerLogs Extends CI_Model {
 	// Table name for this model
-	public $table = 'server_logs';
+	protected $table = 'server_logs';
 	
 	public function __construct(){
 	    // Call the Model constructor

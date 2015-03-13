@@ -3,7 +3,7 @@
 // Model Class Object for Applicants
 class Applicants Extends CI_Model {
 	// Table name for this model
-	public $table = 'applicants';
+	protected $table = 'applicants';
 	
 	public function __construct(){
 		// Call the Model constructor

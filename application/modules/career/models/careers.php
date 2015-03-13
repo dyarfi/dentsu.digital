@@ -3,7 +3,7 @@
 // Model Class Object for Careers
 class Careers Extends CI_Model {
 	// Table name for this model
-	public $table = 'careers';
+	protected $table = 'careers';
 	
 	public function __construct(){
 		// Call the Model constructor
