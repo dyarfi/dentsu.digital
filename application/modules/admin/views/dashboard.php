@@ -81,7 +81,28 @@
 
 		<div class="clearfix">
 		</div>
-		<div class="row ">
+		
+		<div class="row">
+			<div class="col-md-12 col-sm-12">
+				<div class="portlet box green">
+					<div class="portlet-title">
+					<div class="caption">
+						<i class="fa fa-user"></i>Login Activities
+					</div>
+					</div>
+					<div class="portlet-body">
+					<div id="login_statistics_loading">
+						<img src="<?php echo base_url();?>assets/admin/img/loading.gif" alt="loading"/>
+					</div>
+					<div id="login_statistics_content" class="display-none">
+						<div id="login_statistics" class="chart"></div>
+					</div>
+					</div>
+				</div>
+			</div>	
+		</div>
+		
+		<div class="row hidden">
 			<div class="col-md-12 col-sm-12">
 				<div class="portlet box blue">
 					<div class="portlet-title">

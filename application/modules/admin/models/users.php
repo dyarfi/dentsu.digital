@@ -42,8 +42,8 @@ class Users Extends CI_Model {
 		    $this->db->query($sql);
 		}
 		
-                if(!$this->db->query('SELECT * FROM `'.$this->table.'` LIMIT 0, 1;'))
-                        $insert_data	= TRUE;
+		if(!$this->db->query('SELECT * FROM `'.$this->table.'` LIMIT 0, 1;'))
+				$insert_data	= TRUE;
 		
 		if ($insert_data) {
 			$sql	= 'INSERT INTO `'.$this->table.'` '
@@ -334,25 +334,36 @@ class Users Extends CI_Model {
 		    // Set User Profile data
 		    $data = array(
 				    'user_id'	=> $object['id'],
-				    'gender'	=> !empty($object['gender']) ? $object['gender'] : NULL,
-				    'first_name'    => !empty($object['first_name']) ? $object['first_name'] : NULL,
-				    'last_name'	    => !empty($object['last_name']) ? $object['last_name'] : NULL,
-				    'birthday'	    => !empty($object['birthday']) ? $object['birthday'] : NULL,
-				    'phone'	    => !empty($object['phone']) ? $object['phone'] : NULL,	
-				    'mobile_phone'  => !empty($object['mobile_phone']) ? $object['mobile_phone'] : NULL,
-				    'fax'	=> !empty($object['fax']) ? $object['fax'] : NULL,
-				    'website'	=> !empty($object['website']) ? $object['website'] : NULL,
-				    'about'	=> !empty($object['about']) ? $object['about'] : NULL,
-				    'division'	=> !empty($object['division']) ? $object['division'] : NULL,
+				    'gender'	=> !empty($object['gender']) ? $object['gender'] : '',
+				    'first_name'    => !empty($object['first_name']) ? $object['first_name'] : '',
+				    'last_name'	    => !empty($object['last_name']) ? $object['last_name'] : '',
+				    'birthday'	    => !empty($object['birthday']) ? $object['birthday'] : '',
+				    'phone'	    => !empty($object['phone']) ? $object['phone'] : '',	
+				    'mobile_phone'  => !empty($object['mobile_phone']) ? $object['mobile_phone'] : '',
+				    'fax'	=> !empty($object['fax']) ? $object['fax'] : '',
+				    'website'	=> !empty($object['website']) ? $object['website'] : '',
+				    'about'	=> !empty($object['about']) ? $object['about'] : '',
+				    'division'	=> !empty($object['division']) ? $object['division'] : '',
 				    'modified'	=> time(),	
 				    'status'	=> $object['status']);
 		    
-		    // Get User Profile ID
-		    $this->db->where('user_id', $object['id']); 
-	    
-		    // Update User Profile 
-		    $this->db->update('tbl_user_profiles', $data);
-
+			// Get User Profile ID 
+		    $query = $this->db->get_where('tbl_user_profiles', array('user_id'=>$object['id'])); 
+			
+			// Check if profile exists
+			if($query->num_rows() == 0) {
+				
+				// Insert if not found User Profile 
+				$data['added'] = time();
+				$this->db->insert('tbl_user_profiles', $data);
+				
+			} else {
+				 
+				// Update User Profile 
+				$this->db->where('user_id', $object['id']);
+				$this->db->update('tbl_user_profiles', $data);
+				
+			}
 	    }
 
 	    // Return last id

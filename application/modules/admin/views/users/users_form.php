@@ -145,7 +145,7 @@
 			    <label class="control-label col-md-3">Last Name</label>
 			    <div class="col-md-9">
 				<input type="text" placeholder="Last Name" name="last_name" value="<?=$fields->last_name;?>" class="form-control">
-				<span class="help-block"><?php echo $errors['first_name'];?></span>								
+				<span class="help-block"><?php echo $errors['last_name'];?></span>								
 			    </div>
 			</div>
 		    </div>

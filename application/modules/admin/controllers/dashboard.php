@@ -18,18 +18,75 @@ class Dashboard extends Admin_Controller {
 	
 	public function index() {
 	    
-		$data['title']	= "Dashboard Home";
-		$data['main']	= 'admin/dashboard';
+		// Check if the request via AJAX
+		if ($this->input->is_ajax_request()) {
+			$this->stat_dashboard();
+			return false;
+		}
+            
+	    // Total users count
+	    $data['tusers']			= $this->Users->getCount(1);
 		
-		$data['tusers']	= $this->Users->getCount(1);
-		
-		$this->load->vars($data);
-		
+		// Set class name to view
+	    $data['class_name'] = $this->_class_name;
+	    
+	    // Set module with URL request 
+		$data['module_title'] = $this->module;
+
+	    // Set page title
+	    $data['title']	= "Dashboard Home";
+	    
+	    // Set main template
+	    $data['main']	= 'admin/dashboard';
+	    
 		// Set admin title page with module menu
 		$data['page_title'] = $this->module_menu;
+
+	    //$this->load->view('template/dashboard');
+	    $this->load->view('template/admin/admin_template', $this->load->vars($data));
 		
-		//$this->load->view('template/dashboard');
-		$this->load->view('template/admin/admin_template', $data);
-		
+	}
+        
+	public function stat_dashboard() {
+            
+            // Check if the request via AJAX
+            if (!$this->input->is_ajax_request()) {
+                exit('No direct script access allowed');		
+            }
+            
+            /*
+			var visitors = [
+					['01/2013', 500],
+					['02/2013', 1500],
+					['03/2013', 2600],
+					['04/2013', 1200],
+					['05/2013', 560],
+					['06/2013', 2000],
+					['07/2013', 2350],
+					['08/2013', 1500],
+					['09/2013', 4700],
+					['10/2013', 1300],
+				];
+			 * 
+			 */
+			
+			// User login stats
+			$login_stats = $this->Users->getLoginStats();
+            if(!empty($login_stats)) {
+                    
+                $temp_login = array();
+                foreach ($login_stats as $login) {
+                    $temp_login[] = array($login->last_login,$login->total_login);
+                }
+                $result['result']['stats_login'] = $temp_login;
+
+            }
+			
+            // Return data esult
+            $data['json'] = $result;
+
+            // Load data into view		
+            $this->load->view('json', $this->load->vars($data));
+	    
 	}
 }
