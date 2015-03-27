@@ -26,7 +26,7 @@ class Admin_Controller extends CI_Controller {
 		//$this->load->model('admin/Settings');		
 		
 		// Set user data lists from login session		
-		$this->user			= Acl::user();
+		$this->user				= Acl::user();
 
 		// Load user module and function lists
 		$this->module_list		= json_decode($this->session->userdata('module_list'),TRUE);
@@ -36,7 +36,7 @@ class Admin_Controller extends CI_Controller {
 		$this->controller		= @$this->uri->segments[2];
 		$this->action			= @$this->uri->segments[3];
 		$this->param			= @$this->uri->segments[4];																		
-		$this->module_request		= $this->controller . '/' .$this->action;	
+		$this->module_request	= $this->controller . '/' .$this->action;	
 		
 		$this->module_menu		= self::check_module_menu($this->module_request);
 		
@@ -50,15 +50,15 @@ class Admin_Controller extends CI_Controller {
 		}
 		
 		// Check for previous url from referrer
-		if (strstr($this->agent->referrer(), ADMIN) !== '' 
+		if (strstr($this->session->userdata('prev_url'), ADMIN) !== '' 
 				&& $this->session->userdata('prev_url') != $this->session->userdata('curr_url')) {
 			// Set Previous URL to current URL
-			$this->session->set_userdata('prev_url', strstr($this->agent->referrer(), ADMIN));
+			$this->session->set_userdata('prev_url', $this->session->userdata('curr_url'));
 		} else {
 			// Set current URL from current url
 			$this->session->set_userdata('curr_url', $this->uri->uri_string());
 		}	
-
+		
 		// Set previous URL from previous url session		
 		$this->previous_url	= $this->session->userdata('prev_url');
 		
@@ -71,7 +71,7 @@ class Admin_Controller extends CI_Controller {
 		
 		$accessible		= FALSE;
 		
-		$module_list 		= $this->module_list;
+		$module_list 	= $this->module_list;
 
 		$module_function_list 	= $this->module_function_list;				
 		
@@ -123,8 +123,6 @@ class Admin_Controller extends CI_Controller {
 				 */
 				$this->session->set_flashdata('message', 'You do not have permission to '.$action.'!');
 				redirect(ADMIN . $this->controller. '/index');
-				//redirect(ADMIN . 'dashboard/index');
-
 			} 
 
 		} 
@@ -148,12 +146,12 @@ class Admin_Controller extends CI_Controller {
 		// Check if module list is available
 		if (!empty($this->module_function_list)) {
 		    foreach ($this->module_function_list as $modules => $module) {
-			if (!empty($module[$module_menu])) {
-			    $menu_name = $module[$module_menu];
-			}			
+				if (!empty($module[$module_menu])) {
+					$menu_name = $module[$module_menu];
+				}			
 		    }
 		}
-                return $menu_name;
+		return $menu_name;
 		
 	}
 	

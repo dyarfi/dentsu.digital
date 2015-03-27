@@ -79,45 +79,27 @@ License: You must have a valid license purchased only from themeforest(the above
     <!-- BEGIN TOP NAVIGATION BAR -->
     <div class="header-inner">
 	<!-- BEGIN LOGO -->
-	<a class="navbar-brand" href="<?=base_url();?>" target="_blank">
-		<img src="<?=base_url()?>assets/admin/img/logo_small.png" alt="logo" class="img-responsive col-md-7 col-lg-7"/>
-	</a>
+	<a class="navbar-brand" href="<?=base_url();?>" target="_blank"><img src="<?=base_url()?>assets/admin/img/logo_small.png" alt="logo" class="img-responsive col-md-7 col-lg-7"/></a>
 	<!-- END LOGO -->
 	<!-- BEGIN RESPONSIVE MENU TOGGLER -->
-	<a href="javascript:;" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-		<img src="<?=base_url()?>assets/admin/img/menu-toggler.png" alt=""/>
-	</a>
+	<a href="javascript:;" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"><img src="<?=base_url()?>assets/admin/img/menu-toggler.png" alt=""/></a>
 	<!-- END RESPONSIVE MENU TOGGLER -->		
 	<!-- BEGIN TOP NAVIGATION MENU -->
 	<ul class="nav navbar-nav pull-right">
 	    <!-- BEGIN NOTIFICATION DROPDOWN -->
-
 	    <!-- END NOTIFICATION DROPDOWN -->
-
 	    <!-- BEGIN USER LOGIN DROPDOWN -->
 	    <li class="dropdown user">
 		<a href="<?=base_url();?>admin/user/view/<?=Acl::user()->id;?>" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-		    <img alt="" src="<?=base_url()?>assets/admin/img/avatar1_small.jpg"/>&nbsp;>
+		    <img alt="" src="<?=base_url()?>assets/admin/img/avatar1_small.jpg"/>&nbsp;
 			<!--img height="28px" src="<?php //echo base_url('assets/public/img/'.$this->setting['site_logo']->value);?>"/>&nbsp;-->
-		    <span class="username">
-			    <?=Acl::user()->name;?>
-		    </span>
+		    <span class="username"><?=Acl::user()->name;?></span>
 		    <i class="fa fa-angle-down"></i>
 		</a>
 		<ul class="dropdown-menu">				
-		    <li>
-			<a href="<?=base_url();?>admin/user/view/<?=Acl::user()->id;?>"><i class="fa fa-user"></i> Profile</a>
-		    </li>
-		    <li>
-			<a href="javascript:;">
-			    <i class="fa fa-lock"></i> Last Login <?php echo date('Y-m-d, H:i:s',Acl::user()->last_login);?>
-			</a>
-		    </li>
-		    <li>
-			<a href="<?=base_url()?>admin/authenticate/logout">
-			    <i class="fa fa-key"></i> Log Out
-			</a>
-		    </li>
+		    <li><a href="<?=base_url();?>admin/user/view/<?=Acl::user()->id;?>"><i class="fa fa-user"></i> Profile</a></li>
+		    <li><a href="javascript:;"><i class="fa fa-lock"></i> Last Login <?php echo date('Y-m-d, H:i:s',Acl::user()->last_login);?></a></li>
+		    <li><a href="<?=base_url()?>admin/authenticate/logout"><i class="fa fa-key"></i> Log Out</a></li>
 		</ul>
 	    </li>
 	    <!-- END USER LOGIN DROPDOWN -->
@@ -130,7 +112,6 @@ License: You must have a valid license purchased only from themeforest(the above
 <div class="clearfix"></div>
 <!-- BEGIN CONTAINER -->
 <div class="page-container">
-
     <!-- BEGIN SIDEBAR -->
     <div class="page-sidebar-wrapper">
 	<div class="page-sidebar navbar-collapse collapse">
@@ -172,11 +153,9 @@ License: You must have a valid license purchased only from themeforest(the above
 	</div>
     </div>
     <!-- END SIDEBAR -->
-	
     <!-- BEGIN CONTENT -->
 	    <?=$this->load->view($main);?>
     <!-- END CONTENT -->
-	
 </div>
 <!-- END CONTAINER -->
 <!-- BEGIN FOOTER -->

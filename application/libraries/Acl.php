@@ -11,17 +11,17 @@ class ACL {
 	    $this->_ci->load->helper('url');
 	    $this->_ci->load->library('session');
 
-	    if (strpos($this->_ci->session->userdata('prev_url'), ADMIN) !== FALSE 
-			    && $this->_ci->session->userdata('prev_url') != $this->_ci->session->userdata('curr_url')) {
+	    //if (strpos($this->_ci->session->userdata('prev_url'), ADMIN) !== FALSE 
+			    //&& $this->_ci->session->userdata('prev_url') != $this->_ci->session->userdata('curr_url')) {
 		    // Set Previous URL to current URL
-		    $this->_ci->session->set_userdata('prev_url', $this->_ci->session->userdata('curr_url'));
-	    } else {
+		    //$this->_ci->session->set_userdata('prev_url', $this->_ci->session->userdata('curr_url'));
+	    //} else {
 		    // Set current URL from current url
-		    $this->_ci->session->set_userdata('curr_url', $this->_ci->uri->uri_string());
-	    }
+		    //$this->_ci->session->set_userdata('curr_url', $this->_ci->uri->uri_string());
+	    //}
 
 	    // Set previous URL from previous url session		
-	    $this->previous_url	= $this->_ci->session->userdata('prev_url');
+	    //$this->previous_url	= $this->_ci->session->userdata('prev_url');
 																			
 	}
 	/**
