@@ -245,9 +245,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <script>
 jQuery(document).ready(function() {    
     App.init(); // initlayout and core plugins
-   
     TableManaged.init();
-   
     ComponentsPickers.init();      
    
     Index.init();
@@ -266,11 +264,10 @@ jQuery(document).ready(function() {
     FormUser.init();
     FormModule.init();
     FormSetting.init();
-   
 <?php if ($this->session->flashdata('message')) { ?>
 	bootbox.alert('<h3><?php echo $this->session->flashdata('message');?></h3>');
 <?php } ?>
-	
+<?php echo $script_bottom;?>
 });
 </script>
 <!-- END JAVASCRIPTS -->
