@@ -188,7 +188,7 @@ $config['modulelist'] = array(
 	// Questionnaire module
 	'Questionnaire' => array (
 		// Questionnaire Models list
-		'models'		=> array('questionnaire/Questionnaires','questionnaire/Questions','questionnaire/Useranswers','questionnaire/Userquestionnairecompleted'),
+		'models'		=> array('questionnaire/Questionnaires','questionnaire/Questions','questionnaire/Useranswers','questionnaire/Questionnairecompleted'),
 		// Questionnaire module menus
 		'module_menu'	=> array(
 						'questionnaire/index'	=> 'Questionnaires',

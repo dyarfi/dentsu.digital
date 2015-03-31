@@ -1,10 +1,10 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-// Model Class Object for Useranswers
-class Userquestionnairecompleted Extends CI_Model {
+// Model Class Object for Questionnairecompleted
+class Questionnairecompleted Extends CI_Model {
     
 	// Table name for this model
-	protected $table = 'user_questionnaires_completed';
+	protected $table = 'questionnaire_completed';
 	
 	public function __construct(){
 		// Call the Model constructor
@@ -89,7 +89,7 @@ class Userquestionnairecompleted Extends CI_Model {
 	
 	public function setUserComplete($object=null){
 
-		// Set UserAnswer data
+		// Set Questionnairecompleted data
 		$data = array(			
 			'part_id'		=> $object['part_id'],
 			'questionnaire_id'	=> $object['questionnaire_id'],
@@ -99,7 +99,7 @@ class Userquestionnairecompleted Extends CI_Model {
 			'modified'		=> $object['status']
 		);
 		
-		// Insert UserAnswer data
+		// Insert Questionnairecompleted data
 		$this->db->insert($this->table, $data);
 		
 		// Return last insert id primary
@@ -110,13 +110,13 @@ class Userquestionnairecompleted Extends CI_Model {
 		
 	}	
 	
-	// Delete UserAnswer
+	// Delete Questionnairecompleted
 	public function deleteUserComplete($id) {
 		
-		// Check UserAnswer id
+		// Check Questionnairecompleted id
 		$this->db->where('id', $id);
 		
-		// Delete UserAnswer form database
+		// Delete Questionnairecompleted form database
 		return $this->db->delete($this->table);		
 	}	
 }
