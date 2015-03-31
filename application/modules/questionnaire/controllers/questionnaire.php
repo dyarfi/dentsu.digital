@@ -1,6 +1,6 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class Questionnaires extends Admin_Controller {
+class Questionnaire extends Admin_Controller {
 
     /**
      * Index Qrcode for this controller.
@@ -22,14 +22,14 @@ class Questionnaires extends Admin_Controller {
 		parent::__construct();
 
         $this->load->library('grocery_CRUD');
-        $this->load->model('user_model');
+        //$this->load->model('user_model');
         $this->load->model('Questionnaires');
     }
 
     public function index() {
         try {
             $crud = new grocery_CRUD();
-            $crud->set_table('tbl_Questionnaire');
+            $crud->set_table('tbl_questionnaires');
             $crud->set_subject('List Questionnaire');
             $crud->display_as('user_id', 'User');
             $crud->columns('questionnaire_text', 'user_id','status');                      
