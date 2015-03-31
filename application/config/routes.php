@@ -51,7 +51,7 @@ $route['404_override'] = '';
 
 $admin = (ADMIN) ? str_replace('/', '', ADMIN) : '';
 
-$route[$admin]				= "admin/authenticate";
+$route[$admin]						= "admin/authenticate";
 $route[$admin.'/authenticate']		= "admin/authenticate/index";
 $route[$admin.'/authenticate/(:any)']	= "admin/authenticate/$1";
 
@@ -72,6 +72,12 @@ $route[$admin.'/employee/(:any)']	= 'career/employee/$1';
 
 $route[$admin.'/page/(:any)']		= 'page/$1';
 $route[$admin.'/pagemenu/(:any)']	= 'page/pagemenu/$1';
+
+//$route[$admin.'/qrcode/(:any)']			= 'qrcode/$1';
+//$route[$admin.'/qrcodescanner/(:any)']	= 'qrcode/qrcodescanner/$1';
+
+//$route[$admin.'/question/(:any)']			= 'questionnaire/$1';
+//$route[$admin.'/questionnaire/(:any)']	= 'questionnaire/qrcodescanner/$1';
 
 //$route[$admin.'/(:any)'] = '$1';
 

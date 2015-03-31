@@ -19,8 +19,8 @@ $config['admin_list.module_menu']	= array(
 						'dashboard/index'   => 'Dashboard Panel',
 						'user/index'	    => 'Users',
 						'usergroup/index'   => 'User Groups',
-                                                'language/index'    => 'Languages',
-                                                'setting/index'	    => 'Settings'
+						'language/index'    => 'Languages',
+						'setting/index'	    => 'Settings'
 						);
 									
 /* MODULE FUNCTION
@@ -31,7 +31,7 @@ $config['admin_list.module_menu']	= array(
 
 // Module Function Menu List
 $config['admin_list.module_function']	= array(
-                                                'dashboard/add'	    => 'Add New Dashboard',
+						'dashboard/add'	    => 'Add New Dashboard',
 						'dashboard/view'    => 'View Dashboard',
 						'dashboard/edit'    => 'Edit Dashboard',
 						'dashboard/delete'  => 'Delete Dashboard',
@@ -49,11 +49,11 @@ $config['modulelist'] = array(
 					'admin/UserProfiles',
 					'admin/UserHistories',
 					'admin/ModulePermissions',
-                                        'admin/UserGroupPermissions',
-                                        'admin/Languages',
+					'admin/UserGroupPermissions',
+					'admin/Languages',
 					'admin/Settings',
 					'admin/ServerLogs',
-                                        'admin/Sessions'
+					'admin/Sessions'
 					),
 		// Admin module menus
 		'module_menu'	=> array(
@@ -65,7 +65,7 @@ $config['modulelist'] = array(
 					'usergroup/index'   => 'User Groups',
 					// Language index
 					'language/index'     => 'Languages',
-                                        // Setting index
+					// Setting index
 					'setting/index'     => 'Settings',
 					// Server Log index
 					'serverlog/index'   => 'Server Logs'
@@ -90,12 +90,12 @@ $config['modulelist'] = array(
 						'usergroup/edit'    => 'Edit User Group',
 						'usergroup/delete'  => 'Delete User Group',
 						'usergroup/change'  => 'Change User Group Status',
-                                                // Language functions
+						// Language functions
 						'language/add'	    => 'Add Language',
 						'language/view'	    => 'View Language',
 						'language/edit'	    => 'Edit Language',
-						'language/delete'    => 'Delete Language',
-						'language/change'    => 'Change Language Status',
+						'language/delete'   => 'Delete Language',
+						'language/change'   => 'Change Language Status',
 						// Setting functions
 						'setting/add'	    => 'Add Setting',
 						'setting/view'	    => 'View Setting',
@@ -114,8 +114,9 @@ $config['modulelist'] = array(
 		// Page Models list
 		'models'		=> array('page/Pages','page/PageMenus'),
 		// Page module menus
-		'module_menu'		=> array('page/index'	  => 'Pages',
-						 'pagemenu/index' => 'Page Menus'),
+		'module_menu'	=> array(
+						'page/index'		=> 'Pages',
+						'pagemenu/index'	=> 'Page Menus'),
 		// Page module functions
 		'module_function'	=> array(
 						// Page functions
@@ -141,7 +142,7 @@ $config['modulelist'] = array(
 		// Career Models list
 		'models'		=> array('career/Careers','career/Divisions','career/Applicants'),
 		// Career module menus
-		'module_menu'		=> array(
+		'module_menu'	=> array(
 						'career/index'		=> 'Careers',
 						'division/index'	=> 'Divisions',
 						'applicant/index'	=> 'Applicants',
@@ -178,10 +179,60 @@ $config['modulelist'] = array(
 						'employee/index/view'	=> 'View Employee',			
 						'employee/index/edit'	=> 'Edit Employee',			
 						'employee/index/delete' => 'Delete Employee',
-						'employee/set'		=> 'Set to Employee',
+						'employee/set'			=> 'Set to Employee',
 						'employee/index/change' => 'Change Employee',
 						'employee/index/export' => 'Export Employee',
 						'employee/index/print'	=> 'Print Employee'
+						),
+	),
+	// Questionnaire module
+	'Questionnaire' => array (
+		// Questionnaire Models list
+		'models'		=> array('questionnaire/Questionnaires'),
+		// Questionnaire module menus
+		'module_menu'	=> array(
+						'questionnaire/index'	=> 'Questionnaires',
+						'question/index'		=> 'Questions'
+						),
+		// Questionnaire module functions
+		'module_function'	=> array(
+						// Questionnaire functions
+						'questionnaire/index/add'	=> 'Add Questionnaire',
+						'questionnaire/index/view'	=> 'View Questionnaire',
+						'questionnaire/index/edit'	=> 'Edit Questionnaire',
+						'questionnaire/index/delete'	=> 'Delete Questionnaire',
+						'questionnaire/index/change'	=> 'Change Questionnaire Status',
+						'questionnaire/index/export'	=> 'Export Questionnaire',
+						'questionnaire/index/print'	=> 'Print Questionnaire',
+						// Question functions
+						'question/index/add'	=> 'Add Question',
+						'question/index/view'	=> 'View Question',
+						'question/index/edit'	=> 'Edit Question',
+						'question/index/delete'	=> 'Delete Question',
+						'question/index/change'	=> 'Change Question Status',
+						'question/index/export'	=> 'Export Question',
+						'question/index/print'	=> 'Print Question',
+						),
+	),
+	// Qrcode module
+	'Qrcode' => array (
+		// Qrcode Models list
+		'models'		=> array('qrcode/Qrcodes'),
+		// Qrcode module menus
+		'module_menu'	=> array(
+						'qrcode/index'			=> 'QR Codes',
+						'qrcodescanner/index'	=> 'QR Code Scanner'
+						),
+		// Qrcode module functions
+		'module_function'	=> array(
+						// Career functions
+						'qrcode/index/add'	=> 'Add QR Code',
+						'qrcode/index/view'	=> 'View QR Code',
+						'qrcode/index/edit'	=> 'Edit QR Code',
+						'qrcode/index/delete'	=> 'Delete QR Code',
+						'qrcode/index/change'	=> 'Change QR Code Status',
+						'qrcode/index/export'	=> 'Export QR Code',
+						'qrcode/index/print'	=> 'Print QR Code'
 						),
 	)
 );
