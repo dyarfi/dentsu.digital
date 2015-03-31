@@ -1,10 +1,10 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-// Model Class Object for Questionnaires
-class Questionnaires Extends CI_Model {
+// Model Class Object for Questions
+class Questions Extends CI_Model {
     
 	// Table name for this model
-	protected $table = 'questionnaires';
+	protected $table = 'questions';
 	
 	public function __construct(){
 		// Call the Model constructor
@@ -26,8 +26,9 @@ class Questionnaires Extends CI_Model {
                 
                 $sql	= 'CREATE TABLE IF NOT EXISTS `'.$this->table.'` ('
 				. '`id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, '
+				. '`questionnaire_id` INT(11) NULL , '
 				. '`name` VARCHAR(255) NULL, '
-				. '`questionnaire_text` TEXT NULL, '
+				. '`question_text` TEXT NULL, '
 				. '`file_name` VARCHAR(512) NULL, '
 				. '`order` TINYINT(3) NULL, '
 				. '`user_id` INT(11) NULL , '
@@ -62,7 +63,7 @@ class Questionnaires Extends CI_Model {
 		return $data;
 	}
 	
-	public function getQuestionnaire($id = null){
+	public function getQuestion($id = null){
 		if(!empty($id)){
 			$data = array();
 			$options = array('id' => $id);
@@ -76,7 +77,7 @@ class Questionnaires Extends CI_Model {
 		}
 	}	
 	
-	public function getAllQuestionnaire($admin=null){
+	public function getAllQuestion($admin=null){
 		$data = array();
 		$this->db->order_by('added');
 		$Q = $this->db->get($this->table);
@@ -90,12 +91,13 @@ class Questionnaires Extends CI_Model {
 		return $data;
 	}	
 	
-	public function setQuestionnaire($object=null){
+	public function setQuestion($object=null){
 
-		// Set Questionnaire data
+		// Set Question data
 		$data = array(			
-			'name'				 => $object['name'],
-			'questionnaire_text' => $object['questionnaire_text'],
+			'questionnaire_id' => $object['questionnaire_id'],
+			'name'			=> $object['name'],
+			'question_text' => $object['question_text'],
 			'file_name'		=> $object['file_name'],
 			'order'			=> $object['order'],
 			'user_id'		=> $object['user_id'],
@@ -105,7 +107,7 @@ class Questionnaires Extends CI_Model {
 			'modified'		=> $object['status']
 		);
 		
-		// Insert Questionnaire data
+		// Insert Question data
 		$this->db->insert($this->table, $data);
 		
 		// Return last insert id primary
@@ -116,13 +118,13 @@ class Questionnaires Extends CI_Model {
 		
 	}	
 	
-	// Delete Questionnaire
-	public function deleteQuestionnaire($id) {
+	// Delete Question
+	public function deleteQuestion($id) {
 		
-		// Check Questionnaire id
+		// Check Question id
 		$this->db->where('id', $id);
 		
-		// Delete Questionnaire form database
+		// Delete Question form database
 		return $this->db->delete($this->table);		
 	}	
 }
