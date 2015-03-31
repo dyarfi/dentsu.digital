@@ -3,7 +3,7 @@
 class Questionnaire extends Admin_Controller {
 
     /**
-     * Index Qrcode for this controller.
+     * Index Questionnaire for this controller.
      *
      * Maps to the following URL
      * 		http://example.com/index.php/welcome
