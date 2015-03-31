@@ -33,8 +33,8 @@ class Questionnaire extends Admin_Controller {
             $crud->set_subject('List Questionnaire');
             $crud->display_as('user_id', 'User');
             $crud->columns('questionnaire_text', 'user_id','status');                      
-            $crud->callback_column('user_id', array($this, '_callback_admin'));            
-            $crud->field_type('user_id','dropdown',$this->user_model->get_values_users());   
+            //$crud->callback_column('user_id', array($this, '_callback_admin'));            
+            //$crud->field_type('user_id','dropdown',$this->user_model->get_values_users());   
             $crud->field_type('status','dropdown',array('1' => 'Enable', '0' => 'Disable'));    
 
 //            $crud->columns('name', 'email', 'phphone_number', 'twitter', 'total_image');

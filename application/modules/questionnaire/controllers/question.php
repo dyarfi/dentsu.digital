@@ -22,8 +22,8 @@ class Question extends Admin_Controller {
 		parent::__construct();
 
         $this->load->library('grocery_CRUD');
-        $this->load->model('user_model');
-        $this->load->model('questionnaires');
+        //$this->load->model('user_model');
+        $this->load->model('Questionnaires');
         
     }
 
@@ -42,8 +42,8 @@ class Question extends Admin_Controller {
             $crud->callback_column('modified', array($this, '_callback_modified'));
             $crud->callback_column('added', array($this, '_callback_added'));
             
-            $crud->field_type('questionnaire_id','dropdown',$this->questionnaires_model->get_values_questionnaires());    
-            $crud->field_type('user_id','dropdown',$this->user_model->get_values_users());    
+            $crud->field_type('questionnaire_id','dropdown',@$this->Questionnaires->get_values_questionnaires());    
+            //$crud->field_type('user_id','dropdown',$this->user_model->get_values_users());    
             
             $crud->field_type('status','dropdown',array('1' => 'Enable', '0' => 'Disable'));
 
@@ -114,7 +114,7 @@ class Question extends Admin_Controller {
     }      
 
     public function _callback_questionnaires($value, $row) {
-        $questionnaire = $this->questionnaires_model->get_questionnaires($row->questionnaire_id);
+        $questionnaire = $this->Questionnaires->get_questionnaires($row->questionnaire_id);
         return $questionnaire->questionnaire_text;
     }
 
