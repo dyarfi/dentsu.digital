@@ -45,4 +45,67 @@ class Configurations Extends CI_Model {
 	    return $this->db->table_exists($this->table);
 	}
 
+	public function getConfiguration($param = null){
+	    if(!empty($param)) {
+		$data = array();
+		$options = array('parameter' => $param);
+		$Q = $this->db->get_where($this->table,$options,1);
+		if ($Q->num_rows() > 0){
+			foreach ($Q->result_object() as $row)
+			$data = $row;
+		}
+		$Q->free_result();
+		return $data;
+	    }
+	}
+	
+	public function getAllConfiguration(){
+	    $data = array();
+	    $Q = $this->db->get($this->table);
+		if ($Q->num_rows() > 0){
+		    //foreach ($Q->result_array() as $row){
+			    //$data[] = $row;
+		    //}
+		    $data = $Q->result_object();
+		}
+	    $Q->free_result();
+	    return $data;
+	}
+	
+	public function getConfiguration_ByParam($param = null){
+	    $data = '';
+	    $options = array('parameter' => $param);
+	    $Q = $this->db->get_where($this->table,$options,1);
+	    if ($Q->num_rows() > 0){
+		    foreach ($Q->result_object() as $row)
+			    $data = $row->value;
+	    }
+	    $Q->free_result();
+	    return $data;
+	}
+	
+	public function setConfiguration($object=null){
+				
+	    $data = array(
+			'parameter' => $object['parameter'],
+			'value'		=> $object['value']
+		);
+
+	    $this->db->insert($this->table, $data);
+		
+	}
+	
+	public function updateConfiguration($object=null){
+	    $data = array(
+			'parameter' => $object['parameter'],
+			'value'		=> $object['value']
+	    );
+	    $this->db->where('parameter', $object['parameter']);
+	    return $this->db->update($this->table, $data);
+	}
+	
+	public function deleteConfiguration($param){
+	    $this->db->where('parameter', $param);
+	    return $this->db->delete($this->table);
+	}
 }

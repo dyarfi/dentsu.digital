@@ -3,7 +3,6 @@ var FormSetting = function () {
 	var handleMaintenanceForm = function () {	
 		//====== Maintenance mode in setting listing
 		$('form#maintenance_form').submit(function(){
-		    alert('sdfsdf');
 		    //$(":checked").val()
 		    var val  = $(this).find('input:checked').val();
 		    var link = $(this).attr('action');

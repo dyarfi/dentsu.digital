@@ -11,17 +11,34 @@ class Setting extends Admin_Controller {
 		// Set class name
 		$this->_class_name = $this->controller;
 
-		// Load settings model
+		// Load Settings model
 		$this->load->model('Settings');
+		
+		// Load Configuration model
+		$this->load->model('Configurations');
 
 	}
 	
-	public function index()
-	{
+	public function index() {
+		
+		// Check if the request via AJAX
+        if ($this->input->is_ajax_request() && $this->input->post()) {
+			// Make sure if this is an ajax request and mode is 1 
+			if ($this->input->post('ajax') == true) {
+				$object['parameter']	= 'maintenance';
+				$object['value']		= $this->input->post('mode');
+				$result = $this->Configurations->updateConfiguration($object);
+				echo $result;
+			}
+			exit();
+		}
 		
 		// Set data rows
 		$data['rows']	= $this->Settings->getAllSetting();
-				
+		
+		// Set data rows
+		$data['configuration']	= $this->Configurations->getConfiguration_ByParam('maintenance');
+		
 		// Set default statuses
 		$data['statuses'] = $this->configs['status'];
 
@@ -44,7 +61,7 @@ class Setting extends Admin_Controller {
 		$this->load->view('template/admin/admin_template', $this->load->vars($data));
 	}
         
-        public function edit($id=0){
+	public function edit($id=0) {
 				
 		// Check if param is given or not and check from database
 		if (empty($id) || !$this->Settings->getSetting($id)) {
@@ -62,7 +79,7 @@ class Setting extends Admin_Controller {
 		
 		$errors	= $fields;
 		
-                $this->form_validation->set_rules('parameter', 'Parameter', 'trim|required|xss_clean');
+		$this->form_validation->set_rules('parameter', 'Parameter', 'trim|required|xss_clean');
 		$this->form_validation->set_rules('alias', 'Alias','trim|required|xss_clean');
 		$this->form_validation->set_rules('value', 'Value','trim|required');				
 		$this->form_validation->set_rules('status', 'Status','required');
@@ -132,17 +149,17 @@ class Setting extends Admin_Controller {
 		$data['main']       = 'settings/setting_form';			
 		
 		// Set module with URL request 
-		$data['module_title'] = $this->module;
+		$data['module_title']	= $this->module;
 		
 		// Set admin title page with module menu
-		$data['page_title'] = $this->module_menu;
+		$data['page_title']		= $this->module_menu;
 		
 		// Set admin template
 		$this->load->view('template/admin/admin_template', $this->load->vars($data));
 		
 	}
         
-        public function add() {
+	public function add() {
 		
 		//Default data setup
 		$fields	= array(
@@ -221,7 +238,7 @@ class Setting extends Admin_Controller {
 				
 	}
         
-        public function view($id=null){
+	public function view($id=null){
             
             // Check if data is found and redirect if false
             if (empty($id) && (int) count($id) == 0) {
@@ -237,7 +254,7 @@ class Setting extends Admin_Controller {
             }
 
             // Set Param
-	    $data['param']	= $id;
+			$data['param']	= $id;
 
             // Listing data
             $data['listing']    = $this->Settings->getSetting($id);		
@@ -249,7 +266,7 @@ class Setting extends Admin_Controller {
             $data['statuses'] = $this->configs['status'];
 
             // Set class name to view
-	    $data['class_name'] = $this->_class_name;
+			$data['class_name'] = $this->_class_name;
 
             // Set module with URL request 
             $data['module_title'] = $this->module;
@@ -276,20 +293,20 @@ class Setting extends Admin_Controller {
     
     // Action for update item status
     public function change() {	
-	if ($this->input->post('check') !='') {
-	    $rows	= $this->input->post('check');
-	    foreach ($rows as $row) {
-		// Set id for load and change status
-		$this->Settings->setStatus($row,$this->input->post('select_action'));
-	    }
-	    // Set message
-	    $this->session->set_flashdata('message','Status changed!');
-	    redirect(ADMIN.$this->_class_name.'/index');
-	} else {	
-	    // Set message
-	    $this->session->set_flashdata('message','Data not Available');
-	    redirect(ADMIN.$this->_class_name.'/index');			
-	}
+		if ($this->input->post('check') !='') {
+			$rows	= $this->input->post('check');
+			foreach ($rows as $row) {
+			// Set id for load and change status
+			$this->Settings->setStatus($row,$this->input->post('select_action'));
+			}
+			// Set message
+			$this->session->set_flashdata('message','Status changed!');
+			redirect(ADMIN.$this->_class_name.'/index');
+		} else {	
+			// Set message
+			$this->session->set_flashdata('message','Data not Available');
+			redirect(ADMIN.$this->_class_name.'/index');			
+		}
     }
     
 }

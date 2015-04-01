@@ -179,10 +179,10 @@
 			<div class="form-group">
 			    <div class="radio-list">
 				<div class="radio-inline">
-					<label class="col-md-12" for="maintenance_mode">Yes <span>&nbsp;<?php echo form_radio('maintenance_mode', 1, false, 'class="maintenance_mode"');?></span></label>
+					<label class="col-md-12" for="maintenance_mode">Yes <span>&nbsp;<?php echo form_radio('maintenance_mode', 1, ($configuration) ? true : false, 'class="maintenance_mode"');?></span></label>
 				</div>
 				<div class="radio-inline">
-				    <label class="col-md-12" for="maintenance_mode">No <span>&nbsp;<?php echo form_radio('maintenance_mode', 1, false, 'class="maintenance_mode"');?></span></label>
+				    <label class="col-md-12" for="maintenance_mode">No <span>&nbsp;<?php echo form_radio('maintenance_mode', 0, (!$configuration) ? true : false, 'class="maintenance_mode"');?></span></label>
 				</div>
 			    </div>
 			</div>
