@@ -83,7 +83,8 @@ $config['modulelist'] = array(
 						'user/view'	    => 'View User',
 						'user/edit'	    => 'Edit User',
 						'user/delete'	=> 'Delete User',
-						'user/change'	=> 'Change User Status',	
+						'user/change'	=> 'Change User Status',
+						'user/image'	=> 'Change User Image',	
 						// User Group functions
 						'usergroup/add'	    => 'Add User Group',
 						'usergroup/view'    => 'View User Group',

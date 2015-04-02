@@ -4,64 +4,68 @@
 class User extends Admin_Controller {
 
     public $_class_name; 
-	    
+	public $_config;
+
     public function __construct() {
-            parent::__construct();
+        parent::__construct();
 
 	    // Set class name
 	    $this->_class_name = $this->controller;
 		    
-            // Load user related model
-            $this->load->model('Users');
-            $this->load->model('UserProfiles');
-            $this->load->model('UserGroups');		
-            $this->load->model('Captcha');
+        // Load user related model
+        $this->load->model('Users');
+        $this->load->model('UserProfiles');
+        $this->load->model('UserGroups');		
+        $this->load->model('Captcha');
+
+        // Load config files
+        $this->_config = $this->load->config('admin',true);
     }		
 
     public function index() {		
 
-            // Set default statuses
-            $data['statuses'] = $this->configs['status'];
+        // Set default statuses
+        $data['statuses'] = $this->configs['status'];
 
 	    // Set class name to view
 	    $data['class_name'] = $this->_class_name;
 
-            // Get users data
-            $rows = $this->Users->getAllUser();
+        // Get users data
+        $rows = $this->Users->getAllUser();
+        
+        $temp_rows = array();
             
-            $temp_rows = array();
-            
-            if($rows) {
-		$i = 0;
-                foreach($rows as $row){		
-                    $temp_rows[$i]->id = $row->id;
-                    $temp_rows[$i]->username = $row->username;
-                    $temp_rows[$i]->email = $row->email;
-                    $temp_rows[$i]->password = substr_replace($row->password, "********", 0, strlen($row->password));
-                    $temp_rows[$i]->added = $row->added;
-                    $temp_rows[$i]->modified = $row->modified;
-                    $temp_rows[$i]->status = $data['statuses'][$row->status];
-                    $temp_rows[$i]->group_id = $this->UserGroups->getGroupName_ById($row->group_id);
-                    $i++;
-                }
+        if($rows) {
+			$i = 0;
+            foreach($rows as $row){		
+                $temp_rows[$i]->id = $row->id;
+                $temp_rows[$i]->username = $row->username;
+                $temp_rows[$i]->email = $row->email;
+                $temp_rows[$i]->password = substr_replace($row->password, "********", 0, strlen($row->password));
+                $temp_rows[$i]->added = $row->added;
+                $temp_rows[$i]->modified = $row->modified;
+                $temp_rows[$i]->status = $data['statuses'][$row->status];
+                $temp_rows[$i]->group_id = $this->UserGroups->getGroupName_ById($row->group_id);
+                $i++;
             }
+        }
 
-            if (@$temp_rows) $data['rows'] = $temp_rows;
+        if (@$temp_rows) $data['rows'] = $temp_rows;
 
 	    // User profiles
-            $data['user_profiles'] = $this->UserProfiles->getUserProfile(Acl::user()->id);
+        $data['user_profiles'] = $this->UserProfiles->getUserProfile(Acl::user()->id);
 	    
-            // Set main template
-            $data['main'] = 'users/users_index';
+        // Set main template
+        $data['main'] = 'users/users_index';
 
-            // Set module with URL request 
-            $data['module_title'] = $this->module;
+        // Set module with URL request 
+        $data['module_title'] = $this->module;
 
-            // Set admin title page with module menu
-            $data['page_title'] = $this->module_menu;
+        // Set admin title page with module menu
+        $data['page_title'] = $this->module_menu;
 
-            // Load admin template
-            $this->load->view('template/admin/admin_template', $this->load->vars($data));
+        // Load admin template
+        $this->load->view('template/admin/admin_template', $this->load->vars($data));
 
     }	
     
@@ -326,61 +330,74 @@ class User extends Admin_Controller {
 	
     public function delete($id){
 
-            // Delete user data
-            $this->Users->deleteUser($id);
+        // Delete user data
+        $this->Users->deleteUser($id);
 
-            // Set flash message
-            $this->session->set_flashdata('message','User deleted');
+        // Set flash message
+        $this->session->set_flashdata('message','User deleted');
 
-            // Redirect after delete
-            redirect(ADMIN. $this->controller . '/index');
+        // Redirect after delete
+        redirect(ADMIN. $this->controller . '/index');
 
-    }	
+    }
 
     public function view($id=null){
+		
+        // Check if data is found and redirect if false
+        if (empty($id) && (int) count($id) == 0) {
+            $this->session->set_flashdata('message',"Error submission.");
+            redirect(ADMIN. $this->controller . '/index');
+        }
 
-            // Load form validation library if not auto loaded
-            $this->load->library('form_validation');
+        // Check if user data ID is found and redirect if false
+        $user = $this->Users->getUser($id);
+        if (!count($user)){
+            $this->session->set_flashdata('message',"Data not found.");			
+            redirect(ADMIN. $this->controller . '/index');
+        }
 
-            // Check if data is found and redirect if false
-            if (empty($id) && (int) count($id) == 0) {
-                    $this->session->set_flashdata('message',"Error submission.");
-                    redirect(ADMIN. $this->controller . '/index');
-            }
+        // Load js files
+		$data['js_files'] = array(
+			base_url('assets/admin/plugins/jquery-file-upload/js/vendor/jquery.ui.widget.js'),
+			base_url('assets/admin/plugins/jquery-file-upload/js/jquery.iframe-transport.js'),
+			base_url('assets/admin/plugins/jquery-file-upload/js/jquery.fileupload.js'),
+			base_url('assets/admin/plugins/jquery-file-upload/js/jquery.fileupload-process.js'),
+			base_url('assets/admin/plugins/jquery-file-upload/js/jquery.fileupload-validate.js'),
+			base_url('assets/admin/plugins/jquery-file-upload/js/jquery.fileupload-ui.js'),
+		);
+		
+		// Load js execution files
+		//$data['script_bottom'] = "load();setimg('".base_url()."assets/admin/img/')";
+		
+        // Load form validation library if not auto loaded
+        //$this->load->library('form_validation');
 
-            // Check if user data ID is found and redirect if false
-            $user = $this->Users->getUser($id);
-            if (!count($user)){
-                    $this->session->set_flashdata('message',"Data not found.");			
-                    redirect(ADMIN. $this->controller . '/index');
-            }
+        // BASE PATH for upload admin media
+        $data['upload_path']	= $this->_config['upload_path'];
 
-            // BASE PATH for upload admin media
-            $data['upload_path']	= $this->config->item('upload_path');
+        // URL for upload admin media
+        $data['upload_url']		= $this->_config['upload_url'];
 
-            // URL for upload admin media
-            $data['upload_url']		= $this->config->item('upload_url');
+        // Captcha data
+        $data['captcha']		= $this->Captcha->image();
 
-            // Captcha data
-            $data['captcha']		= $this->Captcha->image();
+        // User account data
+        $data['user']			= $this->Users->getUser($id);		
 
-            // User account data
-            $data['user']			= $this->Users->getUser($id);		
+        // User profile data
+        $data['user_profile']	= $this->UserProfiles->getUserProfile($id);
 
-            // User profile data
-            $data['user_profile']	= $this->UserProfiles->getUserProfile($id);
+        // Main template
+        $data['main']	= 'users/users_view';
 
-            // Main template
-            $data['main']	= 'users/users_view';
+        // Set module with URL request 
+        $data['module_title'] = $this->module;
 
-            // Set module with URL request 
-            $data['module_title'] = $this->module;
+        // Set admin title page with module menu
+        $data['page_title'] = $this->module_menu;
 
-            // Set admin title page with module menu
-            $data['page_title'] = $this->module_menu;
-
-            // Load admin template
-            $this->load->view('template/admin/admin_template',$this->load->vars($data));
+        // Load admin template
+        $this->load->view('template/admin/admin_template',$this->load->vars($data));
     }
 
     // Ajax Methods for this controller and module
@@ -650,24 +667,198 @@ class User extends Admin_Controller {
     
     // Action for update item status
     public function change() {	
-	if ($this->input->post('check') !='') {
-	    $rows	= $this->input->post('check');
-	    foreach ($rows as $row) {
-		// Set id for load and change status
-		$this->Users->setStatus($row,$this->input->post('select_action'));
-		$this->UserProfiles->setStatus($row,$this->input->post('select_action'));
-	    }
-	    // Set message
-	    $this->session->set_flashdata('message','Status changed!');
-	    redirect(ADMIN.$this->_class_name.'/index');
-	} else {	
-	    // Set message
-	    $this->session->set_flashdata('message','Data not Available');
-	    redirect(ADMIN.$this->_class_name.'/index');			
-	}
+		if ($this->input->post('check') !='') {
+		    $rows	= $this->input->post('check');
+		    foreach ($rows as $row) {
+			// Set id for load and change status
+			$this->Users->setStatus($row,$this->input->post('select_action'));
+			$this->UserProfiles->setStatus($row,$this->input->post('select_action'));
+		    }
+		    // Set message
+		    $this->session->set_flashdata('message','Status changed!');
+		    redirect(ADMIN.$this->_class_name.'/index');
+		} else {	
+		    // Set message
+		    $this->session->set_flashdata('message','Data not Available');
+		    redirect(ADMIN.$this->_class_name.'/index');			
+		}
     }
 	
     public function search() { }
+
+	public function upload() {
+
+		// Check if the request via AJAX
+		if (empty($_POST)) {
+			exit('No direct script access allowed');		
+		}	
+				
+		$config = array(
+			array('field' => 'image_name', 
+                  'label' => 'File', 
+                  'rules' => 'trim|required|xss_clean|max_length[35]'));
+		
+		// Set rules to form validation
+		$this->form_validation->set_rules($config);
+		
+		// Run validation for checking
+		if ($this->form_validation->run() === FALSE) {
+
+			$part_id	 = $this->user_model->decode($get_data);
+			$participant = $this->user_model->get_participant($part_id);
+
+			$image['file_name'] = $this->input->post('image_temp');
+			$image['type']		= $this->input->post('image_type');
+			$image['part_id']	= $part_id;
+			$image['name']		= $participant->name;				
+			$image['status']	= 1;
+			$image['added']		= time();
+
+			$image_id 			= $this->gallery_model->insert_image($image);
+		
+			//if ($image_id) redirect(base_url() . 'gallery/single/'. $image['type'].'/' . $image_id);
+
+		} else {
+
+		}
+								
+	}
+
+	public function image() {
+			
+		// Check if the request via AJAX
+		if (!$this->input->is_ajax_request()) {
+			exit('No direct script access allowed');		
+		}	
+		
+		// Define initialize result
+		$result['result'] = '';
+		
+			// Set validation config
+			$config = array(
+				array('field' => 'image_name', 
+                      'label' => 'File', 
+                      'rules' => 'trim|required|xss_clean|max_length[35]'));
+
+			// Set rules to form validation
+			$this->form_validation->set_rules($config);
+			
+			// Run validation for checking
+			if ($this->form_validation->run() === FALSE) {
+								
+					if($_FILES) {					
+		
+						usleep(2000000);
+						
+						$file_hash	= md5(time() + rand(100, 999));
+						$file_data	= pathinfo($_FILES['fileupload']['name']);
+											
+						$file_element_name = 'fileupload';
+						
+						$config['upload_path'] = './uploads/users/';
+						$config['allowed_types'] = 'gif|jpg|png|doc|txt';
+						$config['max_size'] = 1024 * 8;
+						$config['encrypt_name'] = FALSE;
+
+						$this->load->library('upload', $config);
+						
+						if (!$this->upload->do_upload($file_element_name))
+						{
+						  $status = 'error!';
+						  $msg = $this->upload->display_errors('', '');
+						}
+						else
+						{
+							
+							$data = $this->upload->data();
+							$image_path = $data['full_path'];
+							
+							if(file_exists($image_path))
+							{
+								$status = "success";
+								$msg = "File successfully uploaded";
+							}
+							else
+							{
+							 $status = "error";
+							 $msg = "Something went wrong when saving the file, please try again.";
+							}
+						}
+												
+						$file_name	= self::_upload_to($_FILES['fileupload'], $file_hash.'.'.$file_data['extension'], './uploads/users/', 0777);
+											
+						$config['source_image']	= $file_name;
+						$config['create_thumb'] = TRUE;
+						$config['maintain_ratio'] = TRUE;
+						$config['width']	= 264;
+						$config['height']	= 220;
+
+						$this->load->library('image_lib', $config); 
+
+						$this->image_lib->resize();
+						
+						$file_data	= pathinfo($file_name);
+						$file_mime	= $_FILES['fileupload']['type'];
+						
+						$thumb = $file_data['filename'].'_thumb.'.$file_data['extension'];
+						$result['files'][] = array(
+												'name'	=>$file_data['basename'],
+												'size'	=>$_FILES['fileupload']['size'],
+												'type'	=>$_FILES['fileupload']['type'],
+												'url'	=> 'uploads/users/'. $file_data['basename'],
+												//'file_id'		=> $file_id,
+												'thumbnailUrl'	=>'uploads/users/'. $thumb,
+												//'deleteUrl'		=>URL::site(ADMIN).'/news/filedelete/'.$file_id,
+												'deleteType'	=>'DELETE'
+												);						
+					}																
+				
+			} else {
+				
+				// Unset captcha post
+				unset($_POST['captcha']); 				
+					
+				// Send message if account not found					
+				$result['result']['code'] = 0;
+				$result['result']['text'] = 'Image not Found';
+			}
+
+		// Return data esult
+		$data['json'] = $result;
+		
+		// Load data into view		
+		$this->load->view('json', $this->load->vars($data));	
+		
+	}
+	
+	// Check if upload dir exists or create one and upload file if true and return file name
+	public static function _upload_to ($file, $name, $upload_path='', $file_perm = '') {
+		if (!empty($upload_path)) {
+			
+			if ( ! is_dir($upload_path) OR ! is_writable(realpath($upload_path))) {	
+				mkdir($upload_path);
+			}
+
+			// Make the filename into a complete path			
+			$filename = realpath($upload_path).DIRECTORY_SEPARATOR.$file['name'];
+			
+			if (move_uploaded_file($file['tmp_name'], $filename))
+			{
+				if ($file_perm !== FALSE)
+				{
+					// Set permissions on filename
+					chmod($filename, $file_perm);
+				}
+
+				// Return new file path
+				return $filename;
+			}
+			
+		} else {
+			return false;
+		}
+		
+	}
 
     // -------------- CALLBACK METHODS -------------- //
 
