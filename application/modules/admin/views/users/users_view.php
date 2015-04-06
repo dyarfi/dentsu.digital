@@ -181,9 +181,9 @@
 												<div class="img-thumbnail">
 													<a href="#" class="handle-img">
 													<?php if (empty($user_profile->file_name)) { ?>
-														<img alt="" class="img-responsive" src="<?=base_url($upload_url.'users_default.png');?>">							
+														<img alt="" src="<?=base_url($upload_url.'users_default.png');?>">							
 													<?php } else {?>
-														<img alt="" class="img-responsive" src="<?=base_url($upload_url.$user_profile->file_name);?>">
+														<img alt="" src="<?=base_url($upload_url.$user_profile->file_name);?>">
 													<?php } ?>
 													</a>
 												</div>

@@ -741,10 +741,12 @@ class User extends Admin_Controller {
 			// Run validation for checking
 			if ($this->form_validation->run() === FALSE) {
 								
-					if($_FILES) {					
-		
-						usleep(2000000);
+					if($_FILES && $_SERVER['REQUEST_METHOD'] == 'POST') {					
 						
+						// uncomment to see javascript loading progress
+						//usleep(2000000);
+						
+						$upload		= TRUE;
 						$file_hash	= md5(time() + rand(100, 999));
 						$file_data	= pathinfo($_FILES['fileupload']['name']);
 											
@@ -754,52 +756,57 @@ class User extends Admin_Controller {
 						$config['allowed_types'] = 'gif|jpg|png|doc|txt';
 						$config['max_size'] = 1024 * 8;
 						$config['encrypt_name'] = FALSE;
-
+						
 						$this->load->library('upload', $config);
+
+						$thumb	= $file_data['filename'].'_thumb.'.$file_data['extension'];
+						
+						if(file_exists($config['upload_path'].$_FILES['fileupload']['name'])) {
+							
+							$upload	= FALSE;
+						
+						}
 						
 						if (!$this->upload->do_upload($file_element_name))
 						{
-						  $status = 'error!';
-						  $msg = $this->upload->display_errors('', '');
+							$status = 'error!';
+							$msg = $this->upload->display_errors('', '');
 						}
 						else
 						{
 							
-							$data = $this->upload->data();
-							$image_path = $data['full_path'];
+							if ($upload == TRUE) {
+
+								$data = $this->upload->data();
+								$image_path = $data['full_path'];
+
+								//$file_name	= self::_upload_to($file_element_name, $file_hash.'.'.$file_data['extension'], './uploads/users/', 0777);
+
+								$configs['source_image']	= $config['upload_path'].$_FILES['fileupload']['name'];
+								$configs['create_thumb'] = TRUE;
+								$configs['maintain_ratio'] = TRUE;
+								$configs['width']	= 264;
+								$configs['height']	= 220;
+
+								$this->load->library('image_lib', $configs); 
+
+								$this->image_lib->resize();
+
+								//$file_data	= pathinfo($file_name);
+								$file_mime	= $_FILES['fileupload']['type'];
+
+								$thumb = $file_data['filename'].'_thumb.'.$file_data['extension'];
+							}
 							
-							if(file_exists($image_path))
-							{
-								$status = "success";
-								$msg = "File successfully uploaded";
-							}
-							else
-							{
-							 $status = "error";
-							 $msg = "Something went wrong when saving the file, please try again.";
-							}
+							$status = "success";
+							$msg = "File successfully uploaded";
+
 						}
-												
-						$file_name	= self::_upload_to($_FILES['fileupload'], $file_hash.'.'.$file_data['extension'], './uploads/users/', 0777);
-											
-						$config['source_image']	= $file_name;
-						$config['create_thumb'] = TRUE;
-						$config['maintain_ratio'] = TRUE;
-						$config['width']	= 264;
-						$config['height']	= 220;
-
-						$this->load->library('image_lib', $config); 
-
-						$this->image_lib->resize();
 						
-						$file_data	= pathinfo($file_name);
-						$file_mime	= $_FILES['fileupload']['type'];
-						
-						$thumb = $file_data['filename'].'_thumb.'.$file_data['extension'];
 						$result['files'][] = array(
-												'name'	=>$file_data['basename'],
-												'size'	=>$_FILES['fileupload']['size'],
-												'type'	=>$_FILES['fileupload']['type'],
+												'name'	=> $file_data['basename'],
+												'size'	=> $_FILES['fileupload']['size'],
+												'type'	=> $_FILES['fileupload']['type'],
 												'url'	=> 'uploads/users/'. $file_data['basename'],
 												//'file_id'		=> $file_id,
 												'thumbnailUrl'	=>'uploads/users/'. $thumb,
@@ -860,64 +867,64 @@ class User extends Admin_Controller {
     // Match Email post to Database
     public function match_email($email) {		
 
-            // Check email if empty
-            if ($email == '') {
-                    $this->form_validation->set_message('match_email', 'The %s can not be empty.');
-                    return false;
-            }
-            // Check email if match
-            else if ($this->Users->getUserEmail($email) == 1) {
-                    $this->form_validation->set_message('match_email', 'The %s is already taken.');			
-                    return false;
-            } else {
-                    return true;
-            } 
+		// Check email if empty
+		if ($email == '') {
+				$this->form_validation->set_message('match_email', 'The %s can not be empty.');
+				return false;
+		}
+		// Check email if match
+		else if ($this->Users->getUserEmail($email) == 1) {
+				$this->form_validation->set_message('match_email', 'The %s is already taken.');			
+				return false;
+		} else {
+				return true;
+		} 
 
     }
 
     // Match Captcha post to Database
     public function match_captcha($captcha) {		
 
-            // Check captcha if empty
-            if ($captcha == '') {
-                    $this->form_validation->set_message('match_captcha', 'The %s code can not be empty.');
-                    return false;
-            }
-            // Check captcha if match
-            else if ($this->Captcha->match($captcha)) {
-                    return true;
-            } 
+		// Check captcha if empty
+		if ($captcha == '') {
+				$this->form_validation->set_message('match_captcha', 'The %s code can not be empty.');
+				return false;
+		}
+		// Check captcha if match
+		else if ($this->Captcha->match($captcha)) {
+				return true;
+		} 
 
     }
 
     // Match Password post to Database
     public function match_password($password) {
 
-            // Check password if empty
-            if ($password == '') {
-                    $this->form_validation->set_message('match_password', 'The %s can not be empty.');
-                    return false;
-            }
-            // Check password if match
-            else if ($this->Users->getUserPassword($password) != 1) {
-                    $this->form_validation->set_message('match_password', 'The %s not match with your current password.');			
-                    return false;
-            // Match current password
-            } else {
-                    return true;
-            }
+		// Check password if empty
+		if ($password == '') {
+				$this->form_validation->set_message('match_password', 'The %s can not be empty.');
+				return false;
+		}
+		// Check password if match
+		else if ($this->Users->getUserPassword($password) != 1) {
+				$this->form_validation->set_message('match_password', 'The %s not match with your current password.');			
+				return false;
+		// Match current password
+		} else {
+				return true;
+		}
 
     }
 
     // Reload Captcha to the view
     public function reload_captcha() {
 
-            // Send image to display Captcha
-            $captcha = $this->Captcha->image();
+		// Send image to display Captcha
+		$captcha = $this->Captcha->image();
 
-            // Echo captcha Image
-            echo $captcha['image'];
-            exit;
+		// Echo captcha Image
+		echo $captcha['image'];
+		exit;
 
     }
 }
