@@ -324,8 +324,8 @@ var FormUser = function () {
 	}
 	
 	var handleUserImgForm = function () {
-		if(typeof $.fileupload != 'undefined') {
-			$('#fileupload').fileupload({
+		if(typeof $.fn.fileupload != 'undefined') {
+			$('#fileupload-img').fileupload({
 				url: $(this).attr('data-url'),
 				dataType: 'json',
 				//acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,

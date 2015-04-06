@@ -94,7 +94,13 @@
                         </table>    
                         </div>    
                     <?php echo form_close(); ?>
-                <?php endif; ?>
+					<?php if ($this->session->userdata('user_session')->group_id == 1) { ?>	
+					<h3>Empty All User Permission</h3>
+					<a class="btn btn-primary btn-empty-permit" href="<?php echo base_url(ADMIN);?>/modulelist/trash">
+						<span class="glyphicon glyphicon-trash"></span> Empty
+					</a>	
+					<?php } ?>	
+				<?php endif; ?>
             </div>
         </div>
     </div>	

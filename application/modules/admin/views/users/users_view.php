@@ -176,33 +176,33 @@
 									<ul class="list-unstyled profile-nav">
 										<li>
 
-				<?php echo form_open_multipart(base_url(ADMIN.'user/index'), array('id'=>'fileUploadForm'));?>
-				<div class="img_holder_xhr">
-					<div class="img-thumbnail">
-						<a href="#" class="handle-img">
-						<?php if (empty($user_profile->file_name)) { ?>
-							<img alt="" class="img-responsive" src="<?=base_url($upload_url.'users_default.png');?>">							
-						<?php } else {?>
-							<img alt="" class="img-responsive" src="<?=base_url($upload_url.$user_profile->file_name);?>">
-						<?php } ?>
-						</a>
-					</div>
-				</div>
-				<!-- The global progress bar -->
-				<div id="progress" class="progress" style="display:none;">
-					<div class="progress-bar progress-bar-danger"></div>
-				</div>
-				<div class="fileUpload pull-left">
-					<span class="btn btn-default">Change</span>
-					<input class="upload" type="file" id="fileupload" name="fileupload" data-url="<?=base_url(ADMIN.'user/image');?>">
-				</div>
-				<input type="hidden" name="image_temp" value=""/>
-				<div class="id-uploadsticker pull-right">
-					<div class="text-center button-submit" style="display: none">
-						<button type="submit" class="profile-edit btn btn-default">Save</button>
-					</div>
-				</div>
-				<?php echo form_close(); ?>											
+											<?php echo form_open_multipart(base_url(ADMIN.'user/upload'), array('id'=>'fileUploadForm'));?>
+											<div class="img_holder_xhr">
+												<div class="img-thumbnail">
+													<a href="#" class="handle-img">
+													<?php if (empty($user_profile->file_name)) { ?>
+														<img alt="" class="img-responsive" src="<?=base_url($upload_url.'users_default.png');?>">							
+													<?php } else {?>
+														<img alt="" class="img-responsive" src="<?=base_url($upload_url.$user_profile->file_name);?>">
+													<?php } ?>
+													</a>
+												</div>
+											</div>
+											<!-- The global progress bar -->
+											<div id="progress" class="progress" style="display:none;">
+												<div class="progress-bar progress-bar-danger"></div>
+											</div>
+											<div class="fileUpload pull-left">
+												<span class="btn btn-default">Change</span>
+												<input class="upload" type="file" id="fileupload-img" name="fileupload" data-url="<?=base_url(ADMIN.'user/image');?>">
+											</div>
+											<input type="hidden" name="image_temp" value=""/>
+											<div class="id-uploadsticker pull-right">
+												<div class="text-center button-submit" style="display: none">
+													<button type="submit" class="profile-edit btn btn-default">Save</button>
+												</div>
+											</div>
+											<?php echo form_close(); ?>											
 			
 										</li>
 									</ul>
@@ -217,7 +217,8 @@
 												<?php if(!empty($user_profile->phone)) { ?>
 												<li><i class="fa fa-phone"></i> <?=$user_profile->phone;?></li>
 												<?php } ?>
-												<?php if(!empty($user_profile->mobile_phone)) { ?>												  <li><i class="fa fa-mobile-phone"></i> <?=$user_profile->mobile_phone;?></li>
+												<?php if(!empty($user_profile->mobile_phone)) { ?>
+												<li><i class="fa fa-mobile-phone"></i> <?=$user_profile->mobile_phone;?></li>
 												<?php } ?>		
 												<?php if(!empty($user_profile->division)) { ?>												
 												<li><i class="fa fa-briefcase"></i> <?=$user_profile->division;?></li>

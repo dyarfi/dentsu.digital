@@ -154,17 +154,17 @@ class ModuleList extends Admin_Controller {
 		if(is_array($fields['module_permission']['group_id'])) {
 		    // Loop data module_permission for update recursion
 		    foreach ($fields['module_permission']['group_id'] as $key => $val) {
-			foreach ($val as $k => $v) {
-			    
-			    $data = array(
-				    'id'    => $k,
-				    'value' => $v,
-				    'modified' => time()
-				 );
-			    
-			    // Load Class to update data
-			    $this->UserGroupPermissions->updateUserGroupPermission($data);
-			}
+				foreach ($val as $k => $v) {
+
+					$data = array(
+						'id'    => $k,
+						'value' => $v,
+						'modified' => time()
+					 );
+
+					// Load Class to update data
+					$this->UserGroupPermissions->updateUserGroupPermission($data);
+				}
 		    }
 		}
 		
@@ -173,5 +173,23 @@ class ModuleList extends Admin_Controller {
 		
 		// Redirect to controller
 		redirect(ADMIN . 'modulelist/index');
+	}
+		
+	public function trash() { 
+		
+		// Check only superadmin group can access this method
+		if ($this->session->userdata('user_session')->group_id == 1) {
+			
+			// Empty all user permission method
+			$return = $this->ModuleLists->emptyPermission();
+			
+			// Set flash message for updated module listing
+			$this->session->set_flashdata('message','User permission emptied, Logout for continue');
+		
+			// Redirect to controller
+			redirect(ADMIN . 'modulelist/index');
+			
+		}
+		
 	}
 }

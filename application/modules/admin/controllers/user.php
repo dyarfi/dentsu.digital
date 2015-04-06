@@ -684,7 +684,7 @@ class User extends Admin_Controller {
 		    redirect(ADMIN.$this->_class_name.'/index');			
 		}
     }
-	
+
     public function search() { }
 
 	public function upload() {
@@ -711,9 +711,7 @@ class User extends Admin_Controller {
 
 			$profile_id 			= $this->UserProfiles->setUserProfiles($profile);
 
-			//print_r($profile_id);
-		
-			//if ($image_id) redirect(base_url() . 'gallery/single/'. $image['type'].'/' . $image_id);
+			if ($profile_id) redirect(base_url(ADMIN) . '/user/index');
 
 		} else {
 

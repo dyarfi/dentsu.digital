@@ -6,12 +6,12 @@
 .fileUpload {
 	position: relative;
 	overflow: hidden;
-	margin: 10px 0px 0px 0px;
+	margin: 0px 0px 0px 0px;
 }
 .fileUpload input.upload {
 	position: absolute;
 	top: 0;
-	right: 0;
+	right: 4px;
 	margin: 0;
 	padding: 0;
 	font-size: 20px;
@@ -19,8 +19,15 @@
 	opacity: 0;
 	filter: alpha(opacity=0);
 }
-.id-uploadsticker {
-	position: relative;
-	margin-top:10px;
-	right: 5px
+.img_holder_xhr .img-thumbnail {
+	padding: 0;
+}
+.img_holder_xhr .img-thumbnail img {
+	width: 100%;
+	text-align: center
+}
+.img_holder_xhr .img-thumbnail {
+	min-width: 300px;
+	max-height: 300px;
+	overflow: hidden
 }

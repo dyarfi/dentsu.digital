@@ -375,5 +375,12 @@ class ModuleLists Extends CI_Model {
 	    }
 						
 	}
+	
+	public function emptyPermission() {
+		$this->db->query('TRUNCATE `tbl_group_permissions`;');
+		$this->db->query('TRUNCATE `tbl_model_lists`;');
+		$this->db->query('TRUNCATE `tbl_module_lists`;');
+		$this->db->query('TRUNCATE `tbl_module_permissions`;');
+	}
 
 }

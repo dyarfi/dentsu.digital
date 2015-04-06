@@ -4,7 +4,10 @@
 
 $config['module_list.models']		= array('admin/ModuleLists');
 $config['module_list.module_menu']	= array('modulelist/index'  => 'Modules');
-$config['module_list.module_function']	= array('modulelist/edit'   => 'Edit Module');
+$config['module_list.module_function']	= array(
+											'modulelist/edit'   => 'Edit Module',
+											'modulelist/trash'	=> 'Delete User Permission'
+											);
 
 /* MODULE MENU 
  * 
@@ -84,7 +87,8 @@ $config['modulelist'] = array(
 						'user/edit'	    => 'Edit User',
 						'user/delete'	=> 'Delete User',
 						'user/change'	=> 'Change User Status',
-						'user/image'	=> 'Change User Image',	
+						'user/image'	=> 'Change User Image', /** Upload temp user image **/
+						'user/upload'	=> 'Upload User Image', /** Upload user image **/
 						// User Group functions
 						'usergroup/add'	    => 'Add User Group',
 						'usergroup/view'    => 'View User Group',

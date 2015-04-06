@@ -176,10 +176,6 @@
 <script src="<?=base_url()?>assets/admin/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
 <!--<script src="<?=base_url()?>assets/admin/plugins/fancybox/source/jquery.fancybox.js" type="text/javascript"></script>-->
 
- <?php if (!empty($js_files)) { foreach ($js_files as $file): ?>
-    <script src="<?php echo $file; ?>"></script>
- <?php endforeach; } ?>
-
 <!-- END CORE PLUGINS -->
 <!-- BEGIN PAGE LEVEL PLUGINS -->
 
@@ -214,9 +210,12 @@
 <script type="text/javascript" src="<?=base_url()?>assets/admin/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
 <script type="text/javascript" src="<?=base_url()?>assets/admin/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
 <script src="<?=base_url()?>assets/admin/plugins/jquery-validation/dist/jquery.validate.min.js" type="text/javascript"></script>
-
 <!-- END PAGE LEVEL PLUGINS -->
 
+ <?php if (!empty($js_files)) { foreach ($js_files as $file): ?>
+<script src="<?php echo $file; ?>"></script>
+ <?php endforeach; } ?>
+	
 <!-- BEGIN PAGE LEVEL SCRIPTS -->
 <script src="<?=base_url()?>assets/admin/scripts/core/app.js" type="text/javascript"></script>
 <script src="<?=base_url()?>assets/admin/scripts/custom/index.js" type="text/javascript"></script>
