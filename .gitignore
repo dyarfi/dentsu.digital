@@ -5,5 +5,5 @@ assets/admin/captcha/image/*
 */cache/*
 */cache/!index.html
 */cache/!.htaccess
-*/uploads/*
+uploads/*
 .DS_Store
