@@ -22,6 +22,7 @@ class Authenticate extends Admin_Controller {
 	    $this->load->model('UserHistories');	
 	    $this->load->model('Captcha');
 		$this->load->model('Sessions');
+	
 	}
 
 	public function index() {
@@ -38,6 +39,7 @@ class Authenticate extends Admin_Controller {
 	}
 	
 	public function login () {	
+
 	    // POST checking
 	    if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
@@ -46,26 +48,27 @@ class Authenticate extends Admin_Controller {
 		    $this->form_validation->set_rules('username', 'Username', 'trim|required|min_length[5]|max_length[24]|xss_clean');
 		    $this->form_validation->set_rules('password', 'Password','trim|required|min_length[5]|max_length[24]|xss_clean');
 
-		    if ($this->form_validation->run() == FALSE)
-		    {
+		    if ($this->form_validation->run() == FALSE) {
 
 		    }
 		    else {
-
+			
 		    }
 
 		    //Make sure login object was true
 		    if($userObj['username'] == '' OR $userObj['password'] == '') {
 			//return false;
+
 		    }
 		    //Check if already logged in
 		    if($this->session->userdata('username') == $userObj['username']) {
 			//User is already logged in.				
 			//return false;
+
 		    }
 
 		    // Initialize install
-		    $this->Users->install();		   
+		    $this->Users->install();					   
 		    $this->UserGroups->install();
 			$this->ModuleLists->install();
 		    $this->ModelLists->install();
@@ -123,15 +126,9 @@ class Authenticate extends Admin_Controller {
 			    //Set session data
 			    $this->session->set_userdata($ci_session);
 			    
-			    // Check referrer if admin already visited a page 
-			    if (strstr($this->previous_url, ADMIN.'authenticate/login')=='') {
-					// Redirect to referrer
-					redirect(base_url($this->previous_url));
-			    } else {
-					// Redirect to dashboard
-					redirect(ADMIN.'dashboard/index');
-			    }
-
+			    // Redirect to dashboard
+				redirect(ADMIN.'dashboard/index');
+			    
 		    } else {
 
 			    $userObj = 'No user with that account';				
@@ -161,7 +158,8 @@ class Authenticate extends Admin_Controller {
 	    $this->session->sess_destroy();
 
 	    //Redirect admin to refresh
-	    redirect(ADMIN);
+	    redirect(ADMIN.'authenticate/login');
+
     }
 	
 }

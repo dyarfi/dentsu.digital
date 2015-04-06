@@ -324,69 +324,71 @@ var FormUser = function () {
 	}
 	
 	var handleUserImgForm = function () {
-		$('#fileupload').fileupload({
-			url: $(this).attr('data-url'),
-			dataType: 'json',
-			//acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
-			//maxFileSize:2000000, // 2000 KB
-			sequentialUploads: false,
-			add: function (e, data) {
-				var uploadErrors = [];
-				//var acceptFileTypes = /\/(pdf|xml)$/i;
-				var acceptFileTypes = /(\.|\/)(gif|jpe?g|png)$/i;
-				if(data.originalFiles[0]['type'].length && !acceptFileTypes.test(data.originalFiles[0]['type'])) {
-					uploadErrors.push('Invalid file type, aborted');
-				}
-				//console.log(data.originalFiles[0]['size']) ;
-				if(data.originalFiles[0]['size'] > 5000000) {
-					uploadErrors.push('Filesize is too big');
-				}
-				if(uploadErrors.length > 0) {
-					alert(uploadErrors.join("\n"));
-				} else {
-					//data.context = $('<p/>').text('Subiendo...').appendTo('.img_holder_xhr');
-					data.submit();
-				}
-	        },
-	        done: function (e, data) {
-				e.preventDefault();
-				$.each(data.result.files, function (index, file) {	
-					//alert(file.error);
-					$('.img-thumbnail a.handle-img')
-					.prop('href',base_URL + file.url).empty()
-					.html('<img src="'+base_URL + file.thumbnailUrl+'"//>');
-					$('input[name="image_temp"]').attr('value',file.name);
-	            });			
-				$('.progress').hide();			
-				$('.button-submit').show({duration:'260',easing:'easeInOutBack'});
-	        },
-	        progressall: function (e, data) {
-				e.preventDefault();
-	            var progress = parseInt(data.loaded / data.total * 100, 10);
-				$('.progress').show();
-	            $('.progress .progress-bar').css(
-	                'width',
-	                progress + '%'
-	            ).html(progress+'% Sedang mengunggah, mohon menunggu..');
-	            $('.button-submit').hide({duration:'260',easing:'easeInOutBack'});
-	        }
-	    })
-		.on('fileuploadfail', function (e, data) {
-	        $.each(data.files, function (index) {
-	        	var error = $('<span class="text-danger"/>').text('File upload failed.');
-	            $(data.context.children()[index])
-	                .append('<br>')
-	                .append(error);
-	            //console.log(files);
-	        });
-	    })
-		.prop('disabled', !$.support.fileInput)
-	        .parent().addClass($.support.fileInput ? undefined : 'disabled');
+		if(typeof $.fileupload != 'undefined') {
+			$('#fileupload').fileupload({
+				url: $(this).attr('data-url'),
+				dataType: 'json',
+				//acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+				//maxFileSize:2000000, // 2000 KB
+				sequentialUploads: false,
+				add: function (e, data) {
+					var uploadErrors = [];
+					//var acceptFileTypes = /\/(pdf|xml)$/i;
+					var acceptFileTypes = /(\.|\/)(gif|jpe?g|png)$/i;
+					if(data.originalFiles[0]['type'].length && !acceptFileTypes.test(data.originalFiles[0]['type'])) {
+						uploadErrors.push('Invalid file type, aborted');
+					}
+					//console.log(data.originalFiles[0]['size']) ;
+					if(data.originalFiles[0]['size'] > 5000000) {
+						uploadErrors.push('Filesize is too big');
+					}
+					if(uploadErrors.length > 0) {
+						alert(uploadErrors.join("\n"));
+					} else {
+						//data.context = $('<p/>').text('Subiendo...').appendTo('.img_holder_xhr');
+						data.submit();
+					}
+		        },
+		        done: function (e, data) {
+					e.preventDefault();
+					$.each(data.result.files, function (index, file) {	
+						//alert(file.error);
+						$('.img-thumbnail a.handle-img')
+						.prop('href',base_URL + file.url).empty()
+						.html('<img src="'+base_URL + file.thumbnailUrl+'"//>');
+						$('input[name="image_temp"]').attr('value',file.name);
+		            });			
+					$('.progress').hide();			
+					$('.button-submit').show({duration:'260',easing:'easeInOutBack'});
+		        },
+		        progressall: function (e, data) {
+					e.preventDefault();
+		            var progress = parseInt(data.loaded / data.total * 100, 10);
+					$('.progress').show();
+		            $('.progress .progress-bar').css(
+		                'width',
+		                progress + '%'
+		            ).html(progress+'% Sedang mengunggah, mohon menunggu..');
+		            $('.button-submit').hide({duration:'260',easing:'easeInOutBack'});
+		        }
+		    })
+			.on('fileuploadfail', function (e, data) {
+		        $.each(data.files, function (index) {
+		        	var error = $('<span class="text-danger"/>').text('File upload failed.');
+		            $(data.context.children()[index])
+		                .append('<br>')
+		                .append(error);
+		            //console.log(files);
+		        });
+		    })
+			.prop('disabled', !$.support.fileInput)
+		        .parent().addClass($.support.fileInput ? undefined : 'disabled');
 
-		$('#fileupload').bind('fileuploadprogress', function (e, data) {
-			// Log the current bitrate for this upload:
-			//console.log(data.bitrate);
-		});
+			$('#fileupload').bind('fileuploadprogress', function (e, data) {
+				// Log the current bitrate for this upload:
+				//console.log(data.bitrate);
+			});
+		}	
 	}
 
 	var FormChangePassword = function() {

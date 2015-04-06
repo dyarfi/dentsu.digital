@@ -79,6 +79,11 @@ $route[$admin.'/qrcodescanner/(:any)']	= 'qrcode/qrcodescanner/$1';
 $route[$admin.'/questionnaire/(:any)']	= 'questionnaire/$1';
 $route[$admin.'/question/(:any)']		= 'questionnaire/question/$1';
 
+$route[$admin.'/color/(:any)']			= 'color/$1';
+$route[$admin.'/colorscanner/(:any)']	= 'color/colorscanner/$1';
+$route[$admin.'/colorcontent/(:any)']	= 'color/colorcontent/$1';
+$route[$admin.'/colorpersonal/(:any)']	= 'color/colorpersonal/$1';
+
 //$route[$admin.'/(:any)'] = '$1';
 
 /*** Admin Related Routes - end - **/

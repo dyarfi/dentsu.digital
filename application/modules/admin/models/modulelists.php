@@ -198,7 +198,7 @@ class ModuleLists Extends CI_Model {
 						    if(is_dir(APPPATH.'modules/'.$row)) {
 
 							    $config		= $this->load->config('modules',TRUE);
-
+			
 							    // Model install
 							    $models = @$config['modulelist'][ucfirst($row)]['models'];
 

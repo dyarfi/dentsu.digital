@@ -24,7 +24,8 @@ class Admin_Controller extends CI_Controller {
 		
 		// Load Setting Model
 		//$this->load->model('admin/Settings');		
-		
+		//$this->session->sess_destroy();
+
 		// Set user data lists from login session		
 		$this->user				= Acl::user();
 
@@ -42,7 +43,7 @@ class Admin_Controller extends CI_Controller {
 		
 		// Check if user data is true empty and redirect to authenticate
 		if (!$this->user 
-				&& strpos($this->uri->uri_string(), ADMIN) === 0 
+				&& strpos($this->uri->uri_string(), ADMIN) == 0 
 					&& $this->uri->segment(2) !== 'authenticate') {
 			
 			// Redirect to authentication if direct access to all classes

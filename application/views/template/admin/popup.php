@@ -25,9 +25,10 @@
         </style>
     </head>
     <body>
-        <?php echo $output ?>
-	 <?php foreach ($js_files as $file): ?>
-            <script src="<?php echo $file; ?>"></script>
-        <?php endforeach; ?>
+       <?php echo $output ?>
+	   <?php foreach ($js_files as $file): ?>
+        <script src="<?php echo $file; ?>"></script>
+       <?php endforeach; ?>
+       <?php echo $js_inline;?>
     </body>
 </html>

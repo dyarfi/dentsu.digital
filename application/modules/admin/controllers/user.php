@@ -20,6 +20,7 @@ class User extends Admin_Controller {
 
         // Load config files
         $this->_config = $this->load->config('admin',true);
+
     }		
 
     public function index() {		
@@ -618,49 +619,49 @@ class User extends Admin_Controller {
 
     public function forgot_password() {
 
-	// Check if the request via AJAX
-	if (!$this->input->is_ajax_request()) {
-		exit('No direct script access allowed');		
-	}
+		// Check if the request via AJAX
+		if (!$this->input->is_ajax_request()) {
+			exit('No direct script access allowed');		
+		}
 
-	// Define initialize result
-	$result['result'] = '';
+		// Define initialize result
+		$result['result'] = '';
 
-	// Get User Data
-	$user = $this->Users->getUserByEmail($this->input->post('email'));
+		// Get User Data
+		$user = $this->Users->getUserByEmail($this->input->post('email'));
 
-	if (!empty($user) && $user->status == 1) {
+		if (!empty($user) && $user->status == 1) {
 
-		$password = $this->Users->setPassword($user);
+			$password = $this->Users->setPassword($user);
 
-		$result['result']['code'] = 1;
-		$result['result']['text'] = 'Your new password: <b>'. $password .'</b>';			
+			$result['result']['code'] = 1;
+			$result['result']['text'] = 'Your new password: <b>'. $password .'</b>';			
 
-		$this->load->library('email');
+			$this->load->library('email');
 
-		$this->email->from('noreply');
-		$this->email->to($user->email);
-		$this->email->subject('Your new password');
-		$this->email->message('Hey <b>'.$user->username.'</b>, this is your new password: <b>'.$password.'</b>');
+			$this->email->from('noreply');
+			$this->email->to($user->email);
+			$this->email->subject('Your new password');
+			$this->email->message('Hey <b>'.$user->username.'</b>, this is your new password: <b>'.$password.'</b>');
 
-		$this->email->send();
+			$this->email->send();
 
-	} else if (!empty($user) && $user->status != 1) { 
+		} else if (!empty($user) && $user->status != 1) { 
 
-		// Account is not Active
-		$result['result']['code'] = 2;
-		$result['result']['text'] = 'Your account is not active';			
+			// Account is not Active
+			$result['result']['code'] = 2;
+			$result['result']['text'] = 'Your account is not active';			
 
-	} else {
+		} else {
 
-		// Account is not existed
-		$result['result']['code'] = 0;
-		$result['result']['text'] = 'Email or User not found';			
+			// Account is not existed
+			$result['result']['code'] = 0;
+			$result['result']['text'] = 'Email or User not found';			
 
-	}
+		}
 
-	$data['json'] = $result;				
-	$this->load->view('json', $this->load->vars($data));				
+		$data['json'] = $result;				
+		$this->load->view('json', $this->load->vars($data));				
 
     }
 
@@ -704,17 +705,13 @@ class User extends Admin_Controller {
 		// Run validation for checking
 		if ($this->form_validation->run() === FALSE) {
 
-			$part_id	 = $this->user_model->decode($get_data);
-			$participant = $this->user_model->get_participant($part_id);
+			$profile['user_id']		= $this->session->userdata('user_session')->id;
+			$profile['file_name'] 	= $this->input->post('image_temp');
+			$profile['modified']	= time();
 
-			$image['file_name'] = $this->input->post('image_temp');
-			$image['type']		= $this->input->post('image_type');
-			$image['part_id']	= $part_id;
-			$image['name']		= $participant->name;				
-			$image['status']	= 1;
-			$image['added']		= time();
+			$profile_id 			= $this->UserProfiles->setUserProfiles($profile);
 
-			$image_id 			= $this->gallery_model->insert_image($image);
+			//print_r($profile_id);
 		
 			//if ($image_id) redirect(base_url() . 'gallery/single/'. $image['type'].'/' . $image_id);
 

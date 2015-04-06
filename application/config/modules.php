@@ -135,7 +135,7 @@ $config['modulelist'] = array(
 						'pagemenu/index/delete'	=> 'Delete Page Menu',
 						'pagemenu/index/change'	=> 'Change Page Menu Status',
 						'pagemenu/index/export'	=> 'Export Page Menu',
-						'pagemenu/index/print'	=> 'Print Page Menu',
+						'pagemenu/index/print'	=> 'Print Page Menu'
 					    ),
 	),
 	// Career module
@@ -212,7 +212,7 @@ $config['modulelist'] = array(
 						'question/index/delete'	=> 'Delete Question',
 						'question/index/change'	=> 'Change Question Status',
 						'question/index/export'	=> 'Export Question',
-						'question/index/print'	=> 'Print Question',
+						'question/index/print'	=> 'Print Question'
 						),
 	),
 	// Qrcode module
@@ -226,7 +226,7 @@ $config['modulelist'] = array(
 						),
 		// Qrcode module functions
 		'module_function'	=> array(
-						// Career functions
+						// Qrcode functions
 						'qrcode/index/add'	=> 'Add QR Code',
 						'qrcode/index/view'	=> 'View QR Code',
 						'qrcode/index/edit'	=> 'Edit QR Code',
@@ -235,6 +235,45 @@ $config['modulelist'] = array(
 						'qrcode/index/export'	=> 'Export QR Code',
 						'qrcode/index/print'	=> 'Print QR Code'
 						),
+	),
+	// Color Recognizer module
+	'Color' => array (
+		// Color Recognizer Models list
+		'models'		=> array('color/Colors','color/Colorcontents','color/Colorpersonals'),
+		// Color Recognizer module menus
+		'module_menu'	=> array(
+						'color/index'			=> 'Color Data',
+						'colorcontent/index'	=> 'Color Content',
+						'colorpersonal/index'	=> 'Color Personal',
+						'colorscanner/index'	=> 'Color Scanner'
+						),
+		// Color Recognizer module functions
+		'module_function'	=> array(
+						// Color Recognizer functions
+						'color/index/add'	=> 'Add Color Recognizer',
+						'color/index/view'	=> 'View Color Recognizer',
+						'color/index/edit'	=> 'Edit Color Recognizer',
+						'color/index/delete'	=> 'Delete Color Recognizer',
+						'color/index/change'	=> 'Change Color Recognizer Status',
+						'color/index/export'	=> 'Export Color Recognizer',
+						'color/index/print'	=> 'Print Color Recognizer',
+						// Color Content functions
+						'colorcontent/index/add'	=> 'Add Color Content',
+						'colorcontent/index/view'	=> 'View Color Content',
+						'colorcontent/index/edit'	=> 'Edit Color Content',
+						'colorcontent/index/delete'	=> 'Delete Color Content',
+						'colorcontent/index/change'	=> 'Change Color Content Status',
+						'colorcontent/index/export'	=> 'Export Color Content',
+						'colorcontent/index/print'	=> 'Print Color Content',
+						// Color Personal functions
+						'colorpersonal/index/add'	=> 'Add Color Personal',
+						'colorpersonal/index/view'	=> 'View Color Personal',
+						'colorpersonal/index/edit'	=> 'Edit Color Personal',
+						'colorpersonal/index/delete'	=> 'Delete Color Personal',
+						'colorpersonal/index/change'	=> 'Change Color Personal Status',
+						'colorpersonal/index/export'	=> 'Export Color Personal',
+						'colorpersonal/index/print'	=> 'Print Color Personal'
+						)
 	)
 );
 

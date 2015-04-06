@@ -97,11 +97,11 @@ class UserProfiles Extends CI_Model {
 	    }
 	}
 	
-	public function setUserProfiles($profile=''){
-	    if (!empty($profile)) {
-		$this->db->where('user_id', $profile['user_id']);		
-		$this->db->update($this->table, $profile);
-		return $this->getUserProfile($profile['user_id']);			
+	public function setUserProfiles($data=''){
+	    if (!empty($data)) {
+		$this->db->where('user_id', $data['user_id']);		
+		$this->db->update($this->table, $data);
+		return self::getUserProfile($data['user_id']);			
 	    }		
 	}
 	
