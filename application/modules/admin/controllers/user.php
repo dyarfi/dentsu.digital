@@ -782,13 +782,13 @@ class User extends Admin_Controller {
 
 								//$file_name	= self::_upload_to($file_element_name, $file_hash.'.'.$file_data['extension'], './uploads/users/', 0777);
 
-								$configs['source_image']	= $config['upload_path'].$_FILES['fileupload']['name'];
-								$configs['create_thumb'] = TRUE;
-								$configs['maintain_ratio'] = TRUE;
-								$configs['width']	= 264;
-								$configs['height']	= 220;
+								$config['source_image']	= $config['upload_path'].$_FILES['fileupload']['name'];
+								$config['create_thumb'] = TRUE;
+								$config['maintain_ratio'] = TRUE;
+								$config['width']	= 264;
+								$config['height']	= 220;
 
-								$this->load->library('image_lib', $configs); 
+								$this->load->library('image_lib', $config); 
 
 								$this->image_lib->resize();
 
