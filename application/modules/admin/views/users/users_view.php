@@ -172,7 +172,7 @@
 					<div class="tab-content">
 						<div id="tab_1_1" class="tab-pane active">
 							<div class="row">
-								<div class="col-md-3">
+								<div class="col-md-4 col-lg-4">
 									<ul class="list-unstyled profile-nav">
 										<li>
 
@@ -207,7 +207,7 @@
 										</li>
 									</ul>
 								</div>
-								<div class="col-md-9">
+								<div class="col-md-8 col-lg-8">
 									<div class="row">
 										<div class="col-md-8 profile-info">
 											<h1><?=ACL::user()->name;?></h1>

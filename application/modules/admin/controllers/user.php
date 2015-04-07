@@ -728,102 +728,89 @@ class User extends Admin_Controller {
 		
 		// Define initialize result
 		$result['result'] = '';
-		
-			// Set validation config
-			$config = array(
-				array('field' => 'image_name', 
-                      'label' => 'File', 
-                      'rules' => 'trim|required|xss_clean|max_length[35]'));
-
-			// Set rules to form validation
-			$this->form_validation->set_rules($config);
-			
-			// Run validation for checking
-			if ($this->form_validation->run() === FALSE) {
 								
-					if($_FILES && $_SERVER['REQUEST_METHOD'] == 'POST') {					
-						
-						// uncomment to see javascript loading progress
-						//usleep(2000000);
-						
-						$upload		= TRUE;
-						$file_hash	= md5(time() + rand(100, 999));
-						$file_data	= pathinfo($_FILES['fileupload']['name']);
-											
-						$file_element_name = 'fileupload';
-						
-						$config['upload_path'] = './uploads/users/';
-						$config['allowed_types'] = 'gif|jpg|png|doc|txt';
-						$config['max_size'] = 1024 * 8;
-						$config['encrypt_name'] = FALSE;
-						
-						$this->load->library('upload', $config);
-
-						$thumb	= $file_data['filename'].'_thumb.'.$file_data['extension'];
-						
-						if(file_exists($config['upload_path'].$_FILES['fileupload']['name'])) {
-							
-							$upload	= FALSE;
-						
-						}
-						
-						if (!$this->upload->do_upload($file_element_name))
-						{
-							$status = 'error!';
-							$msg = $this->upload->display_errors('', '');
-						}
-						else
-						{
-							
-							if ($upload == TRUE) {
-
-								$data = $this->upload->data();
-								$image_path = $data['full_path'];
-
-								//$file_name	= self::_upload_to($file_element_name, $file_hash.'.'.$file_data['extension'], './uploads/users/', 0777);
-
-								$config['source_image']	= $config['upload_path'].$_FILES['fileupload']['name'];
-								$config['create_thumb'] = TRUE;
-								$config['maintain_ratio'] = TRUE;
-								$config['width']	= 264;
-								$config['height']	= 220;
-
-								$this->load->library('image_lib', $config); 
-
-								$this->image_lib->resize();
-
-								//$file_data	= pathinfo($file_name);
-								$file_mime	= $_FILES['fileupload']['type'];
-
-								$thumb = $file_data['filename'].'_thumb.'.$file_data['extension'];
-							}
-							
-							$status = "success";
-							$msg = "File successfully uploaded";
-
-						}
-						
-						$result['files'][] = array(
-												'name'	=> $file_data['basename'],
-												'size'	=> $_FILES['fileupload']['size'],
-												'type'	=> $_FILES['fileupload']['type'],
-												'url'	=> 'uploads/users/'. $file_data['basename'],
-												//'file_id'		=> $file_id,
-												'thumbnailUrl'	=>'uploads/users/'. $thumb,
-												//'deleteUrl'		=>URL::site(ADMIN).'/news/filedelete/'.$file_id,
-												'deleteType'	=>'DELETE'
-												);						
-					}																
+		if($_FILES && $_SERVER['REQUEST_METHOD'] == 'POST') {					
 				
-			} else {
+				// uncomment to see javascript loading progress
+				//usleep(2000000);
 				
-				// Unset captcha post
-				unset($_POST['captcha']); 				
+				$upload		= TRUE;
+				$file_hash	= md5(time() + rand(100, 999));
+				$file_data	= pathinfo($_FILES['fileupload']['name']);
+									
+				$file_element_name = 'fileupload';
+				
+				$config['upload_path'] = './uploads/users/';
+				$config['allowed_types'] = 'gif|jpg|png|doc|txt';
+				$config['max_size'] = 1024 * 8;
+				$config['encrypt_name'] = FALSE;
+				
+				$this->load->library('upload', $config);
+
+				$thumb	= $file_data['filename'].'_thumb.'.$file_data['extension'];
+				
+				if(file_exists($config['upload_path'].$_FILES['fileupload']['name'])) {
+					
+					$upload	= FALSE;
+				
+				}
+				
+				if (!$this->upload->do_upload($file_element_name) || $upload === FALSE)
+				{
+					$status = 'error!';
+					$msg = $this->upload->display_errors('', '');
+				}
+				else
+				{
+					//if ($upload == TRUE) {
+
+						//$data = $this->upload->data();
+
+						//$image_path = $data['full_path'];
+
+						//$file_name	= self::_upload_to($_FILES[$file_element_name]['tmp_name'], $file_hash.'.'.$file_data['extension'], './uploads/users/', 0777);
+
+						$config['source_image']	= $config['upload_path'].$_FILES['fileupload']['name'];
+						$config['create_thumb'] = TRUE;
+						$config['maintain_ratio'] = TRUE;
+						$config['width']	= 264;
+						$config['height']	= 220;
+
+						$this->load->library('image_lib', $config); 
+
+						$this->image_lib->resize();
+
+						//$file_data	= pathinfo($file_name);
+
+						$file_mime	= $_FILES['fileupload']['type'];
+
+						$thumb = $file_data['filename'].'_thumb.'.$file_data['extension'];
+					//}
+					
+					$status = "success";
+					$msg = "File successfully uploaded";
+
+				}
+				
+						//print_r($msg);
+						//exit;
+
+				$result['files'][] = array(
+										'name'	=> $file_data['basename'],
+										'size'	=> $_FILES['fileupload']['size'],
+										'type'	=> $_FILES['fileupload']['type'],
+										'url'	=> 'uploads/users/'. $file_data['basename'],
+										//'file_id'		=> $file_id,
+										'thumbnailUrl'	=>'uploads/users/'. $thumb,
+										//'deleteUrl'		=>URL::site(ADMIN).'/news/filedelete/'.$file_id,
+										'deleteType'	=>'DELETE'
+										);						
+		} else {
 					
 				// Send message if account not found					
 				$result['result']['code'] = 0;
 				$result['result']['text'] = 'Image not Found';
-			}
+		}
 
 		// Return data esult
 		$data['json'] = $result;
