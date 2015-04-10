@@ -83,6 +83,20 @@ class Pages Extends CI_Model {
 		}
 	}	
 	
+	public function getPageByName($name = null){
+		if(!empty($name)){
+			$data = array();
+			$options = array('name' => $name,'status'=>'publish');
+			$Q = $this->db->get_where($this->table,$options,1);
+			if ($Q->num_rows() > 0){
+				foreach ($Q->result_object() as $row)
+				$data = $row;
+			}
+			$Q->free_result();
+			return $data;
+		}
+	}	
+	
 	public function getAllPage($admin=null){
 		$data = array();
 		$this->db->order_by('added');

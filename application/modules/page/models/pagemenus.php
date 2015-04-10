@@ -65,6 +65,7 @@ class PageMenus Extends CI_Model {
 		$data = $this->db->count_all_results();
 		return $data;
 	}
+	
 	public function getPageMenu($id = null){
 		if(!empty($id)){
 			$data = array();
@@ -78,10 +79,11 @@ class PageMenus Extends CI_Model {
 			return $data;
 		}
 	}
-	public function getPageMenuByEmail($email = null){
-		if(!empty($email)){
+	
+	public function getMenu($menu=null){
+		if(!empty($menu)){
 			$data = array();
-			$options = array('email' => $email);
+			$options = array('title' => $menu,'status' => 'publish');
 			$Q = $this->db->get_where('page_menus',$options,1);
 			if ($Q->num_rows() > 0){
 				foreach ($Q->result_object() as $row)
@@ -91,14 +93,15 @@ class PageMenus Extends CI_Model {
 			return $data;
 		}
 	}
-	public function getPageMenuByPageMenuname($page_menuname = null){
-		if(!empty($page_menuname)){
+	
+	public function getPagesByMenu($menu = null){
+		if(!empty($menu)){
+			$_menu = self::getMenu($menu);
 			$data = array();
-			$options = array('page_menuname' => $page_menuname);
-			$Q = $this->db->get_where('page_menus',$options,1);
+			$options = array('menu_id' => $_menu->id,'status'=>'publish');
+			$Q = $this->db->get_where('pages',$options);
 			if ($Q->num_rows() > 0){
-				foreach ($Q->result_object() as $row)
-				$data = $row;
+				$data = $Q->result_object();
 			}
 			$Q->free_result();
 			return $data;
@@ -117,94 +120,6 @@ class PageMenus Extends CI_Model {
 		$Q->free_result();
 		return $data;
 	}
-	// Get page_menu's Email from posts 
-	public function getPageMenuEmail($email=null){
-		if(!empty($email)){
-			$data = array();
-			
-			// Option and query result
-			$options = array('email' => $email);			
-			$Q = $this->db->get_where('page_menus',$options,1);
-			
-			// Check result
-			if($Q->num_rows() > 0) {
-				// Return true if not exists
-				return true;
-			} else {
-				// Return false if exists
-				return false;
-			}		 
-		}
-	}
-	// Get page_menu's Password from hashed password 
-	public function getPageMenuPassword($password=null){
-		if(!empty($password)){
-			$data = array();
-			
-			// Option and query result
-			$options = array('password' => $password);			
-			$Q = $this->db->get_where('page_menus',$options,1);
-			
-			// Check result
-			if($Q->num_rows() > 0) {
-				// Return true if not exists
-				return true;
-			} else {
-				// Return false if exists
-				return false;
-			}		 
-		}
-	}
-	public function login($object=null){		
-		if(!empty($object)){
-			$data = array();
-			$options = array(
-							'page_menuname' => $object['page_menuname'], 
-							'password' => sha1($object['page_menuname'].$object['password']),
-							'status' => 1);
-			
-			$Q = $this->db->get_where('page_menus',$options,1);
-			if ($Q->num_rows() > 0){				
-				foreach ($Q->result_object() as $row) {
-					// Update login state to true
-					$this->setLoggedIn($row->id);
-					$data = $row;
-				}
-			} 			 
-		
-			//print_r($data);
-			//exit;
-			//print_r(); exit();
-			//print_r($this->db->last_query()); exit();
-			
-			$Q->free_result();
-			return $data;
-		}
-	}
-	public function setLastLogin($id=null) {
-		//Get page_menu id
-		$this->db->where('id', $id);
-		//Return result
-		return $this->db->update('page_menus', array('last_login'=>time()));
-	}
-	public function setLoggedIn($id=null) {
-		//Get page_menu id
-		$this->db->where('id', $id);
-		//Return result
-		return $this->db->update('page_menus', array('logged_in'=>1));
-	}
-	public function setPassword($page_menu=null,$changed=''){
-		
-		$password = ($changed) ? $changed : random_string('alnum', 8);
-				
-		$data = array('password' => sha1($page_menu->page_menuname.$password));
-
-		$this->db->where('id', $page_menu->id);
-		$this->db->update('page_menus', $data); 
-		
-		return $password;
-		
-	}	
 	public function setPageMenu($object=null){
 		
 		// Set PageMenu data

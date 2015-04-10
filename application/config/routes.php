@@ -38,14 +38,9 @@
 |
 */
 
-$route['default_controller'] = "home";
-$route['download/(:num)'] = 'download';
-$route['404_override'] = '';
-
-
 /*
 | -------------------------------------------------------------------------
-| MODULE ADMIN PANEL ROUTING
+| MODULE ADMIN PANEL ROUTING - [START]
 | ------------------------------------------------------------------------- 
 */
 
@@ -86,8 +81,17 @@ $route[$admin.'/colorpersonal/(:any)']	= 'color/colorpersonal/$1';
 
 //$route[$admin.'/(:any)'] = '$1';
 
-/*** Admin Related Routes - end - **/
+/*
+| -------------------------------------------------------------------------
+| MODULE ADMIN PANEL ROUTING - [END]
+| ------------------------------------------------------------------------- 
+*/
 
+$route['default_controller'] = 'home';
+//$route['(:any)']			 = 'home/menu/$1';
+//$route['(:any)/page/(:any)'] = 'home/page/$1/$2';
+$route['download/(:num)']	 = 'download';
+$route['404_override']		 = '';
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

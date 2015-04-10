@@ -12,9 +12,13 @@ class home extends CI_Controller {
 		// Load Setting data
 		$this->load->model('admin/Settings');
 		
-		// Load Setting data
+		// Load Career data
 		$this->load->model('career/Careers');
 
+		// Load User related model in admin module
+		$this->load->model('page/Pagemenus');
+		$this->load->model('page/Pages');
+		
 	}
 	
 	public function index() {
@@ -47,6 +51,38 @@ class home extends CI_Controller {
 		// Load admin template
 		$this->load->view('template/public/site_template', $this->load->vars($data));
 		
+	}
+	
+	public function menu ($menu='') {
+		
+		// Set menu data
+		$data['menu'] = $menu;
+		
+		// Set pages data
+		$data['pages'] = $this->Pagemenus->getPagesByMenu($menu);
+		
+		// Set main template
+		//$data['main'] = 'page';
+		
+		// Load admin template
+		$this->load->view('page', $this->load->vars($data));
+	}
+	
+	public function page ($menu='',$page='') {
+		
+		// Set menu data
+		$data['menu'] = $menu;
+		
+		// Set pages data
+		$data['page'] = $this->Pages->getPageByName($page);
+		
+		//print_r($data['pages']);
+		
+		// Set main template
+		//$data['main'] = 'page';
+		
+		// Load admin template
+		$this->load->view('page_detail', $this->load->vars($data));
 	}
 }
 
