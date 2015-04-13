@@ -52,7 +52,7 @@ class Careers Extends CI_Model {
 				. '`division_id` INT(11) UNSIGNED NULL, '
 				. '`name` VARCHAR(255) NULL, '
 				. '`subject` VARCHAR(255) NULL, '
-                                . '`ref_no` VARCHAR(12) NULL, '
+				. '`ref_no` VARCHAR(12) NULL, '
 				. '`sent_to` VARCHAR(32) NULL, '
 				. '`start_date` DATE NULL DEFAULT \'0000-00-00\', '
 				. '`end_date` DATE NULL DEFAULT \'0000-00-00\', '
@@ -71,7 +71,7 @@ class Careers Extends CI_Model {
 				. '`added` INT(11) UNSIGNED NULL, '
 				. '`modified` INT(11) UNSIGNED NULL, '
 				. 'INDEX (`name`, `ref_no`) '
-				. ') ENGINE=MYISAM;';
+				. ') ENGINE=MYISAM DEFAULT CHARSET=utf8;';
 				
 				
 		$this->db->query($sql);

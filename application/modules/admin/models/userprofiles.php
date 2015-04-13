@@ -43,7 +43,7 @@ class UserProfiles Extends CI_Model {
 				. '`added` INT(11) UNSIGNED NOT NULL, '
 				. '`modified` INT(11) UNSIGNED NOT NULL, '
 				. 'INDEX (`user_id`, `phone`) '
-				. ') ENGINE=MYISAM';
+				. ') ENGINE=MYISAM DEFAULT CHARSET=utf8;';
 	
 			$this->db->query($sql);
 		}

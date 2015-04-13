@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class home extends CI_Controller {
+class home extends Public_Controller {
 
 	public function __construct() {
 		parent::__construct();
@@ -60,7 +60,7 @@ class home extends CI_Controller {
 		
 		// Set pages data
 		$data['pages'] = $this->Pagemenus->getPagesByMenu($menu);
-		
+		exit('asdf');
 		// Set main template
 		//$data['main'] = 'page';
 		

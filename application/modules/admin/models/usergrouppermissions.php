@@ -34,7 +34,7 @@ class UserGroupPermissions Extends CI_Model {
 					. '`added` INT(11) NOT NULL,'	
 					. '`modified` INT(11) NOT NULL,'	
 					. 'INDEX (`id`) '
-					. ') ENGINE=MYISAM';
+					. ') ENGINE=MYISAM DEFAULT CHARSET=utf8;';
 	
 			$this->db->query($sql);
 			

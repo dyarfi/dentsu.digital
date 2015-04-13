@@ -360,7 +360,10 @@ $config['proxy_ips'] = '';
 $config['developer_name']	= 'Dentsu Digital Division'; 
 $config['developer_url']	= 'http://dentsudigitaldivision.com/';
 
-
+// TRUE for site is open or FALSE for maintenance mode
+$config['site_open']		= TRUE;
+		
+// Module location in the application folder, see @config/modules.php for module configs and @config/routes.php for module routes
 $config['modules_locations'] = array(
         APPPATH.'modules/' => '../modules/'
     );

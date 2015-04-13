@@ -44,7 +44,7 @@ class Divisions Extends CI_Model {
 				  `modified` int(11) NOT NULL, 
 				  INDEX (`name`, `status`), 
 				  PRIMARY KEY (`id`)
-				) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11;';
+				) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=11;';
 				
 				
 		$this->db->query($sql);

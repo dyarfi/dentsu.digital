@@ -29,7 +29,7 @@ class ModulePermissions Extends CI_Model {
 					. '`module_link` VARCHAR(255) default NULL, '
 					. '`order` INT(11) NOT NULL,'
 					. 'INDEX (`id`) '
-					. ') ENGINE=MYISAM';
+					. ') ENGINE=MYISAM DEFAULT CHARSET=utf8;';
 	
 			if ($sql) $this->db->query($sql);
 		}

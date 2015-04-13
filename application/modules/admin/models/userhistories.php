@@ -30,7 +30,7 @@ class UserHistories Extends CI_Model {
                                     . '`action` CHAR(20), '
                                     . '`time` INT(11) UNSIGNED NOT NULL, '
                                     . 'INDEX (`id`, `module`,`user_id`) '
-                                    . ') ENGINE=MYISAM';
+                                    . ') ENGINE=MYISAM DEFAULT CHARSET=utf8;';
 
 		$this->db->query($sql);
 

@@ -25,7 +25,7 @@ class Configurations Extends CI_Model {
 				    . '`parameter` VARCHAR(150) NOT NULL DEFAULT \'\', '
 				    . '`value` VARCHAR(150) NOT NULL DEFAULT \'\', '
 				    . 'PRIMARY KEY (`parameter`, `value`) '
-				    . ') ENGINE=MYISAM';
+				    . ') ENGINE=MYISAM DEFAULT CHARSET=utf8;';
 
 		    $this->db->query($sql);
 	    }

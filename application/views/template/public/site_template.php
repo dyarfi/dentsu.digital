@@ -72,5 +72,4 @@
 	
 </body>
 </html>
-
-
+<?php echo $this->benchmark->memory_usage();?>

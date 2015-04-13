@@ -42,7 +42,7 @@ class PageMenus Extends CI_Model {
 				. '`added` INT(0) NULL , '
 				. '`modified` INT(0) NULL , '
 				. 'INDEX (`parent_id`, `name`, `sub_level`, `order`, `status`) '
-				. ') ENGINE=MYISAM;';
+				. ') ENGINE=MYISAM DEFAULT CHARSET=utf8;';
 
 		$this->db->query($sql);
 		

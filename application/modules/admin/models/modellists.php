@@ -28,7 +28,7 @@ class ModelLists Extends CI_Model {
 				    . '`module_id` INT(11) NOT NULL,'
 				    . '`model` VARCHAR(255) NOT NULL, '
 				    . 'INDEX (`id`) '
-				    . ') ENGINE=MYISAM';
+				    . ') ENGINE=MYISAM DEFAULT CHARSET=utf8;';
 
 		    $this->db->query($sql);
 	    }

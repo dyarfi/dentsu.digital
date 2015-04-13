@@ -22,9 +22,9 @@ class ServerLogs Extends CI_Model {
 		if (!$this->db->table_exists($this->table)) {
 		    $insert_data	= TRUE;
 
-		    $sql            = 'CREATE TABLE IF NOT EXISTS `'.$this->table.'` ('
+		    $sql = 'CREATE TABLE IF NOT EXISTS `'.$this->table.'` ('
 				    . '`id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,'
-			   	    . '`session_id` VARCHAR(42) NULL, '
+			   	    . '`session_id` VARCHAR(64) NULL, '
 				    . '`url` VARCHAR(255) NULL, '
 				    . '`user_id` INT(11) UNSIGNED NULL, '
 				    . '`status_code` VARCHAR(160) NULL, '
@@ -37,7 +37,7 @@ class ServerLogs Extends CI_Model {
 				    . '`added` INT(11) UNSIGNED NOT NULL, '
 				    . '`modified` INT(11) UNSIGNED NOT NULL, '
 				    . 'INDEX (`url`, `user_id`) '
-				    . ') ENGINE=MYISAM';
+				    . ') ENGINE=MYISAM DEFAULT CHARSET=utf8;';
 		    
 		    $this->db->query($sql);
 		}
@@ -59,7 +59,7 @@ class ServerLogs Extends CI_Model {
 		$data = array();
 		$options = array('status' => $status);
 		$this->db->where($options,1);
-		$this->db->from('users');
+		$this->db->from($this->table);
 		$data = $this->db->count_all_results();
 		return $data;
 	}
@@ -68,7 +68,7 @@ class ServerLogs Extends CI_Model {
 		if(!empty($id)){
 			$data = array();
 			$options = array('id' => $id);
-			$Q = $this->db->get_where('users',$options,1);
+			$Q = $this->db->get_where($this->table,$options,1);
 			if ($Q->num_rows() > 0){
 				foreach ($Q->result_object() as $row)
 				$data = $row;
@@ -94,48 +94,42 @@ class ServerLogs Extends CI_Model {
 	
 	public function setServerLog($object=null){
 		
+		/*
+		 *			. '`session_id` VARCHAR(64) NULL, '
+				    . '`url` VARCHAR(255) NULL, '
+				    . '`user_id` INT(11) UNSIGNED NULL, '
+				    . '`status_code` VARCHAR(160) NULL, '
+				    . '`bytes_served` INT(11) UNSIGNED NOT NULL, '
+				    . '`ip_address` INT(11) NULL DEFAULT 0, '
+				    . '`http_code` INT(11) UNSIGNED NOT NULL, '
+				    . '`referrer` VARCHAR(255) NULL, '
+				    . '`` VARCHAR(255) NULL, '
+				    . '`status` INT(1) UNSIGNED NOT NULL,'
+				    . '`added` INT(11) UNSIGNED NOT NULL, '
+				    . '`modified` INT(11) UNSIGNED NOT NULL, '
+		 * 
+		 */
+		
 		// Set ServerLog data
 		$data = array(
-			'username'	=> $object['username'],
-			'email'		=> $object['email'],			
-			'password'	=> sha1($object['username'].$object['password']),	
-			'group_id'	=> @$object['group_id'],			
-			'added'		=> time(),	
-			'status'	=> $object['status']
+			'session_id'	=> $object['session_id'],
+			'url'			=> $object['url'],	
+			'user_id'		=> @$object['user_id'],	
+			'status_code'	=> $object['status_code'],	
+			'bytes_served'	=> $object['bytes_served'],	
+			'ip_address'	=> $object['ip_address'],	
+			'http_code'	=> $object['http_code'],	
+			'referrer'	=> @$object['referrer'],			
+			'user_agent'	=> @$object['user_agent'],
+			'status'		=> $object['status'],
+			'added'			=> time()
 		);
 		
 		// Insert ServerLog data
-		$this->db->insert('users', $data);
+		$this->db->insert($this->table, $data);
 		
 		// Return last insert id primary
 		$insert_id = $this->db->insert_id();
-			
-		// Check if last is existed
-		if ($insert_id) {
-				
-			// Unset previous data
-			unset($data);
-			
-			// Set ServerLog Profile data
-			$data = array(
-					'user_id'	=> $insert_id,
-					'gender'	=> !empty($object['gender']) ? $object['gender'] : NULL,
-					'first_name'	=> !empty($object['first_name']) ? $object['first_name'] : NULL,
-					'last_name'	=> !empty($object['last_name']) ? $object['last_name'] : NULL,
-					'birthday'	=> !empty($object['birthday']) ? $object['birthday'] : NULL,
-					'phone'		=> !empty($object['phone']) ? $object['phone'] : NULL,	
-					'mobile_phone'	=> !empty($object['mobile_phone']) ? $object['mobile_phone'] : NULL,
-					'fax'		=> !empty($object['fax']) ? $object['fax'] : NULL,
-					'website'	=> !empty($object['website']) ? $object['website'] : NULL,
-					'about'		=> !empty($object['about']) ? $object['about'] : NULL,
-					'division'	=> !empty($object['division']) ? $object['division'] : NULL,
-					'added'		=> time(),	
-					'status'	=> 1);
-			
-			// Insert ServerLog Profile 
-			$this->db->insert('user_profiles', $data);
-					
-		}
 			
 		// Return last insert id primary
 		return $insert_id;
@@ -144,8 +138,11 @@ class ServerLogs Extends CI_Model {
 	
 	public function deleteServerLog($id) {
 		
-		// Check log id
-		return $this->db->where('id', $id);
+		// Check log
+		$this->db->where('id', $id);
+			
+		// Delete log form database		
+		return $this->db->delete($this->table);
 		
 	}
 	

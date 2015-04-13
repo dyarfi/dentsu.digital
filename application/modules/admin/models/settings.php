@@ -28,12 +28,17 @@ class Settings Extends CI_Model {
 					. '`alias` varchar(255) DEFAULT NULL,'
 					. '`value` varchar(255) DEFAULT NULL,'
 					. '`is_system` tinyint(1) DEFAULT 1,'
+					. '`input_type` enum(\'input\',\'textarea\',\'radio\',\'dropdown\',\'timezones\') DEFAULT NULL,'
+					. '`input_size` enum(\'large\',\'medium\',\'small\') DEFAULT NULL,'
+					. '`show_editor` enum(\'0\',\'1\') DEFAULT NULL,'
+					. '`is_numeric` enum(\'0\',\'1\') DEFAULT NULL,'
+					. '`help_text` varchar(512) DEFAULT NULL,'
 					. '`status` tinyint(1) DEFAULT 1,'
 					. '`added` int(11) DEFAULT NULL,'
 					. '`modified` int(11) DEFAULT NULL,'
 					. 'PRIMARY KEY (`id`),'
 					. 'KEY `name` (`parameter`,`status`)'
-					. ') ENGINE=MyISAM DEFAULT CHARSET=latin1';
+					. ') ENGINE=MyISAM DEFAULT CHARSET=utf8;';
 				
 				
 		$this->db->query($sql);

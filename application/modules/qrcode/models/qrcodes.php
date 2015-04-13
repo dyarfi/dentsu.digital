@@ -38,7 +38,7 @@ class Qrcodes Extends CI_Model {
 				. '`added` INT(11) NULL, '
 				. '`modified` INT(11) NULL, '
 				. 'INDEX (`name`) '
-				. ') ENGINE=MYISAM';
+				. ') ENGINE=MYISAM DEFAULT CHARSET=utf8;';
 
 		$this->db->query($sql);
 		

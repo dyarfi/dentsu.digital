@@ -29,7 +29,7 @@ class Sessions Extends CI_Model {
 				. '`last_activity` INT(11) UNSIGNED NOT NULL,'
 				. '`user_data` TEXT NULL, '
 				. 'INDEX (`session_id`, `ip_address`) '
-				. ') ENGINE=MYISAM';
+				. ') ENGINE=MYISAM DEFAULT CHARSET=utf8;';
 
 		$this->db->query($sql);
 	    }

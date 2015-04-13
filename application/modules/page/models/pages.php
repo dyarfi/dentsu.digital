@@ -43,7 +43,7 @@ class Pages Extends CI_Model {
 				. '`added` INT(11) NULL, '
 				. '`modified` INT(11) NULL, '
 				. 'INDEX (`menu_id`, `name`, `publish_date`, `unpublish_date`, `allow_comment`, `order`) '
-				. ') ENGINE=MYISAM';
+				. ') ENGINE=MYISAM DEFAULT CHARSET=utf8;';
 
 		$this->db->query($sql);
 		

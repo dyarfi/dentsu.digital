@@ -42,7 +42,7 @@ class Participants Extends CI_Model {
 				. '`completed` TINYINT(1) NOT NULL, '
 				. '`join_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, '
 				. 'INDEX (`part_id`, `name`) '
-				. ') ENGINE=MYISAM';
+				. ') ENGINE=MYISAM DEFAULT CHARSET=utf8;';
 
 		$this->db->query($sql);
 

@@ -31,8 +31,8 @@ class Languages Extends CI_Model {
 					. '`added` INT(11) UNSIGNED NOT NULL, '
 					. '`modified` INT(11) UNSIGNED NOT NULL, '
 					. 'PRIMARY KEY (`id`), '
-                                        . 'KEY `name` (`name`,`status`)'
-					. ') ENGINE=MyISAM  DEFAULT CHARSET=utf8;';
+                    . 'KEY `name` (`name`,`status`)'
+					. ') ENGINE=MyISAM DEFAULT CHARSET=utf8;';
 	
 			$this->db->query($sql);
 		}
