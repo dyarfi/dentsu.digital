@@ -60,9 +60,9 @@ class home extends Public_Controller {
 		
 		// Set pages data
 		$data['pages'] = $this->Pagemenus->getPagesByMenu($menu);
-		exit('asdf');
+		//exit('asdf');
 		// Set main template
-		//$data['main'] = 'page';
+		$data['main'] = 'home';
 		
 		// Load admin template
 		$this->load->view('page', $this->load->vars($data));

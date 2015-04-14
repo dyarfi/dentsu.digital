@@ -27,12 +27,14 @@ class ServerLogs Extends CI_Model {
 			   	    . '`session_id` VARCHAR(64) NULL, '
 				    . '`url` VARCHAR(255) NULL, '
 				    . '`user_id` INT(11) UNSIGNED NULL, '
-				    . '`status_code` VARCHAR(160) NULL, '
-				    . '`bytes_served` INT(11) UNSIGNED NOT NULL, '
-				    . '`ip_address` INT(11) NULL DEFAULT 0, '
 				    . '`http_code` INT(11) UNSIGNED NOT NULL, '
+				    . '`status_code` VARCHAR(160) NULL, '
+				    . '`bytes_served` INT(11) NULL, '
+				    . '`total_time` INT(11) NULL, '
+					. '`ip_address` INT(11) NULL DEFAULT 0, '
 				    . '`referrer` VARCHAR(255) NULL, '
 				    . '`user_agent` VARCHAR(255) NULL, '
+					. '`is_mobile` INT(1) NULL, '
 				    . '`status` INT(1) UNSIGNED NOT NULL,'
 				    . '`added` INT(11) UNSIGNED NOT NULL, '
 				    . '`modified` INT(11) UNSIGNED NOT NULL, '
@@ -93,36 +95,22 @@ class ServerLogs Extends CI_Model {
 	}
 	
 	public function setServerLog($object=null){
-		
-		/*
-		 *			. '`session_id` VARCHAR(64) NULL, '
-				    . '`url` VARCHAR(255) NULL, '
-				    . '`user_id` INT(11) UNSIGNED NULL, '
-				    . '`status_code` VARCHAR(160) NULL, '
-				    . '`bytes_served` INT(11) UNSIGNED NOT NULL, '
-				    . '`ip_address` INT(11) NULL DEFAULT 0, '
-				    . '`http_code` INT(11) UNSIGNED NOT NULL, '
-				    . '`referrer` VARCHAR(255) NULL, '
-				    . '`` VARCHAR(255) NULL, '
-				    . '`status` INT(1) UNSIGNED NOT NULL,'
-				    . '`added` INT(11) UNSIGNED NOT NULL, '
-				    . '`modified` INT(11) UNSIGNED NOT NULL, '
-		 * 
-		 */
-		
+
 		// Set ServerLog data
 		$data = array(
 			'session_id'	=> $object['session_id'],
 			'url'			=> $object['url'],	
 			'user_id'		=> @$object['user_id'],	
 			'status_code'	=> $object['status_code'],	
-			'bytes_served'	=> $object['bytes_served'],	
+			'bytes_served'	=> $object['bytes_served'],
+			'total_time'	=> $object['total_time'],
 			'ip_address'	=> $object['ip_address'],	
-			'http_code'	=> $object['http_code'],	
-			'referrer'	=> @$object['referrer'],			
+			'http_code'		=> $object['http_code'],	
+			'referrer'		=> @$object['referrer'],			
 			'user_agent'	=> @$object['user_agent'],
+			'is_mobile'		=> @$object['is_mobile'],
 			'status'		=> $object['status'],
-			'added'			=> time()
+			'added'			=> $object['added']
 		);
 		
 		// Insert ServerLog data

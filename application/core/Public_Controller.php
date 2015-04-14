@@ -14,7 +14,7 @@ class Public_Controller extends MY_Controller {
 		self::getSiteStatus();
 		
 		// Set site user access logs
-		self::setAccessLog();
+		self::setAccessLog(1);
 		
 		if($this->config->item('site_open') === FALSE)
         {
@@ -47,25 +47,38 @@ class Public_Controller extends MY_Controller {
 	}
 	
 	protected function setAccessLog($public='') {
-		// url 	user_id 	status_code 	bytes_served 	ip_address 	http_code 	referrer 	user_agent 	status 	added 	modified 
 		
-		// Set ServerLog data
-		$object = array(
-			'session_id'	=> $object['session_id'],
-			'url'			=> $object['url'],	
-			'user_id'		=> @$object['user_id'],	
-			'status_code'	=> $object['status_code'],	
-			'bytes_served'	=> $object['bytes_served'],	
-			'ip_address'	=> $object['ip_address'],	
-			'http_code'	=> $object['http_code'],	
-			'referrer'	=> @$object['referrer'],			
-			'user_agent'	=> @$object['user_agent'],
-			'status'		=> $object['status'],
-			'added'			=> time()
-		);
+		// Set user agents and platform
+		$user_agents['user_agent']	= $this->agent->agent;
+		$user_agents['platform']	= $this->agent->platform;
+		$user_agents['browser']		= $this->agent->browser;
 		
+		// Load status code from config
+		$status_code				= $this->load->config('http_code',true);
+		
+		if ($public) {
+			// Set ServerLog data
+			$object = array(
+				'session_id'	=> $this->session->userdata('session_id'),
+				'url'			=> base_url(uri_string()),
+				'user_id'		=> @$object['user_id'],	
+				'status_code'	=> $status_code[http_response_code()],	
+				'bytes_served'	=> @$object['bytes_served'],	
+				'total_time'	=> $this->benchmark->marker['total_execution_time_start'],	
+				'ip_address'	=> $this->input->ip_address,	
+				'http_code'		=> http_response_code(),	
+				'referrer'		=> $this->agent->is_referral() ? $this->agent->referrer() : '',			
+				'user_agent'	=> json_encode($user_agents),
+				'is_mobile'		=> $this->agent->is_mobile,
+				'status'		=> 1,
+				'added'			=> time()
+			);
+		}
+		//echo '<pre>';
+		//print_r($object);
+		//echo '</pre>';
 		// Get value from tbl_configurations for maintenance
-		//if ($this->ServerLogs->setServerLog($object)) { }
+		if ($this->ServerLogs->setServerLog($object)) { }
 	}
 	
 }
