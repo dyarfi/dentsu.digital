@@ -30,9 +30,9 @@ class ServerLogs Extends CI_Model {
 				    . '`http_code` INT(11) UNSIGNED NOT NULL, '
 				    . '`status_code` VARCHAR(160) NULL, '
 				    . '`bytes_served` INT(11) NULL, '
-				    . '`total_time` INT(11) NULL, '
+				    . '`total_time` VARCHAR(160) NULL, '
 					. '`ip_address` INT(11) NULL DEFAULT 0, '
-				    . '`referrer` VARCHAR(255) NULL, '
+					. '`referrer` VARCHAR(255) NULL, '
 				    . '`user_agent` VARCHAR(255) NULL, '
 					. '`is_mobile` INT(1) NULL, '
 				    . '`status` INT(1) UNSIGNED NOT NULL,'
@@ -45,12 +45,12 @@ class ServerLogs Extends CI_Model {
 		}
 		
 		
-                if(!$this->db->query('SELECT * FROM `'.$this->table.'` LIMIT 0, 1;'))
-                    $insert_data	= TRUE;
+		if(!$this->db->query('SELECT * FROM `'.$this->table.'` LIMIT 0, 1;'))
+				$insert_data	= TRUE;
 		
 		if ($insert_data) {
-                    $sql	= '';
-                    if ($sql) $this->db->query($sql);
+				$sql	= '';
+				if ($sql) $this->db->query($sql);
 		}
 
 		return $this->db->table_exists($this->table);
@@ -82,7 +82,7 @@ class ServerLogs Extends CI_Model {
 	
 	public function getAllServerLog($admin=null){
 		$data = array();
-		$this->db->order_by('added');
+		$this->db->order_by('added','DESC');
 		$Q = $this->db->get($this->table);
 			if ($Q->num_rows() > 0){
 				//foreach ($Q->result_object() as $row){
@@ -104,7 +104,7 @@ class ServerLogs Extends CI_Model {
 			'status_code'	=> $object['status_code'],	
 			'bytes_served'	=> $object['bytes_served'],
 			'total_time'	=> $object['total_time'],
-			'ip_address'	=> $object['ip_address'],	
+			'ip_address'	=> $object['ip_address'],
 			'http_code'		=> $object['http_code'],	
 			'referrer'		=> @$object['referrer'],			
 			'user_agent'	=> @$object['user_agent'],

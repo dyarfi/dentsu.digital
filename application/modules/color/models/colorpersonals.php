@@ -4,7 +4,7 @@
 class Colorpersonals Extends CI_Model {
     
 	// Table name for this model
-	protected $table = 'colorpersonals';
+	protected $table = 'color_personals';
 	
 	public function __construct(){
 		// Call the Model constructor

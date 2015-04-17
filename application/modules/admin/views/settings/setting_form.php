@@ -11,7 +11,7 @@
 				<ul class="page-breadcrumb breadcrumb">					
 					<li>
 						<i class="fa fa-home"></i>
-						<a href="<?=base_url(ADMIN.'dashboard/index');?>">
+						<a href="<?php echo base_url(ADMIN.'dashboard/index');?>">
 							Dashboard
 						</a>
 						<i class="fa fa-angle-right"></i>
@@ -23,8 +23,8 @@
 						<i class="fa fa-angle-right"></i>
 					</li>
 					<li>
-						<a href="<?=base_url(ADMIN.$class_name);?>/<?=($action) ? $action .'/'. $param :'';?>">
-                                                    <?=$page_title;?>
+						<a href="<?php echo base_url(ADMIN.$class_name);?>/<?php echo ($action) ? $action .'/'. $param :'';?>">
+							<?php echo $page_title;?>
 						</a>
 					</li>
 				</ul>
@@ -32,7 +32,7 @@
 			</div>
 		</div>	
 		<!-- BEGIN FORM-->
-		<form class="form-horizontal <?=$class_name;?>-form" method="POST" action="<?=base_url(ADMIN);?>/<?=$class_name;?>/<?=($action) ? $action .'/'. $param :'';?>" id="<?=$class_name;?>-form">
+		<form class="form-horizontal <?php echo $class_name;?>-form" method="POST" action="<?php echo base_url(ADMIN);?>/<?php echo $class_name;?>/<?php echo ($action) ? $action .'/'. $param :'';?>" id="<?php echo $class_name;?>-form">
 			<div class="form-body">
 				<!--/row-->
 				<div class="row">
@@ -41,7 +41,7 @@
 							<label class="control-label col-md-3">Setting Alias </label>
 							<div class="col-md-9">
 								<div class="input-group">
-                                                                    <input type="text" class="form-control" name="alias" placeholder="Alias" value="<?=$fields->alias;?>" id="alias">
+									<input type="text" class="form-control" name="alias" placeholder="Alias" value="<?php echo $fields->alias;?>" id="alias">
 								</div>
 								<span class="help-block"><?php echo $errors['alias'];?></span>
 							</div>
@@ -52,7 +52,7 @@
 							<label class="control-label col-md-3">Parameter</label>
 							<div class="col-md-9">
 								<div class="input-group">
-                                                                    <input type="text" class="form-control" name="parameter" placeholder="Parameter" value="<?=$fields->parameter;?>" id="parameter">
+									<input type="text" class="form-control" name="parameter" <?php echo $action == 'edit' ? 'readonly' : ''; ?> placeholder="Parameter" value="<?php echo $fields->parameter;?>" id="parameter">
 								</div>
 								<span class="help-block"><?php echo $errors['parameter'];?></span>
 							</div>
@@ -60,19 +60,34 @@
 					</div>
 				</div>
 				<div class="row">					
-                                    <!--/span-->
-                                    <div class="col-md-6">							
-                                            <div class="form-group">
-                                                    <label class="control-label col-md-3">Value</label>
-                                                    <div class="col-md-9">
-                                                            <div class="input-group">
-                                                                <input type="text" class="form-control" name="value" placeholder="Value" value="<?=$fields->value;?>" id="value">
-                                                            </div>
-                                                            <span class="help-block"><?php echo $errors['value'];?></span>
-                                                    </div>
-                                            </div>
-                                    </div>
-                                    <!--/span-->
+					<!--/span-->
+					<div class="col-md-6">							
+						<div class="form-group">
+							<label class="control-label col-md-3">Value</label>
+							<div class="col-md-9">
+								<div class="input-group">
+									<?php if ($fields->show_editor) { ?>
+									<textarea name="value" class="form-control wysihtml5" id="value" rows="15" cols="600"><?php echo $fields->value;?></textarea>
+									<?php } else  {?>
+									<input type="text" class="form-control" name="value" placeholder="Value" value="<?php echo $fields->value;?>" id="value">
+									<?php } ?>
+								</div>
+								<span class="help-block"><?php echo $errors['value'];?></span>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="control-label col-md-3">Help Text</label>
+							<div class="col-md-9">
+								<div class="input-group">
+									<textarea name="help_text" class="form-control" id="value" rows="2" cols="600"><?php echo $fields->help_text;?></textarea>
+								</div>
+								<span class="help-block small">Help comments for the fields</span>
+								<span class="help-block"><?php echo $errors['value'];?></span>
+							</div>
+						</div>
+					</div>
+					<!--/span-->
 				</div>
 				<!--/row-->
 				<div class="row">

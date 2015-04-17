@@ -4,7 +4,7 @@
 class Colorcontents Extends CI_Model {
     
 	// Table name for this model
-	protected $table = 'colorcontents';
+	protected $table = 'color_contents';
 	
 	public function __construct(){
 		// Call the Model constructor

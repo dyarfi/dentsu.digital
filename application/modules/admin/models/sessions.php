@@ -15,32 +15,33 @@ class Sessions Extends CI_Model {
 	    $this->table = $this->db->dbprefix($this->table);			
 				
 	}
+	
 	public function install() {
 		
 	    $insert_data	= FALSE;
 
-	    if (!$this->db->table_exists($this->table)) {
-		$insert_data	= TRUE;
+	    if (!$this->db->table_exists($this->table)) { 
+			$insert_data	= TRUE;
 
-		$sql            = 'CREATE TABLE IF NOT EXISTS `'.$this->table.'` ('
-				. '`session_id` VARCHAR(42) NOT NULL DEFAULT 0 PRIMARY KEY,'
-				. '`ip_address` INT(11) NOT NULL DEFAULT 0, '
-				. '`user_agent` VARCHAR(255) NULL, '
-				. '`last_activity` INT(11) UNSIGNED NOT NULL,'
-				. '`user_data` TEXT NULL, '
-				. 'INDEX (`session_id`, `ip_address`) '
-				. ') ENGINE=MYISAM DEFAULT CHARSET=utf8;';
+			$sql = 'CREATE TABLE IF NOT EXISTS `'.$this->table.'` ('
+					. '`session_id` VARCHAR(42) NOT NULL DEFAULT 0 PRIMARY KEY,'
+					. '`ip_address` INT(11) NOT NULL DEFAULT 0, '
+					. '`user_agent` VARCHAR(255) NULL, '
+					. '`last_activity` INT(11) UNSIGNED NOT NULL,'
+					. '`user_data` TEXT NULL, '
+					. 'INDEX (`session_id`, `ip_address`) '
+					. ') ENGINE=MYISAM DEFAULT CHARSET=utf8;';
 
-		$this->db->query($sql);
+			$this->db->query($sql);
 	    }
 
 
 	    if(!$this->db->query('SELECT * FROM `'.$this->table.'` LIMIT 0, 1;'))
-		    $insert_data	= TRUE;
+		    $insert_data = TRUE;
 
-	    if ($insert_data) {
-		$sql	= '';
-		if ($sql) $this->db->query($sql);
+	    if ($insert_data) { 
+			$sql = '';
+			if ($sql) $this->db->query($sql);
 	    }
 
 	    return $this->db->table_exists($this->table);

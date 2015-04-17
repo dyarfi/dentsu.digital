@@ -42,7 +42,6 @@ class User extends Admin_Controller {
                 $temp_rows[$i]->id = $row->id;
                 $temp_rows[$i]->username = $row->username;
                 $temp_rows[$i]->email = $row->email;
-                $temp_rows[$i]->password = substr_replace($row->password, "********", 0, strlen($row->password));
                 $temp_rows[$i]->added = $row->added;
                 $temp_rows[$i]->modified = $row->modified;
                 $temp_rows[$i]->status = $data['statuses'][$row->status];

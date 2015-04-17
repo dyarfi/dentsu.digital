@@ -23,7 +23,9 @@ class Admin_Controller extends CI_Controller {
 		$this->configs			= $this->load->config('admin/admin',true);			
 		
 		// Load Setting Model
-		//$this->load->model('admin/Settings');		
+		$this->load->model('admin/Settings');
+		
+		//print_r($this->Settings);
 		//$this->session->sess_destroy();
 
 		// Set user data lists from login session		

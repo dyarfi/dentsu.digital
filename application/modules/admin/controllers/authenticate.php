@@ -110,7 +110,6 @@ class Authenticate extends Admin_Controller {
 			    $user_session->id = $user->id;
 			    $user_session->username = $user->username;
 			    $user_session->email = $user->email;
-			    $user_session->password = substr_replace($user->password, "********", 0, strlen($user->password));
 			    $user_session->group_id = $user->group_id;
 			    $user_session->status = $user->status;				
 			    $user_session->last_login = $user->last_login;				

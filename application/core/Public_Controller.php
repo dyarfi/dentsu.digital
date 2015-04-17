@@ -30,8 +30,10 @@ class Public_Controller extends MY_Controller {
              * Use my template library to set a theme for your staff
              *     http://philsturgeon.co.uk/code/codeigniter-template
              */
-            $this->template->set_theme('mobile');
-        }
+            //$this->template->set_theme('mobile');
+		} else {
+			//$this->template->set_theme('default');
+		}
     }
 	
 	protected function getSiteStatus() {
@@ -66,6 +68,7 @@ class Public_Controller extends MY_Controller {
 				'bytes_served'	=> @$object['bytes_served'],	
 				'total_time'	=> $this->benchmark->marker['total_execution_time_start'],	
 				'ip_address'	=> $this->input->ip_address,	
+				'geolocation'	=> '',	
 				'http_code'		=> http_response_code(),	
 				'referrer'		=> $this->agent->is_referral() ? $this->agent->referrer() : '',			
 				'user_agent'	=> json_encode($user_agents),

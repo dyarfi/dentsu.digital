@@ -12,7 +12,7 @@ CKEDITOR.editorConfig = function( config ) {
 	config.toolbarGroups = [
 		{ name: 'clipboard',   groups: [ 'clipboard', 'undo' ] },
 		{ name: 'editing',     groups: [ 'find', 'selection', 'spellchecker' ] },
-		{ name: 'links' },
+		{ name: 'links',  groups: [ 'mediaembed' ] },
 		{ name: 'insert' },
 		{ name: 'forms' },
 		{ name: 'tools' },
@@ -29,4 +29,6 @@ CKEDITOR.editorConfig = function( config ) {
 	// Remove some buttons, provided by the standard plugins, which we don't
 	// need to have in the Standard(s) toolbar.
 	config.removeButtons = 'Underline,Subscript,Superscript';
+	
+	config.extraPlugins = 'mediaembed';
 };

@@ -85,8 +85,6 @@
 					</th>
 					    <th class="sorting" role="columnheader" tabindex="0" aria-controls="sample_2" rowspan="1" colspan="1" style="width: 120px;" aria-label="Username : activate to sort column ascending">Username
 					    </th><th class="sorting" role="columnheader" tabindex="1" aria-controls="sample_2" rowspan="1" colspan="1" style="width: 150px;" aria-label="Email : activate to sort column ascending">Email
-					    </th>
-					    <th class="sorting_disabled" role="columnheader" tabindex="2" aria-controls="sample_2" rowspan="1" colspan="1" style="width: 90px;">Password
 					    </th><th class="sorting" role="columnheader" tabindex="3" aria-controls="sample_2" rowspan="1" colspan="1" style="width: 142px;" aria-label="Groups : activate to sort column ascending">Groups
 					    </th><th class="sorting_disabled" role="columnheader" aria-controls="sample_2" tabindex="4" rowspan="1" colspan="1" style="width: 120px;" aria-label="Status : activate to sort column ascending">Status
 					    </th>
@@ -111,7 +109,6 @@
 						    </td>
 						    <td class=" "><?php echo $row->username;?></td>
 						    <td class=" "><a href="mailto:<?php echo $row->email;?>"><?php echo $row->email;?></a></td>
-						    <td class=" "><?php echo $row->password;?></td>
 						    <td class="center "><?php echo $row->group_id;?></td>
 						    <td class="center ">
 							<span class="label label-sm label-<?php if($row->status=='Active') { echo 'success'; } else { echo 'warning'; } ?>">

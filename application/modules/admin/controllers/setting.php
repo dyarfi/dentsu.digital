@@ -16,7 +16,7 @@ class Setting extends Admin_Controller {
 		
 		// Load Configuration model
 		$this->load->model('Configurations');
-
+		
 	}
 	
 	public function index() {
@@ -57,12 +57,28 @@ class Setting extends Admin_Controller {
 		// Set default system
 		$data['is_system'] = $this->configs['is_system'];
 		
+		// Load qr code js execution
+		//$data['script_bottom'] = "load();setimg('".base_url()."assets/admin/img/')";
+		
 		// Load admin template
 		$this->load->view('template/admin/admin_template', $this->load->vars($data));
 	}
         
 	public function edit($id=0) {
 				
+		// Load WYSIHTML js
+		$data['js_files'] = array(
+			base_url('assets/admin/plugins/bootstrap-wysihtml5/wysihtml5-0.3.0.js'),
+			base_url('assets/admin/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.js'),
+			base_url('assets/admin/scripts/custom/components-editors.js'));
+		
+		// Load WYSIHTML CSS 
+		$data['css_files'] = array(
+			base_url('assets/admin/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.css'));
+		
+		// Load Text Editor execution
+		$data['script_bottom'] = "ComponentsEditors.init();";
+		
 		// Check if param is given or not and check from database
 		if (empty($id) || !$this->Settings->getSetting($id)) {
 			$this->session->set_flashdata('message','Item not found!');
@@ -74,7 +90,8 @@ class Setting extends Admin_Controller {
 		$fields	= array(
 				'parameter'	=> '',
 				'alias'		=> '',
-				'value'		=> '',	
+				'value'		=> '',
+				'help_text' => '',
 				'status'	=> '');
 		
 		$errors	= $fields;
@@ -102,11 +119,12 @@ class Setting extends Admin_Controller {
 			} else {
 
 				$posts = array(
-                                    'id'        => $id,
-                                    'parameter'	=> $this->input->post('parameter'),
-                                    'alias'     => $this->input->post('alias'),
-                                    'value'	=> $this->input->post('value'),		
-                                    'status'	=> $this->input->post('status')
+								'id'        => $id,
+								'parameter'	=> $this->input->post('parameter'),
+								'alias'     => $this->input->post('alias'),
+								'value'		=> $this->input->post('value'),
+								'help_text' => $this->input->post('help_text'),
+								'status'	=> $this->input->post('status')
 				);
 				
 				// Set data to add to database
@@ -160,12 +178,26 @@ class Setting extends Admin_Controller {
 	}
         
 	public function add() {
+				
+		// Load WYSIHTML js
+		$data['js_files'] = array(
+			base_url('assets/admin/plugins/bootstrap-wysihtml5/wysihtml5-0.3.0.js'),
+			base_url('assets/admin/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.js'),
+			base_url('assets/admin/scripts/custom/components-editors.js'));
+		
+		// Load WYSIHTML CSS 
+		$data['css_files'] = array(
+			base_url('assets/admin/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.css'));
+		
+		// Load Text Editor execution
+		$data['script_bottom'] = "ComponentsEditors.init();";
 		
 		//Default data setup
 		$fields	= array(
 				'parameter'	=> '',
 				'alias'		=> '',
 				'value'		=> '',	
+				'help_text' => '',
 				'status'	=> '');
 		
 		$errors	= $fields;

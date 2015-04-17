@@ -26,7 +26,7 @@ class Settings Extends CI_Model {
 					. '`id` int(11) unsigned NOT NULL AUTO_INCREMENT,'
 					. '`parameter` varchar(255) DEFAULT NULL,'
 					. '`alias` varchar(255) DEFAULT NULL,'
-					. '`value` varchar(255) DEFAULT NULL,'
+					. '`value` varchar(1024) DEFAULT NULL,'
 					. '`is_system` tinyint(1) DEFAULT 1,'
 					. '`input_type` enum(\'input\',\'textarea\',\'radio\',\'dropdown\',\'timezones\') DEFAULT NULL,'
 					. '`input_size` enum(\'large\',\'medium\',\'small\') DEFAULT NULL,'
@@ -141,6 +141,7 @@ class Settings Extends CI_Model {
 					'parameter' => $object['parameter'],
 					'alias' => $object['alias'],
 					'value' => $object['value'],
+					'help_text' => $object['help_text'],
 					'is_system' => 1,
 					'added'	=> time(),	
 					'status' => $object['status']
@@ -164,6 +165,7 @@ class Settings Extends CI_Model {
                                 'parameter' => $object['parameter'],
                                 'alias' => $object['alias'],
                                 'value' => $object['value'],
+								'help_text' => $object['help_text'],
                                 'modified'  => time(),	
                                 'status' => $object['status']
                             );

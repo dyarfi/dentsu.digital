@@ -44,7 +44,7 @@ class ServerLog extends Admin_Controller {
 	    
 	}
         
-        public function edit($id=0) {
+	public function edit($id=0) {
 				
 		// Check if param is given or not and check from database
 		if (empty($id) || !$this->ServerLogs->getServerLog($id)) {

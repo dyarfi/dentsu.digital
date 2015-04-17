@@ -6,9 +6,7 @@ var ComponentsEditors = function () {
         }
 
         if ($('.wysihtml5').size() > 0) {
-            $('.wysihtml5').wysihtml5({
-                "stylesheets": ["assets/plugins/bootstrap-wysihtml5/wysiwyg-color.css"]
-            });
+            $('.wysihtml5').wysihtml5(/*{"stylesheets": [base_URL + "assets/admin/plugins/bootstrap-wysihtml5/wysiwyg-color.css"]}*/);
         }
     }
 

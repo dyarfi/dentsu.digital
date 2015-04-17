@@ -89,12 +89,14 @@
 			    <tr role="row">
 				<th class="table-checkbox sorting_disabled" role="columnheader" rowspan="1" colspan="1" style="width: 20px;" aria-label=" "><input type="checkbox" data-set="#sample_2 .checkboxes" class="group-checkable">
 				</th>
-				<th class="sorting" role="columnheader" tabindex="1" aria-controls="sample_2" rowspan="1" colspan="1" style="width: 150px;" aria-label="Email : activate to sort column ascending">Url</th>
-				<th class="sorting" role="columnheader" tabindex="0" aria-controls="sample_2" rowspan="1" colspan="1" style="width: 120px;" aria-label="Username : activate to sort column ascending">User</th>
+				<th class="sorting" role="columnheader" tabindex="1" aria-controls="sample_2" rowspan="1" colspan="1" style="width: 150px;" aria-label="Session : activate to sort column ascending">Session Id</th>
+				<th class="sorting" role="columnheader" tabindex="1" aria-controls="sample_2" rowspan="1" colspan="1" style="width: 150px;" aria-label="Url : activate to sort column ascending">Url</th>
+				<th class="sorting" role="columnheader" tabindex="0" aria-controls="sample_2" rowspan="1" colspan="1" style="width: 120px;" aria-label="User : activate to sort column ascending">User</th>
 				<th class="sorting_disabled" role="columnheader" tabindex="2" aria-controls="sample_2" rowspan="1" colspan="1" style="width: 90px;">Status Code</th>
-				<th class="sorting" role="columnheader" tabindex="3" aria-controls="sample_2" rowspan="1" colspan="1" style="width: 142px;" aria-label="Groups : activate to sort column ascending">Bytes Served</th>
+				<th class="sorting" role="columnheader" tabindex="3" aria-controls="sample_2" rowspan="1" colspan="1" style="width: 142px;" aria-label="HTTP Code : activate to sort column ascending">HTTP Code</th>
+				<th class="sorting" role="columnheader" tabindex="3" aria-controls="sample_2" rowspan="1" colspan="1" style="width: 142px;" aria-label="Total Time Load : activate to sort column ascending">Total Time Load</th>
+				<!--th class="sorting" role="columnheader" tabindex="3" aria-controls="sample_2" rowspan="1" colspan="1" style="width: 142px;" aria-label="Groups : activate to sort column ascending">Bytes Served</th-->
 				<th class="sorting_disabled" role="columnheader" tabindex="2" aria-controls="sample_2" rowspan="1" colspan="1" style="width: 90px;">IP Address</th>
-				<th class="sorting" role="columnheader" tabindex="3" aria-controls="sample_2" rowspan="1" colspan="1" style="width: 142px;" aria-label="Groups : activate to sort column ascending">HTTP Code</th>
 				<th class="sorting_disabled" role="columnheader" tabindex="2" aria-controls="sample_2" rowspan="1" colspan="1" style="width: 90px;">Referrer</th>
 				<th class="sorting" role="columnheader" tabindex="3" aria-controls="sample_2" rowspan="1" colspan="1" style="width: 142px;" aria-label="Groups : activate to sort column ascending">User Agent</th>
 				<th class="sorting_disabled" role="columnheader" aria-controls="sample_2" tabindex="4" rowspan="1" colspan="1" style="width: 120px;" aria-label="Status : activate to sort column ascending">Added
@@ -104,17 +106,21 @@
 			    <tbody role="alert" aria-live="polite" aria-relevant="all">								
 				<?php							
 				$i = 1;
-				foreach ($rows as $row) { ?>
+				$agents = array();
+				foreach ($rows as $row) { 
+				$agents = json_decode($row->user_agent);	
+				?>
 				<tr class="odd gradeX <?php echo ($i % 2) ? 'even' : 'odd'; ?>">
 				    <td class=" sorting_1"><input type="checkbox" value="1" class="checkboxes"></td>
-				    <td class=" "><?php echo $row->url;?></td>
+				    <td class=" "><?php echo $row->session_id;?></td>
+					<td class=" "><?php echo $row->url;?></td>
 				    <td class=" "><?php echo ($row->user_id) ? $row->user_id : 'Anonymous';?></td>
 				    <td class=" "><?php echo $row->status_code;?></td>
-				    <td class=" "><?php echo $row->bytes_served;?></td>
-				    <td class=" "><?php echo $row->ip_address;?></td>
 				    <td class=" "><?php echo $row->http_code;?></td>
-				    <td class=" "><?php echo $row->referrer;?></td>
-				    <td class=" "><?php echo word_limiter($row->user_agent,3);?></td>
+				    <td class=" "><?php echo $row->total_time;?></td>
+				    <td class=" "><?php echo $row->ip_address;?></td>
+				    <td class=" "><?php echo ($row->referrer) ? $row->referrer : '-';?></td>
+					<td class=" "><?php echo $agents->browser .'|'. word_limiter($agents->user_agent,4) .'|'. $agents->platform;?></td>
 				    <td class=" "><?php echo date('D, d-m-Y', $row->added);?></td>
 				    <!--td class="center "><?php echo $statuses[$row->status];?></td-->
 				    <!--td class=" ">
