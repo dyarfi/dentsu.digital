@@ -68,6 +68,8 @@ class home extends Public_Controller {
 		//print_r($this->session->userdata['session_id']);
 		//print_r('<br/>');
 		//print_r($this->session);
+
+		//$this->template->set_theme('default');
 		
 		
 	}
@@ -97,14 +99,10 @@ class home extends Public_Controller {
 		$data['contactus_address']	= $this->Settings->getByParameter('contactus_address');		
 		
 		// Set main template
-		$data['main'] = 'default/home';
+		$data['main'] = 'home';
 		
-		// Load admin template
-		$this->template->set('data',$data);
-		$this->template->load_view('template/public/site_template',$this->load->vars($data));
-		
-		//print_r($this->template);
-		//exit;
+		// Load site template
+		$this->load->view('template/public/site_template', $this->load->vars($data));		
 		
 	}
 	

@@ -156,6 +156,19 @@ class UserGroupPermissions Extends CI_Model {
 	    return true;
 	}
 	
+	public function delete_by_permission_id($permission_id = '') {
+
+		if ($permission_id  == '')
+			return false;
+
+		// Check module id
+		$this->db->where('permission_id', $permission_id);
+		
+		// Delete modulelists form database
+		return $this->db->delete($this->table);
+	
+	}
+
 	public function isAuthorized($user_group=null) {
 	    if ($this->permission && in_array($this->permission, $user_group)) {
 		    //Set true if exists

@@ -36,5 +36,17 @@ class ModulePermissions Extends CI_Model {
 		
 		return $this->db->table_exists($this->table);
 	}
+	
+	public function delete_by_module_id ($module_id = '') {
 
+		if ($module_id == '')
+			return false;
+
+		// Check module id
+		$this->db->where('module_id', $id);
+		
+		// Delete modulelists form database
+		return $this->db->delete($this->table);
+
+	}
 }

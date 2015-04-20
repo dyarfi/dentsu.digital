@@ -6,6 +6,10 @@ class Public_Controller extends MY_Controller {
 		
         parent::__construct();
         
+        // Get libraries from system
+        $this->load->library('user_agent');
+		//$this->load->library('Template');
+
 		// Load site models
 		$this->load->model('admin/Configurations');
 		$this->load->model('admin/ServerLogs');
@@ -20,9 +24,6 @@ class Public_Controller extends MY_Controller {
         {
             show_error('Sorry the site is shut for now.');
         }
-
-        // If the user is using a mobile, use a mobile theme
-        $this->load->library('user_agent');
 	
         if( $this->agent->is_mobile() )
         {
@@ -32,8 +33,17 @@ class Public_Controller extends MY_Controller {
              */
             //$this->template->set_theme('mobile');
 		} else {
-			//$this->template->set_theme('default');
+			// $this->template->set_theme('default');
 		}
+
+		//$this->template->theme  	= 'default';
+		//$this->template->title  	= 'Page Title';
+		//$this->template->meta_data  = array();
+
+		//$this->template->layout     = 'template/public/site_template';
+
+		//print_r($this->template);
+
     }
 	
 	protected function getSiteStatus() {

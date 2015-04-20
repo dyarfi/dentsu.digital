@@ -25,9 +25,9 @@ class Languages Extends CI_Model {
 					. '`id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT, '
 					. '`name` VARCHAR(64) NOT NULL, '
 					. '`prefix` VARCHAR(6) NULL, '
-					. '`default` TINYINT(1) NULL DEFAULT 0, '
-					. '`status` TINYINT(1) NOT NULL DEFAULT 1, '
+					. '`default` TINYINT(1) NULL DEFAULT 0, '					
 					. '`is_system` TINYINT(1) NOT NULL DEFAULT 0, '
+					. '`status` TINYINT(1) NOT NULL DEFAULT 1, '
 					. '`added` INT(11) UNSIGNED NOT NULL, '
 					. '`modified` INT(11) UNSIGNED NOT NULL, '
 					. 'PRIMARY KEY (`id`), '
@@ -43,11 +43,11 @@ class Languages Extends CI_Model {
 
 		if ($insert_data) {
 			$sql	= 'INSERT INTO `'. $this->table .'` '
-					. '(`id`, `name`, `prefix`, `default`, `status`, `added`, `modified`) '
+					. '(`id`, `name`, `prefix`, `default`, `is_system`, `status`, `added`, `modified`) '
 					. 'VALUES '
-					. '(1, \'Indonesia\', \'id\', 0, 1, '.time().', 0), '
-					. '(2, \'English\', \'en\', 1, 1, '.time().', 0), '
-					. '(3, \'Arab\', \'ar\', 0, 0, '.time().', 0);';
+					. '(1, \'Indonesia\', \'id\', 0, 0, 1, '.time().', 0), '
+					. '(2, \'English\', \'en\', 1, 1, 1, '.time().', 0), '
+					. '(3, \'Arab\', \'ar\', 0, 0, 0, '.time().', 0);';
 
 			if ($sql) $this->db->query($sql);
 		}

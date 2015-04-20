@@ -9,11 +9,16 @@ class ModuleLists Extends CI_Model {
 	    // Call the Model constructor
 	    parent::__construct();		
 
+	    // Call related models
+	    $this->load->model('admin/ModelLists');
+	    $this->load->model('admin/ModulePermissions');
+		$this->load->model('admin/UserGroupPermissions');
+
 	    // Set default db
 	    $this->db = $this->load->database('default', true);		
 	    // Set default table
 	    $this->table = $this->db->dbprefix($this->table);
-		
+
 	}
 	
 	public function install () {
@@ -36,7 +41,8 @@ class ModuleLists Extends CI_Model {
 		
 	    return $this->db->table_exists($this->table);
 	}
-	
+
+	/*
 	public function load_by_name ($name) {
 	    
 	    $where_cond	= array('module_name' => $name);
@@ -69,7 +75,8 @@ class ModuleLists Extends CI_Model {
 	    return $module[0]->parent_id;
 		
 	}
-	
+	*/
+
 	public function getModules ($user_group) {
 	    if($user_group == '')
 		    return array();
@@ -98,7 +105,7 @@ class ModuleLists Extends CI_Model {
 
 	    }
 	    								
-	    $modules_perm		= $this->load->model('UserGroupPermissions')->getModuleFunction($user_group);		
+	    $modules_perm		= $this->UserGroupPermissions->getModuleFunction($user_group);		
 	    $modules_cols		= array_keys($modules_perm);
 
 	    $where_cond			= array();
@@ -116,9 +123,6 @@ class ModuleLists Extends CI_Model {
 	    $this->db->order_by('order','ASC');
 
 	    $module_lists = $this->db->get($this->table)->result();
-
-	    // Set temp modules
-	    $_modules = '';
 
 	    if(count($module_lists) != 0) {
 		    foreach($module_lists as $module) {
@@ -154,7 +158,7 @@ class ModuleLists Extends CI_Model {
 	    // List all custom modules		
 	    $directory[] = Modules::lists('./application/modules');				
 
-	    //$config_module = array();
+	    $config_module = array();
 
 	    // Loop to get module name			
 	    foreach ($directory as $row) {
@@ -167,11 +171,11 @@ class ModuleLists Extends CI_Model {
 		    // List DB module
 		    $module_list	= array();
 
-		    $module_db	= $this->db->get_where($this->table, array('parent_id' => 0))->result();
+		    $module_db		= $this->db->get_where($this->table, array('parent_id' => 0))->result();
 
 		    $user_groups	= $this->db->get_where($this->db->dbprefix('user_groups'), array('status' => 1))->result();
 
-		    $buffers	= array();
+		    $buffers		= array();
 
 		    if(is_array($module_db) && count($module_db) != 0) {
 
@@ -343,39 +347,67 @@ class ModuleLists Extends CI_Model {
 			    }
 
 		    }
-
-		    /*
-		    // Check deleted module
-		    $deleted_module	= array_diff($module_list, $config_module);
+			
+			/*********** NEED TO CHECK THIS ONE OUT ************/
+			
+			// Check deleted module
+			$deleted_module	= array_diff($module_list, $config_module);
 
 		    if(count($deleted_module) != 0) {
 			    foreach($deleted_module as $key	=> $value) {
 				    if($this->delete($key)) {
 					    $this->delete_by_parent_id($key);
+					    
 					    $where_cond	= array('module_id'	=> $key);
-					    $model_list	= Model_ModelList::instance()->find($where_cond);
+					    
+					    $model_list	= $this->ModelLists->getByModuleId($key);
+					    
 					    if(is_array($model_list) && count($model_list) != 0) {
 						    foreach($model_list as $model) {
-							    $model_name	= strtolower(str_replace('_Model','',$model->model));
-							    if ($this->db->list_tables($model_name)) 
+							    $model_name	= $model->model;
+							    if ($this->db->table_exists($model_name)) 
 								    $this->db->query('DROP TABLE `'.$model_name.'`'); // $this->db->query('DROP TABLE `'.$model_name.'`');	
 						    }							 
 					    }
 
-					    Model_ModelList::instance()->delete_by_module_id($key);
-					    Model_ModulePermission::instance()->delete_by_module_id($key);
-					    Model_UserLevelPermission::instance()->delete_by_permission_id($key);
-					    if ($this->db->list_tables($value)) 
-						    $this->db->query('DROP TABLE `'.$value.'`');//$this->db->query('DROP TABLE `'.$value.'`');	
+					    // Load ModuleLists, ModelLists and ModulePermissions models
+	    				$this->ModelLists->delete_by_module_id($key);
+					    $this->ModulePermissions->delete_by_module_id($key);
+					    $this->UserGroupPermissions->delete_by_permission_id($key);
+
+					    if ($this->db->table_exists($value)) 
+						    $this->db->query('DROP TABLE `'.$value.'`'); //$this->db->query('DROP TABLE `'.$value.'`');	
+
 				    }
 			    }
 		    }
-		     * 
-		     */
+
 	    }
 						
 	}
 	
+	public function delete ($id = '') {
+		if ($id == '')
+			return false;
+
+		// Check module id
+		$this->db->where('id', $id);
+		
+		// Delete modulelists form database
+		return $this->db->delete($this->table);
+	}
+
+	public function delete_by_parent_id ($parent_id = '') {
+		if ($parent_id == '')
+			return false;
+
+		// Check user id
+		$this->db->where('parent_id', $parent_id);
+		
+		// Delete modulelists form database
+		return $this->db->delete($this->table);
+	}
+
 	public function emptyPermission() {
 		$this->db->query('TRUNCATE `tbl_group_permissions`;');
 		$this->db->query('TRUNCATE `tbl_model_lists`;');

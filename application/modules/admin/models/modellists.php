@@ -125,4 +125,31 @@ class ModelLists Extends CI_Model {
 	    return $returns;
 	}
 
+	public function getByModuleId($module_id = null){
+	    if(!empty($module_id)) {
+			$data = array();
+			$options = array('module_id' => $module_id);
+			$Q = $this->db->get_where($this->table,$options,1);
+			if ($Q->num_rows() > 0) {
+				foreach ($Q->result_object() as $row)
+				$data = $row;
+			}
+			$Q->free_result();
+			return $data;
+	    }
+	}
+
+	public function delete_by_module_id($module_id='') {
+		
+		if ($module_id == '')
+			return false;
+
+		// Check module id
+		$this->db->where('module_id', $id);
+		
+		// Delete modulelists form database
+		return $this->db->delete($this->table);
+
+	}
+
 }

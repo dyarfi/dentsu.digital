@@ -17,7 +17,7 @@
 			    <i class="fa fa-angle-right"></i>
 			</li>
 			<li>
-			    <a href="#">
+			    <a href="<?=base_url(ADMIN.$class_name);?>/index">
 				    Language Control
 			    </a>
 			    <i class="fa fa-angle-right"></i>

@@ -112,10 +112,14 @@
 					    </td>
 					    <td class=" "><?php echo $row->name;?></td>
 					    <td class=" "><?php echo $row->prefix;?></td>
-					    <td class=" "><?php echo $options[$row->default];?></td>
+					    <td class=" ">
+					    	<input type="radio" class="btn-language-default" name="default" value="1" <?php echo $row->default ? 'checked' : '';?>/>
+					    	<?php echo $options[$row->default];?>
+					    </td>
 					    <td class="center ">
 						<?php //echo $is_system[$row->is_system];?>
-						<span class="label label-sm label-<?php if($is_system[$row->is_system]) { echo 'success'; } else { echo 'warning'; } ?>">							<?php if($is_system[$row->is_system]) { echo 'Yes'; } else { echo 'No'; } ?>
+						<span class="label label-sm label-<?php echo $is_system[$row->is_system] == 'Yes' ? 'success' : 'warning'; ?>">
+							<?php echo $is_system[$row->is_system] == 'Yes' ? 'Yes' : 'No';?>
 						</span>
 					    </td>
 					    <td class="center "><?php echo $statuses[$row->status];?></td>
