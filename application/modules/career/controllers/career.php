@@ -44,15 +44,15 @@ class Career extends Admin_Controller {
             $crud->set_relation('division_id', 'tbl_divisions', 'subject');
             // Set column
             $crud->columns('subject', 'name','division_id','sent_to','status');   
-	    // Unsets the fields at the add form.
-	    $crud->unset_add_fields('count','added','modified');
-	    // Unsets the fields at the edit form.
-	    $crud->unset_edit_fields('count','added','modified');
-	    // Sets the required fields of add and edit fields
-	    $crud->required_fields('subject','name','status');          
-	    // Set column display 
+			// Unsets the fields at the add form.
+			$crud->unset_add_fields('count','added','modified');
+			// Unsets the fields at the edit form.
+			$crud->unset_edit_fields('count','added','modified');
+			// Sets the required fields of add and edit fields
+			$crud->required_fields('subject','name','status');          
+			// Set column display 
             $crud->display_as('division_id', 'Division');
-	    // Set custom field display for status
+			// Set custom field display for status
             $crud->field_type('status','dropdown',array('1' => 'Active', '0' => 'Inactive')); 
             // Set upload field
             $crud->set_field_upload('file_name','uploads/careers');

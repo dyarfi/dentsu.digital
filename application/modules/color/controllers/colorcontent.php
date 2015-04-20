@@ -41,7 +41,7 @@ class Colorcontent extends Admin_Controller {
 	    // Set our Grocery CRUD
             $crud = new grocery_CRUD();
             // Set tables
-            $crud->set_table('tbl_colorcontents');
+            $crud->set_table('tbl_color_contents');
             // Set CRUD subject
             $crud->set_subject('Color Content');                            
             // Set relation table
