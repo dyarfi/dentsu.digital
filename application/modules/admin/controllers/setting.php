@@ -144,7 +144,7 @@ class Setting extends Admin_Controller {
 			$fields         = (object) $this->Settings->getSetting($id);
 			
 		}
-	
+		
 		// Set Action
 		$data['action']     = 'edit';
 				

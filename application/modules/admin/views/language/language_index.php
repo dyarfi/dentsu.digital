@@ -51,9 +51,12 @@
 			<!-- BEGIN EXAMPLE TABLE PORTLET-->
 			<div class="portlet-body">
 			    <div class="table-toolbar">
-				<div class="btn-group">
+				<div class="btn-group-solid">
 				    <a class="btn green" id="sample_editable_1_new" href="<?=base_url(ADMIN.$class_name.'/add');?>">
-				    Add New <i class="fa fa-plus"></i>
+						Add New <i class="fa fa-plus"></i>
+				    </a>
+					<a class="btn red" id="sample_editable_1_new" href="<?=base_url(ADMIN.'language/labels');?>">
+						Labels <i class="fa fa-plus"></i>
 				    </a>
 				</div>
 				<!--div class="btn-group pull-right">
@@ -110,7 +113,8 @@
 					    <td class=" sorting_1">
 						<input type="checkbox" class="checkboxes" name="check[]" id="check_<?php echo $row->id; ?>" value="<?php echo $row->id; ?>" />
 					    </td>
-					    <td class=" "><?php echo $row->name;?></td>
+					    <td class=" "><?php echo $row->name;?>&nbsp;
+							<img src="<?php echo base_url().'assets/admin/img/flags/'.$row->prefix;?>.png"/></td>
 					    <td class=" "><?php echo $row->prefix;?></td>
 					    <td class=" ">
 					    	<input type="radio" class="btn-language-default" name="default" value="1" <?php echo $row->default ? 'checked' : '';?>/>

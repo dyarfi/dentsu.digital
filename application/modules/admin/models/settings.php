@@ -61,7 +61,7 @@ class Settings Extends CI_Model {
 			    .'(11, \'title_default\', \'Website Title Default\', \'We build on solid foundation, effective, construction and visual appeal\', \'1\', NULL, NULL), '
 			    .'(12, \'title_name\', \'Company Title Name\', \'PT. Default (Web Agency in Jakarta)\', \'1\', NULL, 1336118568), '	
 			    .'(13, \'site_logo\', \'Site Logo\', \'logo.png\', \'1\', NULL, 1336118568), '	
-			    .'(14, \'language\', \'Default Language\', \'en\', \'1\', NULL, 1336118568), '	
+			    .'(14, \'language\', \'Default Site Language\', \'en\', \'1\', NULL, 1336118568), '	
 			    .'(15, \'counter\', \'Site Counter\', \'123\', \'1\', NULL, 1336118568), '
 			    .'(16, \'copyright\', \'Copyright\', \'© 2012 COMPANY NAME COPYRIGHT. All Rights Reserved.\', \'1\', NULL, 1336118568), '
 			    .'(17, \'site_name\', \'Site Name\', \' Default <br/> PT. Default (Web Agency in Jakarta).\', \'1\', NULL, 1336118568), '
@@ -158,20 +158,20 @@ class Settings Extends CI_Model {
 		
 	}
 	
-        public function updateSetting($object=null){
+	public function updateSetting($object=null){
 		
 		// Set Setting data
 		$data = array(			
-                                'parameter' => $object['parameter'],
-                                'alias' => $object['alias'],
-                                'value' => $object['value'],
-								'help_text' => $object['help_text'],
-                                'modified'  => time(),	
-                                'status' => $object['status']
-                            );
+						'parameter' => $object['parameter'],
+						'alias' => $object['alias'],
+						'value' => $object['value'],
+						'help_text' => $object['help_text'],
+						'modified'  => time(),	
+						'status' => $object['status']
+					);
 		
 		// Update Setting data             
-                $this->db->where('id', $object['id']);      
+		$this->db->where('id', $object['id']);      
 
 		// Return last insert id primary
 		$update = $this->db->update($this->table, $data);					

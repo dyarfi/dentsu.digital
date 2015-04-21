@@ -12,6 +12,7 @@ class Admin_Controller extends CI_Controller {
 	public $previous_url = '';
 	
 	public $setting ='';
+	public $i18ln = '';
 		
 	public function __construct() {
 		parent::__construct();	
@@ -25,7 +26,13 @@ class Admin_Controller extends CI_Controller {
 		// Load Setting Model
 		$this->load->model('admin/Settings');
 		
-		//print_r($this->Settings);
+		// Load Setting Model
+		$this->load->model('admin/Languages');
+		
+		// Set i18ln for the default language
+		$this->i18ln = $this->Languages->getDefault();
+		
+		// Session destroy
 		//$this->session->sess_destroy();
 
 		// Set user data lists from login session		
@@ -69,7 +76,14 @@ class Admin_Controller extends CI_Controller {
 		self::check_module_permission($this->controller, $this->action, $this->param);				
 		
 	}
-
+	
+	/**
+	* Checking access permission stored in database and return the accessible function
+	*
+	* @access	public
+	* @param	array
+	* @return	true/false
+	*/
 	public function check_module_permission ($controller='',$action='', $param='') {
 		
 		$accessible		= FALSE;

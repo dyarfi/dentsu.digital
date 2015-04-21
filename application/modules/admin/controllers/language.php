@@ -156,42 +156,42 @@ class Language extends Admin_Controller {
 	    // Check if post is requested		
 	    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-		// Validation form checks
-		if ($this->form_validation->run() == FALSE) {
+			// Validation form checks
+			if ($this->form_validation->run() == FALSE) {
 
-		    // Set error fields
-		    $error = array();
-		    foreach(array_keys($fields) as $error) {
-			    $errors[$error] = form_error($error);
-		    }
+				// Set error fields
+				$error = array();
+				foreach(array_keys($fields) as $error) {
+					$errors[$error] = form_error($error);
+				}
 
-		    // Set previous post merge to default
-		    $fields = array_merge($fields, $this->input->post());						
+				// Set previous post merge to default
+				$fields = array_merge($fields, $this->input->post());						
 
-		} else {
+			} else {
 
-		    $posts = array(
-			    'id'=>$id,
-			    'name' => $this->input->post('name'),
-			    'prefix' => $this->input->post('prefix'),
-			    'status' => $this->input->post('status')
-		    );
+				$posts = array(
+					'id'=>$id,
+					'name' => $this->input->post('name'),
+					'prefix' => $this->input->post('prefix'),
+					'status' => $this->input->post('status')
+				);
 
-		    // Set data to add to database
-		    $this->Languages->updateLanguage($posts);
+				// Set data to add to database
+				$this->Languages->updateLanguage($posts);
 
-		    // Set message
-		    $this->session->set_flashdata('message','User Group updated');
+				// Set message
+				$this->session->set_flashdata('message','Language updated');
 
-		    // Redirect after add
-		    redirect('admin/language');
+				// Redirect after add
+				redirect('admin/language');
 
-		}
+			}
 
 	    } else {	
 
-		// Set fields from database
-		$fields = $this->Languages->getLanguage($id);		
+			// Set fields from database
+			$fields = $this->Languages->getLanguage($id);		
 	    }
 
 	    // Set Action

@@ -1,9 +1,9 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-// Model Class Object for Language
-class Languages Extends CI_Model {
+// Model Class Object for Label
+class Labels Extends CI_Model {
 	// Table name for this model
-	protected $table = 'languages'; 
+	protected $table = 'labels'; 
 	
 	public function __construct() {
 	    // Call the Model constructor
@@ -23,15 +23,17 @@ class Languages Extends CI_Model {
 
 			$sql	= 'CREATE TABLE IF NOT EXISTS `'. $this->table .'` ('
 					. '`id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT, '
+					. '`lang_id` INT(11) UNSIGNED NULL, '
 					. '`name` VARCHAR(64) NOT NULL, '
-					. '`prefix` VARCHAR(8) NULL, '
+					. '`prefix` VARCHAR(6) NULL, '
+					. '`text` TEXT NULL, '
 					. '`default` TINYINT(1) NULL DEFAULT 0, '					
 					. '`is_system` TINYINT(1) NOT NULL DEFAULT 0, '
 					. '`status` TINYINT(1) NOT NULL DEFAULT 1, '
 					. '`added` INT(11) UNSIGNED NOT NULL, '
 					. '`modified` INT(11) UNSIGNED NOT NULL, '
 					. 'PRIMARY KEY (`id`), '
-                    . 'KEY `name` (`name`,`status`)'
+                    . 'KEY `name` (`name`,`prefix`)'
 					. ') ENGINE=MyISAM DEFAULT CHARSET=utf8;';
 	
 			$this->db->query($sql);

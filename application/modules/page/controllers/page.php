@@ -20,9 +20,6 @@ class Page extends Admin_Controller {
 	
     public function __construct() {
             parent::__construct();
-
-			// Load Languages Model
-			$this->load->model('admin/Languages');
 			
             // Load Pages model
             $this->load->model('Pages');
@@ -81,7 +78,7 @@ class Page extends Admin_Controller {
 					foreach($this->Languages->getAllLanguage() as $lang) {
 						//default is the default language
 						if($lang->default != 1) {
-							$crud->add_action($lang->name, base_url('images/'.$lang->name.'.png','marita'),'back/insert_and_redirect/'.$lang->id);
+							$crud->add_action($lang->name, base_url('assets/admin/img/flags/'.$lang->prefix.'.png'),'page/insert_and_redirect/'.$lang->id);
 						}
 					}
 			}
@@ -94,31 +91,34 @@ class Page extends Admin_Controller {
 	
 	function insert_and_redirect($lang_id,$field_id) {
 	  
-		$this->db->where('lang_id',$lang_id);
-		$this->db->where('field_id',$field_id);
-		$page_db = $this->db->get('pages_lang');
+		//$this->db->where('lang_id',$lang_id);
+		//$this->db->where('field_id',$field_id);
+		//$page_db = $this->db->get('pages_lang');
 
-		if($page_db->num_rows() == 0) {
-			  $this->db->insert('pages_lang',array('lang_code' => $lang_id, 'field_id' => $field_id));
-			  redirect(base_url(ADMIN).'/pages/index/edit/'.$this->db->insert_id());
-		}
-		else {
-			  redirect(base_url(ADMIN).'/pages/index/edit/'.$page_db->row()->id);
-		}
+		//if($page_db->num_rows() == 0) {
+			  //$this->db->insert('pages_lang',array('lang_code' => $lang_id, 'field_id' => $field_id));
+			  redirect(base_url(ADMIN).'/page/pages_lang/edit/'.$field_id);
+		//}
+		//else {
+			  //redirect(base_url(ADMIN).'/pages/pages_lang/edit/'.$page_db->row()->id);
+		//}
 	}
 
 	function pages_lang($operation = '') {
 		
 		/* Just make sure that you don't want to redirect him at the page_lang page but at pages */
-		if($operation == '' || $operation == 'list') {
-		   redirect(strtolower(__CLASS__).'/pages');
-		}
+		//if($operation == '' || $operation == 'list') {
+		   //redirect(strtolower(__CLASS__).'/page/index');
+		//}
 
 		$crud = new grocery_CRUD();
 
 		$crud->unset_fields('lang_id','field_id');
 
-		$this->template->build('admin/grocery_crud', $crud->render());
+		//$this->template->build('admin/grocery_crud', $crud->render());
+	
+		$this->load($crud, 'page');
+		
 	}
 
     public function _callback_time ($value, $row) {
