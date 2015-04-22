@@ -1,13 +1,18 @@
 var FormUser = function () {
 	
 	var handleUserForm = function () {
-		$('#user-form').validate({
-			focusInvalid: false, // do not focus the last invalid input
-			ignore: "",
-			submitHandler: function (form) {				
-				ajaxUser();
-			}				
-		});
+		
+		if ($('#user-form').size() > 0) {
+			
+			$('#user-form').validate({
+				focusInvalid: false, // do not focus the last invalid input
+				ignore: "",
+				submitHandler: function (form) {				
+					ajaxUser();
+				}				
+			});
+			
+		}
 						
 		$('.reload_captcha').click(function() {
 			var url	= $(this).attr('rel');		
@@ -29,59 +34,62 @@ var FormUser = function () {
 			return false;	
 		});
 		
-		$('#user-form-default').validate({
-			//errorElement: 'span', //default input error message container
-			errorClass: 'help-block', // default input error message class
-			focusInvalid: false, // do not focus the last invalid input
-			ignore:"",			
-			rules: {
-				username: {
-					required: true
-				},
-				email: {
-					required: true
-				}/*,
-				password: {
-					required: true
-				},
-				password_retype: {
-					equalTo: "#password"
-				}*/
-			},					
-			messages: {
-				username: {
-					required: "Username is required."
-				},
-				email: {
-					required: "Email is required."
-				}/*,
-				password: {
-					required: "Password is required."
-				},
-				password_retype: { 
-					equalTo: "Password not match."
-				}*/
-			},					
-			invalidHandler: function (event, validator) { //display error alert on form submit   
-				$('.help-block', $('#user-form-default')).show();
-			},
-			highlight: function (element) { // hightlight error inputs
-				$(element)
-					.closest('.form-group').addClass('has-error'); // set error class to the control group
-			},
-			success: function (label) {
-				label.closest('.form-group').removeClass('has-error');
-				label.remove();
-			},
-			errorPlacement: function (error, element) {
-				error.insertAfter(element.closest('.input-icon'));
-			},
+		if ($('#user-form-default').size() > 0) {
 			
-			submitHandler: function (form) {
-				form.submit();
-			}
-			
-		});		
+			$('#user-form-default').validate({
+				//errorElement: 'span', //default input error message container
+				errorClass: 'help-block', // default input error message class
+				focusInvalid: false, // do not focus the last invalid input
+				ignore:"",			
+				rules: {
+					username: {
+						required: true
+					},
+					email: {
+						required: true
+					}/*,
+					password: {
+						required: true
+					},
+					password_retype: {
+						equalTo: "#password"
+					}*/
+				},					
+				messages: {
+					username: {
+						required: "Username is required."
+					},
+					email: {
+						required: "Email is required."
+					}/*,
+					password: {
+						required: "Password is required."
+					},
+					password_retype: { 
+						equalTo: "Password not match."
+					}*/
+				},					
+				invalidHandler: function (event, validator) { //display error alert on form submit   
+					$('.help-block', $('#user-form-default')).show();
+				},
+				highlight: function (element) { // hightlight error inputs
+					$(element)
+						.closest('.form-group').addClass('has-error'); // set error class to the control group
+				},
+				success: function (label) {
+					label.closest('.form-group').removeClass('has-error');
+					label.remove();
+				},
+				errorPlacement: function (error, element) {
+					error.insertAfter(element.closest('.input-icon'));
+				},
+
+				submitHandler: function (form) {
+					form.submit();
+				}
+
+			});		
+		}
 	}
 	
 	var ajaxUser = function () {

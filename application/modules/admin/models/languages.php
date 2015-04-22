@@ -69,10 +69,13 @@ class Languages Extends CI_Model {
 	    }
 	}
 	
-	public function getAllLanguage(){
+	public function getAllLanguage($status=''){
 	    $data = array();
 	    $this->db->order_by('added');
-	    $Q = $this->db->get($this->table);
+		if ($status) {
+			$this->db->where('status',$status);
+		}
+		$Q = $this->db->get($this->table);
 		if ($Q->num_rows() > 0){
 		    //foreach ($Q->result_array() as $row){
 			    //$data[] = $row;
@@ -118,6 +121,15 @@ class Languages Extends CI_Model {
 			    $data = $row;
 		    }
 		}
+	    $Q->free_result();
+	    return $data;
+	}
+	
+	public function getActiveCount() {
+	    $data = '';
+	    $options = array('status' => 1);
+	    $Q = $this->db->get_where($this->table,$options,1);
+	    $data = $this->db->count_all_results();
 	    $Q->free_result();
 	    return $data;
 	}

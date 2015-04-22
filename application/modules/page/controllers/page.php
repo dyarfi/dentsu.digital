@@ -42,8 +42,9 @@ class Page extends Admin_Controller {
             $crud->set_subject('Page');                            
             // Set table relation
             $crud->set_relation('menu_id','tbl_page_menus','name');
+			// Add custom column
             // Set column
-            $crud->columns('subject','name','menu_id','synopsis','text','status','added','modified');			
+            $crud->columns('subject','name','menu_id','synopsis','text','status','added','modified','translate');			
 			// The fields that user will see on add and edit form
 			$crud->fields('subject','name','menu_id','synopsis','text','publish_date','unpublish_date','status','added','modified');
             // Set column display 
@@ -51,6 +52,12 @@ class Page extends Admin_Controller {
 			// Changes the default field type
 			$crud->field_type('added', 'hidden');
 			$crud->field_type('modified', 'hidden');
+			
+			if ($this->Languages->getActiveCount() > 0) {
+				// Callback_column translate
+				$crud->callback_column('translate',array($this,'_callback_translate'));
+			}
+			
 			// This callback escapes the default auto field output of the field name at the add form
 			$crud->callback_add_field('added',array($this,'_callback_time_added'));
 			// This callback escapes the default auto field output of the field name at the edit form
@@ -67,13 +74,17 @@ class Page extends Admin_Controller {
 			 
 			$state = $crud->getState();
 			$state_info = $crud->getStateInfo();
-
+			//print_r($state);
 			if ($state == 'add') {
 				// GC Add Method
 			} else if($state == 'edit') {
 				// GC Edit Method. 
+			} else if($state == 'detail') {
+				// GC Edit Method. 
+				exit('asdf');
 			} else {
 				// GC List Method
+				/*
 					// Get languages from db
 					foreach($this->Languages->getAllLanguage() as $lang) {
 						//default is the default language
@@ -81,6 +92,8 @@ class Page extends Admin_Controller {
 							$crud->add_action($lang->name, base_url('assets/admin/img/flags/'.$lang->prefix.'.png'),'page/insert_and_redirect/'.$lang->id);
 						}
 					}
+				 * 
+				 */
 			}
 			
             $this->load($crud, 'page');
@@ -97,22 +110,30 @@ class Page extends Admin_Controller {
 
 		//if($page_db->num_rows() == 0) {
 			  //$this->db->insert('pages_lang',array('lang_code' => $lang_id, 'field_id' => $field_id));
-			  redirect(base_url(ADMIN).'/page/pages_lang/edit/'.$field_id);
+			  redirect(base_url(ADMIN).'/page/index/detail/edit/'.$field_id);
 		//}
 		//else {
 			  //redirect(base_url(ADMIN).'/pages/pages_lang/edit/'.$page_db->row()->id);
 		//}
 	}
 
-	function pages_lang($operation = '') {
+	function detail($operation = '') {
 		
 		/* Just make sure that you don't want to redirect him at the page_lang page but at pages */
-		//if($operation == '' || $operation == 'list') {
+		if($operation == '' || $operation == 'list') {
 		   //redirect(strtolower(__CLASS__).'/page/index');
-		//}
+		}
 
 		$crud = new grocery_CRUD();
-
+		
+		$crud->set_subject('Translation');                            
+		// Set table relation
+		$crud->set_relation('menu_id','tbl_page_menus','name');
+		// Add custom column
+		// Set column
+		$crud->columns('subject','name','menu_id','synopsis','text','status','added','modified','translate');			
+		// The fields that user will see on add and edit form
+		$crud->fields('subject','name','menu_id','synopsis','text','publish_date','unpublish_date','status','added','modified');
 		$crud->unset_fields('lang_id','field_id');
 
 		//$this->template->build('admin/grocery_crud', $crud->render());
@@ -121,6 +142,23 @@ class Page extends Admin_Controller {
 		
 	}
 
+	public function _callback_translate ($value, $row) {
+		/*
+		if ($row->user_id == NULL) { 
+			return '<a href="'.base_url(ADMIN).'/employee/set/'.$row->id.'" class="fa fa-arrow-circle-left">&nbsp;</a>'; 
+		} else { 
+			return 'Already Employed';
+		}*/
+		$links = '';
+		foreach($this->Languages->getAllLanguage(1) as $lang) {
+			// Find other than the default languages
+			if($lang->default != 1) {
+				$links .= '<a href="'.base_url(ADMIN).'/page/index/detail/edit/'.$row->id.'/'.$lang->id.'" class="fancyframe iframe" title="'.$lang->name.'"><img src="'.base_url('assets/admin/img/flags/'.$lang->prefix.'.png').'"/></a>&nbsp;';
+			}
+		}
+		return $links;
+	}
+	
     public function _callback_time ($value, $row) {
 		return empty($value) ? '-' : date('D, d-M-Y',$value);
     }

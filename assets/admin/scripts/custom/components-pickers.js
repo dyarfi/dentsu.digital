@@ -129,35 +129,37 @@ var ComponentsPickers = function () {
     }
 
     var handleDatetimePicker = function () {
+		if( $(".form_datetime").size() > 0 || $(".form_advance_datetime").size() > 0 || $(".form_meridian_datetime").size() > 0) {
+		
+			$(".form_datetime").datetimepicker({
+				autoclose: true,
+				isRTL: App.isRTL(),
+				format: "dd MM yyyy - hh:ii",
+				pickerPosition: (App.isRTL() ? "bottom-right" : "bottom-left")
+			});
 
-        $(".form_datetime").datetimepicker({
-            autoclose: true,
-            isRTL: App.isRTL(),
-            format: "dd MM yyyy - hh:ii",
-            pickerPosition: (App.isRTL() ? "bottom-right" : "bottom-left")
-        });
+			$(".form_advance_datetime").datetimepicker({
+				isRTL: App.isRTL(),
+				format: "dd MM yyyy - hh:ii",
+				autoclose: true,
+				todayBtn: true,
+				startDate: "2013-02-14 10:00",
+				pickerPosition: (App.isRTL() ? "bottom-right" : "bottom-left"),
+				minuteStep: 10
+			});
 
-        $(".form_advance_datetime").datetimepicker({
-            isRTL: App.isRTL(),
-            format: "dd MM yyyy - hh:ii",
-            autoclose: true,
-            todayBtn: true,
-            startDate: "2013-02-14 10:00",
-            pickerPosition: (App.isRTL() ? "bottom-right" : "bottom-left"),
-            minuteStep: 10
-        });
+			$(".form_meridian_datetime").datetimepicker({
+				isRTL: App.isRTL(),
+				format: "dd MM yyyy - HH:ii P",
+				showMeridian: true,
+				autoclose: true,
+				pickerPosition: (App.isRTL() ? "bottom-right" : "bottom-left"),
+				todayBtn: true
+			});
 
-        $(".form_meridian_datetime").datetimepicker({
-            isRTL: App.isRTL(),
-            format: "dd MM yyyy - HH:ii P",
-            showMeridian: true,
-            autoclose: true,
-            pickerPosition: (App.isRTL() ? "bottom-right" : "bottom-left"),
-            todayBtn: true
-        });
-
-        $('body').removeClass("modal-open"); // fix bug when inline picker is used in modal
-    }
+			$('body').removeClass("modal-open"); // fix bug when inline picker is used in modal
+		}
+	}
 
     var handleClockfaceTimePickers = function () {
 

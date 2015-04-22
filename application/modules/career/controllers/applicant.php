@@ -30,8 +30,8 @@ class Applicant extends Admin_Controller {
 	    // Load Applicant model
 	    $this->load->model('Applicants');
 
-             // Load Grocery CRUD
-            $this->load->library('grocery_CRUD');
+		// Load Grocery CRUD
+		$this->load->library('grocery_CRUD');
 
     }
 	
