@@ -137,12 +137,22 @@ class Authenticate extends Admin_Controller {
 		    }
 	    }
 
-	     // Set main template
+	    // Load js for administrator login
+		$data['js_files'] = array(base_url('assets/admin/scripts/custom/login-soft.js'));
+		
+		// Load CSS for the template
+		$data['css_files'] = array(base_url('assets/admin/css/pages/login-soft.css'));
+		
+		// Load JS execution
+		$data['script_bottom'] = "Login.init();";
+
+		// Set main template
 	    $data['main']	= 'admin/login';
 	    
 	    // Load admin template
-	    $this->load->view('template/admin/login_template', $this->load->vars($data));
+	    $this->load->view('template/admin/login', $this->load->vars($data));
 	}
+	
 	public function logout() {
 		
 	    //Set user's last login 

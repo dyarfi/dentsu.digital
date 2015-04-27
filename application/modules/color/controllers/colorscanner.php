@@ -47,7 +47,6 @@ class Colorscanner extends Admin_Controller {
         
 		// Load js color tracking 
 		$data['js_files'] = array(
-
             //base_url('assets/admin/plugins/tracking.js/platform.js'),
             //base_url('assets/admin/plugins/tracking.js/polymer.js'),            
             base_url('assets/admin/plugins/tracking.js/tracking-min.js')        
@@ -118,7 +117,7 @@ class Colorscanner extends Admin_Controller {
 		$data['page_title'] = $this->module_menu;
 
 		// Load admin template
-		$this->load->view('template/admin/admin_template', $this->load->vars($data));
+		$this->load->view('template/admin/template', $this->load->vars($data));
     }
     	
 }

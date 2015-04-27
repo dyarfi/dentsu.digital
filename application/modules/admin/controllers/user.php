@@ -51,7 +51,7 @@ class User extends Admin_Controller {
         }
 
         if (@$temp_rows) $data['rows'] = $temp_rows;
-
+		
 	    // User profiles
         $data['user_profiles'] = $this->UserProfiles->getUserProfile(Acl::user()->id);
 	    
@@ -65,7 +65,7 @@ class User extends Admin_Controller {
         $data['page_title'] = $this->module_menu;
 
         // Load admin template
-        $this->load->view('template/admin/admin_template', $this->load->vars($data));
+        $this->load->view('template/admin/template', $this->load->vars($data));
 
     }	
     
@@ -140,6 +140,12 @@ class User extends Admin_Controller {
 
 	    } 	
 
+		// Load js for administrator login
+		$data['js_files'] = array(base_url('assets/admin/scripts/custom/form-user.js'));
+		
+		// Load JS execution
+		$data['script_bottom'] = "FormUser.init();";
+		
 	    // Set Action
 	    $data['action'] = 'add';
 
@@ -174,7 +180,7 @@ class User extends Admin_Controller {
 	    $data['page_title'] = $this->module_menu;
 
 	    // Admin view template
-	    $this->load->view('template/admin/admin_template', $this->load->vars($data));
+	    $this->load->view('template/admin/template', $this->load->vars($data));
 
     }
 	
@@ -290,6 +296,12 @@ class User extends Admin_Controller {
 
 	    }
 
+		// Load js for administrator login
+		$data['js_files'] = array(base_url('assets/admin/scripts/custom/form-user.js'));
+		
+		// Load JS execution
+		$data['script_bottom'] = "FormUser.init();";
+		
 	    // Set Action
 	    $data['action'] = 'edit';
 
@@ -324,7 +336,7 @@ class User extends Admin_Controller {
 	    $data['page_title'] = $this->module_menu;
 
 	    // Set admin template
-	    $this->load->view('template/admin/admin_template', $this->load->vars($data));
+	    $this->load->view('template/admin/template', $this->load->vars($data));
 
     }
 	
@@ -366,11 +378,11 @@ class User extends Admin_Controller {
 			base_url('assets/admin/plugins/jquery-file-upload/js/jquery.fileupload-ui.js'),
 		);
 		
-		// Load js execution files
-		//$data['script_bottom'] = "load();setimg('".base_url()."assets/admin/img/')";
+		// Load js for administrator login
+		$data['js_files'] = array(base_url('assets/admin/scripts/custom/form-user.js'));
 		
-        // Load form validation library if not auto loaded
-        //$this->load->library('form_validation');
+		// Load JS execution
+		$data['script_bottom'] = "FormUser.init();";
 
         // BASE PATH for upload admin media
         $data['upload_path']	= $this->_config['upload_path'];
@@ -397,7 +409,7 @@ class User extends Admin_Controller {
         $data['page_title'] = $this->module_menu;
 
         // Load admin template
-        $this->load->view('template/admin/admin_template',$this->load->vars($data));
+        $this->load->view('template/admin/template',$this->load->vars($data));
     }
 
     // Ajax Methods for this controller and module

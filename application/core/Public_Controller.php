@@ -65,9 +65,7 @@ class Public_Controller extends MY_Controller {
 		$user_agents['platform']	= $this->agent->platform;
 		$user_agents['browser']		= $this->agent->browser;
 		
-		// Load status code from config
-		$status_code				= $this->load->config('http_code',true);
-		
+		/*
 		if ($public) {
 			// Set ServerLog data
 			$object = array(
@@ -86,12 +84,10 @@ class Public_Controller extends MY_Controller {
 				'status'		=> 1,
 				'added'			=> time()
 			);
-		}
-		//echo '<pre>';
-		//print_r($object);
-		//echo '</pre>';
+		}*/
+		print_r($this->output->get_output('404',1));
 		// Get value from tbl_configurations for maintenance
-		if ($this->ServerLogs->setServerLog($object)) { }
+		//if ($this->ServerLogs->setServerLog($object)) { }
 	}
 	
 }

@@ -23,7 +23,7 @@
 //print_r($record);
 //echo '</pre>';
 
-class home extends Public_Controller {
+class Home extends Public_Controller {
 
 	public function __construct() {
 		parent::__construct();
@@ -102,7 +102,7 @@ class home extends Public_Controller {
 		$data['main'] = 'home';
 		
 		// Load site template
-		$this->load->view('template/public/site_template', $this->load->vars($data));		
+		$this->load->view('template/public/template', $this->load->vars($data));		
 		
 	}
 	

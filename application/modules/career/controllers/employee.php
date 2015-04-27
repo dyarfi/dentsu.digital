@@ -36,8 +36,8 @@ class Employee extends Admin_Controller {
 	    // Load Applicant model
 	    $this->load->model('Applicants');
 
-             // Load Grocery CRUD
-            $this->load->library('grocery_CRUD');
+		// Load Grocery CRUD
+	   $this->load->library('grocery_CRUD');
 
     }
 	
@@ -184,7 +184,7 @@ class Employee extends Admin_Controller {
             // Set Main Template
             $output->main       = 'template/admin/metronix';
             // Set Primary Template
-            $this->load->view('template/admin/admin_template.php', $output);
+            $this->load->view('template/admin/template.php', $output);
         } else {
             $this->load->view('template/admin/popup.php', $output);
         }    

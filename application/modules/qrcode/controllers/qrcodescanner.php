@@ -58,7 +58,7 @@ class Qrcodescanner extends Admin_Controller {
 		$data['page_title'] = $this->module_menu;
 
 		// Load admin template
-		$this->load->view('template/admin/admin_template', $this->load->vars($data));
+		$this->load->view('template/admin/template', $this->load->vars($data));
     }
     	
 }

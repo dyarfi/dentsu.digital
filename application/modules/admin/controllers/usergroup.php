@@ -43,7 +43,7 @@ class UserGroup extends Admin_Controller {
 	$data['page_title'] = $this->module_menu;
 
 	// Load admin template
-	$this->load->view('template/admin/admin_template', $this->load->vars($data));
+	$this->load->view('template/admin/template', $this->load->vars($data));
 
     }
 
@@ -122,7 +122,7 @@ class UserGroup extends Admin_Controller {
 	$data['page_title'] = $this->module_menu;
 
 	// Admin view template
-	$this->load->view('template/admin/admin_template', $this->load->vars($data));
+	$this->load->view('template/admin/template', $this->load->vars($data));
 
     }
 
@@ -218,7 +218,7 @@ class UserGroup extends Admin_Controller {
 	$data['page_title'] = $this->module_menu;
 
 	// Set admin template
-	$this->load->view('template/admin/admin_template', $this->load->vars($data));
+	$this->load->view('template/admin/template', $this->load->vars($data));
 
     }
     public function delete($id){
@@ -266,7 +266,7 @@ class UserGroup extends Admin_Controller {
 	$data['page_title'] = $this->module_menu;
 
 	// Set admin template
-	$this->load->view('template/admin/admin_template', $this->load->vars($data));
+	$this->load->view('template/admin/template', $this->load->vars($data));
     }
 
     // Action for update item status

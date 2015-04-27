@@ -2,7 +2,7 @@
 
 // Developers Name
 $config['developer_name']	= 'Dentsu Digital Division'; 
-$config['developer_url']	= 'http://dentsudigitaldivision.com/';
+$config['developer_url']	= 'http://dentsu.digital/';
 
 // Upload PATH and URL
 $config['upload_path']		= BASEPATH.'uploads/users/';

@@ -42,14 +42,14 @@ class PageMenu extends Admin_Controller {
             $crud->set_subject('Page Menu');                            
             // Set column
             $crud->columns('name','title','position','description','status');	
-	    // Unsets the fields at the add form.
-	    $crud->unset_add_fields('parent_id','sub_level','has_child','user_id','order','count','is_system','added','modified');
-	    // Unsets the fields at the edit form.
-	    $crud->unset_edit_fields('parent_id','sub_level','has_child','user_id','order','count','is_system','added','modified');
-	    // Set custom field display for position
-            $crud->field_type('position','dropdown',array('top'=>'Top','bottom'=>'Bottom'));  
-	    // Sets the required fields of add and edit fields
-	    $crud->required_fields('subject','name','position','status');   
+			// Unsets the fields at the add form.
+			$crud->unset_add_fields('parent_id','sub_level','has_child','user_id','order','count','is_system','added','modified');
+			// Unsets the fields at the edit form.
+			$crud->unset_edit_fields('parent_id','sub_level','has_child','user_id','order','count','is_system','added','modified');
+			// Set custom field display for position
+				$crud->field_type('position','dropdown',array('top'=>'Top','bottom'=>'Bottom'));  
+			// Sets the required fields of add and edit fields
+			$crud->required_fields('subject','name','position','status');   
             // Set upload field
             //$crud->set_field_upload('file_name','uploads/pages');
             $this->load($crud, 'page');
@@ -72,7 +72,7 @@ class PageMenu extends Admin_Controller {
             // Set Main Template
             $output->main       = 'template/admin/metronix';
             // Set Primary Template
-            $this->load->view('template/admin/admin_template.php', $output);
+            $this->load->view('template/admin/template.php', $output);
         } else {
             $this->load->view('template/admin/popup.php', $output);
         }    

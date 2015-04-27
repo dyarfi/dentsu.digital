@@ -23,15 +23,29 @@ class Dashboard extends Admin_Controller {
 			$this->stat_dashboard();
 			return false;
 		}
-            
+           
+		// Load WYSIHTML JS and other JS
+		$data['js_files'] = array(
+			base_url('assets/admin/plugins/flot/jquery.flot.min.js'),
+			base_url('assets/admin/plugins/flot/jquery.flot.resize.min.js'),
+			base_url('assets/admin/plugins/flot/jquery.flot.categories.min.js'),
+			base_url('assets/admin/plugins/jquery-easy-pie-chart/jquery.easy-pie-chart.js'));
+		
+		// Load WYSIHTML CSS and Others
+		$data['css_files'] = array(
+			base_url('assets/admin/plugins/jquery-easy-pie-chart/jquery.easy-pie-chart.css"'));
+		
+		// Load Text Editor execution
+		$data['script_bottom'] = "Index.initCharts(); // Initialize graph";
+		
 	    // Total users count
 	    $data['tusers']			= $this->Users->getCount(1);
 		
 		// Set class name to view
-	    $data['class_name'] = $this->_class_name;
+	    $data['class_name']		= $this->_class_name;
 	    
 	    // Set module with URL request 
-		$data['module_title'] = $this->module;
+		$data['module_title']	= $this->module;
 
 	    // Set page title
 	    $data['title']	= "Dashboard Home";
@@ -43,7 +57,7 @@ class Dashboard extends Admin_Controller {
 		$data['page_title'] = $this->module_menu;
 
 	    //$this->load->view('template/dashboard');
-	    $this->load->view('template/admin/admin_template', $this->load->vars($data));
+	    $this->load->view('template/admin/template', $this->load->vars($data));
 		
 	}
         

@@ -46,7 +46,7 @@ class Language extends Admin_Controller {
 	    $data['page_title'] = $this->module_menu;
 
 	    // Load admin template
-	    $this->load->view('template/admin/admin_template', $this->load->vars($data));
+	    $this->load->view('template/admin/template', $this->load->vars($data));
 				
 	}
 	
@@ -127,7 +127,7 @@ class Language extends Admin_Controller {
 	    $data['page_title'] = $this->module_menu;
 
 	    // Admin view template
-	    $this->load->view('template/admin/admin_template', $this->load->vars($data));
+	    $this->load->view('template/admin/template', $this->load->vars($data));
 		
 	}
 	
@@ -228,7 +228,7 @@ class Language extends Admin_Controller {
 	    $data['page_title'] = $this->module_menu;
 
 	    // Set admin template
-	    $this->load->view('template/admin/admin_template', $this->load->vars($data));
+	    $this->load->view('template/admin/template', $this->load->vars($data));
 
 	}
 	public function delete($id){
@@ -278,7 +278,7 @@ class Language extends Admin_Controller {
 	    // Set admin title page with module menu
 	    $data['page_title'] = $this->module_menu;
 
-	    $this->load->view('template/admin/admin_template', $this->load->vars($data));
+	    $this->load->view('template/admin/template', $this->load->vars($data));
 	}
 	
 	// Action for update item status

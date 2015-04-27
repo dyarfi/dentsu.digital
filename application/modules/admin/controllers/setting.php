@@ -33,6 +33,12 @@ class Setting extends Admin_Controller {
 			exit();
 		}
 		
+		// Load WYSIHTML JS and other JS
+		$data['js_files'] = array(base_url('assets/admin/scripts/custom/form-setting.js'));
+		
+		// Load Text Editor execution
+		$data['script_bottom'] = "FormSetting.init();";
+		
 		// Set data rows
 		$data['rows']	= $this->Settings->getAllSetting();
 		
@@ -61,23 +67,10 @@ class Setting extends Admin_Controller {
 		//$data['script_bottom'] = "load();setimg('".base_url()."assets/admin/img/')";
 		
 		// Load admin template
-		$this->load->view('template/admin/admin_template', $this->load->vars($data));
+		$this->load->view('template/admin/template', $this->load->vars($data));
 	}
         
 	public function edit($id=0) {
-				
-		// Load WYSIHTML js
-		$data['js_files'] = array(
-			base_url('assets/admin/plugins/bootstrap-wysihtml5/wysihtml5-0.3.0.js'),
-			base_url('assets/admin/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.js'),
-			base_url('assets/admin/scripts/custom/components-editors.js'));
-		
-		// Load WYSIHTML CSS 
-		$data['css_files'] = array(
-			base_url('assets/admin/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.css'));
-		
-		// Load Text Editor execution
-		$data['script_bottom'] = "ComponentsEditors.init();";
 		
 		// Check if param is given or not and check from database
 		if (empty($id) || !$this->Settings->getSetting($id)) {
@@ -145,6 +138,19 @@ class Setting extends Admin_Controller {
 			
 		}
 		
+		// Load WYSIHTML JS and other JS
+		$data['js_files'] = array(
+			base_url('assets/admin/plugins/bootstrap-wysihtml5/wysihtml5-0.3.0.js'),
+			base_url('assets/admin/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.js'),
+			base_url('assets/admin/scripts/custom/components-editors.js'));
+		
+		// Load WYSIHTML CSS and Others
+		$data['css_files'] = array(
+			base_url('assets/admin/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.css'));
+		
+		// Load Text Editor execution
+		$data['script_bottom'] = "ComponentsEditors.init();";
+		
 		// Set Action
 		$data['action']     = 'edit';
 				
@@ -173,24 +179,11 @@ class Setting extends Admin_Controller {
 		$data['page_title']		= $this->module_menu;
 		
 		// Set admin template
-		$this->load->view('template/admin/admin_template', $this->load->vars($data));
+		$this->load->view('template/admin/template', $this->load->vars($data));
 		
 	}
         
 	public function add() {
-				
-		// Load WYSIHTML js
-		$data['js_files'] = array(
-			base_url('assets/admin/plugins/bootstrap-wysihtml5/wysihtml5-0.3.0.js'),
-			base_url('assets/admin/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.js'),
-			base_url('assets/admin/scripts/custom/components-editors.js'));
-		
-		// Load WYSIHTML CSS 
-		$data['css_files'] = array(
-			base_url('assets/admin/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.css'));
-		
-		// Load Text Editor execution
-		$data['script_bottom'] = "ComponentsEditors.init();";
 		
 		//Default data setup
 		$fields	= array(
@@ -237,7 +230,20 @@ class Setting extends Admin_Controller {
 			}
 			
 		}	
-			
+		
+		// Load WYSIHTML JS and other JS
+		$data['js_files'] = array(
+			base_url('assets/admin/plugins/bootstrap-wysihtml5/wysihtml5-0.3.0.js'),
+			base_url('assets/admin/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.js'),
+			base_url('assets/admin/scripts/custom/components-editors.js'));
+		
+		// Load WYSIHTML CSS and Others
+		$data['css_files'] = array(
+			base_url('assets/admin/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.css'));
+		
+		// Load Text Editor execution
+		$data['script_bottom'] = "ComponentsEditors.init();";
+		
 		// Set Action
 		$data['action'] = 'add';
 				
@@ -266,7 +272,7 @@ class Setting extends Admin_Controller {
 		$data['page_title'] = $this->module_menu;
 		
 		// Admin view template
-		$this->load->view('template/admin/admin_template', $this->load->vars($data));
+		$this->load->view('template/admin/template', $this->load->vars($data));
 				
 	}
         
@@ -307,7 +313,7 @@ class Setting extends Admin_Controller {
             $data['page_title'] = $this->module_menu;
 
             // Load admin template
-            $this->load->view('template/admin/admin_template',$this->load->vars($data));
+            $this->load->view('template/admin/template',$this->load->vars($data));
     }
     
     public function delete($id){

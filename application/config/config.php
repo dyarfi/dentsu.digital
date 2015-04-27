@@ -358,7 +358,7 @@ $config['proxy_ips'] = '';
 
 // Developers Name and website
 $config['developer_name']	= 'Dentsu Digital Division'; 
-$config['developer_url']	= 'http://dentsudigitaldivision.com/';
+$config['developer_url']	= 'http://dentsu.digital/';
 
 // TRUE for site is open or FALSE for maintenance mode
 $config['site_open']		= TRUE;

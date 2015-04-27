@@ -88,7 +88,7 @@ class Province extends Admin_Controller {
             // Set Main Template
             $output->main       = 'template/admin/metronix';
             // Set Primary Template
-            $this->load->view('template/admin/admin_template.php', $output);
+            $this->load->view('template/admin/template.php', $output);
         } else {
             $this->load->view('template/admin/popup.php', $output);
         }    

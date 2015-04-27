@@ -51,6 +51,13 @@ class ModuleList extends Admin_Controller {
 		$total_rows	= count($listings);				
 		
 		/** Views **/
+		
+		// Load js for administrator login
+		$data['js_files'] = array(base_url('assets/admin/scripts/custom/form-module.js'));
+		
+		// Load JS execution
+		$data['script_bottom'] = "FormModule.init();";
+		
 		$data['user_group']		= $this->user_group;
 		$data['module_permission']	= $this->module_permission;
 		$data['user_group_permission']	= $this->user_group_permission;
@@ -68,7 +75,7 @@ class ModuleList extends Admin_Controller {
 		// Set admin title page with module menu
 		$data['page_title'] = $this->module_menu;
 		
-		$this->load->view('template/admin/admin_template', $this->load->vars($data));
+		$this->load->view('template/admin/template', $this->load->vars($data));
 				
 	}
 	
@@ -138,7 +145,7 @@ class ModuleList extends Admin_Controller {
 		$data['main']		= 'users/usergroups_form';		
 		
 		// Admin view template
-		$this->load->view('template/admin_template', $this->load->vars($data));
+		$this->load->view('template/template', $this->load->vars($data));
 		
 	}
 	
