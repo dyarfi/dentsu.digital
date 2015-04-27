@@ -56,7 +56,7 @@ class ModuleList extends Admin_Controller {
 		$data['js_files'] = array(base_url('assets/admin/scripts/custom/form-module.js'));
 		
 		// Load JS execution
-		$data['script_bottom'] = "FormModule.init();";
+		$data['js_inline'] = "FormModule.init();";
 		
 		$data['user_group']		= $this->user_group;
 		$data['module_permission']	= $this->module_permission;

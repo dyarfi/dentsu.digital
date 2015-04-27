@@ -84,7 +84,7 @@
 <script type="text/javascript">
 jQuery(document).ready(function() {     
 	App.init();
-<?php echo ($script_bottom) ? "\t".$script_bottom."\n" : "";?>
+<?php echo ($js_inline) ? "\t".$js_inline."\n" : "";?>
 });
 </script>
 <!-- END JAVASCRIPTS -->

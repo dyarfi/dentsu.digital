@@ -207,7 +207,7 @@ jQuery(document).ready(function() {
     
     // Custom JS in admin pages
 	FormStatus.init();
-<?php echo ($script_bottom) ? "\t".$script_bottom."\n" : "";?>
+<?php echo ($js_inline) ? "\t".$js_inline."\n" : "";?>
 <?php if ($this->session->flashdata('message')) { ?>
 	bootbox.alert('<h3><?php echo $this->session->flashdata('message');?></h3>');
 <?php } ?>

@@ -144,7 +144,7 @@ class Authenticate extends Admin_Controller {
 		$data['css_files'] = array(base_url('assets/admin/css/pages/login-soft.css'));
 		
 		// Load JS execution
-		$data['script_bottom'] = "Login.init();";
+		$data['js_inline'] = "Login.init();";
 
 		// Set main template
 	    $data['main']	= 'admin/login';

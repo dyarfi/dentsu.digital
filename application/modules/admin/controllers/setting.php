@@ -149,7 +149,7 @@ class Setting extends Admin_Controller {
 			base_url('assets/admin/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.css'));
 		
 		// Load Text Editor execution
-		$data['script_bottom'] = "ComponentsEditors.init();";
+		$data['js_inline'] = "ComponentsEditors.init();";
 		
 		// Set Action
 		$data['action']     = 'edit';
@@ -242,7 +242,7 @@ class Setting extends Admin_Controller {
 			base_url('assets/admin/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.css'));
 		
 		// Load Text Editor execution
-		$data['script_bottom'] = "ComponentsEditors.init();";
+		$data['js_inline'] = "ComponentsEditors.init();";
 		
 		// Set Action
 		$data['action'] = 'add';

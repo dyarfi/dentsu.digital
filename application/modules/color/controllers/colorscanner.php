@@ -53,7 +53,7 @@ class Colorscanner extends Admin_Controller {
         );
 		$img = base_url("assets/admin/img/works/img5.jpg");
         // Load 
-        $data['script_bottom'] = "
+        $data['js_inline'] = "
         
         var canvas = document.querySelector('canvas');
             canvas.addEventListener('track', function(event) {

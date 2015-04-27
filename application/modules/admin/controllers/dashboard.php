@@ -36,7 +36,7 @@ class Dashboard extends Admin_Controller {
 			base_url('assets/admin/plugins/jquery-easy-pie-chart/jquery.easy-pie-chart.css"'));
 		
 		// Load Text Editor execution
-		$data['script_bottom'] = "Index.initCharts(); // Initialize graph";
+		$data['js_inline'] = "Index.initCharts(); // Initialize graph";
 		
 	    // Total users count
 	    $data['tusers']			= $this->Users->getCount(1);

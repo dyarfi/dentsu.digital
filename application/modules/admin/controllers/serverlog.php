@@ -142,7 +142,7 @@ class ServerLog extends Admin_Controller {
 		
 	}
         
-        public function add() {
+	public function add() {
 		
 		//Default data setup
 		$fields	= array(
@@ -221,7 +221,7 @@ class ServerLog extends Admin_Controller {
 				
 	}
         
-        public function view($id=null){
+	public function view($id=null){
 
             // Check if data is found and redirect if false
             if (empty($id) && (int) count($id) == 0) {
@@ -239,8 +239,8 @@ class ServerLog extends Admin_Controller {
             // ServerLog account data
             $data['log']			= $this->ServerLogs->getServerLog($id);		
 
-	     // Set class name to view
-	    $data['class_name'] = $this->_class_name;
+			// Set class name to view
+		   $data['class_name'] = $this->_class_name;
 	    
             // Main template
             $data['main']	= 'logs/log_view';

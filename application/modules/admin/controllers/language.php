@@ -70,30 +70,30 @@ class Language extends Admin_Controller {
 	    // Check if post is requested
 	    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-		// Validation form checks
-		if ($this->form_validation->run() == FALSE) {
+			// Validation form checks
+			if ($this->form_validation->run() == FALSE) {
 
-		    // Set error fields
-		    $error = array();
-		    foreach(array_keys($fields) as $error) {
-			    $errors[$error] = form_error($error);
-		    }
+				// Set error fields
+				$error = array();
+				foreach(array_keys($fields) as $error) {
+					$errors[$error] = form_error($error);
+				}
 
-		    // Set previous post merge to default
-		    $fields = array_merge($fields, $this->input->post());
+				// Set previous post merge to default
+				$fields = array_merge($fields, $this->input->post());
 
-		} else {
+			} else {
 
-		    // Set data to add to database
-		    $this->Languages->setLanguage($this->input->post());
+				// Set data to add to database
+				$this->Languages->setLanguage($this->input->post());
 
-		    // Set message
-		    $this->session->set_flashdata('message','Language created!');
+				// Set message
+				$this->session->set_flashdata('message','Language created!');
 
-		    // Redirect after add
-		    redirect('admin/language');
+				// Redirect after add
+				redirect('admin/language');
 
-		}
+			}
 	    }	
 
 	    // Set Action
@@ -254,14 +254,14 @@ class Language extends Admin_Controller {
 	    // Set Param
 	    $data['param']	= $id;
 
-            // Listing data
+		// Listing data
 	    $data['listing']  = $this->Languages->getLanguage($id);
             
-            // Set default statuses
-            $data['statuses'] = $this->configs['status'];
-                        
-            // Set default enum
-            $data['options'] = $this->configs['enum_default'];
+		// Set default statuses
+		$data['statuses'] = $this->configs['status'];
+
+		// Set default enum
+		$data['options'] = $this->configs['enum_default'];
 	    
 	    // Default system options
 	    $data['is_system']	= $this->configs['is_system'];
@@ -278,25 +278,30 @@ class Language extends Admin_Controller {
 	    // Set admin title page with module menu
 	    $data['page_title'] = $this->module_menu;
 
+		// Load admin template
 	    $this->load->view('template/admin/template', $this->load->vars($data));
 	}
 	
 	// Action for update item status
 	public function change() {	
 	    if ($this->input->post('check') !='') {
-		$rows	= $this->input->post('check');
-		foreach ($rows as $row) {
-		    // Set id for load and change status
-		    $this->Languages->setStatus($row,$this->input->post('select_action'));
+			
+			$rows	= $this->input->post('check');
+			foreach ($rows as $row) {
+				// Set id for load and change status
+				$this->Languages->setStatus($row,$this->input->post('select_action'));
+			}
+			// Set message
+			$this->session->set_flashdata('message','Status changed!');
+			redirect(ADMIN.$this->_class_name.'/index');
+			
+		} else {
+			
+			// Set message
+			$this->session->set_flashdata('message','Data not Available');
+			redirect(ADMIN.$this->_class_name.'/index');		
+			
 		}
-		// Set message
-		$this->session->set_flashdata('message','Status changed!');
-		redirect(ADMIN.$this->_class_name.'/index');
-	    } else {	
-		// Set message
-		$this->session->set_flashdata('message','Data not Available');
-		redirect(ADMIN.$this->_class_name.'/index');			
-	    }
 	}
 
 	public function ajax($action='') {

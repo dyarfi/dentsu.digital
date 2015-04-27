@@ -144,7 +144,7 @@ class User extends Admin_Controller {
 		$data['js_files'] = array(base_url('assets/admin/scripts/custom/form-user.js'));
 		
 		// Load JS execution
-		$data['script_bottom'] = "FormUser.init();";
+		$data['js_inline'] = "FormUser.init();";
 		
 	    // Set Action
 	    $data['action'] = 'add';
@@ -300,7 +300,7 @@ class User extends Admin_Controller {
 		$data['js_files'] = array(base_url('assets/admin/scripts/custom/form-user.js'));
 		
 		// Load JS execution
-		$data['script_bottom'] = "FormUser.init();";
+		$data['js_inline'] = "FormUser.init();";
 		
 	    // Set Action
 	    $data['action'] = 'edit';
@@ -382,7 +382,7 @@ class User extends Admin_Controller {
 		$data['js_files'] = array(base_url('assets/admin/scripts/custom/form-user.js'));
 		
 		// Load JS execution
-		$data['script_bottom'] = "FormUser.init();";
+		$data['js_inline'] = "FormUser.init();";
 
         // BASE PATH for upload admin media
         $data['upload_path']	= $this->_config['upload_path'];
