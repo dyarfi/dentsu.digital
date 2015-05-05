@@ -251,12 +251,12 @@ class Users Extends CI_Model {
 		
 	    // Set User data
 	    $data = array(
-		'username'	=> $object['username'],
-		'email'	=> $object['email'],			
-		'password'	=> sha1($object['username'].$object['password']),	
-		'group_id'	=> @$object['group_id'],			
-		'added'	=> time(),	
-		'status'	=> $object['status']
+			'username'	=> $object['username'],
+			'email'	=> $object['email'],			
+			'password'	=> sha1($object['username'].$object['password']),	
+			'group_id'	=> @$object['group_id'],			
+			'added'	=> time(),	
+			'status'	=> $object['status']
 	    );
 
 	    // Insert User data

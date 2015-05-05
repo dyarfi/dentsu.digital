@@ -55,7 +55,8 @@ class Language extends Admin_Controller {
 	    //Default data setup
 	    $fields = array(
 			    'name'=>'',
-			    'prefix'=>'',
+			    'url'=>'',
+				'prefix'=>'',
 			    'default'=>'',
 			    'is_system'=>'',
 			    'status'=>'');
@@ -64,7 +65,8 @@ class Language extends Admin_Controller {
 
 	    // Set form validation rules
 	    $this->form_validation->set_rules('name', 'Name', 'trim|required|xss_clean');
-	    $this->form_validation->set_rules('prefix', 'Prefix', 'trim|required|xss_clean');
+	    $this->form_validation->set_rules('url', 'Url', 'trim|required|xss_clean');
+		$this->form_validation->set_rules('prefix', 'Prefix', 'trim|required|xss_clean');
 	    $this->form_validation->set_rules('status', 'Status','trim|required|xss_clean');
 
 	    // Check if post is requested
@@ -143,14 +145,16 @@ class Language extends Admin_Controller {
 	    // Default data setup
 	    $fields = array(
 			    'name' => '',
-			    'prefix' => '',
+			    'url' => '',
+				'prefix' => '',
 			    'status' => '');
 
 	    $errors = $fields;
 
 	    // Set form validation rules
 	    $this->form_validation->set_rules('name', 'Name', 'trim|required|xss_clean');
-	    $this->form_validation->set_rules('prefix', 'Prefix', 'trim|required|xss_clean');
+	    $this->form_validation->set_rules('url', 'Url', 'trim|required|xss_clean');
+		$this->form_validation->set_rules('prefix', 'Prefix', 'trim|required|xss_clean');
 	    $this->form_validation->set_rules('status', 'Status','trim|required|xss_clean');
 
 	    // Check if post is requested		
@@ -173,6 +177,7 @@ class Language extends Admin_Controller {
 				$posts = array(
 					'id'=>$id,
 					'name' => $this->input->post('name'),
+					'url' => $this->input->post('url'),
 					'prefix' => $this->input->post('prefix'),
 					'status' => $this->input->post('status')
 				);

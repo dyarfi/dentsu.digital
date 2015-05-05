@@ -171,6 +171,15 @@
                                                     </p>
                                                 </div>
                                             </div>
+											
+											 <div class="form-group">
+                                                <label class="control-label col-md-4">Url:</label>
+                                                <div class="col-md-8">
+                                                    <p class="form-control-static">
+                                                        <?php echo $listing->url;?>
+                                                    </p>
+                                                </div>
+                                            </div>
                                             
                                             <div class="form-group">
                                                 <label class="control-label col-md-4">Prefix:</label>

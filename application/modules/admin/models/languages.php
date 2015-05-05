@@ -24,6 +24,7 @@ class Languages Extends CI_Model {
 			$sql	= 'CREATE TABLE IF NOT EXISTS `'. $this->table .'` ('
 					. '`id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT, '
 					. '`name` VARCHAR(64) NOT NULL, '
+					. '`url` VARCHAR(82) NULL, '
 					. '`prefix` VARCHAR(8) NULL, '
 					. '`default` TINYINT(1) NULL DEFAULT 0, '					
 					. '`is_system` TINYINT(1) NOT NULL DEFAULT 0, '
@@ -43,11 +44,11 @@ class Languages Extends CI_Model {
 
 		if ($insert_data) {
 			$sql	= 'INSERT INTO `'. $this->table .'` '
-					. '(`id`, `name`, `prefix`, `default`, `is_system`, `status`, `added`, `modified`) '
+					. '(`id`, `name`, `url`, `prefix`, `default`, `is_system`, `status`, `added`, `modified`) '
 					. 'VALUES '
-					. '(1, \'Indonesia\', \'id\', 0, 0, 1, '.time().', 0), '
-					. '(2, \'English\', \'en\', 1, 1, 1, '.time().', 0), '
-					. '(3, \'Arab\', \'ar\', 0, 0, 0, '.time().', 0);';
+					. '(1, \'Indonesia\', \'indonesia\', \'id\', 0, 0, 1, '.time().', 0), '
+					. '(2, \'English\', \'english\', \'en\', 1, 1, 1, '.time().', 0), '
+					. '(3, \'Arab\', \'arab\', \'ar\', 0, 0, 0, '.time().', 0);';
 
 			if ($sql) $this->db->query($sql);
 		}
@@ -128,8 +129,9 @@ class Languages Extends CI_Model {
 	public function getActiveCount() {
 	    $data = '';
 	    $options = array('status' => 1);
-	    $Q = $this->db->get_where($this->table,$options,1);
-	    $data = $this->db->count_all_results();
+	    $this->db->where($options);
+	    $Q = $this->db->get($this->table);
+		$data = $Q->num_rows();
 	    $Q->free_result();
 	    return $data;
 	}
@@ -138,6 +140,7 @@ class Languages Extends CI_Model {
 				
 	    $data = array(
 			'name' => $object['name'],
+			'url' => @$object['url'],
 			'prefix' => @$object['prefix'],
 			'added' => time(),
 			'status' => $object['status']
@@ -145,6 +148,7 @@ class Languages Extends CI_Model {
 
 	    $this->db->insert($this->table, $data);
 		
+		return $this->db->insert_id();
 	}
 	
 	public function setStatus($id=null,$status=null) {
@@ -160,6 +164,7 @@ class Languages Extends CI_Model {
 	public function updateLanguage($object=null){
 	    $data = array(
 			'name' => $object['name'],
+			'url' => $object['url'],
 			'prefix' => @$object['prefix'],			
 			'status' => $object['status'],
 			'modified' => time(),

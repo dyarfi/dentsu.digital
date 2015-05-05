@@ -45,8 +45,19 @@
 				    </div>
 				    <span class="help-block"><?php echo $errors['name'];?></span>
 				</div>
-			    </div>
+				</div>
 			</div>
+			<div class="col-md-6">
+			    <div class="form-group">
+				<label class="control-label col-md-3">Url</label>
+				<div class="col-md-9">
+				    <div class="input-group">
+					<input type="text" class="form-control" name="url" placeholder="Url" value="<?=$fields->url;?>" id="url">
+				    </div>
+				    <span class="help-block"><span class="small">URL friendly text</span> <?php echo $errors['url'];?></span>
+				</div>
+				</div>
+			</div>	
 			<div class="col-md-6">
 			    <div class="form-group">
 				<label class="control-label col-md-3">Prefix</label>

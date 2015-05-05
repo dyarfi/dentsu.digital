@@ -95,6 +95,8 @@
 					</th>
 					<th class="sorting" role="columnheader" tabindex="1" aria-controls="sample_2" rowspan="1" colspan="1" style="width: 150px;" aria-label="Email : activate to sort column ascending">Name
 					</th>
+					<th class="sorting" role="columnheader" tabindex="0" aria-controls="sample_2" rowspan="1" colspan="1" style="width: 120px;" aria-label="Url : activate to sort column ascending">Url
+					</th>
 					<th class="sorting" role="columnheader" tabindex="0" aria-controls="sample_2" rowspan="1" colspan="1" style="width: 120px;" aria-label="Username : activate to sort column ascending">Prefix
 					</th>
 					<th class="sorting_disabled" role="columnheader" tabindex="2" aria-controls="sample_2" rowspan="1" colspan="1" style="width: 90px;">Default
@@ -115,7 +117,8 @@
 					    </td>
 					    <td class=" "><?php echo $row->name;?>&nbsp;
 							<img src="<?php echo base_url().'assets/admin/img/flags/'.$row->prefix;?>.png"/></td>
-					    <td class=" "><?php echo $row->prefix;?></td>
+					    <td class=" "><?php echo $row->url;?></td>
+						<td class=" "><?php echo $row->prefix;?></td>
 					    <td class=" ">
 					    	<input type="radio" class="btn-language-default" name="default" value="1" <?php echo $row->default ? 'checked' : '';?>/>
 					    	<?php echo $options[$row->default];?>
