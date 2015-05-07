@@ -67,8 +67,8 @@
 			<label class="control-label col-md-3">Status</label>
 			<div class="col-md-6">
 			    <select class="form-control" name="status">
-				<?php foreach ($statuses as $val) {?>
-					<option value="<?php echo $val;?>" <?php echo ($val == $fields->status) ? 'selected' : '';?>><?php echo $val;?></option>
+				<?php foreach ($statuses as $status => $stat) {?>
+					<option value="<?php echo $status;?>" <?php echo ($status == $fields->status) ? 'selected' : '';?>><?php echo $stat;?></option>
 				<?php } ?>
 			    </select>								
 			    <span class="help-block"><?php echo $errors['status'];?></span>

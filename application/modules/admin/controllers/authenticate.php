@@ -159,12 +159,7 @@ class Authenticate extends Admin_Controller {
 	    $this->Users->setLastLogin(@Acl::user()->id);		
 
 	    //Destroy user session		
-	    $this->session->unset_userdata('module_list');
-	    $this->session->unset_userdata('module_function_list');
-	    $this->session->unset_userdata('user_data');		
-	    $this->session->unset_userdata('user_session');
-
-	    $this->session->sess_destroy();
+	    ACL::session_destroy();
 
 	    //Redirect admin to refresh
 	    redirect(ADMIN.'authenticate/login');

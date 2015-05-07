@@ -69,5 +69,23 @@ class ACL {
 	    return $modules;		
 	}
 	
+	/**
+	* Destroy the current session
+	*
+	* @access	public
+	* @param	NULL (session)
+	* @return	TRUE/FALSE
+	*/	
+	public function session_destroy () {
+		
+		//Destroy user session		
+	    $this->session->unset_userdata('module_list');
+	    $this->session->unset_userdata('module_function_list');
+	    $this->session->unset_userdata('user_data');		
+	    $this->session->unset_userdata('user_session');
+
+	    return ($this->session->sess_destroy());
+	}
+	
 }
 

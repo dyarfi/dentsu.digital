@@ -54,7 +54,8 @@ class Admin_Controller extends CI_Controller {
 		if (!$this->user 
 				&& strpos($this->uri->uri_string(), ADMIN) == 0 
 					&& $this->uri->segment(2) !== 'authenticate') {
-			
+			// Destroy all session
+			ACL::session_destroy();
 			// Redirect to authentication if direct access to all classes
 			redirect(ADMIN.'authenticate/logout');
 		}
