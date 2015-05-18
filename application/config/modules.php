@@ -3,7 +3,7 @@
 //======================== Administrator Access - start config - ========================//
 
 $config['module_list.models']		= array('admin/ModuleLists');
-$config['module_list.module_menu']	= array('modulelist/index'  => 'Modules');
+$config['module_list.module_menu']	= array('modulelist/index'  => 'Module Lists');
 $config['module_list.module_function']	= array(
 											'modulelist/edit'   => 'Edit Module',
 											'modulelist/trash'	=> 'Delete User Permission'

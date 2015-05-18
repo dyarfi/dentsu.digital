@@ -147,9 +147,9 @@ if ( ! function_exists('create_captcha'))
 		// -----------------------------------
 
 		$bg_color		= imagecolorallocate ($im, 255, 255, 255);
-		$border_color	= imagecolorallocate ($im, 153, 102, 102);
-		$text_color		= imagecolorallocate ($im, 204, 153, 153);
-		$grid_color		= imagecolorallocate($im, 255, 200, 200);
+		$border_color	= imagecolorallocate ($im, 255, 255, 255);
+		$text_color		= imagecolorallocate ($im, 53, 126, 189);
+		$grid_color		= imagecolorallocate($im, 226, 236, 232);
 		$shadow_color	= imagecolorallocate($im, 255, 240, 240);
 
 		// -----------------------------------
