@@ -1,4 +1,4 @@
-assets/admin/captcha/image/*
+assets/static/captcha/image/*
 */config/development
 */logs/log-*.php
 */logs/!index.html
