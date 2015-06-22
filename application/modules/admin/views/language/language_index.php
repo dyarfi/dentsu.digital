@@ -115,8 +115,8 @@
 					    <td class=" sorting_1">
 						<input type="checkbox" class="checkboxes" name="check[]" id="check_<?php echo $row->id; ?>" value="<?php echo $row->id; ?>" />
 					    </td>
-					    <td class=" "><?php echo $row->name;?>&nbsp;
-							<img src="<?php echo base_url().'assets/admin/img/flags/'.$row->prefix;?>.png"/></td>
+						<td class=" "><?php echo $row->name;?>&nbsp;
+							<img src="<?php echo base_url().'assets/static/img/flags/'.$row->prefix;?>.png"/></td>
 					    <td class=" "><?php echo $row->url;?></td>
 						<td class=" "><?php echo $row->prefix;?></td>
 					    <td class=" ">
