@@ -93,7 +93,7 @@ class Language extends Admin_Controller {
 				$this->session->set_flashdata('message','Language created!');
 
 				// Redirect after add
-				redirect('admin/language');
+				redirect(ADMIN.'language/index');
 
 			}
 	    }	
@@ -139,7 +139,7 @@ class Language extends Admin_Controller {
 	    if (empty($id) || !$this->Languages->getLanguage($id)) {
 		    $this->session->set_flashdata('message','Item not found!');
 		    // Redirect to index
-		    redirect(base_url().'admin/language');
+		    redirect(ADMIN.'language/index');
 	    }				
 
 	    // Default data setup
@@ -189,7 +189,7 @@ class Language extends Admin_Controller {
 				$this->session->set_flashdata('message','Language updated');
 
 				// Redirect after add
-				redirect('admin/language');
+				redirect(ADMIN.'language/index');
 
 			}
 
@@ -242,7 +242,7 @@ class Language extends Admin_Controller {
 	    // Set flash message to display
 	    $this->session->set_flashdata('message','Language deleted');
 	    // Redirect to index
-	    redirect('admin/language');
+	    redirect(ADMIN.'language/index');
 	}	
 	public function view($id=null){
 
