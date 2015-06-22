@@ -17,18 +17,25 @@ $(function() {
         $('.image-thumbnail').fancybox({
             'transitionIn': 'elastic',
             'transitionOut': 'elastic',
-            'speedIn': 300,
+            'speedIn': 200,
             'speedOut': 200,
-            'overlayShow': false
+            'overlayShow': true
         });
         $('.fancyframe').fancybox({
             'transitionIn': 'elastic',
             'transitionOut': 'elastic',
-            'speedIn': 300,
+            'speedIn': 200,
             'speedOut': 200,
-            'overlayShow': false,
-            'height': 500,
-            padding:0
+            'overlayShow': true,
+			'scrolling' : 'auto',
+			'aspectRatio' : true,
+			'width'	: '100%',
+            'minHeight': '480',
+			'height': '480',
+			'autoCenter' : true,
+			'autoResize' : true,
+			'fitToView' : true,
+            padding:15
         });
     };
 

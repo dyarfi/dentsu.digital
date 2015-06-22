@@ -24,13 +24,13 @@ class Admin_Controller extends CI_Controller {
 		$this->configs			= $this->load->config('admin/admin',true);			
 		
 		// Load Setting Model
-		$this->load->model('admin/Settings');
+		// $this->load->model('admin/Settings');
 		
 		// Load Setting Model
-		$this->load->model('admin/Languages');
+		// $this->load->model('admin/Languages');
 		
 		// Set i18ln for the default language
-		$this->i18ln = $this->Languages->getDefault();
+		// $this->i18ln = $this->Languages->getDefault();
 		
 		// Session destroy
 		//$this->session->sess_destroy();

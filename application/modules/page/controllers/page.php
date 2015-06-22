@@ -50,6 +50,7 @@ class Page extends Admin_Controller {
             // Set column display 
             $crud->display_as('menu_id','Menu');
 			// Changes the default field type
+			$crud->field_type('name', 'hidden');
 			$crud->field_type('added', 'hidden');
 			$crud->field_type('modified', 'hidden');
 			
@@ -62,9 +63,15 @@ class Page extends Admin_Controller {
 			// This callback escapes the default auto column output of the field name at the add form
 			$crud->callback_column('added',array($this,'_callback_time'));
 			$crud->callback_column('modified',array($this,'_callback_time'));  
+			
+			// Set callback before database set
+            $crud->callback_before_insert(array($this,'_callback_url'));
+            $crud->callback_before_update(array($this,'_callback_url'));
+			
 			// Sets the required fields of add and edit fields
 			$crud->required_fields('subject','name','text','status'); 
-            // Set upload field
+            
+			// Set upload field
             // $crud->set_field_upload('file_name','uploads/pages');
 			 
 			$state = $crud->getState();
@@ -82,6 +89,13 @@ class Page extends Admin_Controller {
         } catch (Exception $e) {
             show_error($e->getMessage() . ' --- ' . $e->getTraceAsString());
         }
+    }
+	
+	public function _callback_url($value, $primary_key) {
+        // Set url_title() function to set readable text
+        $value['name'] = url_title($value['name'],'-',true);
+        // Return update database
+		return $value; 
     }
 	
     public function _callback_time ($value, $row) {
