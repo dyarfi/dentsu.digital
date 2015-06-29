@@ -222,7 +222,7 @@ class Questionnaires Extends CI_Model {
         foreach ($_data_text as $question) {            
         
             $data[] = array(
-                strip_tags($question->question_text) .': '.$this->count_user_answer_by_question_id($question->id),
+                '&nbsp;'. $question->name .' - '. strip_tags($question->question_text) .': '.$this->count_user_answer_by_question_id($question->id),
                 $this->count_user_answer_by_question_id($question->id)
                 );
             

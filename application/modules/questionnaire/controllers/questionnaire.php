@@ -36,7 +36,16 @@ class Questionnaire extends Admin_Controller {
             //$crud->callback_column('user_id', array($this, '_callback_admin'));            
             //$crud->field_type('user_id','dropdown',$this->user_model->get_values_users());   
             $crud->field_type('status','dropdown',array('1' => 'Enable', '0' => 'Disable'));    
+            $crud->field_type('user_id','hidden');
+            $crud->field_type('order','hidden');
+            $crud->field_type('count','hidden');
+            $crud->field_type('added','hidden');
+            $crud->field_type('modified','hidden');
 
+
+            // Set upload field
+            $crud->set_field_upload('file_name','uploads/questionnaire');
+            
 //            $crud->columns('name', 'email', 'phphone_number', 'twitter', 'total_image');
 //            $crud->callback_column('total_image', array($this, '_callback_total_image'));
 //            $crud->display_as('name', 'Name');

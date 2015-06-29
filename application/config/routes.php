@@ -79,6 +79,10 @@ $route[$admin.'/colorscanner/(:any)']	= 'color/colorscanner/$1';
 $route[$admin.'/colorcontent/(:any)']	= 'color/colorcontent/$1';
 $route[$admin.'/colorpersonal/(:any)']	= 'color/colorpersonal/$1';
 
+// Participant and Attachment Routes
+$route[$admin.'/participant/(:any)']	= 'participant/$1';
+$route[$admin.'/attachment/(:any)']		= 'participant/attachment/$1';
+
 //$route[$admin.'/(:any)'] = '$1';
 
 /*

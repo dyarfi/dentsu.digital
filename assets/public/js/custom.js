@@ -141,4 +141,32 @@
 //            'poster': base_URL + 'assets/public/media/Gatwick_Airport_1Videvo_1'
 //    });
 	
+        $('.reload_captcha').click(function() {
+            var url	= $(this).attr('rel');		
+            $.ajax({
+                type: "POST",
+                url: url,
+                cache: false,
+                async: false,	
+                success: function(msg){
+                    $('.reload_captcha').empty().html(msg);
+                    // Need random for browser recache
+                    img = $('.reload_captcha').find('img');
+                    src = img.attr('src');
+                    ran	= img.fadeOut(50).fadeIn(50).attr('src', src + '?=' + Math.random());
+                },
+                complete: function(msg) {},
+                error: function(msg) {}
+            });
+            return false;	
+        });
+        
 })(jQuery);
+
+
+
+function popupCenter(url, title, w, h) {
+    var left = (screen.width/2)-(w/2);
+    var top = (screen.height/2)-(h/2);
+    return window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
+} 

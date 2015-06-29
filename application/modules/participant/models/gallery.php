@@ -27,7 +27,7 @@ class Gallery Extends CI_Model {
 	    $sql	= 'CREATE TABLE IF NOT EXISTS `'.$this->table.'` ('
 			    . '`id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, '
 			    . '`part_id` INT(11) UNSIGNED NULL, '
-			    . '`name` VARCHAR(255) NULL, '
+			    . '`url` VARCHAR(255) NULL, '
 			    . '`title` VARCHAR(255) NULL, '
 			    . '`file_name` TEXT NULL, '
 			    . '`count` INT(11) NULL , '	
@@ -96,7 +96,7 @@ class Gallery Extends CI_Model {
 	    // Set Image data
 	    $data = array(	
 		    'part_id'   => $object['part_id'],
-		    'name'	=> $object['name'],
+		    'url'	=> $object['url'],
 		    'title'	=> $object['title'],
 		    'count'	=> $object['count'],
 		    'status'    => $object['status'],

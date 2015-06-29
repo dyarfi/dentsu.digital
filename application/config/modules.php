@@ -278,6 +278,34 @@ $config['modulelist'] = array(
 						'colorpersonal/index/export'	=> 'Export Color Personal',
 						'colorpersonal/index/print'	=> 'Print Color Personal'
 						)
+	),
+    // Participant Module
+    'Participant' => array(// Career Models list
+		'models'    => array('participant/Participants','participant/Attachments'),
+		// Participant module menus
+		'module_menu'		=> array(
+                    'participant/index' => 'Participant',
+                    'attachment/index'	=> 'Attachment'
+        ),
+		// Participant module functions
+		'module_function'	=> array(
+                    // Participant functions
+                    'participant/index/add'	    => 'Add Participant',
+                    'participant/index/view'    => 'View Participant',
+                    'participant/index/edit'    => 'Edit Participant',
+                    'participant/index/delete'  => 'Delete Participant',
+                    'participant/index/change'  => 'Change Participant Status',
+                    'participant/index/export'  => 'Export Participant',
+                    'participant/index/print'   => 'Print Participant',
+                    // Attachment functions
+                    'attachment/index/add'	=> 'Add Attachment',
+                    'attachment/index/view'    => 'View Attachment',
+                    'attachment/index/edit'    => 'Edit Attachment',
+                    'attachment/index/delete'  => 'Delete Attachment',
+                    'attachment/index/change'  => 'Change Attachment Status',
+                    'attachment/index/export'  => 'Export Attachment',
+                    'attachment/index/print'   => 'Print Attachment',
+        )
 	)
 );
 

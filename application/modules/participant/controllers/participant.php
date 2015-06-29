@@ -25,18 +25,18 @@ class Participant extends Admin_Controller {
             // Set CRUD subject
             $crud->set_subject('Participant');                            
             // Set table relation
-            $crud->set_relation('province','tbl_provinces','name');
+            //$crud->set_relation('province','tbl_provinces','name');
             // Set table relation
-            $crud->set_relation('urbandistrict','tbl_urban_districts','name');
+            //$crud->set_relation('urbandistrict','tbl_urban_districts','name');
             // Set table relation
-            $crud->set_relation('suburban','tbl_sub_urbans','name');
+            //$crud->set_relation('suburban','tbl_sub_urbans','name');
 			// Set column display 
-            $crud->display_as('province','Propinsi');
-            $crud->display_as('urbandistrict','Kabupaten');
-            $crud->display_as('suburban','Kecamatan');
-			$crud->display_as('file_name','ID Image File');
+            //$crud->display_as('province','Propinsi');
+            //$crud->display_as('urbandistrict','Kabupaten');
+            //$crud->display_as('suburban','Kecamatan');
+			//$crud->display_as('file_name','ID Image File');
             // Set column
-            $crud->columns('id_number','name','gender','age','email','phone_number','address','province','urbandistrict','suburban','zipcode','oshi_favorite','fb_pic_url','file_name','join_date');			
+            $crud->columns('id_number','name','gender','age','email','phone_number','address','province','urbandistrict','suburban','zipcode','oshi_favorite','fb_pic_url','file_name','join_date');
 			// The fields that user will see on add and edit form
 			//$crud->fields('subject','name','menu_id','synopsis','text','publish_date','unpublish_date','status','added','modified');
             // Set column display 
