@@ -55,6 +55,20 @@ class Sessions Extends CI_Model {
 		
 	}
 	
+	// Get all session stats by session date
+	public function getSessionStats() {
+	    
+	    $sql = 'SELECT count(session_id) total_session, FROM_UNIXTIME(`last_activity`, \'%Y/%m/%d\') last_activity '
+                    .'FROM `'. $this->table .'`'
+                    .'WHERE FROM_UNIXTIME(`last_activity`, \'%Y/%m/%d\') >= \''.date('Y/m/d',strtotime("-5 month", time())).'\' '
+                    .'AND FROM_UNIXTIME(`last_activity`, \'%Y/%m/%d\') <= \''.date('Y/m/d').'\' '
+                    .'GROUP BY FROM_UNIXTIME(`last_activity`, \'%Y/%m/%d\') ORDER BY `last_activity` ASC';
+	    
+	    $query = $this->db->query($sql);
+            
+	    return $query->result_object();
+	}
+	
 	public function truncate(){
 	    // Set data to be emptied
 	    $result = $this->db->query("TRUNCATE TABLE `".$this->table."`");

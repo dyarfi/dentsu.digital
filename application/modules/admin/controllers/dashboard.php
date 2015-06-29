@@ -8,6 +8,9 @@ class Dashboard extends Admin_Controller {
 		//Load user
 		$this->load->model('Users');
 		
+		//Load session
+		$this->load->model('Sessions');
+		
 		//Load user permission
 		$this->load->model('UserGroupPermissions');
 		
@@ -93,10 +96,22 @@ class Dashboard extends Admin_Controller {
                     $temp_login[] = array($login->last_login,$login->total_login);
                 }
                 $result['result']['stats_login'] = $temp_login;
-
+				unset($temp_login);
             }
 			
-            // Return data esult
+			// Session stats
+			$session_stats = $this->Sessions->getSessionStats();
+            if(!empty($session_stats)) {
+                    
+                $temp_session = array();
+                foreach ($session_stats as $session) {
+                    $temp_session[] = array($session->last_activity,$session->total_session);
+                }
+                $result['result']['stats_session'] = $temp_session;
+				unset($temp_session);
+            }
+			
+            // Return data result
             $data['json'] = $result;
 
             // Load data into view		

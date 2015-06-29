@@ -102,6 +102,26 @@
 			</div>	
 		</div>
 		
+		<div class="row">
+			<div class="col-md-12 col-sm-12">
+				<div class="portlet box red">
+					<div class="portlet-title">
+					<div class="caption">
+						<i class="fa fa-user"></i>Session Activities
+					</div>
+					</div>
+					<div class="portlet-body">
+					<div id="session_statistics_loading">
+						<img src="<?php echo base_url();?>assets/admin/img/loading.gif" alt="loading"/>
+					</div>
+					<div id="session_statistics_content" class="display-none">
+						<div id="session_statistics" class="chart"></div>
+					</div>
+					</div>
+				</div>
+			</div>	
+		</div>
+		
 		<div class="row hidden">
 			<div class="col-md-12 col-sm-12">
 				<div class="portlet box blue">

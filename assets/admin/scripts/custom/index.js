@@ -338,21 +338,7 @@ var Index = function () {
 						dataType:"json",
 						sortData:true,
 						success: function(data) {
-						  var participants = 
-								data.result.stats_join
-								/* sample data
-								['01/2013', 500],
-								['02/2013', 1500],
-								['03/2013', 2600],
-								['04/2013', 1200],
-								['05/2013', 560],
-								['06/2013', 2000],
-								['07/2013', 2350],
-								['08/2013', 1500],
-								['09/2013', 4700],
-								['10/2013', 1300],
-								*/
-							;
+						  var participants = data.result.stats_join;
 
 							if ($('#join_statistics').size() != 0) {
 
@@ -426,6 +412,102 @@ var Index = function () {
 												y = item.datapoint[1].toFixed(2);
 
 											showChartTooltip(item.pageX, item.pageY, item.datapoint[0], item.datapoint[1] + ' Join');
+										}
+									} else {
+										$("#tooltip").remove();
+										previousPoint = null;
+									}
+								});                      
+							}
+						}
+				});
+			}
+			
+			// Check if statistic dom is existed
+			if($('#session_statistics').size() != 0) {
+				// Modified for ajax request for participants stats
+				$.ajax({
+						// have to use synchronous here, else the function 
+						// will return before the data is fetched
+						async: false,
+						url: 'index',
+						dataType:"json",
+						sortData:true,
+						success: function(data) {
+						  var sessions = data.result.stats_session;
+
+							if ($('#session_statistics').size() != 0) {
+
+								$('#session_statistics_loading').hide();
+								$('#session_statistics_content').show();
+
+								var plot_statistics = $.plot($("#session_statistics"), 
+									[{
+										data:sessions,
+										lines: {
+											fill: 0.6,
+											lineWidth: 0
+										},
+										color: ['#ff9900']
+									},
+									{
+										data: sessions,
+										points: {
+											show: true,
+											fill: true,
+											radius: 5,
+											fillColor: "#ff9933",
+											lineWidth: 3
+										},
+										color: '#fff',
+										shadowSize: 0
+									}],
+									{
+									xaxis: {
+										tickLength: 0,
+										tickDecimals: 0,                        
+										mode: "categories",
+										min: 0,
+										font: {
+											lineHeight: 14,
+											style: "normal",
+											variant: "small-caps",
+											color: "#6F7B8A"
+										}
+									},
+									yaxis: {
+										ticks: 5,
+										tickDecimals: 0,
+										tickColor: "#eee",
+										font: {
+											lineHeight: 14,
+											style: "normal",
+											variant: "small-caps",
+											color: "#6F7B8A"
+										}
+									},
+									grid: {
+										hoverable: true,
+										clickable: true,
+										tickColor: "#eee",
+										borderColor: "#eee",
+										borderWidth: 1
+									}
+								});
+
+								var previousPoint = null;
+								$("#session_statistics").bind("plothover", function (event, pos, item) {
+									$("#x").text(pos.x.toFixed(2));
+									$("#y").text(pos.y.toFixed(2));
+									if (item) {
+										if (previousPoint != item.dataIndex) {
+											previousPoint = item.dataIndex;
+
+											$("#tooltip").remove();
+											var x = item.datapoint[0].toFixed(2),
+												y = item.datapoint[1].toFixed(2);
+
+											showChartTooltip(item.pageX, item.pageY, item.datapoint[0], item.datapoint[1] + ' Session');
 										}
 									} else {
 										$("#tooltip").remove();
