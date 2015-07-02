@@ -13,6 +13,7 @@ class Public_Controller extends MY_Controller {
 		// Load site models
 		$this->load->model('admin/Configurations');
 		$this->load->model('admin/ServerLogs');
+        $this->load->model('participant/Participants');
 		
 		// Set site status default
 		self::getSiteStatus();

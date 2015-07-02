@@ -1,8 +1,8 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-/*!
+/**
 * HybridAuth
 * http://hybridauth.sourceforge.net | http://github.com/hybridauth/hybridauth
-* (c) 2009-2012, HybridAuth authors | http://hybridauth.sourceforge.net/licenses.html
+* (c) 2009-2015, HybridAuth authors | http://hybridauth.sourceforge.net/licenses.html
 */
 
 // ----------------------------------------------------------------------------------------
@@ -22,8 +22,8 @@ $config =
 
 			"Yahoo" => array (
 				"enabled" => true,
-				"keys"    => array ( "id" => "", "secret" => "" ),
-			),
+                "keys"    => array ( "key" => "dj0yJmk9YUhEaGhqaUhYRTltJmQ9WVdrOWF6VTVZM1pFTXpZbWNHbzlNQS0tJnM9Y29uc3VtZXJzZWNyZXQmeD1mNw--", "secret" => "9b00bd2e50ee2797d881c9b6d0f33a858328d2a6" ),
+            ),
 
 			"AOL"  => array (
 				"enabled" => true
@@ -57,7 +57,7 @@ $config =
 
 			"LinkedIn" => array (
 				"enabled" => true,
-				"keys"    => array ( "key" => "", "secret" => "" )
+				"keys"    => array ( "key" => "75blw6tuiaom3x", "secret" => "rJMdMWsbpe2ixl9d" )
 			),
 
 			"Foursquare" => array (

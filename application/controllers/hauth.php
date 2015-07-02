@@ -35,7 +35,7 @@ class HAuth extends Public_Controller {
 					log_message('info', 'controllers.HAuth.login: user profile:'.PHP_EOL.print_r($user_profile, TRUE));
 
 					$data['user_profile'] = $user_profile;
-
+                    
                     if ($user_profile) {
                             
                             $participant = $this->Participants->getParticipantByIdentity($user_profile->identifier,$provider);
@@ -54,7 +54,7 @@ class HAuth extends Public_Controller {
                                 $object['phone_number'] = $user_profile->phone;
                                 $object['website'] = $user_profile->webSiteURL;
                                 $object['about'] = $user_profile->description;
-                                
+                                $object['status'] = 0;                                
                                 
                                 $participant_id = $this->Participants->setParticipant($object);
                                 
@@ -202,6 +202,8 @@ class HAuth extends Public_Controller {
 				case 4 : $error = 'Missing provider application credentials.'; break;
 				case 5 : log_message('debug', 'controllers.HAuth.login: Authentification failed. The user has canceled the authentication or the provider refused the connection.');
 				         //redirect();
+                         //print_r($e);
+                         //exit;
 				         if (isset($service))
 				         {
 				         	log_message('debug', 'controllers.HAuth.login: logging out from service.');
