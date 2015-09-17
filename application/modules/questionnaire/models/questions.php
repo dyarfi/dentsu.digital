@@ -104,7 +104,7 @@ class Questions Extends CI_Model {
 			'count'			=> $object['count'],
 			'status'		=> $object['status'],
 			'added'			=> time(),	
-			'modified'		=> $object['status']
+			'modified'		=> $object['modified']
 		);
 		
 		// Insert Question data

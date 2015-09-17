@@ -19,6 +19,9 @@ class Admin_Controller extends CI_Controller {
 		
 		// Load Session library
 		$this->load->library('session');
+        
+        // Load Helper Library
+        $this->load->helper('csv');
 		
 		// Load Admin config
 		$this->configs			= $this->load->config('admin/admin',true);			
@@ -34,7 +37,7 @@ class Admin_Controller extends CI_Controller {
 		
 		// Session destroy
 		//$this->session->sess_destroy();
-
+		
 		// Set user data lists from login session		
 		$this->user				= Acl::user();
 
@@ -172,5 +175,27 @@ class Admin_Controller extends CI_Controller {
 		return $menu_name;
 		
 	}
+    
+    /**
+	* Export data from database tables to csv 
+	*
+	* @access	public
+	* @param	array
+	* @return	string
+	*/
+    public function export_csv ($table='', $name='', $force='') {
+        
+        $filename = "export-".$this->_class_name .'-'. date("Y-m-d_H:i:s") . ".csv";
+        
+        $array = array(
+            array('Last Name', 'First Name', 'Gender'),
+            array('Furtado', 'Nelly', 'female'),
+            array('Twain', 'Shania', 'female'),
+            array('Farmer', 'Mylene', 'female')
+        );
+        
+        //$asdf = array('asdf','dsfg');
+        print_r(array_to_csv($array,$filename));
+    }
 	
 }

@@ -96,7 +96,7 @@ class Questionnairecompleted Extends CI_Model {
 			'date_completed'	=> $object['date_completed'],
 			'status'		=> $object['status'],
 			'added'			=> time(),	
-			'modified'		=> $object['status']
+			'modified'		=> $object['modified']
 		);
 		
 		// Insert Questionnairecompleted data

@@ -1004,6 +1004,15 @@ var App = function () {
         }
     }
 
+    var handleNavigateURL = function() {
+
+        if (App.getURLParameter('active')) {
+            console.log($('.active').parents('li').find('a').click());
+            //console.log(App.getURLParameter('active'));
+        }
+
+    }
+
     //* END:CORE HANDLERS *//
 
     return {
@@ -1046,6 +1055,8 @@ var App = function () {
 			
 			//custom handling
 			handleInitDashboard();
+            handleNavigateURL(); // handle get Parameter url Value
+            
         },
 
         //main function to initiate core javascript after ajax complete

@@ -78,7 +78,7 @@ class Home extends Public_Controller {
 		
 					
 		// Set site title page with module menu
-		$data['page_title'] = $this->config->item('developer_name') .' | '. $this->Settings->getByParameter('title_default')->value;
+		$data['page_title'] = $this->config->item('site_name') .' | '. $this->Settings->getByParameter('title_default')->value;
 		
 		// Set facebook link data
 		$data['vacancies']	= $this->Careers->getAllCareer();

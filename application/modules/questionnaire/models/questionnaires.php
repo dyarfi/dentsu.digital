@@ -28,6 +28,7 @@ class Questionnaires Extends CI_Model {
 				. '`id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, '
 				. '`name` VARCHAR(255) NULL, '
 				. '`questionnaire_text` TEXT NULL, '
+                . '`help_text` TEXT NULL, '
 				. '`file_name` VARCHAR(512) NULL, '
 				. '`order` TINYINT(3) NULL, '
 				. '`user_id` INT(11) NULL , '
@@ -96,13 +97,14 @@ class Questionnaires Extends CI_Model {
 		$data = array(			
 			'name'				 => $object['name'],
 			'questionnaire_text' => $object['questionnaire_text'],
-			'file_name'		=> $object['file_name'],
+            'help_text'     => $object['help_text'],
+            'file_name'		=> $object['file_name'],
 			'order'			=> $object['order'],
 			'user_id'		=> $object['user_id'],
 			'count'			=> $object['count'],
 			'status'		=> $object['status'],
 			'added'			=> time(),	
-			'modified'		=> $object['status']
+			'modified'		=> $object['modified']
 		);
 		
 		// Insert Questionnaire data

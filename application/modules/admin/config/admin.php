@@ -8,10 +8,10 @@ $config['developer_url']	= 'http://dentsu.digital/';
 $config['upload_path']		= BASEPATH.'uploads/users/';
 $config['upload_url']		= 'uploads/users/';
 
-$config['gender']		= array(1=>'Male',0=>'Female');
-$config['status']		= array(1=>'Active',0=>'Inactive');
-$config['is_system']		= array(1=>'Yes',0=>'No');
-$config['enum_default']		= array(1=>'Yes',0=>'No');
+$config['gender']		= array(''=>'',1=>'Male',2=>'Female');
+$config['status']		= array(''=>'',1=>'Active',2=>'Inactive');
+$config['is_system']		= array(''=>'',1=>'Yes',2=>'No');
+$config['enum_default']		= array(''=>'',1=>'Yes',2=>'No');
 
 $config['default_page']		= ADMIN . 'user/view/{admin_id}';
 

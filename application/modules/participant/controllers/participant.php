@@ -36,7 +36,7 @@ class Participant extends Admin_Controller {
             //$crud->display_as('suburban','Kecamatan');
 			//$crud->display_as('file_name','ID Image File');
             // Set column
-            $crud->columns('id_number','name','gender','age','email','phone_number','address','province','urbandistrict','suburban','zipcode','oshi_favorite','fb_pic_url','file_name','join_date');
+            $crud->columns('id_number','name','photo_url','gender','age','email','phone_number','address','province','urbandistrict','suburban','zipcode','oshi_favorite','fb_pic_url','file_name','join_date');
 			// The fields that user will see on add and edit form
 			//$crud->fields('subject','name','menu_id','synopsis','text','publish_date','unpublish_date','status','added','modified');
             // Set column display 
@@ -55,6 +55,7 @@ class Participant extends Admin_Controller {
 			$crud->callback_column('added',array($this,'_callback_time'));
 			$crud->callback_column('modified',array($this,'_callback_time'));  
 			$crud->callback_column('fb_pic_url',array($this,'callback_pic'));
+            $crud->callback_column('photo_url',array($this,'_callback_pic'));
 			$crud->unset_columns('completed');
 			// Sets the required fields of add and edit fields
 			// $crud->required_fields('subject','name','text','status'); 
@@ -105,11 +106,8 @@ class Participant extends Admin_Controller {
 		return ($row->file_name) ? base_url('uploads/users/'.$row->file_name) : '-';
 	}
 	
-    public function callback_pic($value = '', $primary_key = null){
-	//print_r($primary_key->fb_id);
-	//exit;
-        return '<a href="'.$value.'" class="image-thumbnail"><img src="'.$value.'"></a>';
-	//. '<img src="//graph.facebook.com/'.$primary_key->fb_id.'/picture?type=normal"></a>';
+    public function _callback_pic($value = '', $primary_key = null){
+        return ($value) ? '<a href="'.$value.'" class="image-thumbnail"><img src="'.$value.'" height="80px"></a>' :'';
     }
     
     private function load($crud, $nav) {

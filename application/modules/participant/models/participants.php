@@ -43,7 +43,8 @@ class Participants Extends CI_Model {
                 . '`about` TEXT NULL, '
                 . '`address` VARCHAR(512) NULL, '
                 . '`region` VARCHAR(64) NULL, '
-				. '`phone_number` VARCHAR(255) NULL, '
+				. '`phone_number` VARCHAR(32) NULL, '
+                . '`phone_home` VARCHAR(32) NULL, '
                 . '`id_number` VARCHAR(32) NULL, '
 				. '`file_name` VARCHAR(512) NULL, '
                 . '`verify` VARCHAR(8) NULL, '
@@ -53,6 +54,7 @@ class Participants Extends CI_Model {
                 . '`session_id` VARCHAR(40) NOT NULL, '
 				. '`status` TINYINT(1) NOT NULL DEFAULT 0, '
 				. '`join_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, '
+                . '`modified` INT(11) NULL, '
 				. 'INDEX (`name`) '
 				. ') ENGINE=MYISAM DEFAULT CHARSET=utf8;';
 

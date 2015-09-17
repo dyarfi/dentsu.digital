@@ -25,8 +25,8 @@ class HAuth extends Public_Controller {
 			{
 				log_message('debug', "controllers.HAuth.login: service $provider enabled, trying to authenticate.");
 				$service = $this->hybridauthlib->authenticate($provider);
-
-				if ($service->isUserConnected())
+                
+                if ($service->isUserConnected())
 				{
 					log_message('debug', 'controller.HAuth.login: user authenticated.');
 
@@ -54,6 +54,7 @@ class HAuth extends Public_Controller {
                                 $object['phone_number'] = $user_profile->phone;
                                 $object['website'] = $user_profile->webSiteURL;
                                 $object['about'] = $user_profile->description;
+                                $object['photo_url'] = $user_profile->photoURL;
                                 $object['status'] = 0;                                
                                 
                                 $participant_id = $this->Participants->setParticipant($object);

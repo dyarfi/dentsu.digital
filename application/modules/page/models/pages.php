@@ -31,6 +31,7 @@ class Pages Extends CI_Model {
 				. '`subject` VARCHAR(255) NULL, '
 				. '`synopsis` TEXT NULL, '
 				. '`text` TEXT NULL, '
+                . '`url` VARCHAR(255) NULL , '	   
 				. '`attribute` TEXT NULL, '
 				. '`publish_date` DATE NULL, '
 				. '`unpublish_date` DATE NULL, '
@@ -110,6 +111,20 @@ class Pages Extends CI_Model {
 		$Q->free_result();
 		return $data;
 	}	
+
+    public function getPageByUrl($url = null){
+		if(!empty($url)){
+			$data = array();
+			$options = array('url' => $url,'status'=>'publish');
+			$Q = $this->db->get_where($this->table,$options,1);
+			if ($Q->num_rows() > 0){
+				foreach ($Q->result_object() as $row)
+				$data = $row;
+			}
+			$Q->free_result();
+			return $data;
+		}
+	}
 	
 	public function setPage($object=null){
 		

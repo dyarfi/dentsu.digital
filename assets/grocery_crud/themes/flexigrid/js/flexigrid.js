@@ -19,6 +19,7 @@ $(function() {
             'transitionOut': 'elastic',
             'speedIn': 200,
             'speedOut': 200,
+            'type':'image',
             'overlayShow': true
         });
         $('.fancyframe').fancybox({

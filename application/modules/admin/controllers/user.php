@@ -20,7 +20,7 @@ class User extends Admin_Controller {
 
         // Load config files
         $this->_config = $this->load->config('admin',true);
-
+        
     }		
 
     public function index() {		

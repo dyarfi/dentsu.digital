@@ -24,20 +24,21 @@ class Users Extends CI_Model {
 		    $insert_data	= TRUE;
 
 		    $sql            = 'CREATE TABLE IF NOT EXISTS `'.$this->table.'` ('
-				    . '`id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,'
-				    . '`email` VARCHAR(255) NOT NULL, '
-				    . '`password` VARCHAR(100) NOT NULL, '
-				    . '`username` VARCHAR(160) NOT NULL, '
-				    . '`group_id` INT(11) UNSIGNED NOT NULL, '
-				    . '`is_system` TINYINT(3) NOT NULL DEFAULT 0, '
-				    . '`last_login` INT(11) UNSIGNED NOT NULL, '
-				    . '`logged_in` INT(1) UNSIGNED NOT NULL,'
-				    . '`session_id` VARCHAR(40) NOT NULL, '
-				    . '`status` INT(1) UNSIGNED NOT NULL,'
-				    . '`added` INT(11) UNSIGNED NOT NULL, '
-				    . '`modified` INT(11) UNSIGNED NOT NULL, '
-				    . 'INDEX (`email`, `group_id`) '
-				    . ') ENGINE=MYISAM DEFAULT CHARSET=utf8;';
+                            . '`id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,'
+                            . '`email` VARCHAR(255) NOT NULL, '
+                            . '`password` VARCHAR(100) NOT NULL, '
+                            . '`username` VARCHAR(160) NOT NULL, '
+                            . '`group_id` INT(11) UNSIGNED NOT NULL, '
+                            . '`is_system` TINYINT(3) NOT NULL DEFAULT 0, '
+                            . '`last_login` INT(11) UNSIGNED NOT NULL, '
+                            . '`logged_in` INT(1) UNSIGNED NOT NULL,'
+                            . '`session_id` VARCHAR(40) NOT NULL, '
+                            . '`verify` VARCHAR(8) NULL, '
+                            . '`status` INT(1) UNSIGNED NOT NULL,'
+                            . '`added` INT(11) UNSIGNED NOT NULL, '
+                            . '`modified` INT(11) UNSIGNED NOT NULL, '
+                            . 'INDEX (`email`, `group_id`) '
+                            . ') ENGINE=MYISAM DEFAULT CHARSET=utf8;';
 		    
 		    $this->db->query($sql);
 		}
@@ -47,12 +48,12 @@ class Users Extends CI_Model {
 		
 		if ($insert_data) {
 			$sql	= 'INSERT INTO `'.$this->table.'` '
-				. '(`id`,`email`,`password`,`username`,`group_id`,`is_system`,`last_login`,`logged_in`,`session_id`,`status`,`added`,`modified`) '
+				. '(`id`,`email`,`password`,`username`,`group_id`,`is_system`,`last_login`,`logged_in`,`session_id`,`verify`,`status`,`added`,`modified`) '
 				. 'VALUES '
-				. '(NULL, \'admin@admin.com\', \'dd94709528bb1c83d08f3088d4043f4742891f4f\', \'admin\', 1, 1, 0, '.time().', NULL, 1, '.time().', 0), '
-				. '(NULL, \'administrator\', \'12506e739378348ec662bb015bfd2288362dcc1c\', \'Administrator\', 2, 1, 0, '.time().', NULL, 1, '.time().', 0), '
-				. '(NULL, \'user@testing.com\', \'12506e739378348ec662bb015bfd2288362dcc1c\', \'User\', 99, 0, 0, '.time().', NULL, 1, '.time().', 0), '
-				. '(NULL, \'employee@employee.com\', \'12506e739378348ec662bb015bfd2288362dcc1c\', \'Employee Staff\', 100, 0, 0, '.time().', NULL, 1, '.time().', 0);';
+				. '(NULL, \'admin@admin.com\', \'a03c997e5e5643a11d77287d82856b9f83bd8fe4\', \'admin\', 1, 1, 0, '.time().', NULL,\'Q12C\', 1, '.time().', 0), '
+				. '(NULL, \'administrator\', \'12506e739378348ec662bb015bfd2288362dcc1c\', \'Administrator\', 2, 1, 0, '.time().', NULL,\'Q12C\', 1, '.time().', 0), '
+				. '(NULL, \'user@testing.com\', \'12506e739378348ec662bb015bfd2288362dcc1c\', \'User\', 99, 0, 0, '.time().', NULL,\'Q12C\', 1, '.time().', 0), '
+				. '(NULL, \'employee@employee.com\', \'12506e739378348ec662bb015bfd2288362dcc1c\', \'Employee Staff\', 100, 0, 0, '.time().', NULL,\'Q12C\', 1, '.time().', 0);';
 
 			if ($sql) $this->db->query($sql);
 		}
@@ -133,61 +134,61 @@ class Users Extends CI_Model {
 	// Get user's Email from posts 
 	public function getUserEmail($email=null){
 	    if(!empty($email)){
-		$data = array();
+            $data = array();
 
-		// Option and query result
-		$options = array('email' => $email);			
-		$Q = $this->db->get_where($this->table,$options,1);
+            // Option and query result
+            $options = array('email' => $email);			
+            $Q = $this->db->get_where($this->table,$options,1);
 
-		// Check result
-		if($Q->num_rows() > 0) {
-			// Return true if not exists
-			return true;
-		} else {
-			// Return false if exists
-			return false;
-		}		 
+            // Check result
+            if($Q->num_rows() > 0) {
+                // Return true if not exists
+                return true;
+            } else {
+                // Return false if exists
+                return false;
+            }		 
 	    }
 	}
 	
 	// Get user's Password from hashed password 
 	public function getUserPassword($password=null){
 	    if(!empty($password)){
-		$data = array();
+            $data = array();
 
-		// Option and query result
-		$options = array('password' => $password);			
-		$Q = $this->db->get_where($this->table,$options,1);
+            // Option and query result
+            $options = array('password' => $password);			
+            $Q = $this->db->get_where($this->table,$options,1);
 
-		// Check result
-		if($Q->num_rows() > 0) {
-			// Return true if not exists
-			return true;
-		} else {
-			// Return false if exists
-			return false;
-		}		 
+            // Check result
+            if($Q->num_rows() > 0) {
+                // Return true if not exists
+                return true;
+            } else {
+                // Return false if exists
+                return false;
+            }		 
 	    }
 	}
         
 	// Get loggedin count for all user
 	public function getLoginCount() {
-            $data = array();
-	    $options = array('status' => $status);
-	    $this->db->where($options,1);
-	    $this->db->from($this->table);
-	    $data = $this->db->count_all_results();
-	    return $data;            
-        }
+        $data = array();
+        $options = array('status' => $status);
+        $this->db->where($options,1);
+        $this->db->from($this->table);
+        $data = $this->db->count_all_results();
+        return $data;            
+    }
         
 	// Get all users Login stats by login date
 	public function getLoginStats() {
 	    
 	    $sql = 'SELECT count(id) total_login, FROM_UNIXTIME(`last_login`, \'%Y/%m/%d\') last_login '
-                    .'FROM `'. $this->table .'`'
-                    .'WHERE FROM_UNIXTIME(`last_login`, \'%Y/%m/%d\') >= \''.date('Y/m/d',strtotime("-5 month", time())).'\' '
-                    .'AND FROM_UNIXTIME(`last_login`, \'%Y/%m/%d\') <= \''.date('Y/m/d').'\' '
-                    .'GROUP BY FROM_UNIXTIME(`last_login`, \'%Y/%m/%d\') ORDER BY `last_login` ASC';
+                .'FROM `'. $this->table .'`'
+                .'WHERE FROM_UNIXTIME(`last_login`, \'%Y/%m/%d\') >= \''.date('Y/m/d',strtotime("-5 month", time())).'\' '
+                .'AND FROM_UNIXTIME(`last_login`, \'%Y/%m/%d\') <= \''.date('Y/m/d').'\' '
+                .'GROUP BY FROM_UNIXTIME(`last_login`, \'%Y/%m/%d\') ORDER BY `last_login` ASC';
 	    
 	    $query = $this->db->query($sql);
             
@@ -196,27 +197,34 @@ class Users Extends CI_Model {
         
 	// Authenticate function for user login
 	public function login($object=null){		
+        // Check parameters
 	    if(!empty($object)){
-		$data = array();
-		$options = array(
-				'username' => $object['username'], 
-				'password' => sha1($object['username'].$object['password']));
+            $data = array();
 
-		$Q = $this->db->get_where($this->table,$options,1);
-		if ($Q->num_rows() > 0){				
-		    foreach ($Q->result_object() as $row) {
-			if (intval($row->status) === 1) {
-			    // Update login state to true
-			    $this->setLoggedIn($row->id);
-			    $data = $row;
-			} else {
-			    $data = 'disabled';
-			}
-		    }
-		} 			 
+            // Find username or email from input
+            $this->db->where('username', $object['username'])
+            ->or_where('email', $object['username']); 
 
-		$Q->free_result();
-		return $data;
+            // Query the table
+            $Q = $this->db->get($this->table,1);               
+
+            if ($Q->num_rows() > 0){				
+                // Query login
+                $result = $Q->row_object();
+                $salted = hash('sha1',$object['password'].$result->verify);
+                // Check if salted password is match
+                if (intval($Q->row()->status) === 1 && intval($Q->row()->password === $salted) === 1) {
+                    // Update login state to true
+                    $this->setLoggedIn($Q->row()->id);
+                    $data = $Q->row();
+                } else {
+                    $data = 'disabled';
+                }
+            } 			 
+            
+            // Free result
+            $Q->free_result();
+            return $data;
 	    }
 	}
 	
@@ -235,16 +243,14 @@ class Users Extends CI_Model {
 	}
 	
 	public function setPassword($user=null,$changed=''){
-		
+		// Check if password is changed
 	    $password = ($changed) ? $changed : random_string('alnum', 8);
-
-	    $data = array('password' => sha1($user->username.$password));
-
+        // Set password data
+	    $data = array('password' => sha1($user->verify.$password));
+        // Update database
 	    $this->db->where('id', $user->id);
 	    $this->db->update($this->table, $data); 
-
-	    return $password;
-		
+	    return $password;		
 	}	
 	
 	public function setUser($object=null){
@@ -253,7 +259,7 @@ class Users Extends CI_Model {
 	    $data = array(
 			'username'	=> $object['username'],
 			'email'	=> $object['email'],			
-			'password'	=> sha1($object['username'].$object['password']),	
+			'password'	=> sha1($object['verify'].$object['password']),	
 			'group_id'	=> @$object['group_id'],			
 			'added'	=> time(),	
 			'status'	=> $object['status']
@@ -300,7 +306,7 @@ class Users Extends CI_Model {
 	
 	public function setStatus($id=null,$status=null) {
             
-            // Get user id
+        // Get user id
 	    $this->db->where('id', $id);
 	    
 	    // Return result
@@ -312,11 +318,11 @@ class Users Extends CI_Model {
 	    
 	    // Set User data
 	    $data = array(
-		'username'  => $object['username'],
-		'email'	    => $object['email'],			
-		'group_id'  => @$object['group_id'],			
-		'modified'  => time(),	
-		'status'    => $object['status']
+            'username'  => $object['username'],
+            'email'	    => $object['email'],			
+            'group_id'  => @$object['group_id'],			
+            'modified'  => time(),	
+            'status'    => $object['status']
 	    );
 
 	    // Update User data             

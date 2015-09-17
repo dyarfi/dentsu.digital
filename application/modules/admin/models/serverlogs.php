@@ -31,9 +31,10 @@ class ServerLogs Extends CI_Model {
 				    . '`status_code` VARCHAR(160) NULL, '
 				    . '`bytes_served` INT(11) NULL, '
 				    . '`total_time` VARCHAR(160) NULL, '
-					. '`ip_address` INT(11) NULL DEFAULT 0, '
-					. '`referrer` VARCHAR(255) NULL, '
-				    . '`user_agent` VARCHAR(255) NULL, '
+					. '`ip_address` VARCHAR(45) NULL, '
+					. '`referrer` VARCHAR(512) NULL, '
+                    . '`geolocation` VARCHAR(512) NULL, '
+				    . '`user_agent` VARCHAR(512) NULL, '
 					. '`is_mobile` INT(1) NULL, '
 				    . '`status` INT(1) UNSIGNED NOT NULL,'
 				    . '`added` INT(11) UNSIGNED NOT NULL, '
@@ -79,6 +80,19 @@ class ServerLogs Extends CI_Model {
 			return $data;
 		}
 	}
+    
+    public function getServerLogBySessionId($session_id = null){
+		if(!empty($session_id)){
+			$data = array();
+			$options = array('session_id' => $session_id);
+			$Q = $this->db->get_where($this->table,$options,1);
+			if ($Q->num_rows() > 0){
+				$data = $Q->row_object();
+			}
+			$Q->free_result();
+			return $data;
+		}
+	}
 	
 	public function getAllServerLog($admin=null){
 		$data = array();
@@ -94,33 +108,36 @@ class ServerLogs Extends CI_Model {
 		return $data;
 	}
 	
-	public function setServerLog($object=null){
+	public function setServerLog($object=''){
+        
+        // Check if already logged before 
+        if (self::getServerLogBySessionId($object['session_id'])) {
+            
+            // Set current modified time
+            $object['modified'] = time();
+            
+            // Update data from session_id
+            $this->db->where('session_id', $object['session_id']);
+            
+            // Return result
+            return $this->db->update($this->table, $object);
+        
+        // Set new server log data    
+        } else {        
+                        
+            // Insert ServerLog data
+            $this->db->insert($this->table, $object);
 
-		// Set ServerLog data
-		$data = array(
-			'session_id'	=> $object['session_id'],
-			'url'			=> $object['url'],	
-			'user_id'		=> @$object['user_id'],	
-			'status_code'	=> $object['status_code'],	
-			'bytes_served'	=> $object['bytes_served'],
-			'total_time'	=> $object['total_time'],
-			'ip_address'	=> $object['ip_address'],
-			'http_code'		=> $object['http_code'],	
-			'referrer'		=> @$object['referrer'],			
-			'user_agent'	=> @$object['user_agent'],
-			'is_mobile'		=> @$object['is_mobile'],
-			'status'		=> $object['status'],
-			'added'			=> $object['added']
-		);
-		
-		// Insert ServerLog data
-		$this->db->insert($this->table, $data);
-		
-		// Return last insert id primary
-		$insert_id = $this->db->insert_id();
-			
-		// Return last insert id primary
-		return $insert_id;
+            // Return last insert id primary
+            $insert_id = $this->db->insert_id();
+
+            // Return last insert id primary
+            return $insert_id;
+            
+		}
+        
+        // Return true otherwise
+        return true;
 		
 	}	
 	

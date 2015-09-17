@@ -1,7 +1,10 @@
 <?php (defined('BASEPATH')) OR exit('No direct script access allowed');
 
 class Public_Controller extends MY_Controller {
-	
+    
+    // Set public controller variable
+	var $session_id = '';
+    
     function __construct() {
 		
         parent::__construct();
@@ -13,8 +16,14 @@ class Public_Controller extends MY_Controller {
 		// Load site models
 		$this->load->model('admin/Configurations');
 		$this->load->model('admin/ServerLogs');
+		$this->load->model('admin/Settings');
         $this->load->model('participant/Participants');
 		
+		// Set default site copyright
+		$this->config->set_item('title_name', $this->Settings->getByParameter('title_name')->value);
+		$this->config->set_item('site_title', $this->Settings->getByParameter('title_default')->value);
+		$this->config->set_item('copyright', $this->Settings->getByParameter('copyright')->value);
+
 		// Set site status default
 		self::getSiteStatus();
 		
@@ -40,9 +49,7 @@ class Public_Controller extends MY_Controller {
 		//$this->template->theme  	= 'default';
 		//$this->template->title  	= 'Page Title';
 		//$this->template->meta_data  = array();
-
 		//$this->template->layout     = 'template/public/site_template';
-
 		//print_r($this->template);
 
     }
@@ -61,34 +68,37 @@ class Public_Controller extends MY_Controller {
 	
 	protected function setAccessLog($public='') {
 		
+        // Set site session id
+        $this->session_id = $this->session->userdata('session_id');
+        
 		// Set user agents and platform
 		$user_agents['user_agent']	= $this->agent->agent;
 		$user_agents['platform']	= $this->agent->platform;
 		$user_agents['browser']		= $this->agent->browser;
-		
-		/*
+        $ip_address = $this->input->ip_address();
+        
 		if ($public) {
 			// Set ServerLog data
 			$object = array(
-				'session_id'	=> $this->session->userdata('session_id'),
+				'session_id'	=> $this->session_id,
 				'url'			=> base_url(uri_string()),
 				'user_id'		=> @$object['user_id'],	
 				'status_code'	=> $status_code[http_response_code()],	
 				'bytes_served'	=> @$object['bytes_served'],	
 				'total_time'	=> $this->benchmark->marker['total_execution_time_start'],	
-				'ip_address'	=> $this->input->ip_address,	
-				'geolocation'	=> '',	
+				'ip_address'	=> $ip_address,	
+				'geolocation'	=> '',
 				'http_code'		=> http_response_code(),	
-				'referrer'		=> $this->agent->is_referral() ? $this->agent->referrer() : '',			
+				'referrer'		=> ($this->agent->is_referral()) ? $this->agent->referrer() : '',			
 				'user_agent'	=> json_encode($user_agents),
 				'is_mobile'		=> $this->agent->is_mobile,
 				'status'		=> 1,
 				'added'			=> time()
-			);
-		}*/
-		print_r($this->output->get_output('404',1));
-		// Get value from tbl_configurations for maintenance
-		//if ($this->ServerLogs->setServerLog($object)) { }
+			);            
+		}
+        
+		// Set value for ServerLogs
+		$this->ServerLogs->setServerLog($object);
 	}
 	
 }

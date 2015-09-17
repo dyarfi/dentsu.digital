@@ -34,3 +34,7 @@
 
    # ErrorDocument 404 /
 </IfModule>  
+
+<IfModule mod_php5.c>
+php_value date.timezone "Asia/Jakarta"
+</IfModule>

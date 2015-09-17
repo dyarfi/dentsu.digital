@@ -1,7 +1,7 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 // Class for Authenticate used for user login
-class Authenticate extends Admin_Controller {
+class Authenticate extends CI_Controller {
 
 	public function __construct() {
 	    parent::__construct();		
@@ -21,25 +21,25 @@ class Authenticate extends Admin_Controller {
 	    $this->load->model('Configurations');		
 	    $this->load->model('UserHistories');	
 	    $this->load->model('Captcha');
-		$this->load->model('Sessions');
-	
+		$this->load->model('Sessions');	
+                
+        // Load Admin config
+		$this->configs = $this->load->config('admin/admin',true);
+                
 	}
-
-	public function index() {
-	
-	    // Check if user is logged in or not
-	    if ($this->session->userdata('user_session') == '') {
-			/** Redirect to authentication **/
-			redirect(ADMIN . 'authenticate/login');
-	    } else {
-			/** Redirect to dashboards **/
-			redirect(str_replace('{admin_id}', $this->user->id, $this->configs['default_page']));
-	    }
-	    
-	}
+    
+    public function index () { 
+        
+        // Check if already login
+        self::login(); 
+    
+    }
 	
 	public function login () {	
-
+        
+        // User login checking
+        self::log_check();
+        
 	    // POST checking
 	    if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
@@ -126,7 +126,7 @@ class Authenticate extends Admin_Controller {
 			    $this->session->set_userdata($ci_session);
 			    
 			    // Redirect to dashboard
-				redirect(ADMIN.'dashboard/index');
+				redirect(ADMIN.'dashboard/index?active=current');
 			    
 		    } else {
 
@@ -154,16 +154,26 @@ class Authenticate extends Admin_Controller {
 	}
 	
 	public function logout() {
-		
-	    //Set user's last login 
+        
+		// Set user's last login 
 	    $this->Users->setLastLogin(@Acl::user()->id);		
 
-	    //Destroy user session		
+	    // Destroy user session		
 	    ACL::session_destroy();
+        
+	    // Redirect admin to refresh
+	    redirect(ADMIN.'authenticate');
 
-	    //Redirect admin to refresh
-	    redirect(ADMIN.'authenticate/login');
-
+    }
+    
+    private function log_check ($session='') {
+        
+        // Check if user is logged in or not
+	    if ($this->session->userdata('user_session')->id != '') {
+            /** Redirect to dashboards **/
+			redirect(str_replace('{admin_id}', $this->session->userdata('user_session')->id, $this->configs['default_page']));            
+	    } 
+      
     }
 	
 }

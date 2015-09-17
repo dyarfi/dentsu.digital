@@ -176,7 +176,7 @@ $config['directory_trigger']	= 'd'; // experimental not currently in use
 | your log files will fill up very fast.
 |
 */
-$config['log_threshold'] = 1;
+$config['log_threshold'] = 2;
 
 /*
 |--------------------------------------------------------------------------
@@ -359,6 +359,9 @@ $config['proxy_ips'] = '';
 // Developers Name and website
 $config['developer_name']	= 'Dentsu Digital Division'; 
 $config['developer_url']	= 'http://dentsu.digital/';
+
+// Site name configuration
+$config['site_name']        = 'Dentsu Digital Division'; 
 
 // TRUE for site is open or FALSE for maintenance mode
 $config['site_open']		= TRUE;
