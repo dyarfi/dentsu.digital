@@ -1007,8 +1007,10 @@ var App = function () {
     var handleNavigateURL = function() {
 
         if (App.getURLParameter('active')) {
-            console.log($('.active').parents('li').find('a').click());
-            //console.log(App.getURLParameter('active'));
+
+            // Click the current link
+            $('.active').parents('li').find('a').click();
+
         }
 
     }
