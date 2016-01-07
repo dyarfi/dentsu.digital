@@ -19,8 +19,22 @@
  *
  */
     define('ENVIRONMENT', 'development');    
-    // Set the system timezone
-    ini_set("date.timezone", "Asia/Jakarta");
+/*
+*---------------------------------------------------------------
+* TIMEZONES - NEXTLOOP.NET
+*---------------------------------------------------------------
+*
+* A valid timezone must be set, in order to avoid datetime inconsitencies
+* if in doubt use UTC
+* you can view full list of supported timezones here: http://www.php.net/manual/en/timezones.php
+*/
+
+//define('TIMEZONE', 'UTC');
+define('TIMEZONE', 'Asia/Jakarta');
+if (!@date_default_timezone_set(TIMEZONE)) {
+    die('System Error! - You have specified an invalid timezone(' . TIMEZONE . ')');
+}
+
 /*
  *---------------------------------------------------------------
  * ERROR REPORTING

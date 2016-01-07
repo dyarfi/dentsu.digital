@@ -40,8 +40,10 @@ class Applicant extends Admin_Controller {
 			// Set our Grocery CRUD
             $crud = new grocery_CRUD();
 			// Set query for Applicants that doesn't have user id
-			$crud->where('tbl_applicants.user_id',NULL);
-			$crud->where('tbl_applicants.status','1');
+			
+            //$crud->where('tbl_applicants.user_id',NULL);
+			//$crud->where('tbl_applicants.status','1');
+
             // Set tables
             $crud->set_table('tbl_applicants');
             // Set CRUD subject
@@ -49,11 +51,11 @@ class Applicant extends Admin_Controller {
             // Set table relation
             $crud->set_relation('career_id', 'tbl_careers', 'subject');
 			// Set new action
-			//$crud->add_action('Set To Employee', '', '','fa fa-arrow-circle-left',array($this,'_callback_set_applicant_to_employee'));
+			// $crud->add_action('Set To Employee', '', '','fa fa-arrow-circle-left',array($this,'_callback_set_applicant_to_employee'));
 			// Callback_column set to
             $crud->callback_column('set_to',array($this,'_callback_set_link'));
 			// Set column
-            $crud->columns('name','email','gender','photo','cv_file','career_id','status','set_to');			
+            $crud->columns('name','email','gender','photo','cv_file','career_id','status','set_to','update_employee_data');
             // Set column display 
             $crud->display_as('career_id','Career Applied');
 			// Set column display 
@@ -79,9 +81,9 @@ class Applicant extends Admin_Controller {
     
     public function _callback_set_link ($value, $row) {
 		if ($row->user_id == NULL) { 
-			return '<a href="'.base_url(ADMIN).'/employee/set/'.$row->id.'" class="fa fa-arrow-circle-left">&nbsp;</a>'; 
+			return '<div class="bg-info"><a href="'.base_url(ADMIN).'/employee/set/'.$row->id.'"><span class="fa fa-arrow-circle-left"></span>&nbsp;Set Employed</a></div>'; 
 		} else { 
-			return 'Already Employed';
+			return '<div class="bg-success"><a href="'.base_url(ADMIN).'/user/view/'.$row->user_id.'" class="text-warning"><span class="glyphicon glyphicon-user"></span>&nbsp;Is Employed</a></div>';
 		}
     }
     
