@@ -26,13 +26,13 @@ class QuestionnaireUserAnswers Extends CI_Model {
                 
                 $sql	= 'CREATE TABLE IF NOT EXISTS `'.$this->table.'` ('
 				. '`id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, '
-				. '`part_id` INT(11) NULL , '
+				. '`participant_id` INT(11) NULL , '
 				. '`user_questionnaire_id` INT(11) NULL , '	
 				. '`question_id` INT(11) NULL , '	
 				. '`status` TINYINT(1) NULL DEFAULT 1, '
 				. '`added` INT(11) NULL, '
 				. '`modified` INT(11) NULL, '
-				. 'INDEX (`part_id`) '
+				. 'INDEX (`participant_id`) '
 				. ') ENGINE=MYISAM DEFAULT CHARSET=utf8;';
 
 		$this->db->query($sql);
@@ -88,25 +88,32 @@ class QuestionnaireUserAnswers Extends CI_Model {
 	}	
 	
 	public function setUserAnswer($object=null){
-
-		// Set UserAnswer data
-		$data = array(			
-			'part_id'		=> $object['part_id'],
-			'user_questionnaire_id'	=> $object['user_questionnaire_id'],
-			'question_id'	=> $object['question_id'],
-			'status'		=> $object['status'],
-			'added'			=> time(),	
-			'modified'		=> $object['status']
-		);
 		
+		if (is_array($object['questionnaire_id'])) {
+			$data = array();
+			$insert_ids = array();
+			foreach ($object['questionnaire_id'] as $key => $value) {
+				$data[$key]['participant_id'] 		 = $object['participant_id'];
+				$data[$key]['user_questionnaire_id'] = $key;
+				$data[$key]['question_id']	= $value;
+				$data[$key]['status']		= 1;
+				$data[$key]['added']		= time();
+				$data[$key]['modified']		= time();
+				$this->db->insert($this->table, $data[$key]);
+				$insert_ids[]				= $key;
+			}
+			return $insert_ids;
+		}
+
+
 		// Insert UserAnswer data
-		$this->db->insert($this->table, $data);
+		//$this->db->insert($this->table, $data);
 		
 		// Return last insert id primary
-		$insert_id = $this->db->insert_id();
+		//$insert_id = $this->db->insert_id();
 			
 		// Return last insert id primary
-		return $insert_id;
+		//return $insert_id;
 		
 	}	
 	

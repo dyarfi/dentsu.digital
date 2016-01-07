@@ -26,8 +26,10 @@ class Questionnaires Extends CI_Model {
                 
                 $sql	= 'CREATE TABLE IF NOT EXISTS `'.$this->table.'` ('
 				. '`id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, '
-				. '`name` VARCHAR(255) NULL, '
+				. '`type` INT(11) NULL, '
+                . '`name` VARCHAR(255) NULL, '
 				. '`questionnaire_text` TEXT NULL, '
+                . '`value` VARCHAR(12), '
                 . '`help_text` TEXT NULL, '
 				. '`file_name` VARCHAR(512) NULL, '
 				. '`order` TINYINT(3) NULL, '
@@ -95,7 +97,8 @@ class Questionnaires Extends CI_Model {
 
 		// Set Questionnaire data
 		$data = array(			
-			'name'				 => $object['name'],
+            'type'               => $object['type'],
+            'name'				 => $object['name'],
 			'questionnaire_text' => $object['questionnaire_text'],
             'help_text'     => $object['help_text'],
             'file_name'		=> $object['file_name'],
@@ -175,6 +178,39 @@ class Questionnaires Extends CI_Model {
         
 		return $data;	
 	}
+
+    public function get_all_questionnaires_checked ($limit = 1000, $start = 0, $order=array(), $search='', $condition='') {
+        
+        $data = array();
+                        
+        $this->db->where('status',1);
+
+        if ($condition != '' && is_array($condition)) {
+            $this->db->where_not_in('id', $condition['questionnaire_id']); 
+        }
+                
+        if ($search != '') {       
+            $this->db->like('name', $search); 
+        }         
+        
+        if (is_array($order)) {
+            foreach ($order as $key => $value) {                
+                $this->db->order_by($key,$value);
+            }
+        }
+
+        $this->db->limit($limit, $start);        
+
+        $Q = $this->db->get('questionnaires');
+
+        if ($Q->num_rows() > 0){
+            $data = $Q->result_object();
+        }
+        
+        $Q->free_result();
+        
+        return $data;   
+    }
 
     public function get_count_questionnaires ($search='') {
         if (!empty($search)) {
@@ -292,7 +328,7 @@ class Questionnaires Extends CI_Model {
         
         return $this->db
         ->where('question_id',$question_id)          
-        ->count_all_results('user_answers');
+        ->count_all_results('questionnaire_user_answers');
 
         //return $this->db->last_query();
 
@@ -302,7 +338,7 @@ class Questionnaires Extends CI_Model {
         
         $this->db->where('part_id !=','');
 
-        $Q = $this->db->get('user_questionnaires_completed');
+        $Q = $this->db->get('questionnaire_completed' );
 
         $data = $Q->result_object();
 

@@ -71,9 +71,16 @@ $route[$admin.'/pagemenu/(:any)']	= 'page/pagemenu/$1';
 $route[$admin.'/qrcode/(:any)']			= 'qrcode/$1';
 $route[$admin.'/qrcodescanner/(:any)']	= 'qrcode/qrcodescanner/$1';
 
-$route[$admin.'/questionnaire/(:any)']	= 'questionnaire/$1';
-$route[$admin.'/question/(:any)']		= 'questionnaire/question/$1';
+$route[$admin.'/questionnaire/(:any)']		= 'questionnaire/$1';
+$route[$admin.'/question/(:any)']			= 'questionnaire/question/$1';
+$route[$admin.'/questionrule/(:any)']		= 'questionnaire/questionrule/$1';
+$route[$admin.'/questionuseranswer/(:any)']	= 'questionnaire/questionuseranswer/$1';
 
+// Participant and Attachment Routes
+$route[$admin.'/participant/(:any)']			= 'participant/$1';
+$route[$admin.'/participant_answer/(:any)']		= 'participant/participant_answer/$1';
+
+// Color
 $route[$admin.'/color/(:any)']			= 'color/$1';
 $route[$admin.'/colorscanner/(:any)']	= 'color/colorscanner/$1';
 $route[$admin.'/colorcontent/(:any)']	= 'color/colorcontent/$1';

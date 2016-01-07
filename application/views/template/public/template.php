@@ -93,11 +93,10 @@
          *   - listening to `circle-animation-progress` event and display the animation progress: from 0 to 100%
          */
         $('.second.circle').circleProgress({
-        value: '0.<?=$progress;?>'
+          value: '<?php echo $progress == $questionnaire_count ? "1" : "0.".round($progress * 100 / $questionnaire_count)?>'
         }).on('circle-animation-progress', function(event, progress) {
-        $(this).find('strong').html(parseInt(<?=$progress * 20;?> * progress) + '<i>%</i>');
+          $(this).find('strong').html(parseInt(<?php echo $progress ? $progress : 0;?> * 100 / <?php echo $questionnaire_count ? $questionnaire_count : 0;?>) + '<i>%</i>');
         });
-
 
 
         jQuery.jqplot.config.enablePlugins = true;

@@ -46,6 +46,12 @@ class Public_Controller extends MY_Controller {
 			// $this->template->set_theme('default');
 		}
 
+		// Set participant session objects
+		//$this->participant = $this->session->userdata('participant');
+		$user->id 			= 1;
+		$user->status 		= 0;
+		$this->participant  = $user;
+
 		//$this->template->theme  	= 'default';
 		//$this->template->title  	= 'Page Title';
 		//$this->template->meta_data  = array();

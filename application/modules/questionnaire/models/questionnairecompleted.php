@@ -26,13 +26,14 @@ class Questionnairecompleted Extends CI_Model {
                 
                 $sql	= 'CREATE TABLE IF NOT EXISTS `'.$this->table.'` ('
 				. '`id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, '
-				. '`part_id` INT(11) NULL , '
+				. '`participant_id` INT(11) NULL , '
 				. '`questionnaire_id` INT(11) NULL , '	
+				. '`text` TEXT NULL , '	
 				. '`date_completed` INT(11) NULL , '	
 				. '`status` TINYINT(1) NULL DEFAULT 1, '
 				. '`added` INT(11) NULL, '
 				. '`modified` INT(11) NULL, '
-				. 'INDEX (`part_id`) '
+				. 'INDEX (`participant_id`) '
 				. ') ENGINE=MYISAM DEFAULT CHARSET=utf8;';
 
 		$this->db->query($sql);
@@ -72,6 +73,20 @@ class Questionnairecompleted Extends CI_Model {
 			return $data;
 		}
 	}	
+
+	public function getUserCompletedQuestionnaire($participant_id = null){
+		if(!empty($participant_id)){
+			$data = array();
+			$options = array('participant_id' => $participant_id);
+			$Q = $this->db->get_where($this->table,$options);
+			if ($Q->num_rows() > 0){
+				foreach ($Q->result_object() as $row)
+				$data['questionnaire_id'][] = $row->questionnaire_id;
+			}
+			$Q->free_result();
+			return $data;
+		}
+	}	
 	
 	public function getAllUserComplete($admin=null){
 		$data = array();
@@ -87,26 +102,44 @@ class Questionnairecompleted Extends CI_Model {
 		return $data;
 	}	
 	
-	public function setUserComplete($object=null){
+	public function setUserCompletedQuestionnaire($object=null){
 
+
+		//rint_r($object);
+
+		if (is_array($object)) {
+			foreach ($object['questionnaire_id'] as $key => $value) {
+				$data['participant_id']	  = $object['participant_id'];
+				$data['questionnaire_id'] = $value;
+				$data['date_completed']	  = time();
+				$data['status']		= 1;
+				$data['added']		= time();
+				$data['modified']	= time();
+				$this->db->insert($this->table, $data);
+			}
+			return true;
+		}
+		
+		/*
 		// Set Questionnairecompleted data
 		$data = array(			
-			'part_id'		=> $object['part_id'],
+			'participant_id'	=> $object['participant_id'],
 			'questionnaire_id'	=> $object['questionnaire_id'],
-			'date_completed'	=> $object['date_completed'],
-			'status'		=> $object['status'],
-			'added'			=> time(),	
-			'modified'		=> $object['modified']
+			'date_completed'	=> time(),
+			'status'			=> 1,
+			'added'				=> time(),	
+			'modified'			=> $object['modified']
 		);
-		
+		*/
+
 		// Insert Questionnairecompleted data
-		$this->db->insert($this->table, $data);
+		//$this->db->insert($this->table, $data);
 		
 		// Return last insert id primary
-		$insert_id = $this->db->insert_id();
+		//$insert_id = $this->db->insert_id();
 			
 		// Return last insert id primary
-		return $insert_id;
+		//return $insert_id;
 		
 	}	
 	
