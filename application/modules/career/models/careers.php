@@ -114,10 +114,10 @@ class Careers Extends CI_Model {
 			return $data;
 		}
 	}
-	public function getByParameter($param = null){
-		if(!empty($param)){
+	public function getCareerByName($name = null){
+		if(!empty($name)){
 			$data = array();
-			$options = array('parameter' => $email);
+			$options = array('name' => $name);
 			$Q = $this->db->get_where($this->table,$options,1);
 			if ($Q->num_rows() > 0){
 				foreach ($Q->result_object() as $row)
@@ -127,17 +127,32 @@ class Careers Extends CI_Model {
 			return $data;
 		}
 	}
-	public function getAllCareer($status=null){
+	public function getAllCareer($param=null){
 		$data = array();
 		$this->db->order_by('added');
-		$Q = $this->db->get($this->table);
+
+
+		if(!empty($param)){
+			$options = array($param);
+			$Q = $this->db->get_where($this->table,$options);
+			if ($Q->num_rows() > 0){
+				foreach ($Q->result_object() as $row)
+				$data = $row;
+			}
+			$Q->free_result();
+			return $data;
+		} else {
+			$Q = $this->db->get($this->table);
 			if ($Q->num_rows() > 0){
 				//foreach ($Q->result_object() as $row){
 					//$data[] = $row;
 				//}
 				$data = $Q->result_object();
-			}
+			}			
+		}
+
 		$Q->free_result();
+
 		return $data;
 	}
 	public function setCareer($object=null){

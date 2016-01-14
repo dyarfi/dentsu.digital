@@ -26,7 +26,7 @@ class Attachments Extends CI_Model {
 
 	    $sql	= 'CREATE TABLE IF NOT EXISTS `'.$this->table.'` ('
 			    . '`id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, '
-			    . '`part_id` INT(11) UNSIGNED NULL, '
+			    . '`participant_id` INT(11) UNSIGNED NULL, '
 			    . '`url` VARCHAR(255) NULL, '
 			    . '`title` VARCHAR(255) NULL, '
 			    . '`file_name` TEXT NULL, '
@@ -34,7 +34,7 @@ class Attachments Extends CI_Model {
 			    . '`status` TINYINT(1) NULL DEFAULT 1, '
 			    . '`added` INT(11) NULL, '
 			    . '`modified` INT(11) NULL, '
-			    . 'INDEX (`part_id`, `url`) '
+			    . 'INDEX (`participant_id`, `url`) '
 			    . ') ENGINE=MYISAM DEFAULT CHARSET=utf8;';
 
 	    $this->db->query($sql);
@@ -109,7 +109,7 @@ class Attachments Extends CI_Model {
 
 	    // Set Attachment data
 	    $data = array(	
-		    'part_id'   => $object['part_id'],
+		    'participant_id'   => $object['participant_id'],
 		    'url'	=> $object['url'],
 		    'title'	=> $object['title'],
 		    'count'	=> $object['count'],

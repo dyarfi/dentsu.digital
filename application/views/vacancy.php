@@ -1,8 +1,29 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); ?>
 
 <div class="boxed-grey">
-	<h4>Apply vacancy for</h4>
-	<form id="vacancy-form" action="" class="" method="POST">
+	<div class="container">
+	<div class="row-fluid">
+		<div class="topDiv50">
+		<?php 
+		if ($vacancies) {
+			?>
+			<h5>Available Vacancies</h5>
+			<ul>
+				<?php
+				foreach ($vacancies as $val) { ?>
+					<li><a href="javascript:;"><?php echo $val->subject; ?></a></li>
+				<?php
+				}
+				?>
+			</ul>
+		<?php
+		}
+		?>
+		</div>
+		<hr/>
+	</div>
+	<h4>Apply vacancy for <?php echo $vacancy->subject;?></h4>
+	<form id="vacancy-form" action="<?php echo base_url('vacancy/apply');?>" class="" method="POST">
 		<div class="row">
 			<div class="col-md-6">
 				<div class="form-group">
@@ -48,4 +69,5 @@
 			</div>
 		</div>
 	</form>
+	</div>
 </div>

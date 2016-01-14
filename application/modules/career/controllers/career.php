@@ -44,11 +44,15 @@ class Career extends Admin_Controller {
             $crud->set_relation('division_id', 'tbl_divisions', 'subject');
             // Set column
             $crud->columns('subject', 'name','division_id','sent_to','status');   
+            // The fields that user will see on add and edit form
+            $crud->fields('subject','name','division_id','responsibilities','requirements','start_date','end_date','attributes','status');
 			// Unsets the fields at the add form.
 			$crud->unset_add_fields('count','added','modified');
 			// Unsets the fields at the edit form.
 			$crud->unset_edit_fields('count','added','modified');
-			// Sets the required fields of add and edit fields
+            // Fields callback 
+            $crud->callback_field('attributes',array($this,'_callback_attributes'));
+            // Sets the required fields of add and edit fields
 			$crud->required_fields('subject','name','status');          
 			// Set column display 
             $crud->display_as('division_id', 'Division');
@@ -62,6 +66,11 @@ class Career extends Admin_Controller {
         }
     }
     
+    public function _callback_attributes($value = '', $primary_key = null)
+    {
+        return '<!-- +30 <input type="text" maxlength="50" value="'.$value.'" name="phone" style="width:462px"> -->';
+    }
+
     public function _callback_total_image($value, $row) {
         $total = $this->user_model->total_image_submitted($row->participant_id);
         return $total;

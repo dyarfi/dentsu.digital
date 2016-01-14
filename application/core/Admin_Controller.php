@@ -38,6 +38,9 @@ class Admin_Controller extends CI_Controller {
 		// Session destroy
 		//$this->session->sess_destroy();
 		
+		// Set config value for default
+		$this->config->set_item('language', 'english');
+
 		// Set user data lists from login session		
 		$this->user				= Acl::user();
 

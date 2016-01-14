@@ -8,35 +8,62 @@ class vacancy extends CI_Controller {
 		// Load user related model in admin module
 		$this->load->model('admin/Users');
 		$this->load->model('admin/UserProfiles');
+
+		$this->load->model('career/Careers');
+		$this->load->model('career/Divisions');
 					
 	}
 	
 	public function index() {
 		
 		// Set main template
-		$data['main'] = 'home';
+		$data['main'] = 'vacancy';
 				
 		// Set site title page with module menu
-		$data['page_title'] = 'User';
-		
+		$data['page_title'] = 'Vacancy';
+
+		// Get career data from database
+		$data['vacancies']  = $this->Careers->getAllCareer();
+
 		// Load admin template
-		$this->load->view('template/public/site_template', $this->load->vars($data));
+		$this->load->view('template/public/template', $this->load->vars($data));
 		
 	}
 	
-	public function apply() {
-		
+	public function view($name='') {
+	
+		// Set vacany data
+		$data['vacancy'] = $this->Careers->getCareerByName($name);
+
 		// Set main template
 		$data['main'] = 'vacancy';
 				
 		// Set site title page with module menu
-		$data['page_title'] = 'User';
+		$data['page_title'] = 'Vacancy Detail';
 		
 		// Load admin template
-		$this->load->view('template/public/blank_template', $this->load->vars($data));
+		$this->load->view('template/public/template', $this->load->vars($data));
+		
+	}
+
+	public function apply($vacancy='') {
+		
+
+
+		print_r($this->input->post());		
+
+
+		// Set main template
+		$data['main'] = 'vacancy';
+				
+		// Set site title page with module menu
+		$data['page_title'] = 'Apply Vacancy';
+		
+		// Load admin template
+		$this->load->view('template/public/template', $this->load->vars($data));
 		
 	}
 }
 
-/* End of file user.php */
-/* Location: ./application/controllers/user.php */
+/* End of file vacancy.php */
+/* Location: ./application/controllers/vacancy.php */
