@@ -46,7 +46,7 @@ class Qrcodescanner extends Admin_Controller {
 		$data['js_files'] = array(base_url('assets/admin/plugins/qr-codes/llqrcode.js'),base_url('assets/admin/plugins/qr-codes/webqr.js'));
 		
 		// Load qr code js execution
-		$data['script_bottom'] = "load();setimg('".base_url()."assets/admin/img/')";
+		$data['js_inline'] = "load();setimg('".base_url()."assets/admin/img/')";
 		
 		// Set main template
 		$data['main'] = 'qrcode/qrcodescanner_index';

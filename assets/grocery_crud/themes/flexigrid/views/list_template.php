@@ -33,13 +33,6 @@ $this->load_js_jqueryui();
 
     var message_alert_delete = "<?php echo $this->l('alert_delete'); ?>";
 </script>
-
-<style>
-    #fancybox-wrap{
-        top:80px !important;
-    }
-    
-</style>
 <div id='list-report-error' class='report-div error'></div>
 <div id='list-report-success' class='report-div success report-list' <?php if ($success_message !== null) { ?>style="display:block"<?php } ?>><?php if ($success_message !== null) { ?>
         <p><?php echo $success_message; ?></p>

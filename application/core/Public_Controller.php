@@ -48,6 +48,9 @@ class Public_Controller extends MY_Controller {
 
 		// Set participant session objects
 		//$this->participant = $this->session->userdata('participant');
+		//print_r(rand(1,300));
+		//exit;
+		
 		$user->id 			= 1;
 		$user->status 		= 0;
 		$this->participant  = $user;

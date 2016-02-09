@@ -185,7 +185,8 @@ class Applicants Extends CI_Model {
 		// Set User data
 		$data = array(			
 				'user_id' => $object->user_id,
-				'modified'=> time(),	
+				'modified'=> time(),
+				'status'=> 1,
 			    );
 		
 		// Check Applicant id

@@ -5,25 +5,22 @@
 	<meta charset="utf-8">
 	<title><?php echo $page_title; ?></title>
 	
-    <!-- Bootstrap Core CSS -->
-    <link href="<?php echo base_url();?>assets/public/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+  <!-- Bootstrap Core CSS -->
+  <link href="<?php echo base_url();?>assets/public/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 
 	<!--link href="<?php echo base_url();?>assets/public/js/rs-plugin/css/settings.css" media="screen" rel="stylesheet"-->
 	
 	<link href="<?php echo base_url();?>assets/public/css/fancybox/jquery.fancybox.css" rel="stylesheet" type="text/css">
 	
-    <!-- Fonts -->
-    <link href="<?php echo base_url();?>assets/public/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <!-- Fonts -->
+  <link href="<?php echo base_url();?>assets/public/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 	<link href="<?php echo base_url();?>assets/public/css/animate.css" rel="stylesheet" />
-    <!-- Squad theme CSS -->
-    <link href="<?php echo base_url();?>assets/public/css/style.css" rel="stylesheet">
-	<link href="<?php echo base_url();?>assets/public/color/default.css" rel="stylesheet">
-	
+  <!-- Squad theme CSS -->
+  <link href="<?php echo base_url();?>assets/public/css/style.css" rel="stylesheet">
+	<link href="<?php echo base_url();?>assets/public/color/default.css" rel="stylesheet">	
     
 	<link type="text/css" href="<?=base_url();?>assets/public/js/jquery.jqplot.1.0.8/jquery.jqplot.min.css" rel="stylesheet" media="all" />
 
-	
-    
 	<script type="text/javascript">
 		var base_URL = '<?php echo base_url();?>';
 	</script>
@@ -51,17 +48,17 @@
 		
 	</div>    
 	
-	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+	<!--script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script-->
 	
 	<!-- Core JavaScript Files -->
-    <script src="<?php echo base_url();?>assets/public/js/jquery.min.js"></script>
+  <script src="<?php echo base_url();?>assets/public/js/jquery.min.js"></script>
 	<script src="<?php echo base_url();?>assets/public/js/gmap3.min.js"></script>
 	<!--<script src="<?php echo base_url();?>assets/public/js/jquery-ui/jquery-ui.min.js"></script>-->
 	
-    <script src="<?php echo base_url();?>assets/public/js/jquery.fancybox.pack.js"></script>
+  <script src="<?php echo base_url();?>assets/public/js/jquery.fancybox.pack.js"></script>
     
 	<script src="<?php echo base_url();?>assets/public/js/bootstrap.min.js"></script>
-    <script src="<?php echo base_url();?>assets/public/js/jquery.easing.min.js"></script>	
+  <script src="<?php echo base_url();?>assets/public/js/jquery.easing.min.js"></script>	
 	<script src="<?php echo base_url();?>assets/public/js/jquery.scrollTo.js"></script>
 	<script src="<?php echo base_url();?>assets/public/js/wow.min.js"></script>
 	
@@ -72,16 +69,20 @@
 	<!--script src="<?php echo base_url();?>assets/public/js/rs-plugin/js/jquery.themepunch.plugins.min.js"></script>
 	<script src="<?php echo base_url();?>assets/public/js/rs-plugin/js/jquery.themepunch.revolution.min.js"></script-->
 	
-    <script type="text/javascript" src="<?=base_url();?>assets/public/js/jquery.jqplot.1.0.8/jquery.jqplot.min.js"></script>
+  <script type="text/javascript" src="<?=base_url();?>assets/public/js/jquery.jqplot.1.0.8/jquery.jqplot.min.js"></script>
 	<script type="text/javascript" src="<?=base_url();?>assets/public/js/jquery.jqplot.1.0.8/plugins/jqplot.pieRenderer.min.js"></script>
 	
 	<script type="text/javascript" src="<?=base_url();?>assets/public/js/jquery.jqplot.1.0.8/plugins/jqplot.json2.min.js"></script>
 	
 	<script type="text/javascript" src="<?=base_url();?>assets/public/js/circle-progress.js"></script>
     
-    
+  <?php if (!empty($js_files)) { foreach ($js_files as $file): ?>
+  <script src="<?php echo $file; ?>"></script>
+  <?php endforeach; } ?>
+  
     <!-- Custom Theme JavaScript -->
     <script src="<?php echo base_url();?>assets/public/js/custom.js"></script>
+    
     <script>
     $(document).ready(function() {
 
@@ -178,6 +179,7 @@
           });
 
 
+      <?php echo ($js_inline) ? "\t".$js_inline."\n" : "";?>
 
     });
     </script>

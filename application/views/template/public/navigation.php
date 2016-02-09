@@ -1,5 +1,5 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed'); ?>
-<nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+<nav class="navbar navbar-custom navbar-fixed-topsssss" role="navigation">
 	<div class="container">
 		<div class="navbar-header page-scroll">
 			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
@@ -12,7 +12,7 @@
 
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse navbar-right navbar-main-collapse">
-			<ul class="nav navbar-nav">
+			<ul class="nav navbar-nav hide">
 			  <li class="active"><a href="#intro">Home</a></li>
 			  <li><a href="#about">About</a></li>
 			  <li><a href="#service">Service</a></li>

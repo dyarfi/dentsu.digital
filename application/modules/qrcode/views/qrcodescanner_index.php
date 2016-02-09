@@ -123,18 +123,25 @@ p.helptext2{
 }
 
 </style>
-<img id="qrimg" src=""/>
-<img id="webcamimg" src=""/>
-<div id="main">
-	<div id="mainbody">
-		<div id="outdiv"></div>
-		<div id="result"></div>
+
+		<div id="main">
+			<div id="mainbody" class="center-block">
+				<div class="clearfix">
+					<div class="pull-left">
+						<button id="qrimg" class="btn btn-primary btn-sm" onclick="setimg()"><span class="fa fa-file-o"></span></button>
+						<button id="webcamimg" class="btn btn-primary btn-sm" onclick="setwebcam()"><span class="fa fa-camera"></span></button>
+					</div>	
+				</div>
+				<div id="outdiv" style="width:373px;height:280px"></div>
+				<div id="result" style="width:373px;height:auto"></div>
+			</div>
+		</div>
+
+		<canvas id="qr-canvas" width="800" height="600"></canvas>
+
+		<!-- END PAGE CONTENT-->
+
+		</div>	
 	</div>
 </div>
-<canvas id="qr-canvas" width="800" height="600"></canvas>
-
-		    </div>
-		</div>
-		<!-- END PAGE CONTENT-->
-	</div>
 </div>

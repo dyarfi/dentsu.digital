@@ -91,76 +91,77 @@ class Employee extends Admin_Controller {
 			$objects = $this->Applicants->getApplicant($id);
 			if($objects) {
 
-			/*
-			[id] => 2
-			[career_id] => 6
-			[name] => Defrian Yarfi
-			[email] => defrian.yarfi@gmail.com
-			[gender] => 1
-			[marital_status] => 1
-			[id_number] => ASDAD12312312313
-			[phone] => 647474747
-			[address] => 45745747
-			[birth_date] => 4567457
-			[birth_place] => 
-			[education_grade] => 1
-			[education_name] => 
-			[education_major] => 
-			[education_from] => 
-			[education_to] => 
-			[employment_name] => 
-			[employment_position] => 
-			[employment_from] => 
-			[employment_to] => 
-			[photo] => 3b394-1513781_10205610488526266_3600135193534162242_n.jpg
-			[cv_file] => 976bd-export-2015-02-13_14_37_25.xls
-			[is_located] => 0
-			[is_related] => 0
-			[messages] => <p>457457457</p>
-			[available_date] => 0
-			[expected_salary] => 0
-			[status] => 1
-			[added] => 0
-			[modified] => 0
-			 */
+				/*
+				[id] => 2
+				[career_id] => 6
+				[name] => Defrian Yarfi
+				[email] => defrian.yarfi@gmail.com
+				[gender] => 1
+				[marital_status] => 1
+				[id_number] => ASDAD12312312313
+				[phone] => 647474747
+				[address] => 45745747
+				[birth_date] => 4567457
+				[birth_place] => 
+				[education_grade] => 1
+				[education_name] => 
+				[education_major] => 
+				[education_from] => 
+				[education_to] => 
+				[employment_name] => 
+				[employment_position] => 
+				[employment_from] => 
+				[employment_to] => 
+				[photo] => 3b394-1513781_10205610488526266_3600135193534162242_n.jpg
+				[cv_file] => 976bd-export-2015-02-13_14_37_25.xls
+				[is_located] => 0
+				[is_related] => 0
+				[messages] => <p>457457457</p>
+				[available_date] => 0
+				[expected_salary] => 0
+				[status] => 1
+				[added] => 0
+				[modified] => 0
+				 */
 
-			// Set default username from email
-			$objects->username = $objects->email;
-			// Set default password from 'Password1'
-			$objects->password = 'Password1';
-			// Set default group id for 'Employee' group
-			$objects->group_id = '100';
-			// Set default file_name if existed
-			$objects->file_name = !empty($objects->photo) ? $objects->photo : NULL;
+				// Set default username from email
+				$objects->username = $objects->email;
+				// Set default password from 'Password1'
+				$objects->password = 'Password1';
+				// Set default group id for 'Employee' group
+				$objects->group_id = '100';
+				// Set default file_name if existed
+				$objects->file_name = !empty($objects->photo) ? $objects->photo : NULL;
+				// Set default username from email
+				$objects->first_name = $objects->name;
+				// Set status default
+				$objects->status = 1;
+				
+				/*
+				 * 'username'	=> $object['username'],
+					'email'	=> $object['email'],			
+					'password'	=> sha1($object['username'].$object['password']),	
+					'group_id'	=> @$object['group_id'],			
+					'added'	=> time(),	
+					'status'	=> $object['status']
 
-			// Set default username from email
-			$objects->first_name = $objects->name;
+				 * 
+					'user_id'	=> $insert_id,
+					'gender'	=> !empty($object['gender']) ? $object['gender'] : NULL,
+					'first_name'	=> !empty($object['first_name']) ? $object['first_name'] : NULL,
+					'last_name'	=> !empty($object['last_name']) ? $object['last_name'] : NULL,
+					'birthday'	=> !empty($object['birthday']) ? $object['birthday'] : NULL,
+					'phone'		=> !empty($object['phone']) ? $object['phone'] : NULL,	
+					'mobile_phone'	=> !empty($object['mobile_phone']) ? $object['mobile_phone'] : NULL,
+					'fax'		=> !empty($object['fax']) ? $object['fax'] : NULL,
+					'website'	=> !empty($object['website']) ? $object['website'] : NULL,
+					'about'		=> !empty($object['about']) ? $object['about'] : NULL,
+					'division'	=> !empty($object['division']) ? $object['division'] : NULL,
+					'added'		=> time(),	
+					'status'	=> 1)
+				 */
 
-			/*
-			 * 'username'	=> $object['username'],
-				'email'	=> $object['email'],			
-				'password'	=> sha1($object['username'].$object['password']),	
-				'group_id'	=> @$object['group_id'],			
-				'added'	=> time(),	
-				'status'	=> $object['status']
-
-			 * 
-				'user_id'	=> $insert_id,
-				'gender'	=> !empty($object['gender']) ? $object['gender'] : NULL,
-				'first_name'	=> !empty($object['first_name']) ? $object['first_name'] : NULL,
-				'last_name'	=> !empty($object['last_name']) ? $object['last_name'] : NULL,
-				'birthday'	=> !empty($object['birthday']) ? $object['birthday'] : NULL,
-				'phone'		=> !empty($object['phone']) ? $object['phone'] : NULL,	
-				'mobile_phone'	=> !empty($object['mobile_phone']) ? $object['mobile_phone'] : NULL,
-				'fax'		=> !empty($object['fax']) ? $object['fax'] : NULL,
-				'website'	=> !empty($object['website']) ? $object['website'] : NULL,
-				'about'		=> !empty($object['about']) ? $object['about'] : NULL,
-				'division'	=> !empty($object['division']) ? $object['division'] : NULL,
-				'added'		=> time(),	
-				'status'	=> 1)
-			 */
-
-			$user_id = $this->Users->setUser((array) $objects);
+				$user_id = $this->Users->setUser((array) $objects);
 
 				if ($user_id) {
 					$objects->user_id = $user_id;
