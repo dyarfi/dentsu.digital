@@ -163,7 +163,7 @@
 
     if(typeof $.fn.fileupload == 'function') {
 
-    	$('#fileupload').fileupload({
+    	$('#fileuploadsssss').fileupload({
 		    url: $(this).attr('data-url'),
 		    dataType: 'json',
 		    //acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,

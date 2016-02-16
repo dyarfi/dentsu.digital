@@ -90,6 +90,15 @@ $route[$admin.'/colorpersonal/(:any)']	= 'color/colorpersonal/$1';
 $route[$admin.'/participant/(:any)']	= 'participant/$1';
 $route[$admin.'/attachment/(:any)']		= 'participant/attachment/$1';
 
+// Conference module routes
+//$route[$admin.'/conference/(:any)']	 = 'conference/$1';
+//$route[$admin.'/information/(:any)'] = 'conference/information/$1';
+//$route[$admin.'/schedule/(:any)']	 = 'conference/schedule/$1';
+//$route[$admin.'/speaker/(:any)']	 = 'conference/speaker/$1';
+//$route[$admin.'/submission/(:any)']	 = 'conference/submission/$1';
+//$route[$admin.'/conference_gallery/(:any)']  = 'conference/conference_gallery/$1';
+//$route[$admin.'/conference_banner/(:any)']  = 'conference/conference_banner/$1';
+
 //$route[$admin.'/(:any)'] = '$1';
 
 /*

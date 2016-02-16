@@ -1,0 +1,209 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
+class Fabric extends Public_Controller {
+	
+	public function __construct() {
+		parent::__construct();
+		
+		// Load User related model in admin module
+		$this->load->model('page/Pagemenus');
+		$this->load->model('page/Pages');	
+
+		// Load Participant related model 
+		$this->load->model('participant/Participants');
+        //$this->load->model('questionnaire/Questionnaires');
+        //$this->load->model('questionnaire/QuestionnaireCompleted');
+		//$this->load->model('questionnaire/QuestionnaireUserAnswers');
+        $this->load->model('qrcode/Qrcodes');
+
+        // Check if session was made 
+		if ($this->participant) {
+		
+			// Set temporary data
+			$this->_participant = $this->Participants->getParticipant($this->participant->id);
+			
+			// Unset data from session
+			unset($this->participant);	
+			
+			// Set new data and to session
+			$this->participant = $this->_participant;
+			$this->session->set_userdata('participant',$this->participant);
+			
+		}
+
+		//print_r($this->participant);
+		
+	}
+
+	public function index() {
+			
+
+		if ($this->input->is_ajax_request()) {
+
+			// Define initialize result
+			$result['result'] = '';
+
+			// Default data setup
+		    $fields	= array(
+				    'email' => '',
+				    );
+
+		    $errors	= $fields;
+
+		    // Set validation rules
+	     	$this->form_validation->set_rules('email', 'Email','trim|valid_email|required|min_length[5]|max_length[36]|callback_match_email|xss_clean');	    
+
+		    // Check if post is requested
+		    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+			    // Validation form checks
+			    if ($this->form_validation->run() == FALSE)
+			    {
+			         // Send errors to JSON text
+                    $result['result']['code'] = 0;
+                    $result['result']['text'] = validation_errors();
+			    }
+			    else
+			    {
+
+			    	// Set default participant data
+			    	$participant = $this->Participants->getByEmail($this->input->post('email'));
+
+					// Set participant data to session
+			    	$this->session->set_userdata('participant', $participant);
+
+		            // Send success update password result
+		            $result['result']['code'] = 1;
+		            $result['result']['text'] = 'Thank you, wait for a moment please...';
+
+			    }
+
+		    } 	
+
+			// Return data esult
+			$data['json'] = $result;
+			
+			// Load data into view		
+			$this->load->view('json', $this->load->vars($data));	
+
+		}	
+
+		//$data['logged_in']		= $this->logged_in;
+
+ 		// Set main template
+	    $data['main'] 			= 'fabric';
+
+	    // Set site title page with module menu
+	    $data['page_title'] 	= 'Fabric Canvas';
+    
+		// Load fabric js library
+		$data['js_files'] = [ 
+								// Jquery File Upload
+								base_url('assets/admin/plugins/jquery-file-upload/js/jquery.ui.widget.min.js'),
+								base_url('assets/admin/plugins/jquery-file-upload/js/jquery.iframe-transport.js'),
+								base_url('assets/admin/plugins/jquery-file-upload/js/jquery.fileupload.js'),
+								base_url('assets/admin/plugins/jquery-file-upload/js/jquery.fileupload-process.js'),								
+								base_url('assets/admin/plugins/jquery-file-upload/js/jquery.fileupload-validate.js'),
+								base_url('assets/admin/plugins/jquery-file-upload/js/jquery.fileupload-ui.js'),
+								base_url('assets/admin/plugins/jquery-file-upload/js/jquery.iframe-transport.js'),
+								
+								// Jquery Fabric JS	
+								base_url('assets/admin/plugins/fabric.js/canvas2image.js'),
+								base_url('assets/admin/plugins/fabric.js/fabric-0.9.15.js'),
+								base_url('assets/admin/plugins/fabric.js/aligning_guidelines.js'),								
+								base_url('assets/admin/plugins/fabric.js/client.js')
+							];
+
+		// Load qr code js execution
+		$data['js_inline'] = "
+			$('#submit_email').submit(function(e) {
+				e.preventDefault();
+				// default form var
+				var userform = $(this);
+                // process the form
+                $.ajax({
+                    type        : 'POST', // define the type of HTTP verb we want to use (POST for our form)
+                    //url       : 'process.php', // the url where we want to POST
+                    data        : $(this).serialize(), // our data object
+                    dataType    : 'json', // what type of data do we expect back from the server
+                    encode      : true,
+					complete: function(message) {
+						var msg = message.responseJSON;
+						
+						userform.find('.msg').empty();
+						userform.find('.msg')
+						.html('<div class=\"alert alert-danger msg\">'
+						+'<button class=\"close\" data-close=\"alert\"></button>'
+						+msg.result.text+'</div>');				
+
+						if (msg.result.code === 1) {					
+							setTimeout(function() {
+								// Do something after 5 seconds
+								window.location.href = base_URL + 'fabric';
+							}, 2000);
+						}
+						
+						$('.reload_captcha').click();
+						
+						//alert(msg.result);
+						//console.log(msg.result);
+					},
+					error: function(x,message,t) { 
+						if(message===\"timeout\") {
+							alert('got timeout');
+						} else {
+							//alert(message);
+						}	
+					}
+                });
+
+                return false;
+            });
+		";
+
+		// Load site template
+		$this->load->view('template/public/template', $this->load->vars($data));	
+			
+	}
+
+	public function upload_result() {
+		
+		// Detect if data sent by POST
+		if ($this->input->server('REQUEST_METHOD') === 'POST') {
+			
+			// Get the data sent and replace unwanted string
+			$base64img = str_replace('data:image/png;base64,', '', $this->input->post("str"));
+
+			// Decode base64 data sent
+			$result = base64_decode($base64img);
+
+			// Generate unique image name 
+			$file = 'uploads/gallery/' . uniqid() . '.png';
+
+			// Put file to upload directory
+	    	file_put_contents($file, $result);	
+
+		}	
+
+	}
+
+	 // -------------- CALLBACK METHODS -------------- //
+
+    // Match Email post to Database
+    public function match_email($email) {		
+
+		// Check email if empty
+		if ($email == '') {
+			$this->form_validation->set_message('match_email', 'The %s can not be empty.');
+			return false;
+		}
+		// Check email if match
+		else if ($this->Participants->getByEmail($email) == 1) {
+			$this->form_validation->set_message('match_email', 'The %s is already taken.');			
+			return true;
+		} else {
+			return true;
+		} 
+
+    }
+}

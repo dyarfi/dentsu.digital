@@ -1,15 +1,16 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Gallery extends Admin_Controller {
+class Attachment extends Admin_Controller {
 
     public function __construct() {
+
             parent::__construct();
 
             // Load Participant model
             $this->load->model('participant/Participants');
 
             // Load Gallery model
-            //$this->load->model('participant/Gallery');
+            $this->load->model('participant/Attachments');
 
             // Load Grocery CRUD
             $this->load->library('grocery_CRUD');
@@ -21,13 +22,13 @@ class Gallery extends Admin_Controller {
 			// Set our Grocery CRUD
             $crud = new grocery_CRUD();
             // Set tables
-            $crud->set_table('tbl_participant_images');
+            $crud->set_table('tbl_participant_attachment_submissions');
             // Set CRUD subject
-            $crud->set_subject('Gallery');                            
+            $crud->set_subject('Attachment');                            
             // Set table relation
-            $crud->set_relation('part_id','tbl_participants','name');
+            $crud->set_relation('participant_id','tbl_participants','email');
             // Set column
-			$crud->columns('type', 'part_id','file_name','status','added','modified');
+			$crud->columns('type', 'participant_id','file_name','status','added','modified');
 			
             //$crud->columns('subject','name','menu_id','synopsis','text','status','added','modified');			
 			// The fields that user will see on add and edit form
@@ -47,7 +48,11 @@ class Gallery extends Admin_Controller {
 			
 			$crud->field_type('status','dropdown',array('0' => 'Inactive','1' => 'Active','2' => 'Completed')); 
 			$crud->field_type('type','dropdown',array('16' => 'Stiker 16', '2' => 'Stiker 2'));
-			$crud->field_type('file_name','text');
+			
+			//$crud->field_type('file_name','text');
+			// Set upload field
+            $crud->set_field_upload('file_name','uploads/participants');
+
 			$crud->edit_fields('status','modified');			
 			$crud->callback_column('added',array($this,'_callback_time'));
 			$crud->callback_column('modified',array($this,'_callback_time'));
@@ -71,9 +76,11 @@ class Gallery extends Admin_Controller {
 			// $crud->required_fields('subject','name','text','status'); 
             // Set upload field
             // $crud->set_field_upload('file_name','uploads/pages');
+
 			// $crud->unset_edit();
-			$crud->unset_add();
-			$crud->unset_delete();
+			// $crud->unset_add();
+			// $crud->unset_delete();
+
 			$this->load($crud, 'gallery');
         } catch (Exception $e) {
             show_error($e->getMessage() . ' --- ' . $e->getTraceAsString());

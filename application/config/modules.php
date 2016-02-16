@@ -315,7 +315,87 @@ $config['modulelist'] = array(
                     'attachment/index/export'  => 'Export Attachment',
                     'attachment/index/print'   => 'Print Attachment',
         )
-	)
+	),
+	/*
+	// Conference module
+	'Conference' => array (
+		// Career Models list
+		'models'		=> array('conference/Conferences','conference/Speakers','conference/Informations','conference/Schedules','conference/Submissions','conference/Galleries','conference/Banners'),
+		// Career module menus
+		'module_menu'	=> array(
+                    'conference/index'	=> 'Conferences',
+                    'speaker/index'     => 'Speakers',
+                    'information/index'	=> 'Informations',
+                    'schedule/index'	=> 'Schedules',
+                    'submission/index'	=> 'Submissions'
+        ),
+		// Conference module functions
+		'module_function'	=> array(
+                // Conference functions
+                'conference/index/add'	=> 'Add Conference',
+                'conference/index/view'	=> 'View Conference',
+                'conference/index/edit'	=> 'Edit Conference',
+                'conference/index/delete'	=> 'Delete Conference',
+                'conference/index/change'	=> 'Change Conference Status',
+                'conference/index/export'	=> 'Export Conference',
+                'conference/index/print'	=> 'Print Conference',
+                // Speaker functions
+                'speaker/index/add'     => 'Add Speaker',
+                'speaker/index/view'	=> 'View Speaker',
+                'speaker/index/edit'	=> 'Edit Speaker',
+                'speaker/index/delete'	=> 'Delete Speaker',
+                'speaker/index/change'	=> 'Change Speaker Status',
+                'speaker/index/export'  => 'Export Speaker',
+                'speaker/index/print'	=> 'Print Speaker',
+                // Informations functions
+                'information/index/add'     => 'Add Information',
+                'information/index/view'	=> 'View Information',			
+                'information/index/edit'	=> 'Edit Information',			
+                'information/index/delete'  => 'Delete Information',
+                'information/index/change'  => 'Change Information',
+                'information/index/export'  => 'Export Information',
+                'information/index/print'	=> 'Print Information',
+                // Schedule functions
+                'schedule/index/add'	=> 'Add Schedule',
+                'schedule/index/view'	=> 'View Schedule',			
+                'schedule/index/edit'	=> 'Edit Schedule',			
+                'schedule/index/delete' => 'Delete Schedule',
+                'schedule/set'			=> 'Set to Schedule',
+                'schedule/index/change' => 'Change Schedule',
+                'schedule/index/export' => 'Export Schedule',
+                'schedule/index/print'	=> 'Print Schedule',
+
+                // Conferences Submissions functions
+                'conference/submission/index/add'	=> 'Add Submission',
+                'conference/submission/index/view'	=> 'View Submission',			
+                'conference/submission/index/edit'	=> 'Edit Submission',			
+                'conference/submission/index/delete' => 'Delete Submission',
+                'conference/submission/index/change' => 'Change Submission',
+                'conference/submission/index/export' => 'Export Submission',
+                'conference/submission/index/print'	=> 'Print Submission',
+
+                // Conferences Gallery functions
+                'conference_gallery/index'	=> 'Gallery',
+                'conference_gallery/index/add'	=> 'Add Gallery',
+                'conference_gallery/index/view'	=> 'View Gallery',			
+                'conference_gallery/index/edit'	=> 'Edit Gallery',			
+                'conference_gallery/index/delete' => 'Delete Gallery',
+                'conference_gallery/index/change' => 'Change Gallery',
+                'conference_gallery/index/export' => 'Export Gallery',
+                'conference_gallery/index/print'	=> 'Print Gallery',
+
+                // Conferences Banner functions
+                'conference_banner/index'	=> 'Banner',
+                'conference_banner/index/add'	=> 'Add Banner',
+                'conference_banner/index/view'	=> 'View Banner',			
+                'conference_banner/index/edit'	=> 'Edit Banner',			
+                'conference_banner/index/delete' => 'Delete Banner',
+                'conference_banner/index/change' => 'Change Banner',
+                'conference_banner/index/export' => 'Export Banner',
+                'conference_banner/index/print'	=> 'Print Banner'
+                ),
+	),
+	*/
 );
 
 

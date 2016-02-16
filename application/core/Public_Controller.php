@@ -4,8 +4,16 @@ class Public_Controller extends MY_Controller {
     
     // Set public controller variable
 	var $session_id = '';
+
+	// Set empty participant data
+	var $participant = '';
+
+	// Set public logged in
+	var $logged_in = true;
+
+
     
-    function __construct() {
+    public function __construct() {
 		
         parent::__construct();
         
@@ -32,7 +40,7 @@ class Public_Controller extends MY_Controller {
 		
 		if($this->config->item('site_open') === FALSE)
         {
-            show_error('Sorry the site is shut for now.');
+            show_error('Sorry the site is shut for now for maintenance.',false);
         }
 	
         if( $this->agent->is_mobile() )
@@ -51,9 +59,27 @@ class Public_Controller extends MY_Controller {
 		//print_r(rand(1,300));
 		//exit;
 		
-		$user->id 			= 1;
-		$user->status 		= 0;
-		$this->participant  = $user;
+		//$user->id 			= 1;
+		//$user->status 		= 0;
+		//$this->participant  	= $user;
+
+		if (! $this->session->userdata('participant')) {
+
+			// Set public to logged in
+			$this->logged_in = false;
+
+		} else {
+			
+			// Set temporary participant data
+			$this->participant = $this->session->userdata ('participant');
+
+		}
+
+		//print_r($this->session->unset_userdata('participant'));
+
+		//print_r($this->participant);
+
+		//$this->session->set_userdata('participant',$this->participant);
 
 		//$this->template->theme  	= 'default';
 		//$this->template->title  	= 'Page Title';

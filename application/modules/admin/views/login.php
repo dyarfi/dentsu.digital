@@ -1,5 +1,5 @@
 <!-- BEGIN LOGIN FORM -->
-<form class="login-form" action="<?=base_url()?>admin/authenticate/login" method="post">
+<?php echo form_open(base_url('admin/authenticate/login'),['class'=>'login-form']);?>	
     <h3 class="form-title">Login to your account</h3>
     <div class="alert alert-danger display-hide">
 	<button class="close" data-close="alert"></button>
@@ -33,10 +33,10 @@
 	<h4>Forgot your password ?</h4>
 	<p>Click <a href="javascript:;" id="forget-password">here</a> to reset your password.</p>
     </div>
-</form>
+<?php echo form_close();?>
 <!-- END LOGIN FORM -->
 <!-- BEGIN FORGOT PASSWORD FORM -->
-<form class="forget-form" action="" method="post">
+<?php echo form_open('',['class'=>'forget-form']);?>	
     <h3>Forget Password ?</h3>
     <p>Enter your e-mail address below to reset your password.</p>
     <div class="form-group">
@@ -54,5 +54,5 @@
 	Submit <i class="m-icon-swapright m-icon-white"></i>
 	</button>
     </div>
-</form>
+<?php echo form_close();?>    
 <!-- END FORGOT PASSWORD FORM -->

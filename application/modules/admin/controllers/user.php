@@ -638,41 +638,45 @@ class User extends Admin_Controller {
 		// Define initialize result
 		$result['result'] = '';
 
-		// Get User Data
-		$user = $this->Users->getUserByEmail($this->input->post('email'));
+	    // Check if post is requested		
+	    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-		if (!empty($user) && $user->status == 1) {
+			// Get User Data
+			$user = $this->Users->getUserByEmail($this->input->post('email'));
 
-			$password = $this->Users->setPassword($user);
+			if (!empty($user) && $user->status == 1) {
 
-			$result['result']['code'] = 1;
-			$result['result']['text'] = 'Your new password: <b>'. $password .'</b>';			
+				$password = $this->Users->setPassword($user);
 
-			$this->load->library('email');
+				$result['result']['code'] = 1;
+				$result['result']['text'] = 'Your new password: <b>'. $password .'</b>';			
 
-			$this->email->from('noreply');
-			$this->email->to($user->email);
-			$this->email->subject('Your new password');
-			$this->email->message('Hey <b>'.$user->username.'</b>, this is your new password: <b>'.$password.'</b>');
+				$this->load->library('email');
 
-			$this->email->send();
+				$this->email->from('noreply');
+				$this->email->to($user->email);
+				$this->email->subject('Your new password');
+				$this->email->message('Hey <b>'.$user->username.'</b>, this is your new password: <b>'.$password.'</b>');
 
-		} else if (!empty($user) && $user->status != 1) { 
+				$this->email->send();
 
-			// Account is not Active
-			$result['result']['code'] = 2;
-			$result['result']['text'] = 'Your account is not active';			
+			} else if (!empty($user) && $user->status != 1) { 
 
-		} else {
+				// Account is not Active
+				$result['result']['code'] = 2;
+				$result['result']['text'] = 'Your account is not active';			
 
-			// Account is not existed
-			$result['result']['code'] = 0;
-			$result['result']['text'] = 'Email or User not found';			
+			} else {
 
+				// Account is not existed
+				$result['result']['code'] = 0;
+				$result['result']['text'] = 'Email or User not found';			
+
+			}
 		}
 
 		$data['json'] = $result;				
-		$this->load->view('json', $this->load->vars($data));				
+		$this->load->view('json', $this->load->vars($data));					
 
     }
 

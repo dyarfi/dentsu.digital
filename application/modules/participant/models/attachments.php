@@ -27,6 +27,7 @@ class Attachments Extends CI_Model {
 	    $sql	= 'CREATE TABLE IF NOT EXISTS `'.$this->table.'` ('
 			    . '`id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, '
 			    . '`participant_id` INT(11) UNSIGNED NULL, '
+			    . '`type` VARCHAR(255) NULL, '
 			    . '`url` VARCHAR(255) NULL, '
 			    . '`title` VARCHAR(255) NULL, '
 			    . '`file_name` TEXT NULL, '
@@ -105,6 +106,20 @@ class Attachments Extends CI_Model {
 	    return $data;
 	}	
 	
+	public function getByType($type = null){
+		if(!empty($type)){
+			$data = array();
+			$options = array('type' => $type,'status'=>'publish');
+			$Q = $this->db->get_where($this->table,$options,1);
+			if ($Q->num_rows() > 0){
+				foreach ($Q->result_object() as $row)
+				$data = $row;
+			}
+			$Q->free_result();
+			return $data;
+		}
+	}	
+
 	public function setAttachment($object=null){
 
 	    // Set Attachment data

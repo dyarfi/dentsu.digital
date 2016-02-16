@@ -69,9 +69,9 @@ class Participant extends Admin_Controller {
 				$crud->callback_column('file_name',array($this,'_callback_filename_url'));				
 			} 
 			
-			$crud->unset_add();
-			$crud->unset_edit();
-			$crud->unset_delete();
+			//$crud->unset_add();
+			//$crud->unset_edit();
+			//$crud->unset_delete();
             $this->load($crud, 'participant');
         } catch (Exception $e) {
             show_error($e->getMessage() . ' --- ' . $e->getTraceAsString());
