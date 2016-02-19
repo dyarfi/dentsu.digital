@@ -29,7 +29,8 @@ if (document.getElementById('fileupload') != null) {
     reader.onload = function (event) { 
       
         console.log('fdsf');
-        resizeCanvas();
+
+        // resizeCanvas();
 
         $('.button-submit').show({duration:'260',easing:'easeInOutBack'});
 
@@ -39,7 +40,12 @@ if (document.getElementById('fileupload') != null) {
             // start fabricJS stuff
             
             var image = new fabric.Image(imgObj);
-            
+
+            //console.log(image.width);
+            //console.log(image.height);
+
+            resizeCanvas(image.width,image.height);
+
             /*
             image.set({
                 left: 250,
@@ -64,11 +70,23 @@ if (document.getElementById('fileupload') != null) {
   // resize the canvas to fill browser window dynamically
   window.addEventListener('resize', resizeCanvas, false);
 
-  function resizeCanvas() {
-    if (document.getElementById('canva-row') != null) {
+  function resizeCanvas(itemHandlerWidth='',itemHandlerHeight='') {
+
+    if (itemHandlerWidth == '' && document.getElementById('canva-row') != null) {
+
       canvas.setWidth(document.getElementById('canva-row').offsetWidth );
+
+    } else {
+
+      canvas.setWidth(itemHandlerWidth);
+      canvas.setHeight(itemHandlerHeight);      
+
     }
+
+    
+
   }
+
   resizeCanvas();
   
   initAligningGuidelines(canvas);
@@ -143,17 +161,44 @@ if (document.getElementById('fileupload') != null) {
     canvas.add(text);
   });
 
-  $('#send_image').click(function() {
+  $('#send_image').click(function(e) {
+    // Prevent own default clicking
+    e.preventDefault();
+
+    // default form var
+    var userform = $(this).next('.msg');
+
     canvas.discardActiveGroup();
     canvas.discardActiveObject();
     canvas.renderAll();
       $.ajax({
          url: 'upload/upload_result',
          type: 'POST',
+         dataType : 'json', // what type of data do we expect back from the server
          data: {
             data: canvas.toDataURL('image/png')
          },
          complete: function(data, status) {
+          var msg = data.responseJSON;
+
+            console.log(msg);
+            
+            //userform.find('.msg').empty();
+            //userform.find('.msg')
+
+            userform.empty();
+            userform
+            .html('<div class=\"alert alert-danger msg\">'
+            +'<button class=\"close\" data-close=\"alert\"></button>'
+            +msg.result.text+'</div>');       
+
+            if (msg.result.code === 1) {          
+              setTimeout(function() {
+                // Do something after 5 seconds
+                window.location.href = base_URL + 'fabric';
+              }, 2000);
+            }
+
             if(status=='success') {
                 alert('saved!');
             }

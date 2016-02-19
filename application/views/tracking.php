@@ -1,16 +1,54 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed'); ?>
+<style type="text/styelsheet">
+@media (min-width:980px) {
+  body { /*padding-top: 60px;*/ }
+}
+.main-block { margin: 180px auto 360px auto; }
+.main-box { margin: 100px auto 100px auto; display: inline-block; }
+.canvas-container { margin: 0 auto; float: none; border: 5px solid #aaa; overflow: hidden; }
+.menu { margin-bottom: 20px; }
+.menu img { margin-bottom: 10px; cursor: pointer; border: 1px solid white; }
+.menu img:hover{ border: 1px solid green; }
+.thumb { height: 70px; }
+.msg { margin: 10px auto 10px auto; }
+</style>
 <div class="container">
-
    <div class="center-block">
-      <div class="text-center main-block">
+      <div class="text-center main-block" style="margin:100px auto 100px auto;">
         <div class="col-md-12">
           <div class="demo-frame">
             <div class="demo-container">
               <img id="img_tracking" src="<?php echo base_url('uploads/gallery/faces.jpg');?>" />
               <!-- <img id="img_tracking" src="<?php echo base_url('uploads/gallery/10275287_875775332540613_4181229518108083063_o_612.jpg');?>" /> -->
             </div>
-          </div>          
-          <div class="pull-left handler-text"><h1></h1></div>
+          </div>
+          <div class="col-xs-12 cari-foto vag-font">
+                <!--div class="img_holder_xhr">
+                    <div class="img-thumbnail">
+                        <a href="#" class="colorbox"><img src="<?php echo base_url('assets/static/img/250x250.jpg');?>" class="img-rounded" alt="Upload"></a>
+                    </div>
+                </div-->
+                <div class="text-center">
+                    <div class="container-fluid">
+                        <!-- The global progress bar -->
+                        <div id="progress" class="progress" style="display:none;">
+                            <div class="progress-bar progress-bar-danger"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="center-block">
+                    <div class="fileUpload label label-danger">
+                        <label class="cari-foto-color">Browse File</label>
+                        <input class="upload" type="file" id="fileupload" name="fileupload" data-url="<?=base_url('upload/image');?>"/>
+                    </div>
+                </div>
+                <input type="hidden" name="image_temp" value="" id="image_temp">
+                <div class="text-center button-submit" style="display: none; text-align:center; margin: 12px -33px 0px 0px;">
+                    <?php echo form_submit(['type'=>'submit','value'=>'KIRIM','id'=>'send_image','class'=>"btn btn-danger submit-color"]);?>
+                    <div class="msg"></div>
+                </div>
+            </div>          
+          <div class="center-block handler-text"><h1></h1></div>
         </div>
     </div>
   </div>
@@ -29,58 +67,6 @@
     /*margin: -173px 0 0 -300px;*/
   }
   </style>
-
-  <script>
-    window.onload = function() {
-
-      var img = document.getElementById('img_tracking');
-      var tracker = new tracking.ObjectTracker(['face']);
-
-      tracker.setStepSize(1.7);
-      tracking.track('#img_tracking', tracker);
-
-      tracker.on('track', function(event) {
-        event.data.forEach(function(rect) {
-          window.plot(rect.x, rect.y, rect.width, rect.height);
-        });
-
-          if (event.data.length === 0) {
-
-            // No targets were detected in this frame.            
-            // Text information that displayed the information of the image tracking
-            $('.handler-text h1').html();
-
-
-          } if (event.data.length === 3) {             
-
-            // Text information that displayed the information of the image tracking            
-            $('.handler-text h1').html('<small>Thanks you good to go!</small> <button class="btn btn-primary">Submit</button>');
-
-          } else {
-
-            // Text information that displayed the information of the image tracking
-            $('.handler-text h1').html('You no good to go, please upload other image..');
-
-            // console.log(event.data.length);
-            event.data.forEach(function(data) {
-              // Plots the detected targets here.
-            });
-
-          }
-        
-      });
-
-      window.plot = function(x, y, w, h) {
-        var rect = document.createElement('div');
-        document.querySelector('.demo-container').appendChild(rect);
-        rect.classList.add('rect');
-        rect.style.width = w + 'px';
-        rect.style.height = h + 'px';
-        rect.style.left = (img.offsetLeft + x) + 'px';
-        rect.style.top = (img.offsetTop + y) + 'px';
-      };
-
-    };
-  </script>
+  <script type="text/javascript"></script>
   <!-- /.container -->
 </div>    

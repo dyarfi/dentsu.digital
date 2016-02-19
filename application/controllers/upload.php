@@ -152,17 +152,46 @@ class upload extends Public_Controller {
 			$base64img = str_replace('data:image/png;base64,', '', $this->input->post("data"));
 
 			// Decode base64 data sent
-			$result = base64_decode($base64img);
+			$return = base64_decode($base64img);
+			$filename = uniqid() . '.png';
 
 			// Generate unique image name 
-			$file = 'uploads/gallery/' . uniqid() . '.png';
+			$file = 'uploads/gallery/' . $filename;
+
+			// Default result empty variable
+			$result = '';
 
 			// Put file to upload directory
-	    	if (file_put_contents($file, $result)) {
+	    	if (file_put_contents($file, $return)) {
 
-	    		// return 
+    			// Send success message 
+				$result['result']['code'] = 1;
+				$result['result']['text'] = 'Success';				
+				$result['result']['file'] = $file;
 
-	    	}	
+				$object['participant_id'] 	= $this->participant->id;				
+				$object['type'] 			= 'fabric';
+				$object['file_name']		= $filename;
+				$object['status'] 			= 1;
+				$object['modified'] 		= time();
+
+				$this->Attachments->setAttachment($object);
+
+
+	    	} else {
+
+				// Send fail message
+				$result['result']['code'] = 0;
+				$result['result']['text'] = 'Failed';
+				$result['result']['file'] = '';
+
+	    	}
+
+			// Return data esult
+			$data['json'] = $result;
+			
+			// Load data into view		
+			$this->load->view('json', $this->load->vars($data));	
 
 		}	
 

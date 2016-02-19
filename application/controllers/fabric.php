@@ -1,20 +1,15 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Fabric extends Public_Controller {
+
+	var $attachment = '';
 	
 	public function __construct() {
 		parent::__construct();
 		
 		// Load User related model in admin module
 		$this->load->model('page/Pagemenus');
-		$this->load->model('page/Pages');	
-
-		// Load Participant related model 
-		$this->load->model('participant/Participants');
-        //$this->load->model('questionnaire/Questionnaires');
-        //$this->load->model('questionnaire/QuestionnaireCompleted');
-		//$this->load->model('questionnaire/QuestionnaireUserAnswers');
-        $this->load->model('qrcode/Qrcodes');
+		$this->load->model('page/Pages');
 
         // Check if session was made 
 		if ($this->participant) {
@@ -31,12 +26,20 @@ class Fabric extends Public_Controller {
 			
 		}
 
-		//print_r($this->participant);
+		$this->attachment = $this->Attachments->getParticipantAttachment($this->participant->id);
+		
+		// print_r($this->participant);
 		
 	}
 
 	public function index() {
-			
+
+		if ($this->attachment) {
+
+			// Redirect Participant already participated
+			redirect('fabric/participated');
+
+		}			
 
 		if ($this->input->is_ajax_request()) {
 
@@ -109,9 +112,13 @@ class Fabric extends Public_Controller {
 								
 								// Jquery Fabric JS	
 								base_url('assets/admin/plugins/fabric.js/canvas2image.js'),
-								base_url('assets/admin/plugins/fabric.js/fabric-0.9.15.js'),
+								//base_url('assets/admin/plugins/fabric.js/fabric-0.9.15.js'),
+								base_url('assets/admin/plugins/fabric.js/fabric-1.6.0-rc.1.min.js'),
 								base_url('assets/admin/plugins/fabric.js/aligning_guidelines.js'),								
-								base_url('assets/admin/plugins/fabric.js/client.js')
+								base_url('assets/admin/plugins/fabric.js/client.js'),
+
+
+
 							];
 
 		// Load qr code js execution
@@ -141,10 +148,8 @@ class Fabric extends Public_Controller {
 								// Do something after 5 seconds
 								window.location.href = base_URL + 'fabric';
 							}, 2000);
-						}
-						
-						$('.reload_captcha').click();
-						
+						}						
+						// $('.reload_captcha').click();						
 						//alert(msg.result);
 						//console.log(msg.result);
 					},
@@ -166,30 +171,33 @@ class Fabric extends Public_Controller {
 			
 	}
 
-	public function upload_result() {
-		
-		// Detect if data sent by POST
-		if ($this->input->server('REQUEST_METHOD') === 'POST') {
-			
-			// Get the data sent and replace unwanted string
-			$base64img = str_replace('data:image/png;base64,', '', $this->input->post("str"));
+	// Redirect if particpant already participated
+	public function participated () {
 
-			// Decode base64 data sent
-			$result = base64_decode($base64img);
+		// Set Gallery Data
+	    $data['gallery'] 		= $this->Attachments->getAllAttachment('fabric');
 
-			// Generate unique image name 
-			$file = 'uploads/gallery/' . uniqid() . '.png';
+		// Set Participated Data
+	    $data['attachment'] 	= $this->attachment;
 
-			// Put file to upload directory
-	    	file_put_contents($file, $result);	
+		// Set main template
+	    $data['main'] 			= 'fabric';
 
-		}	
+	    // Set site title page with module menu
+	    $data['page_title'] 	= 'Fabric Canvas Gallery';
+
+	    // Load qr code js execution
+		$data['js_inline'] = "$('#fancybox').fancybox();";
+
+		// Load site template
+		$this->load->view('template/public/template', $this->load->vars($data));
 
 	}
 
-	 // -------------- CALLBACK METHODS -------------- //
 
-    // Match Email post to Database
+	// -------------- CALLBACK METHODS -------------- //
+
+    // Match Email post to Database // Reverse Mode
     public function match_email($email) {		
 
 		// Check email if empty
@@ -199,10 +207,14 @@ class Fabric extends Public_Controller {
 		}
 		// Check email if match
 		else if ($this->Participants->getByEmail($email) == 1) {
+
 			$this->form_validation->set_message('match_email', 'The %s is already taken.');			
+
 			return true;
+
 		} else {
-			return true;
+
+			return false;
 		} 
 
     }

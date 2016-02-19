@@ -31,6 +31,7 @@ class Attachments Extends CI_Model {
 			    . '`url` VARCHAR(255) NULL, '
 			    . '`title` VARCHAR(255) NULL, '
 			    . '`file_name` TEXT NULL, '
+			    . '`attribute` TEXT NULL, '			    
 			    . '`count` INT(11) NULL , '	
 			    . '`status` TINYINT(1) NULL DEFAULT 1, '
 			    . '`added` INT(11) NULL, '
@@ -92,24 +93,30 @@ class Attachments Extends CI_Model {
 	    }
 	}	
 	
-	public function getAllAttachment($admin=null){
+	public function getAllAttachment($type=null){
+
 	    $data = array();
+		
+		if ($type !='') {
+			$options = ['status'=>1,'type'=>$type];
+			$this->db->where($options);
+		}
+
 	    $this->db->order_by('added');
 	    $Q = $this->db->get($this->table);
 	    if ($Q->num_rows() > 0){
-		//foreach ($Q->result_object() as $row){
-			//$data[] = $row;
-		//}
-		$data = $Q->result_object();
+			$data = $Q->result_object();
 	    }
+	    
 	    $Q->free_result();
+
 	    return $data;
 	}	
 	
 	public function getByType($type = null){
 		if(!empty($type)){
 			$data = array();
-			$options = array('type' => $type,'status'=>'publish');
+			$options = array('type' => $type,'status'=>1);
 			$Q = $this->db->get_where($this->table,$options,1);
 			if ($Q->num_rows() > 0){
 				foreach ($Q->result_object() as $row)
@@ -120,6 +127,7 @@ class Attachments Extends CI_Model {
 		}
 	}	
 
+	// Set attachment for new or update
 	public function setAttachment($object=null){
 
 	    // Set Attachment data
@@ -128,19 +136,37 @@ class Attachments Extends CI_Model {
 		    'url'	=> $object['url'],
 		    'title'	=> $object['title'],
 		    'count'	=> $object['count'],
+		    'file_name'	=> $object['file_name'],
+		    'attribute'	=> $object['attribute'],		    
+		    'type'		=> $object['type'],
 		    'status'    => $object['status'],
-		    'added'	=> time(),	
-		    'modified'  => $object['status']
+		    'added'		=> time(),
+		    'modified'  => $object['modified']
 	    );
 
-	    // Insert Attachment data
-	    $this->db->insert($this->table, $data);
+		if ($this->getParticipantAttachment($object['participant_id'])) {
 
-	    // Return last insert id primary
-	    $insert_id = $this->db->insert_id();
+  			// Update User data             
+		    $this->db->where('participant_id', $object['participant_id']);      
 
-	    // Return last insert id primary
-	    return $insert_id;
+		    // Return last insert id primary
+		    $update = $this->db->update($this->table, $data);	
+
+		    // Return update
+		    return $update;
+		    
+		} else {
+
+			// Insert Attachment data
+		    $this->db->insert($this->table, $data);
+
+		    // Return last insert id primary
+		    $insert_id = $this->db->insert_id();
+
+		    // Return last insert id primary
+		    return $insert_id;		  
+
+		}    
 		
 	}	
 	

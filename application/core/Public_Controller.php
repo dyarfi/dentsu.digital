@@ -25,7 +25,8 @@ class Public_Controller extends MY_Controller {
 		$this->load->model('admin/Configurations');
 		$this->load->model('admin/ServerLogs');
 		$this->load->model('admin/Settings');
-        $this->load->model('participant/Participants');
+        $this->load->model('participant/Participants');        
+        $this->load->model('participant/Attachments');
 		
 		// Set default site copyright
 		$this->config->set_item('title_name', $this->Settings->getByParameter('title_name')->value);

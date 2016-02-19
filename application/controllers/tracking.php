@@ -2,19 +2,14 @@
 
 class Tracking extends Public_Controller {
 	
+	var $attachment = '';
+
 	public function __construct() {
 		parent::__construct();
 		
 		// Load User related model in admin module
 		$this->load->model('page/Pagemenus');
 		$this->load->model('page/Pages');	
-
-		// Load Participant related model 
-		$this->load->model('participant/Participants');
-        //$this->load->model('questionnaire/Questionnaires');
-        //$this->load->model('questionnaire/QuestionnaireCompleted');
-		//$this->load->model('questionnaire/QuestionnaireUserAnswers');
-        $this->load->model('qrcode/Qrcodes');
 
         // Check if session was made 
 		if ($this->participant) {
@@ -30,149 +25,168 @@ class Tracking extends Public_Controller {
 			$this->session->set_userdata('participant',$this->participant);
 			
 		}
+
+		$this->attachment = $this->Attachments->getParticipantAttachment($this->participant->id);
+		
+		// print_r($this->participant);		
 		
 	}
 
 	public function index() {
-		/*
-			// DATA MAIN SETUP
-			$questionnaire_done 	= $this->QuestionnaireCompleted->getUserCompletedQuestionnaire($this->participant->id);
-		    
-		    // Load session id
-		    $data['participant'] 	= base64_encode($this->session->userdata('session_id'));
-
-		    // Load Questionaires data
-		    $data['questions'] 		= $this->Questionnaires->get_all_questions(1000,0);
-
-		    // Load Questionaires data
-		    $data['questionnaires']	= $this->Questionnaires->get_all_questionnaires_checked('1000',0,'','',$questionnaire_done);
-
-		    // Load Questionnaire count
-		    $data['questionnaire_count']= $this->Questionnaires->get_count_questionnaires();
-
-		    $progress_only_one  = !$questionnaire_done ? '0' : count($questionnaire_done['questionnaire_id']);
-		    
-		    // Set main template
-		    $data['main'] 			= 'quest';
-
-		    // Set site title page with module menu
-		    $data['page_title'] 	= 'Questionnaiers';
-
-			// Default data setup
-		    $fields	= array();
-		    $valids	= array();
-		    
-		    $i = 0;
-		    foreach ($data['questionnaires'] as $val) {
-				$fields['qrid_'.$val->id] = '';
-				$valids[$i]['field'] = 'qrid_'.$val->id;
-				$valids[$i]['label'] = 'Pertanyaan No. '.$val->id;
-				$valids[$i]['rules'] = 'required';
-				$i++;
-		    }
-		    
-		    // Set default error value
-		    $errors = $fields;
-		    
-		    // Set form validation
-		    $this->form_validation->set_rules($valids);
-		
-		    // Set default progress
-		    $progress = 0;
-			
-			// Check if post is requested
-		    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-		    	
-
-			    // Validation form checks
-			    if ($this->form_validation->run() == FALSE)
-			    {
-
-					// Set error fields
-					$error = array();
-
-					$int = 0;
-					foreach(array_keys($fields) as $error) {
-					    $errors[$error] = form_error($error);
-					    if (form_error($error) != '') { 
-						$int += count(form_error($error));
-					    }
-					}
-
-					// Show progress
-					$progress = count($fields) - $int;
-
-					// Set previous post merge to default
-					$fields = array_merge($fields, $this->input->post());
-
-			    }
-			    else
-			    {
-
-		    		$result = array();
-			    	foreach ($this->input->post() as $post => $value) {		
-
-		    		   
-			    		if($post != 'submit') {	
-			    			$post 	= str_replace('qrid_', '', $post);
-			    			$value 	= str_replace('qsid_', '', $value);
-			    			$result['participant_id']   		= $this->participant->id;
-					    	$result['questionnaire_id'][$post]	= $value;
-				    	}
-			    	}
-
-
-			    	// Set data to return
-			    	$insert_ids['questionnaire_id'] = $this->QuestionnaireUserAnswers->setUserAnswer($result);
-			    	$insert_ids['participant_id'] 	= $this->participant->id;
-			    	$completed  = $this->QuestionnaireCompleted->setUserCompletedQuestionnaire($insert_ids);
-			    	
-			    	// exit;
-					// Set data to add to database
-					//$this->Users->setUser($this->input->post());
-
-					// Set message
-					//$this->session->set_flashdata('message','User created!');
-
-					// Redirect after add
-					//redirect('admin/user');				
-
-					redirect('quest','refresh');
-
-		   		}
-
-			}
-			
-			// Load Questionaires post errors
-			$data['errors'] 		= $errors;
-			
-			// Load progress number
-			$data['progress']		= $progress ? $progress : $progress_only_one;
-		
-			// Load Questionaires data
-			$data['fields'] 		= $fields;	    
-			
-			// Load site template
-			$this->load->view('template/public/template', $this->load->vars($data));	
-
-		*/	
 
  		// Set main template
 	    $data['main'] 			= 'tracking';
 
 	    // Set site title page with module menu
-	    $data['page_title'] 	= 'Tracking';
+	    $data['page_title'] 	= 'Tracking Face';
 
 		// Load qr codes js scanner 
 		$data['js_files'] = [ 
 								base_url('assets/admin/plugins/tracking.js/tracking-min.js'),
 								base_url('assets/admin/plugins/tracking.js/data/face-min.js'),
-								base_url('assets/admin/plugins/tracking.js/data/eye-min.js'),
-								base_url('assets/admin/plugins/tracking.js/data/mouth-min.js')
+								//base_url('assets/admin/plugins/tracking.js/data/eye-min.js'),
+								//base_url('assets/admin/plugins/tracking.js/data/mouth-min.js'),								
 							];
 		
 		// Load qr code js execution
-		//$data['js_inline'] = "load();setimg('".base_url()."assets/admin/img/')";
+		$data['js_inline'] = "
+		 					function init () {
+
+								window.onload = function() {
+							        var img = document.getElementById('img_tracking');
+							        var tracker = new tracking.ObjectTracker(['face']);
+
+							        tracker.setStepSize(1.7);
+							        tracking.track('#img_tracking', tracker);
+
+							        tracker.on('track', function(event) {
+							          event.data.forEach(function(rect) {
+							            window.plot(rect.x, rect.y, rect.width, rect.height);
+							          });
+
+							            if (event.data.length === 0) {
+
+							              // No targets were detected in this frame.            
+							              // Text information that displayed the information of the image tracking
+							              $('.handler-text h1').html();
+
+
+							            } if (event.data.length === 3) {             
+
+							              // Text information that displayed the information of the image tracking            
+							              $('.handler-text h1').html('<small>Thanks you good to go!</small> <button class=\"btn btn-primary\">Submit</button>');
+
+							            } else {
+
+							              // Text information that displayed the information of the image tracking
+							              $('.handler-text h1').html('You no good to go, please upload other image..');
+
+							              // console.log(event.data.length);
+							              event.data.forEach(function(data) {
+							                // Plots the detected targets here.
+							              });
+
+							            }
+							          
+							        });
+
+							        window.plot = function(x, y, w, h) {
+							          var rect = document.createElement('div');
+							          document.querySelector('.demo-container').appendChild(rect);
+							          rect.classList.add('rect');
+							          rect.style.width = w + 'px';
+							          rect.style.height = h + 'px';
+							          rect.style.left = (img.offsetLeft + x) + 'px';
+							          rect.style.top = (img.offsetTop + y) + 'px';
+							        };
+
+						      	}							      
+						    };
+
+						      	// init();
+
+						      	if (document.getElementById('fileupload') != null) {
+							        document.getElementById('fileupload').onchange = function handleImage(e) {
+							          var reader = new FileReader();
+
+							          var elemts = document.querySelectorAll('.demo-container .rect');
+
+							          if (elemts != null) {
+							          	var i;
+										for (i = 0; i <	elemts.length; i++) {
+										   	elemts[i].parentElement.removeChild(elemts[i]);
+										}
+						    			// console.log(elemts);
+						    		  }
+
+							          reader.onload = function (event) { 
+							              
+							              var dataURL = reader.result;
+							              var img = document.getElementById('img_tracking');
+							              img.src = dataURL;
+
+							              $('.button-submit').show({duration:'260',easing:'easeInOutBack'});
+
+							        	  var tracker = new tracking.ObjectTracker(['face']);
+
+							        	  	tracker.setStepSize(1.7);
+								        	tracking.track('#img_tracking', tracker);
+
+									        tracker.on('track', function(event) {
+									          event.data.forEach(function(rect) {
+									            window.plot(rect.x, rect.y, rect.width, rect.height);
+									          });
+
+									            if (event.data.length === 0) {
+
+									              // No targets were detected in this frame.            
+									              // Text information that displayed the information of the image tracking
+									              $('.handler-text h1').html();
+
+
+									            } if (event.data.length === 3) {             
+
+									              // Text information that displayed the information of the image tracking            
+									              $('.handler-text h1').html('<small>Thanks you good to go!</small> <button class=\"btn btn-primary\">Submit</button>');
+
+									            } else {
+
+									              // Text information that displayed the information of the image tracking
+									              $('.handler-text h1').html('You no good to go, please upload other image..');
+
+									              // console.log(event.data.length);
+									              event.data.forEach(function(data) {
+									                // Plots the detected targets here.
+									              });
+
+									            }
+									          
+								        	});
+
+											window.plot = function(x, y, w, h) {
+									          var rect = document.createElement('div');									          
+									          document.querySelector('.demo-container').appendChild(rect);
+									          rect.classList.add('rect');
+									          rect.style.width = w + 'px';
+									          rect.style.height = h + 'px';
+									          rect.style.left = (img.offsetLeft + x) + 'px';
+									          rect.style.top = (img.offsetTop + y) + 'px';
+									        };
+
+							              //init();
+							              
+							          }
+
+							          reader.onloadend = function() {
+							            // console.log(reader.error.message);
+
+							          };
+							          
+							          reader.readAsDataURL(e.target.files[0]);
+							        }
+						      	}
+
+							    ";
 
 		// Load site template
 		$this->load->view('template/public/template', $this->load->vars($data));	
