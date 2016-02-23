@@ -32,8 +32,8 @@
 	    </div>
 	</div>	
 	<!-- BEGIN FORM-->
-	<form class="form-horizontal <?php echo $class_name;?>-form" method="POST" action="<?php echo base_url(ADMIN);?>/<?php echo $class_name;?>/<?php echo ($action) ? $action .'/'. $param :'';?>" id="<?php echo $class_name;?>-form-default">
-	    <div class="form-body">
+	<?php echo form_open(base_url(ADMIN).'/'.$class_name.'/'.($action ? $action .'/'. $param :''),['id'=>$class_name.'-form','class'=>'form-horizontal','enctype'=>'multipart/form-data','role'=>'form']);?>
+		<div class="form-body">
 		<h3 class="form-section">User Info</h3>
 		<!--/row-->
 		<div class="row">
@@ -264,7 +264,7 @@
 		    </div>
 		</div>
 	    </div>
-	</form>
+	<?php echo form_close();?>
 	<!-- END FORM-->
     </div>
 </div>	

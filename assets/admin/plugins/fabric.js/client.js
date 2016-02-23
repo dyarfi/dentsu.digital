@@ -176,7 +176,8 @@ if (document.getElementById('fileupload') != null) {
          type: 'POST',
          dataType : 'json', // what type of data do we expect back from the server
          data: {
-            data: canvas.toDataURL('image/png')
+            data: canvas.toDataURL('image/png'),
+            csrf_token: $.cookie('csrf_cookie')
          },
          complete: function(data, status) {
           var msg = data.responseJSON;

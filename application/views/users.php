@@ -204,7 +204,7 @@
 		<div class="row">
 			<div class="col-lg-8">
 				<div class="boxed-grey">
-					<form id="contact-form">
+					<?php echo form_open('',['id'=>'contact-form']);?>
 					<div class="row">
 						<div class="col-md-6">
 							<div class="form-group">
@@ -244,7 +244,7 @@
 								Send Message</button>
 						</div>
 					</div>
-					</form>
+					<?php echo form_close();?>
 				</div>
 			</div>
 

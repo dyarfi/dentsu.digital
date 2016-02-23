@@ -6,7 +6,7 @@
 <br/><br/><br/><br/>
   <h4>Questionnaires Result</h4>
 
-  <form class="form-horizontal">
+    <?php echo form_open('',['class'=>'form-horizontal']);?>
       <select name="quests" id="index_quest" class="form-control"/>
             <option value="">----- PILIH -----</option>            
             <?php 
@@ -20,7 +20,7 @@
             }
             ?>
       </select>
-  </form>  
+    <?php echo form_close();?>
 
   <div id="chart2" style="padding:250px 0px;margin:40px 0; clear: both; position: relative;"></div>
 

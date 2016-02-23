@@ -1,10 +1,10 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed'); ?>
-<style type="text/styelsheet">
+<style>
 @media (min-width:980px) {
-  body { /*padding-top: 60px;*/ }
+  body { padding-top: 60px; }
 }
 .main-block { margin: 180px auto 360px auto; }
-.main-box { margin: 100px auto 100px auto; display: inline-block; }
+.main-box { margin: 100px auto 100px auto; }
 .canvas-container { margin: 0 auto; float: none; border: 5px solid #aaa; overflow: hidden; }
 .menu { margin-bottom: 20px; }
 .menu img { margin-bottom: 10px; cursor: pointer; border: 1px solid white; }
@@ -14,9 +14,7 @@
 </style>
 <?php
 /*
- *
  * This is when user already participated
- *
  */
 if ($gallery && $attachment) { ?>
 <div class="container">
@@ -34,9 +32,7 @@ if ($gallery && $attachment) { ?>
 <?php
 } else {
 /*
- *
  * This is when user not yet participated
- *
  */
 ?>
 <div class="container">
@@ -96,7 +92,7 @@ if ($gallery && $attachment) { ?>
                       </div> 
                   </div> <!-- /row -->
                   <div class="row-fluid" id="canva-row">
-                    <canvas id="canvas" height="550"></canvas>
+                    <canvas id="canvas"></canvas>
                   </div> <!-- /row -->
                   <div class="col-xs-12 cari-foto vag-font">
                       <!--div class="img_holder_xhr">
@@ -120,27 +116,29 @@ if ($gallery && $attachment) { ?>
                       </div>
                       <input type="hidden" name="image_temp" value="" id="image_temp">
                       <div class="text-center button-submit" style="display: none; text-align:center; margin: 12px -33px 0px 0px;">
+                        <?php //echo form_open('#');?>
                           <?php echo form_submit(['type'=>'submit','value'=>'KIRIM','id'=>'send_image','class'=>"btn btn-danger submit-color"]);?>
                           <div class="msg"></div>
+                        <?php //echo form_close();?>  
                       </div>
                   </div>    
               </div>     
-          <?php } else { ?>  
-            <div class="row-fluid" style="margin:200px auto 300px auto; ">
-              <div class="center-block">
-                <div class="text-center main-block">
-                    <div class="center-block clearfix main-box">
-                        <?php echo form_open('',['class'=>'form-inline','id'=>'submit_email']);?>
-                        <h3>Please Input your Email first...</h3>
-                        <?php echo form_input(['name'=>'email','class'=>'form-control','placeholder'=>'email@d3.dentsu.co.id']);?>
-                        <?php echo form_submit(['type'=>'submit', 'name'=>'submit', 'value'=>'Submit', 'class'=>'btn btn-primary']);?>
-                        <div class="msg"></div>
-                        <?php echo form_close();?>
-                    </div>
-                </div>    
-              </div>
-            </div>    
-            <? } ?>
+              <?php } else { ?>  
+              <div class="row-fluid" style="margin:200px auto 300px auto; ">
+                <div class="center-block">
+                  <div class="text-center main-block">
+                      <div class="center-block clearfix main-box">
+                          <?php echo form_open('',['class'=>'form-inline','id'=>'submit_email']);?>
+                          <h3>Please Input your Email first...</h3>
+                          <?php echo form_input(['name'=>'email','class'=>'form-control','placeholder'=>'email@d3.dentsu.co.id']);?>
+                          <?php echo form_submit(['type'=>'submit', 'name'=>'submit', 'value'=>'Submit', 'class'=>'btn btn-primary']);?>
+                          <div class="msg"></div>
+                          <?php echo form_close();?>
+                      </div>
+                  </div>    
+                </div>
+              </div>    
+            <?php } ?>
           </div>                
       </div>
   </div>

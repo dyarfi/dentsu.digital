@@ -23,7 +23,7 @@
 		<hr/>
 	</div>
 	<h4>Apply vacancy for <?php echo $vacancy->subject;?></h4>
-	<form id="vacancy-form" action="<?php echo base_url('vacancy/apply');?>" class="" method="POST">
+	<?php echo form_open(base_url('vacancy/apply'),['id'=>'vacancy-form','class'=>'form-horizontal','enctype'=>'multipart/form-data','role'=>'form']);?>
 		<div class="row">
 			<div class="col-md-6">
 				<div class="form-group">
@@ -68,6 +68,6 @@
 				<button type="submit" class="btn btn-skin pull-right" id="btnContactUs">Send</button>
 			</div>
 		</div>
-	</form>
+	<?php echo form_close();?>
 	</div>
 </div>

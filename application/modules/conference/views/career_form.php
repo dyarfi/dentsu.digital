@@ -37,7 +37,7 @@ foreach ($divisions as $division) {
 			</div>
 		</div>	
 		<!-- BEGIN FORM-->
-		<form class="form-horizontal user-form-add" method="POST" action="<?=base_url(ADMIN.$controller);?>/<?=($action) ? $action .'/'. $param :'';?>" id="user-form-add">
+		<?php echo form_open(base_url(ADMIN).'/'.$class_name.'/'.($action ? $action .'/'. $param :''),['id'=>$class_name.'-form','class'=>'form-horizontal','enctype'=>'multipart/form-data','role'=>'form']);?>
 			<div class="form-body">
 				
 				<!--/row-->
@@ -189,7 +189,7 @@ foreach ($divisions as $division) {
 					</div>
 				</div>
 			</div>
-		</form>
+		<?php echo form_close();?>
 		<!-- END FORM-->
 	</div>
 </div>	

@@ -292,9 +292,9 @@ $config['global_xss_filtering'] = FALSE;
 | 'csrf_cookie_name' = The cookie name
 | 'csrf_expire' = The number in seconds the token should expire.
 */
-$config['csrf_protection'] = FALSE;
-$config['csrf_token_name'] = 'csrf_token_set';
-$config['csrf_cookie_name'] = 'csrf_cookie_set';
+$config['csrf_protection'] = TRUE;
+$config['csrf_token_name'] = 'csrf_token';
+$config['csrf_cookie_name'] = 'csrf_cookie';
 $config['csrf_expire'] = 14400; // 7200
 
 /*
@@ -365,6 +365,9 @@ $config['site_name']        = 'Dentsu Digital Division';
 
 // TRUE for site is open or FALSE for maintenance mode
 $config['site_open']		= TRUE;
+
+// Set attachment type
+$config['type_attachment'] 	= ['fabric','tracking','qrcoder'];
 		
 // Module location in the application folder, see @config/modules.php for module configs and @config/routes.php for module routes
 $config['modules_locations'] = array(

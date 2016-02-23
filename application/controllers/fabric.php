@@ -28,12 +28,13 @@ class Fabric extends Public_Controller {
 
 		$this->attachment = $this->Attachments->getParticipantAttachment($this->participant->id);
 		
-		// print_r($this->participant);
+		//print_r($this->participant);
 		
 	}
 
 	public function index() {
 
+		// Check if attachment is already existed
 		if ($this->attachment) {
 
 			// Redirect Participant already participated
@@ -48,9 +49,10 @@ class Fabric extends Public_Controller {
 
 			// Default data setup
 		    $fields	= array(
-				    'email' => '',
+			    		'email' => '',
 				    );
 
+		    // Fill error with default fields
 		    $errors	= $fields;
 
 		    // Set validation rules
@@ -100,28 +102,27 @@ class Fabric extends Public_Controller {
 	    $data['page_title'] 	= 'Fabric Canvas';
     
 		// Load fabric js library
-		$data['js_files'] = [ 
+		$data['js_files'] = ['fabric' => 
+								[
 								// Jquery File Upload
-								base_url('assets/admin/plugins/jquery-file-upload/js/jquery.ui.widget.min.js'),
-								base_url('assets/admin/plugins/jquery-file-upload/js/jquery.iframe-transport.js'),
-								base_url('assets/admin/plugins/jquery-file-upload/js/jquery.fileupload.js'),
-								base_url('assets/admin/plugins/jquery-file-upload/js/jquery.fileupload-process.js'),								
-								base_url('assets/admin/plugins/jquery-file-upload/js/jquery.fileupload-validate.js'),
-								base_url('assets/admin/plugins/jquery-file-upload/js/jquery.fileupload-ui.js'),
-								base_url('assets/admin/plugins/jquery-file-upload/js/jquery.iframe-transport.js'),
+								'admin/plugins/jquery-file-upload/js/jquery.ui.widget.min.js',
+								'admin/plugins/jquery-file-upload/js/jquery.iframe-transport.js',
+								'admin/plugins/jquery-file-upload/js/jquery.fileupload.js',
+								'admin/plugins/jquery-file-upload/js/jquery.fileupload-process.js',	
+								'admin/plugins/jquery-file-upload/js/jquery.fileupload-validate.js',
+								'admin/plugins/jquery-file-upload/js/jquery.fileupload-ui.js',
+								'admin/plugins/jquery-file-upload/js/jquery.iframe-transport.js',
 								
 								// Jquery Fabric JS	
-								base_url('assets/admin/plugins/fabric.js/canvas2image.js'),
-								//base_url('assets/admin/plugins/fabric.js/fabric-0.9.15.js'),
-								base_url('assets/admin/plugins/fabric.js/fabric-1.6.0-rc.1.min.js'),
-								base_url('assets/admin/plugins/fabric.js/aligning_guidelines.js'),								
-								base_url('assets/admin/plugins/fabric.js/client.js'),
-
-
-
+								'admin/plugins/fabric.js/canvas2image.js',
+								// 'assets/admin/plugins/fabric.js/fabric-0.9.15.js', // old version
+								'admin/plugins/fabric.js/fabric-1.6.0-rc.1.min.js',
+								'admin/plugins/fabric.js/aligning_guidelines.js',
+								'admin/plugins/fabric.js/client.js'
+								]	
 							];
 
-		// Load qr code js execution
+		// Load js execution
 		$data['js_inline'] = "
 			$('#submit_email').submit(function(e) {
 				e.preventDefault();
@@ -136,29 +137,29 @@ class Fabric extends Public_Controller {
                     encode      : true,
 					complete: function(message) {
 						var msg = message.responseJSON;
-						
+
 						userform.find('.msg').empty();
 						userform.find('.msg')
 						.html('<div class=\"alert alert-danger msg\">'
 						+'<button class=\"close\" data-close=\"alert\"></button>'
-						+msg.result.text+'</div>');				
+						+msg.result.text+'</div>');
 
-						if (msg.result.code === 1) {					
+						if (msg.result.code === 1) {
 							setTimeout(function() {
 								// Do something after 5 seconds
 								window.location.href = base_URL + 'fabric';
 							}, 2000);
-						}						
-						// $('.reload_captcha').click();						
+						}
+						// $('.reload_captcha').click();
 						//alert(msg.result);
 						//console.log(msg.result);
 					},
-					error: function(x,message,t) { 
+					error: function(x,message,t) {
 						if(message===\"timeout\") {
 							alert('got timeout');
 						} else {
 							//alert(message);
-						}	
+						}
 					}
                 });
 
@@ -187,7 +188,7 @@ class Fabric extends Public_Controller {
 	    $data['page_title'] 	= 'Fabric Canvas Gallery';
 
 	    // Load qr code js execution
-		$data['js_inline'] = "$('#fancybox').fancybox();";
+		$data['js_inline'] 		= "$('#fancybox').fancybox();";
 
 		// Load site template
 		$this->load->view('template/public/template', $this->load->vars($data));

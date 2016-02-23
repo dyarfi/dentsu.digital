@@ -30,8 +30,8 @@
     						<?php if ($questionnaires) { ?>
     								<div class="row">
     						    	<!-- <h4>Questionnaires</h4> -->
-    							    <form id="form-questionnaire" class="form-inline form-quiz-pocky" name="questionnaire" method="POST" action="<?php echo base_url('quest');?>">
-    							    	<ol class="text-left">
+                                    <?php echo form_open(base_url('quest'),['id'=>'form-questionnaire','class'=>'form-inline form-quiz-pocky','enctype'=>'multipart/form-data','role'=>'form','name'=>'questionnaire']);?>
+                                    <ol class="text-left">
     									  <?php 
     									  $i=1;
     									  foreach($questionnaires as $questionnaire) { ?>
@@ -71,7 +71,7 @@
     						   			<div class="center-block submit-block">
     						                <button class="btn btn-default btn-lg" name="submit">Kirim</button>
     						            </div>
-    							    </form>  
+    							    <?php echo form_close();?> 
     								</div>
     							<?php } else { ?>
     							<div class="">	

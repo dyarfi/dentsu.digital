@@ -159,8 +159,8 @@
 		<!-- BEGIN PAGE CONTENT-->
                 <div class="portlet-body form">
                     <!-- BEGIN FORM-->
-                    <form class="form-horizontal" role="form" action="<?php echo base_url(ADMIN.$class_name.'/edit/'.$param);?>">
-                            <div class="form-body">
+                    	<?php echo form_open(base_url(ADMIN.$class_name.'/edit/'.$param),['id'=>$class_name.'-form','class'=>'form-horizontal','enctype'=>'multipart/form-data','role'=>'form','method'=>'GET']);?>
+								<div class="form-body">
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <div class="form-group">
@@ -199,7 +199,7 @@
                                                 </div>
                                             </div>
 					    
-					    <div class="form-group">
+					    					<div class="form-group">
                                                 <label class="control-label col-md-4">Is System:</label>
                                                 <div class="col-md-8">
                                                     <p class="form-control-static">
@@ -251,7 +251,7 @@
                                     </div>
                                 </div>
                             </div>
-                    </form>
+                    	<?php echo form_close();?>
                     <!-- END FORM-->
                 </div>
 		<!-- END PAGE CONTENT-->

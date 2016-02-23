@@ -625,7 +625,7 @@
 		    <div id="maps"></div>
 		    <div class="col-lg-8">
 			    <div class="boxed-grey">
-				    <form id="contact-form" action="" class="">
+			    	<?php echo form_open('',['id'=>'contact-form']);?>
 					    <div class="row">
 						    <div class="col-md-6">
 							    <div class="form-group">
@@ -665,7 +665,7 @@
 								    Send Message</button>
 						    </div>
 					    </div>
-				    </form>
+				    <?php echo form_close();?>
 			    </div>
 		    </div>
 		    <div class="col-lg-4">
@@ -770,7 +770,8 @@
 					<h4>Apply vacancy for <span class="vacancy-title"></span>
 				   <a href="javascript:;" class="btn btn-link btn-sm pull-right back">back <span class="fa fa-chevron-right"></span></a>
 				  </h4>				
-				  <form id="vacancy-form" action="" class="" method="POST">
+			  	  <?php echo form_open('',['id'=>'vacancy-form','class'=>'form-horizontal','enctype'=>'multipart/form-data','role'=>'form']);?>
+		
 					  <div class="row">
 						  <div class="col-md-6">
 							  <div class="form-group">
@@ -815,7 +816,7 @@
 							  <button type="submit" class="btn btn-skin pull-right" id="btnContactUs">Send</button>
 						  </div>
 					  </div>
-				  </form>
+				  <?php echo form_close();?>
 			  </div>
 		  </div>
 

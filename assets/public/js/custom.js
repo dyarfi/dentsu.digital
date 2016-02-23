@@ -1,11 +1,11 @@
 (function ($) {
 
-	new WOW().init();
-
 	jQuery(window).load(function() { 
 		jQuery("#preloader").delay(100).fadeOut("slow");
 		jQuery("#load").delay(100).fadeOut("slow");
 	});
+
+    $('.col-md-6 .alert.alert-danger').fadeIn('slow');
 
 	$('#container').imagesLoaded( function() {
 		// images have loaded

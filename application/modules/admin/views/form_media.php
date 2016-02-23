@@ -153,7 +153,7 @@ License: You must have a valid license purchased only from themeforest(the above
 						</div>
 						<div class="portlet-body form">
 							<!-- BEGIN FORM-->
-							<form action="<?=base_url()?>__admin_media/add_media" method="post" id="form_sample_1" class="form-horizontal" enctype="multipart/form-data">
+							<?php echo form_open(base_url().'__admin_media/add_media',['id'=>'form_sample_1','class'=>'form-horizontal','enctype'=>'multipart/form-data']);?>	
 								<div class="form-body">
 									<div class="alert alert-danger display-hide">
 										<button class="close" data-close="alert"></button>
@@ -270,6 +270,7 @@ License: You must have a valid license purchased only from themeforest(the above
 									</div>
 								</div>
 							</form>
+							<?php echo form_close();?>
 							<!-- END FORM-->
 						</div>
 					</div>

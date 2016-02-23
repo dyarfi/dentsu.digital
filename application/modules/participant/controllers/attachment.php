@@ -14,7 +14,17 @@ class Attachment extends Admin_Controller {
 
             // Load Grocery CRUD
             $this->load->library('grocery_CRUD');
-      
+
+            // Generate js inline
+			//$this->js_files = array(
+				//random_string('alnum',32) => base_url('assets/admin/plugins/jscolor/jscolor.js'),
+			//);
+
+    		//$this->css_files = array(
+				//random_string('alnum',32) => base_url('assets/admin/plugins/bootstrap/css/bootstrap.min.css'),
+    			//random_string('alnum',32) => base_url('assets/admin/plugins/bootstrap-colorpicker/css/colorpicker.css'),
+			//);
+
     }
 	
     public function index() {
@@ -133,11 +143,21 @@ class Attachment extends Admin_Controller {
 	}
     
     private function load($crud, $nav) {
+    	//$crud->set_theme('twitter-bootstrap');
+    	
+    	// Output render
         $output = $crud->render();
+        // Navigation render
         $output->nav = $nav;
+
+        // JS Inline Render
+        // $output->js_files = array_merge($output->js_files,$this->js_files);
+        
         if ($crud->getState() == 'list') {
             // Set Gallery Title 
-            $output->page_title = 'Gallery Listings';
+            $output->page_title = 'Gallery Listings';            
+	        // Custom inline method on PHP
+	        $output->custom_method = config_item('type_attachment');
             // Set Main Template
             $output->main       = 'template/admin/metronix';
             // Set Primary Template

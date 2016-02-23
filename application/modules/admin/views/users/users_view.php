@@ -845,7 +845,7 @@
 								<div class="col-md-9">
 									<div class="tab-content">
 										<div class="tab-pane active" id="tab_1-1">
-											<form action="" method="POST" id="user-form" class="user-form">
+											<?php echo form_open('',['id'=>'user-form','class'=>'user-form','role'=>'form']);?>	
 												<input type="hidden" value="<?=$user_profile->user_id;?>" name="user_id"/>
 												<div class="form-group">
 													<label class="control-label">First Name</label>
@@ -896,13 +896,13 @@
 														<div class="msg"></div>
 													</div>
 												</div>
-											</form>
+											<?php echo form_close();?>
 										</div>
 										<div class="tab-pane hidden" id="tab_2-2">
 											<p>
 												 Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
 											</p>
-											<form role="form" action="#" id="" class="user-form">
+											<?php echo form_open('',['id'=>'user-form','class'=>'user-form','role'=>'form']);?>	
 												<div class="form-group">
 													<div style="width: 310px;" class="thumbnail">
 														<img alt="" src="http://www.placehold.it/310x170/EFEFEF/AAAAAA&amp;text=no+image">
@@ -945,10 +945,10 @@
 														 Cancel
 													</a>
 												</div>
-											</form>
+											<?php echo form_close();?>
 										</div>
 										<div class="tab-pane" id="tab_3-3">
-										<form action="#" id="user-form-password" class="user-form-password">											<input type="hidden" class="form-control" id="user_id" name="user_id" value="<?=$user->id;?>">	
+										<?php echo form_open('#',['id'=>'user-form-password','class'=>'user-form-password','role'=>'form']);?>											<input type="hidden" class="form-control" id="user_id" name="user_id" value="<?=$user->id;?>">	
 											<input type="hidden" class="form-control" id="username" name="username" value="<?=$user->username;?>">
 											<div class="form-group">
 												<label class="control-label">Current Password</label>
@@ -969,10 +969,11 @@
 													<div class="msg"></div>
 												</div>
 											</div>
-										</form>
+										<?php echo form_close();?>
 										</div>
 										<div class="tab-pane hidden" id="tab_4-4">
-											<form action="#">
+											<?php echo form_open('#',['id'=>'','class'=>'','role'=>'form']);?>
+											<input type="hidden" class="form-control" id="user_id" name="user_id" value="<?=$user->id;?>">	
 												<table class="table table-bordered table-striped">
 												<tbody><tr>
 													<td>Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus..</td>
@@ -1012,7 +1013,7 @@
 													<a class="btn green" href="#"> Save Changes</a>
 													<a class="btn default" href="#"> Cancel</a>
 												</div>
-											</form>
+											<?php echo form_close();?>
 										</div>
 									</div>
 								</div>

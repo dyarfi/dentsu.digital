@@ -164,13 +164,15 @@ class Qrcoder extends Public_Controller {
 	    $data['page_title'] 	= 'QR Code Scanner';
 
 		// Load qr codes js scanner 
-		$data['js_files'] = [ 
-								base_url('assets/admin/plugins/qr-codes/llqrcode.js'),
-								base_url('assets/admin/plugins/qr-codes/webqr.js')
+		$data['js_files'] = ['qrcoder'=>
+								[ 
+									'admin/plugins/qr-codes/llqrcode.js',
+									'admin/plugins/qr-codes/webqr.js'
+								]
 							];
 		
 		// Load qr code js execution
-		$data['js_inline'] = "load();setimg('".base_url()."assets/admin/img/')";
+		$data['js_inline'] = "load(); setimg('".base_url()."assets/admin/img/')";
 
 		// Load site template
 		$this->load->view('template/public/template', $this->load->vars($data));	
