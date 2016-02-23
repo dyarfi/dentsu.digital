@@ -188,7 +188,14 @@ class Fabric extends Public_Controller {
 	    $data['page_title'] 	= 'Fabric Canvas Gallery';
 
 	    // Load qr code js execution
-		$data['js_inline'] 		= "$('#fancybox').fancybox();";
+		$data['js_inline'] 		= "$('#fancybox').fancybox();
+								 $('.li-participated').hover(function(e){
+								 	e.preventDefault();
+								    $(this).find('.participated').show();
+								 },function(e){
+								 	e.preventDefault();
+								    $(this).find('.participated').hide();
+								 })";
 
 		// Load site template
 		$this->load->view('template/public/template', $this->load->vars($data));

@@ -11,6 +11,8 @@
 .menu img:hover{ border: 1px solid green; }
 .thumb { height: 70px; }
 .msg { margin: 10px auto 10px auto; }
+.li-participated { position:relative; }
+.participated { display:none;padding:2px;position:absolute;bottom:0;left:0;right:0;z-index:1;background:#f2f2f2;width:auto;margin 0 auto;word-wrap:break-word; font-size: 0.9em}
 </style>
 <?php
 /*
@@ -20,10 +22,17 @@ if ($gallery && $attachment) { ?>
 <div class="container">
    <div class="text-center main-block">
     <h4>Gallery</h4>
-    <div class="row-fluid" style="margin:200px auto">
+    <div class="row-fluid" style="margin:170px auto">
       <ul class="list-unstyled list-inline">
         <?php foreach ($gallery as $img) { ?>    
-        <li><a href="<?php echo base_url('uploads/gallery/'.$img->file_name);?>" id="fancybox" title=""><img class="img-responsive" style="max-height:220px;<?php if ($attachment->id == $img->id) { echo 'border:2px dashed red;'; } ?>" src="<?php echo base_url('uploads/gallery/'.$img->file_name);?>"/></a></li>
+        <li class="li-participated">
+          <a href="<?php echo base_url('uploads/gallery/'.$img->file_name);?>" id="fancybox" title="<?php echo $this->Participants->getParticipant($img->participant_id)->email;?>">
+            <img class="img-responsive" style="max-height:220px;<?php if ($attachment->id == $img->id) { echo 'border:2px dashed red;'; } ?>" src="<?php echo base_url('uploads/gallery/'.$img->file_name);?>"/>
+          </a>
+          <div class="participated">
+            <?php echo $this->Participants->getParticipant($img->participant_id)->email;?>
+          </div>          
+        </li>
         <?php } ?>
       </ul>
     </div>
