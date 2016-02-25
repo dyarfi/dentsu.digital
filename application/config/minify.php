@@ -26,7 +26,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @link      http://www.spidersoft.com.au/projects/codeigniter-minify/
  */
 
-$config['assets_dir'] = 'assets/min';
+$config['assets_dir'] = 'assets';
 $config['css_dir']    = 'assets';
 $config['js_dir'] = 'assets';
 

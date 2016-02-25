@@ -26,10 +26,13 @@ class Tracking extends Public_Controller {
 			
 		}
 
-		$this->attachment = $this->Attachments->getParticipantAttachment($this->participant->id);
+		// Get participant attachment by type
+		$this->attachment = $this->Attachments->getParticipantAttachmentByType($this->participant->id, 'tracking');
 		
-		// print_r($this->participant);		
+		//print_r($this->attachment);
 		
+		//print_r($this->participant);
+
 	}
 
 	public function index() {
@@ -89,18 +92,22 @@ class Tracking extends Public_Controller {
 
 									              // No targets were detected in this frame.            
 									              // Text information that displayed the information of the image tracking
-									              $('.handler-text h1').html();
+									              // $('.handler-text h3').html();
 
 
 									            } if (event.data.length === 3) {             
 
 									              // Text information that displayed the information of the image tracking            
-									              $('.handler-text h1').html('<small>Thanks you good to go!</small> <button class=\"btn btn-primary\">Submit</button>');
+									              $('.handler-text h3').html('Thanks, you\'re good to go!').fancybox({'hideOnOverlayClick':true,'hideOnContentClick':true}).click();
+									              //bootbox.alert('Thanks, you\'re good to go!');
 
 									            } else {
 
 									              // Text information that displayed the information of the image tracking
-									              $('.handler-text h1').html('You no good to go, please upload other image..');
+									              $('.handler-text h3').html('You no good to go, please upload other picture along with your friends..').fancybox({'hideOnOverlayClick':true,'hideOnContentClick':true}).click();
+												  //bootbox.alert('You no good to go, please upload other picture along with your friends..');
+									            	//$.fn.fancybox();
+									            	//$(this).fancybox().html('Inline - modal window');
 
 									              // console.log(event.data.length);
 									              event.data.forEach(function(data) {

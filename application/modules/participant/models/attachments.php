@@ -78,6 +78,20 @@ class Attachments Extends CI_Model {
 		return $data;
 	    }
 	}
+
+	public function getParticipantAttachmentByType($participant_id = null, $type = 'fabric'){
+	    if(!empty($participant_id) && !empty($type)) {
+            $data = array();
+            $options = array('participant_id' => $participant_id, 'type' => $type);
+            $Q = $this->db->get_where($this->table,$options,1);
+            if ($Q->num_rows() > 0){
+                foreach ($Q->result_object() as $row)
+                $data = $row;
+            }
+            $Q->free_result();
+		return $data;
+	    }
+	}
     
 	public function getAttachment($id = null){
 	    if(!empty($id)){

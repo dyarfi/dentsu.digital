@@ -25,9 +25,11 @@ class Fabric extends Public_Controller {
 			$this->session->set_userdata('participant',$this->participant);
 			
 		}
-
-		$this->attachment = $this->Attachments->getParticipantAttachment($this->participant->id);
 		
+		// Get participant attachment by type
+		$this->attachment = $this->Attachments->getParticipantAttachmentByType($this->participant->id);
+		
+		//print_r($this->attachment);		
 		//print_r($this->participant);
 		
 	}

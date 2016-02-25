@@ -12,7 +12,7 @@
     * Add css files that want to be minify
     */    
     // Add / Change default dir
-    $this->minify->assets_dir = 'assets/min/css';
+    $this->minify->assets_dir = 'assets/public/css';
     // Add Stylesheet
     $this->minify->css([
       "public/css/bootstrap.min.css",
@@ -31,7 +31,12 @@
           $this->minify->add_css($css, $sheet);
         endforeach; 
     }
-    echo $this->minify->deploy_css();
+    /* 
+     * ----------------- BEWARE OF DEPLOYING | ALWAYS SET TO FALSE AFTER RECOMPILE ------------------
+     * Recompile css!!! Set this to true every times you add css library from anywhere
+     * delete assets/public/css/styles.min.css to recompile again
+     */
+    echo $this->minify->deploy_css(FALSE);
   ?>
 </head>
 <body id="page-top" data-spy="scroll" data-target=".navbar-custom">	
@@ -58,13 +63,14 @@
     * Add js files that want to be minify
     */
     // Add / Change default dir
-    $this->minify->assets_dir = 'assets/min/js';
+    $this->minify->assets_dir = 'assets/public/js';
     // Add javascripts
     $this->minify->js([
       "public/js/jquery.min.js",
       "public/js/jquery.cookie.js",
       "public/js/jquery.fancybox.pack.js",
       "public/js/bootstrap.min.js",
+      "admin/plugins/bootbox/bootbox.min.js",
       "public/js/jquery.easing.min.js",
       "public/js/jquery.scrollTo.js",
       "public/js/imagesloaded.pkgd.min.js"
@@ -81,6 +87,7 @@
     /* 
      * ----------------- BEWARE OF DEPLOYING | ALWAYS SET TO FALSE AFTER RECOMPILE ------------------
      * Recompile javascript!!! Set this to true every times you add javascripts library from anywhere
+     * delete assets/public/js/scripts.min.js to recompile again
      */
     echo $this->minify->deploy_js(FALSE);
   ?>
