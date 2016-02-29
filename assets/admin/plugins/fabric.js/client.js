@@ -71,20 +71,12 @@ if (document.getElementById('fileupload') != null) {
   window.addEventListener('resize', resizeCanvas, false);
 
   function resizeCanvas(itemHandlerWidth='',itemHandlerHeight='') {
-
     if (itemHandlerWidth == '' && document.getElementById('canva-row') != null) {
-
       canvas.setWidth(document.getElementById('canva-row').offsetWidth );
-
     } else {
-
       canvas.setWidth(itemHandlerWidth);
       canvas.setHeight(itemHandlerHeight);      
-
     }
-
-    
-
   }
 
   resizeCanvas();
@@ -93,8 +85,7 @@ if (document.getElementById('fileupload') != null) {
   
   canvas.observe('object:modified', function (e) {
     var activeObject = e.target;
-    activeObject.straighten(45);
-    
+    activeObject.straighten(45);    
   });
 
   // load image from menu to canva
@@ -171,6 +162,7 @@ if (document.getElementById('fileupload') != null) {
     canvas.discardActiveGroup();
     canvas.discardActiveObject();
     canvas.renderAll();
+    
       $.ajax({
          url: 'upload/upload_result',
          type: 'POST',

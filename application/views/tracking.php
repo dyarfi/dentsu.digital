@@ -14,13 +14,17 @@
 </style>
 <div class="container">
    <div class="center-block">
-      <div class="text-center main-block" style="margin:100px auto 100px auto;">
-        <div class="col-md-12">
+      <div class="text-center main-block" style="margin:100px auto 180px auto;">
           <div class="demo-frame">
-            <div class="demo-container">
+            <div class="demo-container" id="file-handler">
               <img id="img_tracking" src="<?php echo base_url('uploads/gallery/faces.jpg');?>" />
               <!-- <img id="img_tracking" src="<?php echo base_url('uploads/gallery/10275287_875775332540613_4181229518108083063_o_612.jpg');?>" /> -->
             </div>
+            
+            <div id="canvasHolder"></div>
+
+            <div id="pngHolder"></div>
+
           </div>
           <div class="col-xs-12 cari-foto vag-font">
                 <!--div class="img_holder_xhr">
@@ -43,13 +47,12 @@
                     </div>
                 </div>
                 <input type="hidden" name="image_temp" value="" id="image_temp">
-                <div class="text-center button-submit" style="display: none; text-align:center; margin: 12px -33px 0px 0px;">
-                    <?php echo form_submit(['type'=>'submit','value'=>'KIRIM','id'=>'send_image','class'=>"btn btn-danger submit-color"]);?>
+                <div class="text-center button-submit" id="submit-button" style="display: none; text-align:center; margin: 12px -33px 0px 0px;">
+                    <?php echo form_submit(['type'=>'submit','value'=>'KIRIM','id'=>'send_image','class'=>"btn btn-primary submit-color"]);?>
                     <div class="msg"></div>
                 </div>
             </div>          
           <div class="center-block handler-text"><h3></h3></div>
-        </div>
     </div>
   </div>
 
@@ -60,12 +63,12 @@
     position: absolute;
     top: -1000px;
   }
-  #img_tracking {
+  /*#img_tracking {*/
     /*position: absolute;*/
     /*top: 50%;*/
     /*left: 50%;*/
     /*margin: -173px 0 0 -300px;*/
-  }
+  /*}*/
   </style>
   <script type="text/javascript"></script>
   <!-- /.container -->

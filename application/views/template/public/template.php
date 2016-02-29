@@ -102,7 +102,7 @@
   ?>
   <!-- Custom Theme JavaScript -->
   <script src="<?php echo base_url();?>assets/public/js/custom.js"></script>    
-  <script>
+  <script type="text/javascript">
   $(document).ready(function() {     
   <?php 
     // Write the javascript inline in the controller

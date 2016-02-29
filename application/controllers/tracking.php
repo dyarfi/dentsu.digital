@@ -54,92 +54,207 @@ class Tracking extends Public_Controller {
 							];
 		
 		// Load js execution
-		$data['js_inline'] = "	if (document.getElementById('fileupload') != null) {
-							        document.getElementById('fileupload').onchange = function handleImage(e) {
-							          var reader = new FileReader();
+		$data['js_inline'] = "// Variable to catch file upload id
+							  var fileupload = document.getElementById('fileupload');
 
-							          reader.onload = function (event) { 
+							  // Tracker new object on face detection
+							  var tracker = new tracking.ObjectTracker(['face']);    
+							  
+							  // Variable to get id of filereader
+							  var reader = new FileReader();
+							  
+							  // Variable to get img tracking id
+							  var img = document.getElementById('img_tracking');
 
-						               	  var elemts = document.querySelectorAll('.demo-container .rect');
-						               	  
-							              var dataURL = reader.result;
-							              var img = document.getElementById('img_tracking');
-							              img.src = dataURL;
+							  // Add event listener    
+							  fileupload.addEventListener('change', handleFiles, false);
 
-							              $('.button-submit').show({duration:'260',easing:'easeInOutBack'});
+							  // Function for handling files
+							  function handleFiles() {        
 
-							        	  var tracker = new tracking.ObjectTracker(['face']);
+							      var fileList = this.files; /* now you can work with the file list */
+							      
+							      // Elements rectangle
+							      var elemts = document.querySelectorAll('.demo-container .rect');
 
-							        	  	tracker.setStepSize(1.7);
-								        	tracking.track('#img_tracking', tracker);
-
-									        tracker.on('track', function(event) {
-							        		  
-							        		  // Destroy all rectangle 
-								              if (elemts != null) {
-									          	var i;
-												for (i = 0; i <	elemts.length; i++) {
-												   	elemts[i].parentElement.removeChild(elemts[i]);
-												}
-								    			// console.log(elemts);
-								    		  }	  
-
-									          event.data.forEach(function(rect) {
-									            window.plot(rect.x, rect.y, rect.width, rect.height);
-									          });
-
-									            if (event.data.length === 0) {
-
-									              // No targets were detected in this frame.            
-									              // Text information that displayed the information of the image tracking
-									              // $('.handler-text h3').html();
-
-
-									            } if (event.data.length === 3) {             
-
-									              // Text information that displayed the information of the image tracking            
-									              $('.handler-text h3').html('Thanks, you\'re good to go!').fancybox({'hideOnOverlayClick':true,'hideOnContentClick':true}).click();
-									              //bootbox.alert('Thanks, you\'re good to go!');
-
-									            } else {
-
-									              // Text information that displayed the information of the image tracking
-									              $('.handler-text h3').html('You no good to go, please upload other picture along with your friends..').fancybox({'hideOnOverlayClick':true,'hideOnContentClick':true}).click();
-												  //bootbox.alert('You no good to go, please upload other picture along with your friends..');
-									            	//$.fn.fancybox();
-									            	//$(this).fancybox().html('Inline - modal window');
-
-									              // console.log(event.data.length);
-									              event.data.forEach(function(data) {
-									                // Plots the detected targets here.
-									              });
-
-									            }
-									          
-								        	});
-
-											window.plot = function(x, y, w, h) {
-									          var rect = document.createElement('div');									          
-									          document.querySelector('.demo-container').appendChild(rect);
-									          rect.classList.add('rect');
-									          rect.style.width = w + 'px';
-									          rect.style.height = h + 'px';
-									          rect.style.left = (img.offsetLeft + x) + 'px';
-									          rect.style.top = (img.offsetTop + y) + 'px';
-									        };
-
-							              //init();
-							              
-							          }
-
-							          reader.onloadend = function() {
-							            // console.log(reader.error.message);
-
-							          };
-							          
-							          reader.readAsDataURL(e.target.files[0]);
+							      // Destroy all rectangle 
+							      if (elemts != null && elemts.length !== 0) {
+							        var i;
+							        for (i = 0; i < elemts.length; i++) {
+							            elemts[i].parentElement.removeChild(elemts[i]);
 							        }
-						      	}";
+							        console.log(elemts.length);
+							      }
+
+							      reader.addEventListener('loadend',function loadEndImage(event) {                                    
+
+							          reader.removeEventListener('loadend',loadEndImage,false);
+
+							      });
+
+							      reader.addEventListener('load',function loadImage(event) {
+
+							          var dataURL = reader.result;
+							          img.src = dataURL;
+							          
+							          if(navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
+							            // There is a tweak on firefox and i don't know why
+							            setTimeout(function(){
+							                readerFileReturn();
+							            },500);
+
+							          } else {
+							            readerFileReturn();
+							          }          
+
+							          reader.removeEventListener('load',loadImage,false);
+							      });
+							         
+							      reader.readAsDataURL(fileList[0]);
+
+							}
+
+							function readerFileReturn() {
+							          
+							      tracker.setStepSize(1.7);
+							      var trackerTask = tracking.track('#img_tracking', tracker);          
+
+							      tracker.on('track', function trackFace(event) {                      
+
+							            if (event.data.length === 0) {
+
+							              // No targets were detected in this frame.            
+							              // Text information that displayed the information of the image tracking
+							              // $('.handler-text h3').html();
+							              // setRectangle(img);
+
+							            }
+
+							            if (event.data.length === 3) {             
+							              
+							              setRectangle(event, img);
+
+							              // Text information that displayed the information of the image tracking            
+							              $('.handler-text h3').html('Thanks, you\'re good to go!').fancybox({'hideOnOverlayClick':true,'hideOnContentClick':true}).click();
+
+							              document.getElementById('submit-button').style.display=\"block\";							          
+							              
+							            } else {
+
+							              // Text information that displayed the information of the image tracking
+							              $('.handler-text h3').html('<div class=\"text-center\">You no good to go, <br/> please upload other picture <br/>along with your friends..</div>').fancybox({'hideOnOverlayClick':true,'hideOnContentClick':true}).click();
+							        
+							              //event.data.forEach(function(data) {
+							                // Plots the detected targets here.
+							              //});
+							          
+							            }
+
+							      });
+
+							      trackerTask.stop();
+							}
+
+							function setRectangle(event, img) {
+
+							  //img.addEventListener('track', function(event) {
+							      event.data.forEach(function(rect) {
+							        plotRectangle(rect.x, rect.y, rect.width, rect.height, img);
+							      });
+							  //});
+							}
+
+							function plotRectangle(x, y, w, h, img) {
+							    var rect = document.createElement('div');                           
+							    document.querySelector('.demo-container').appendChild(rect);
+							    rect.classList.add('rect');
+							    rect.style.width = w + 'px';
+							    rect.style.height = h + 'px';
+							    rect.style.left = (img.offsetLeft + x) + 'px';
+							    rect.style.top = (img.offsetTop + y) + 'px';
+							}
+
+							$('#send_image').click(function(e) {
+							    // Prevent own default clicking
+							    e.preventDefault();
+
+							    // default form var
+							    var userform = $(this).next('.msg');
+
+							    // canvas.discardActiveGroup();
+							    // canvas.discardActiveObject();
+							    // canvas.renderAll();
+
+							      $.ajax({
+							         url: 'upload/upload_result',
+							         type: 'POST',
+							         dataType : 'json', // what type of data do we expect back from the server
+							         data: {
+							            /* data: canvas.toDataURL('image/png'),*/
+							            csrf_token: $.cookie('csrf_cookie')
+							         },
+							         complete: function(data, status) {
+							          var msg = data.responseJSON;
+
+							            console.log(msg);
+							            
+							            //userform.find('.msg').empty();
+							            //userform.find('.msg')
+
+							            userform.empty();
+							            userform
+							            .html('<div class=\"alert alert-danger msg\">'
+							            +'<button class=\"close\" data-close=\"alert\"></button>'
+							            +msg.result.text+'</div>');       
+
+							            if (msg.result.code === 1) {          
+							              setTimeout(function() {
+							                // Do something after 5 seconds
+							                window.location.href = base_URL + 'fabric';
+							              }, 2000);
+							            }
+
+							            if(status=='success') {
+							                alert('saved!');
+							            }
+							            // alert('Error has been occurred');
+							         }
+							      });
+							   });
+
+							
+							// https://davidwalsh.name/demo/convert-canvas-image.php
+							wo = window.onload;
+							window.onload = function() {
+								wo && wo.call(null);
+								
+								// Get the image
+								var sampleImage = document.getElementById(\"img_tracking\"),
+									canvas = convertImageToCanvas(sampleImage);
+								
+								// Actions
+								document.getElementById(\"canvasHolder\").appendChild(canvas);
+								document.getElementById(\"pngHolder\").appendChild(convertCanvasToImage(canvas));
+								
+								// Converts image to canvas; returns new canvas element
+								function convertImageToCanvas(image) {
+									var canvas = document.createElement(\"canvas\");
+									canvas.width = image.width;
+									canvas.height = image.height;
+									canvas.getContext(\"2d\").drawImage(image, 0, 0);
+
+									return canvas;
+								}
+
+								// Converts canvas to an image
+								function convertCanvasToImage(canvas) {
+									var image = new Image();
+									image.src = canvas.toDataURL(\"image/png\");
+									return image;
+								}
+							};
+		
+							";
 
 		// Load site template
 		$this->load->view('template/public/template', $this->load->vars($data));	
