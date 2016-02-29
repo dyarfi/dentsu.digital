@@ -150,6 +150,7 @@ class upload extends Public_Controller {
 			
 			// Get the data sent and replace unwanted string
 			$base64img = str_replace('data:image/png;base64,', '', $this->input->post("data"));
+			$base64img = str_replace('data:image/jpeg;base64,', '', $base64img);
 
 			// Decode base64 data sent
 			$return = base64_decode($base64img);

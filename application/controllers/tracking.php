@@ -190,7 +190,7 @@ class Tracking extends Public_Controller {
 							         type: 'POST',
 							         dataType : 'json', // what type of data do we expect back from the server
 							         data: {
-							            /* data: canvas.toDataURL('image/png'),*/
+							            data: document.getElementById(\"img_tracking\").src,
 							            csrf_token: $.cookie('csrf_cookie')
 							         },
 							         complete: function(data, status) {
@@ -224,36 +224,43 @@ class Tracking extends Public_Controller {
 
 							
 							// https://davidwalsh.name/demo/convert-canvas-image.php
-							wo = window.onload;
-							window.onload = function() {
-								wo && wo.call(null);
-								
-								// Get the image
-								var sampleImage = document.getElementById(\"img_tracking\"),
-									canvas = convertImageToCanvas(sampleImage);
-								
-								// Actions
-								document.getElementById(\"canvasHolder\").appendChild(canvas);
-								document.getElementById(\"pngHolder\").appendChild(convertCanvasToImage(canvas));
-								
-								// Converts image to canvas; returns new canvas element
-								function convertImageToCanvas(image) {
-									var canvas = document.createElement(\"canvas\");
-									canvas.width = image.width;
-									canvas.height = image.height;
-									canvas.getContext(\"2d\").drawImage(image, 0, 0);
 
-									return canvas;
-								}
+							/* add this to your html
+				            <div id=\"canvasHolder\" style=\"display:none\"></div>
+				            <div id=\"pngHolder\"></div>
+				            */
 
-								// Converts canvas to an image
-								function convertCanvasToImage(canvas) {
-									var image = new Image();
-									image.src = canvas.toDataURL(\"image/png\");
-									return image;
-								}
-							};
-		
+							/* add this to your html
+								wo = window.onload;
+								window.onload = function() {
+									wo && wo.call(null);
+									
+									// Get the image
+									var sampleImage = document.getElementById(\"img_tracking\"),
+										canvas = convertImageToCanvas(sampleImage);
+									
+									// Actions
+									document.getElementById(\"canvasHolder\").appendChild(canvas);
+									document.getElementById(\"pngHolder\").appendChild(convertCanvasToImage(canvas));
+									
+									// Converts image to canvas; returns new canvas element
+									function convertImageToCanvas(image) {
+										var canvas = document.createElement(\"canvas\");
+										canvas.width = image.width;
+										canvas.height = image.height;
+										canvas.getContext(\"2d\").drawImage(image, 0, 0);
+
+										return canvas;
+									}
+
+									// Converts canvas to an image
+									function convertCanvasToImage(canvas) {
+										var image = new Image();
+										image.src = canvas.toDataURL(\"image/png\");
+										return image;
+									}
+								};
+							*/
 							";
 
 		// Load site template

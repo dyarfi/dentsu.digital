@@ -19,12 +19,7 @@
             <div class="demo-container" id="file-handler">
               <img id="img_tracking" src="<?php echo base_url('uploads/gallery/faces.jpg');?>" />
               <!-- <img id="img_tracking" src="<?php echo base_url('uploads/gallery/10275287_875775332540613_4181229518108083063_o_612.jpg');?>" /> -->
-            </div>
-            
-            <div id="canvasHolder"></div>
-
-            <div id="pngHolder"></div>
-
+            </div>          
           </div>
           <div class="col-xs-12 cari-foto vag-font">
                 <!--div class="img_holder_xhr">
