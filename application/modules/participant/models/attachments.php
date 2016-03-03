@@ -107,9 +107,9 @@ class Attachments Extends CI_Model {
 	    }
 	}	
 	
-	public function getAllAttachment($type=null){
-
-	    $data = array();
+	public function getAllAttachment($type=''){
+		
+		$data = array();
 		
 		if ($type !='') {
 			$options = ['status'=>1,'type'=>$type];

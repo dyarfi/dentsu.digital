@@ -67,6 +67,7 @@ $route[$admin.'/employee/(:any)']	= 'career/employee/$1';
 
 $route[$admin.'/page/(:any)']		= 'page/$1';
 $route[$admin.'/pagemenu/(:any)']	= 'page/pagemenu/$1';
+$route[$admin.'/page_gallery/(:any)']  = 'page/page_gallery/$1';
 
 $route[$admin.'/qrcode/(:any)']			= 'qrcode/$1';
 $route[$admin.'/qrcodescanner/(:any)']	= 'qrcode/qrcodescanner/$1';

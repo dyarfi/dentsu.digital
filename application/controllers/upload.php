@@ -171,7 +171,7 @@ class upload extends Public_Controller {
 				$result['result']['file'] = $file;
 
 				$object['participant_id'] 	= $this->participant->id;				
-				$object['type'] 			= 'fabric';
+				$object['type'] 			= $this->input->get("type");
 				$object['file_name']		= $filename;
 				$object['status'] 			= 1;
 				$object['modified'] 		= time();

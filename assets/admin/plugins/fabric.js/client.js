@@ -164,7 +164,7 @@ if (document.getElementById('fileupload') != null) {
     canvas.renderAll();
     
       $.ajax({
-         url: 'upload/upload_result',
+         url: 'upload/upload_result?type=fabric',
          type: 'POST',
          dataType : 'json', // what type of data do we expect back from the server
          data: {

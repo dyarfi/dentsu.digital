@@ -37,6 +37,14 @@ class Tracking extends Public_Controller {
 
 	public function index() {
 
+		// Check if attachment is already existed
+		if ($this->attachment) {
+
+			// Redirect Participant already participated
+			redirect('tracking/participated');
+
+		}		
+
  		// Set main template
 	    $data['main'] 			= 'tracking';
 
@@ -186,7 +194,7 @@ class Tracking extends Public_Controller {
 							    // canvas.renderAll();
 
 							      $.ajax({
-							         url: 'upload/upload_result',
+							         url: 'upload/upload_result?type=tracking',
 							         type: 'POST',
 							         dataType : 'json', // what type of data do we expect back from the server
 							         data: {
@@ -210,7 +218,7 @@ class Tracking extends Public_Controller {
 							            if (msg.result.code === 1) {          
 							              setTimeout(function() {
 							                // Do something after 5 seconds
-							                window.location.href = base_URL + 'fabric';
+							                window.location.href = base_URL + 'tracking';
 							              }, 2000);
 							            }
 
@@ -221,7 +229,6 @@ class Tracking extends Public_Controller {
 							         }
 							      });
 							   });
-
 							
 							// https://davidwalsh.name/demo/convert-canvas-image.php
 
@@ -268,24 +275,58 @@ class Tracking extends Public_Controller {
 			
 	}
 
-	public function upload_result() {
-		
-		// Detect if data sent by POST
-		if ($this->input->server('REQUEST_METHOD') === 'POST') {
-			
-			// Get the data sent and replace unwanted string
-			$base64img = str_replace('data:image/png;base64,', '', $this->input->post("str"));
+	// Redirect if particpant already participated
+	public function participated () {
 
-			// Decode base64 data sent
-			$result = base64_decode($base64img);
+		// Set Gallery Data
+	    $data['gallery'] 		= $this->Attachments->getAllAttachment('tracking');
 
-			// Generate unique image name 
-			$file = 'uploads/gallery/' . uniqid() . '.png';
+		// Set Participated Data
+	    $data['attachment'] 	= $this->attachment;
 
-			// Put file to upload directory
-	    	file_put_contents($file, $result);	
+		// Set main template
+	    $data['main'] 			= 'fabric';
 
-		}	
+	    // Set site title page with module menu
+	    $data['page_title'] 	= 'Fabric Canvas Gallery';
+
+	    // Load qr code js execution
+		$data['js_inline'] 		= "$('#fancybox').fancybox();
+								 $('.li-participated').hover(function(e){
+								 	e.preventDefault();
+								    $(this).find('.participated').show();
+								 },function(e){
+								 	e.preventDefault();
+								    $(this).find('.participated').hide();
+								 })";
+
+		// Load site template
+		$this->load->view('template/public/template', $this->load->vars($data));
 
 	}
+
+
+	// -------------- CALLBACK METHODS -------------- //
+
+    // Match Email post to Database // Reverse Mode
+    public function match_email($email) {		
+
+		// Check email if empty
+		if ($email == '') {
+			$this->form_validation->set_message('match_email', 'The %s can not be empty.');
+			return false;
+		}
+		// Check email if match
+		else if ($this->Participants->getByEmail($email) == 1) {
+
+			$this->form_validation->set_message('match_email', 'The %s is already taken.');			
+
+			return true;
+
+		} else {
+			$this->form_validation->set_message('match_email', 'Use valid email please.');		
+			return false;
+		} 
+
+    }
 }

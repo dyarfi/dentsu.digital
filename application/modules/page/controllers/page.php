@@ -44,7 +44,7 @@ class Page extends Admin_Controller {
             $crud->set_relation('menu_id','tbl_page_menus','name');
 			// Add custom column
             // Set column
-            $crud->columns('subject','name','menu_id','synopsis','text','status','added','modified');			
+            $crud->columns('subject','name','menu_id','synopsis','text','gallery','status','added','modified');			
 			// The fields that user will see on add and edit form
 			$crud->fields('subject','name','menu_id','synopsis','text','publish_date','unpublish_date','status','added','modified');
             // Set column display 
@@ -68,8 +68,11 @@ class Page extends Admin_Controller {
             $crud->callback_before_insert(array($this,'_callback_url'));
             $crud->callback_before_update(array($this,'_callback_url'));
 			
+            // Callback Column 
+            $crud->callback_column('gallery',array($this,'_callback_gallery'));
+
 			// Sets the required fields of add and edit fields
-			$crud->required_fields('subject','name','text','status'); 
+			$crud->required_fields('subject',/*'name',*/'text','status'); 
             
 			// Set upload field
             // $crud->set_field_upload('file_name','uploads/pages');
@@ -83,8 +86,8 @@ class Page extends Admin_Controller {
 				// GC Edit Method. 
 			} else {
 				// GC List Method
-			}
-			
+			}			
+
             $this->load($crud, 'page');
         } catch (Exception $e) {
             show_error($e->getMessage() . ' --- ' . $e->getTraceAsString());
@@ -117,6 +120,14 @@ class Page extends Admin_Controller {
         return $total;
     }
     
+    public function _callback_gallery ($value,$row) {
+        if ($row->id) { 
+            return '<a href="'.base_url(ADMIN).'/page_gallery/index/'.$row->id.'" class="fancyframe iframe"><span class="btn btn-default btn-mini glyphicon glyphicon-camera"></span></a>'; 
+        } else { 
+            return '-';
+        }
+    }
+
     private function load($crud, $nav) {
         $output = $crud->render();
         $output->nav = $nav;

@@ -132,6 +132,16 @@ $config['modulelist'] = array(
 						'page/index/change'	=> 'Change Page Status',
 						'page/index/export'	=> 'Export Page',
 						'page/index/print'	=> 'Print Page',
+						// Pages Gallery functions
+                        'page_gallery/index'        => 'Gallery',
+                        'page_gallery/index/add'	=> 'Add Gallery',
+                        'page_gallery/index/view'	=> 'View Gallery',			
+                        'page_gallery/index/edit'	=> 'Edit Gallery',			
+                        'page_gallery/index/delete' => 'Delete Gallery',
+                        'page_gallery/index/change' => 'Change Gallery',
+                        'page_gallery/index/export' => 'Export Gallery',
+                        'page_gallery/index/print'	=> 'Print Gallery',
+                        'page_gallery/index/upload_file'	=> 'Upload Gallery',                        
 						// Page Menu functions
 						'pagemenu/index/add'	=> 'Add Page Menu',
 						'pagemenu/index/view'	=> 'View Page Menu',
