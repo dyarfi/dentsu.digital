@@ -48,11 +48,11 @@ class Employee extends Admin_Controller {
 			// Set query for employee
 			$crud->where('group_id',100);
 			//$crud->where('tbl_users.status','1');
-			$crud->where('tbl_user_profiles.status',1);
+			$crud->where($this->UserProfiles->table.'.status',1);
             // Set tables
-            $crud->set_table('tbl_user_profiles');
+            $crud->set_table($this->UserProfiles->table);
 			// Handles the default primary key for a specific table. 
-			$crud->set_primary_key('user_id','tbl_user_profiles');
+			$crud->set_primary_key('user_id',$this->UserProfiles->table);
             // Set CRUD subject
             $crud->set_subject('Employee'); 
 			// Set table relation	

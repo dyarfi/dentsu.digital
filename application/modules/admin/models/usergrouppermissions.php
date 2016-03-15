@@ -1,9 +1,9 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 // Class for User Permission
-class UserGroupPermissions Extends CI_Model {
+class UserGroupPermissions Extends MY_Model {
 	// Table name for this model
-	protected $table = 'group_permissions';
+	public $table = 'group_permissions';
 	public $permission;
 	
 	public function __construct(){

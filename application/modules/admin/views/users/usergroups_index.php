@@ -144,27 +144,15 @@
 			    Add New <i class="fa fa-plus"></i>
 			    </a>
 			</div>	
-			<!--div class="btn-group pull-right">
-				<button data-toggle="dropdown" class="btn dropdown-toggle">Tools <i class="fa fa-angle-down"></i>
-				</button>
-				<ul class="dropdown-menu pull-right">
-				    <li>
-					<a href="#">
-						 Print
-					</a>
-				    </li>
-				    <li>
-					<a href="#">
-						 Save as PDF
-					</a>
-				    </li>
-				    <li>
-					<a href="#">
-						 Export to Excel
-					</a>
-				    </li>
-				</ul>
-			</div-->
+			<div class="btn-group pull-right">
+			    <button data-toggle="dropdown" class="btn dropdown-toggle">Export <i class="fa fa-file-text"></i>
+			    </button>
+			    <ul class="dropdown-menu pull-right">
+				<!-- <li><a href="#">Print</a></li> -->
+				<!-- <li><a href="#">Save as PDF</a></li> -->
+				<li><a href="<?php echo base_url(ADMIN . $class_name.'/export');?>">Excel</a></li>
+			    </ul>
+			</div>
 		    </div>								
 		    <div role="grid" class="dataTables_wrapper" id="sample_1_wrapper">								
 		    <!--div class="table-scrollable"-->

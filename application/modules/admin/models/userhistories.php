@@ -3,7 +3,7 @@
 // Model Class Object for User Histories
 class UserHistories Extends CI_Model {
 	// Table name for this model
-	protected $table = 'user_histories';
+	public $table = 'user_histories';
 		
 	public function __construct(){
 	    // Call the Model constructor

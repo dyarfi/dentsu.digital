@@ -1,9 +1,9 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 // Model Class Object for Label
-class Labels Extends CI_Model {
+class Labels Extends MY_Model {
 	// Table name for this model
-	protected $table = 'labels'; 
+	public $table = 'labels'; 
 	
 	public function __construct() {
 	    // Call the Model constructor

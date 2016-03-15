@@ -56,20 +56,20 @@
 			if(!empty($rows)) { ?>
 			<div class="portlet-body">
 			    <div class="table-toolbar">
-				<div class="btn-group">
-				    <a class="btn green" id="sample_editable_1_new" href="<?=base_url(ADMIN.$class_name.'/add');?>">
-				    Add New <i class="fa fa-plus"></i>
-				    </a>
-				</div>
-				<!--div class="btn-group pull-right">
-				    <button data-toggle="dropdown" class="btn dropdown-toggle">Tools <i class="fa fa-angle-down"></i>
-				    </button>
-				    <ul class="dropdown-menu pull-right">
-					<li><a href="#">Print</a></li>
-					<li><a href="#">Save as PDF</a></li>
-					<li><a href="#">Export to Excel</a></li>
-				    </ul>
-				</div-->
+					<div class="btn-group">
+					    <a class="btn green" id="sample_editable_1_new" href="<?=base_url(ADMIN.$class_name.'/add');?>">
+					    Add New <i class="fa fa-plus"></i>
+					    </a>
+					</div>
+					<div class="btn-group pull-right">
+					    <button data-toggle="dropdown" class="btn dropdown-toggle">Export <i class="fa fa-file-text"></i>
+					    </button>
+					    <ul class="dropdown-menu pull-right">
+						<!-- <li><a href="#">Print</a></li> -->
+						<!-- <li><a href="#">Save as PDF</a></li> -->
+						<li><a href="<?php echo base_url(ADMIN . $class_name.'/export');?>">Excel</a></li>
+					    </ul>
+					</div>
 			    </div>
 			    <div role="grid" class="dataTables_wrapper" id="sample_1_wrapper">						
 			    <!--div class="table-scrollable"-->
@@ -109,10 +109,10 @@
 						    </td>
 						    <td class=" "><?php echo $row->username;?></td>
 						    <td class=" "><a href="mailto:<?php echo $row->email;?>"><?php echo $row->email;?></a></td>
-						    <td class="center "><?php echo $row->group_id;?></td>
+						    <td class="center "><?php echo $row->group->name ? $row->group->name :'<span class="label label-warning label-sm">No Group</span>';?></td>
 						    <td class="center ">
-							<span class="label label-sm label-<?php if($row->status=='Active') { echo 'success'; } else { echo 'warning'; } ?>">
-                                                            <?php if($row->status) { echo $row->status; } ?>
+							<span class="label label-sm label-<?php if($row->status==1) { echo 'success'; } else { echo 'warning'; } ?>">
+                                <?php if($row->status) { echo $statuses[$row->status]; } ?>
 							</span>
 						    </td>
 						    <td class="center "><?php echo date('D, d-m-Y', $row->added);?></td>

@@ -42,7 +42,7 @@ class Qrcode extends Admin_Controller {
 	    // Set our Grocery CRUD
             $crud = new grocery_CRUD();
             // Set tables
-            $crud->set_table('tbl_qrcodes');
+            $crud->set_table($this->Qrcodes->table);
             // Set CRUD subject
             $crud->set_subject('qrcode');                            
             // Set column

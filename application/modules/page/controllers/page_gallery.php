@@ -10,7 +10,7 @@ class Page_Gallery extends Admin_Controller {
             $this->load->model('page/Pages');
 
             // Load Image CRUD
-            $this->load->library('image_CRUD');
+            $this->load->library('image_CRUD');            
             
     }
 	

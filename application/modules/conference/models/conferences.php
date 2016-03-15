@@ -1,9 +1,11 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 // Model Class Object for Conferences
-class Conferences Extends CI_Model {
+class Conferences Extends MY_Model {
 	// Table name for this model
-	protected $table = 'conferences';
+	public $table = 'conferences';
+	public $table_pivot = 'conference_attach_submissions';
+	
 	
 	public function __construct(){
 		// Call the Model constructor
@@ -27,7 +29,7 @@ class Conferences Extends CI_Model {
 
 						'registration_fee'	=> '',
 						
-						'cover_photo'			=> '',
+						'cover_photo'		=> '',
 						
 						
 						'is_located'		=> 0,
@@ -49,6 +51,9 @@ class Conferences Extends CI_Model {
 		
 		// Set default table
 		$this->table = $this->db->dbprefix($this->table);
+		
+		// Set default table_pivot
+		$this->table_pivot = $this->db->dbprefix($this->table_pivot);
 				
 	}
 	
@@ -85,16 +90,25 @@ class Conferences Extends CI_Model {
 				.'`added` int(11) NOT NULL, '
 				.'`modified` int(11) NOT NULL, '
 				.'PRIMARY KEY (`id`) '
-				.') ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1; ';
-                /*
-                // Add n to n table relation
-                .'CREATE TABLE IF NOT EXISTS `tbl_conference_speakers` ('
-                .'`speaker_id` int(11) NOT NULL,'
-                .'`conference_id` int(11) NOT NULL,'
-                .'`priority` int(11) NOT NULL'
+				.') ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;';
+				
+		$sql1 	= 'CREATE TABLE IF NOT EXISTS `' . $this->db->dbprefix('conference_attach_speakers') . '` ('
+                .'`speaker_id` int(11) NOT NULL AUTO_INCREMENT, '
+                .'`conference_id` int(11) NOT NULL, '
+                .'`priority` int(11) NOT NULL, PRIMARY KEY (`speaker_id`)'
                 .') ENGINE=MyISAM DEFAULT CHARSET=utf8;';
-                */
-		$this->db->query($sql);
+				
+		$sql2	='CREATE TABLE IF NOT EXISTS `' . $this->db->dbprefix('conference_attach_submissions') . '` ('
+                .'`submission_id` int(11) NOT NULL AUTO_INCREMENT, '
+                .'`conference_id` int(11) NOT NULL, '
+                .'`priority` int(11) NOT NULL, PRIMARY KEY (`submission_id`)'
+                .') ENGINE=MyISAM DEFAULT CHARSET=utf8;';
+
+        $this->db->query($sql);
+		
+		$this->db->query($sql1);
+		        
+		$this->db->query($sql2);
 		
         if(!$this->db->query('SELECT * FROM `'.$this->table.'` LIMIT 0, 1;'))
 			$insert_data	= TRUE;

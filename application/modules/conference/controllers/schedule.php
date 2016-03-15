@@ -36,11 +36,11 @@ class Schedule extends Admin_Controller {
             // Set our Grocery CRUD
             $crud = new grocery_CRUD();
             // Set tables
-            $crud->set_table('tbl_schedules')->order_by('date','asc');
+            $crud->set_table($this->Schedules->table)->order_by('date','asc');
             // Set CRUD subject
             $crud->set_subject('Schedule');               
             // Set table relation
-            $crud->set_relation('conference_id', 'tbl_conferences', 'name');
+            $crud->set_relation('conference_id', $this->Conferences->table, 'name');
             // Set column
             $crud->columns('subject','date','conference_id','description','status');	
 			// Sets the required fields of add and edit fields

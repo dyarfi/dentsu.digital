@@ -1,7 +1,7 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 // Model Class Object for Captcha
-class Captcha extends CI_Model {
+class Captcha extends MY_Model {
 	var $table = 'tbl_captcha';
 	var $expiration = 60;
 	function __construct(){

@@ -1,21 +1,39 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 // Model Class Object for User Group
-class UserGroups Extends CI_Model {
+class UserGroups Extends MY_Model {
+
 	// Table name for this model
-	protected $table = 'user_groups'; 
+	public $table = 'user_groups';
+
+	// Set model primary key
+	public $primary_key = 'id';
+
+	// Belong to and has many relationship
+    public $has_many = ['users' => [
+							// Set relation Model
+							'model' => 'Users',
+							// Set Foreign Key to primary key
+							'primary_key'=>'group_id']
+						]; 
+
+	// Simply set $soft_delete to be TRUE and rows will magically be marked as deleted
+	public $soft_delete = TRUE;	
 	
 	public function __construct() {
-	    // Call the Model constructor
-	    parent::__construct();
+	    // Call the Model constructor		
+		parent::__construct();
 
 	    // Load other necesseray model
-    	    $this->load->model('Users');
-
+	    $this->load->model('Users');
+	    
 	    // Set default db
 	    $this->db = $this->load->database('default', true);		
 	    // Set default table
 	    $this->table = $this->db->dbprefix($this->table);	
+		// Set private MY_Model table name
+		$this->_table = $this->table;
+
 	}
 	
 	public function install () {

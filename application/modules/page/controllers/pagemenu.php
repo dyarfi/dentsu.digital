@@ -37,7 +37,7 @@ class PageMenu extends Admin_Controller {
 	    // Set our Grocery CRUD
             $crud = new grocery_CRUD();
             // Set tables
-            $crud->set_table('tbl_page_menus');
+            $crud->set_table($this->Pages->table);
             // Set CRUD subject
             $crud->set_subject('Page Menu');                            
             // Set column

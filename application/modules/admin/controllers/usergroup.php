@@ -6,7 +6,8 @@ class UserGroup extends Admin_Controller {
     public $_class_name;
 
     public function __construct() {
-	parent::__construct();
+
+		parent::__construct();
 
 		// Set class name
 		$this->_class_name = $this->controller;
@@ -16,9 +17,19 @@ class UserGroup extends Admin_Controller {
 		$this->load->model('UserProfiles');
 		$this->load->model('UserGroups');		
 
+		// Load excel library
+        $this->load->library('Excel');        
+
     }
 
     public function index() {		
+
+    	//$post = $this->post_model->with('author')
+                         //->with('comments')
+                         //->get(1);
+
+    	//$test = $this->UserGroups->with('users')->get(100);
+    	//print_r($test);
 
 		$rows = $this->UserGroups->getAllUserGroup();
 
@@ -289,47 +300,57 @@ class UserGroup extends Admin_Controller {
 
     public function ajax($action='') {
 
-	//Check if the request via AJAX
-	if (!$this->input->is_ajax_request()) {
-		exit('No direct script access allowed');		
-	}	
+		//Check if the request via AJAX
+		if (!$this->input->is_ajax_request()) {
+			exit('No direct script access allowed');		
+		}	
 
-	//Define initialize result
-	$result['result'] = '';
+		//Define initialize result
+		$result['result'] = '';
 
-	//Update user profile via Ajax
-	if ($action == 'update' && $this->input->post() !== '') {
+		//Update user profile via Ajax
+		if ($action == 'update' && $this->input->post() !== '') {
 
-		//Set User Data
-		$user_profile = $this->UserProfiles->setUserProfiles($this->input->post());
+			//Set User Data
+			$user_profile = $this->UserProfiles->setUserProfiles($this->input->post());
 
-		//Reload session if the user is logged in
-		//Set session data
-		//$this->session->set_userdata($user_profile);
+			//Reload session if the user is logged in
+			//Set session data
+			//$this->session->set_userdata($user_profile);
 
-		if (!empty($user_profile) && $user_profile->status === 'active') {
+			if (!empty($user_profile) && $user_profile->status === 'active') {
 
-			$result['result']['code'] = 1;
-			$result['result']['text'] = 'Changes saved !';
+				$result['result']['code'] = 1;
+				$result['result']['text'] = 'Changes saved !';
 
-		} else if (!empty($user_profile) && $user->status !== 'active') { 
+			} else if (!empty($user_profile) && $user->status !== 'active') { 
 
-			$result['result']['code'] = 2;
-			$result['result']['text'] = 'Your account profile is not active';			
+				$result['result']['code'] = 2;
+				$result['result']['text'] = 'Your account profile is not active';			
 
-		} else {
+			} else {
 
-			$result['result']['code'] = 0;
-			$result['result']['text'] = 'Profile not found';			
+				$result['result']['code'] = 0;
+				$result['result']['text'] = 'Profile not found';			
+			}
+
 		}
 
-	}
+		// Load json template
+		$data['json'] = $result;
 
-	// Load json template
-	$data['json'] = $result;
+		// Load admin template for json output
+		$this->load->view('json', $this->load->vars($data));	
+    }
 
-	// Load admin template for json output
-	$this->load->view('json', $this->load->vars($data));	
+    public function export() {
+
+		// Data collection        
+        $usergroups = $this->UserGroups->get_all();
+        
+		// Return excel data
+        return $this->excel->export($usergroups);
+
     }
 		
 }

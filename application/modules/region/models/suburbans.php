@@ -1,10 +1,10 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 // Model Class Object for SubDistrict
-class SubUrbans extends CI_Model {
+class SubUrbans extends MY_Model {
 	
 	// Table name for this model
-	protected $table = 'sub_urbans'; 
+	public $table = 'sub_urbans'; 
 
 	public function __construct () {
 		parent::__construct();

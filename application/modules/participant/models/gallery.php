@@ -1,10 +1,10 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 // Model Class Object for Gallery
-class Gallery Extends CI_Model {
+class Gallery Extends MY_Model {
     
 	// Table name for this model
-	protected $table = 'participant_images';
+	public $table = 'participant_images';
 	
 	public function __construct(){
 	    // Call the Model constructor

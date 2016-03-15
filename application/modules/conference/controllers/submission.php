@@ -53,7 +53,7 @@ class Submission extends Admin_Controller {
 			//$crud->where('tbl_users.status','1');
 			//$crud->where('tbl_user_profiles.status',1);
             // Set tables
-            $crud->set_table('tbl_submissions');
+            $crud->set_table($this->Submissions->table);
 			// Handles the default primary key for a specific table. 
 			//$crud->set_primary_key('user_id','tbl_user_profiles');
             // Set CRUD subject

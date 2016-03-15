@@ -98,7 +98,7 @@
 			<div class="col-md-12">
 				<!-- BEGIN PAGE TITLE & BREADCRUMB-->
 				<h3 class="page-title">
-					User Profile <small><?php Acl::user()->name;?></small>
+					User Profile <small><?php $user->name;?></small>
 				</h3>
 				<ul class="page-breadcrumb breadcrumb">
 					<!--li class="btn-group">
@@ -135,13 +135,13 @@
 					</li-->
 					<li>
 						<i class="fa fa-home"></i>
-						<a href="<?=base_url();?>admin/dashboard">
+						<a href="<?php echo base_url();?>admin/dashboard">
 							Home
 						</a>
 						<i class="fa fa-angle-right"></i>
 					</li>
 					<li>
-						<a href="<?=base_url();?>admin/user">
+						<a href="<?php echo base_url();?>admin/user">
 							Users
 						</a>
 						<i class="fa fa-angle-right"></i>
@@ -180,10 +180,10 @@
 											<div class="img_holder_xhr">
 												<div class="img-thumbnail">
 													<a href="#" class="handle-img">
-													<?php if (empty($user_profile->file_name)) { ?>
-														<img alt="" src="<?=base_url($upload_url.'users_default.png');?>">							
+													<?php if (empty($user->profile->file_name)) { ?>
+														<img alt="" src="<?php echo base_url($upload_url.'users_default.png');?>">							
 													<?php } else {?>
-														<img alt="" src="<?=base_url($upload_url.$user_profile->file_name);?>">
+														<img alt="" src="<?php echo base_url($upload_url.$user->profile->file_name);?>">
 													<?php } ?>
 													</a>
 												</div>
@@ -194,7 +194,7 @@
 											</div>
 											<div class="fileUpload pull-left">
 												<span class="btn btn-default">Change</span>
-												<input class="upload" type="file" id="fileupload-img" name="fileupload" data-url="<?=base_url(ADMIN.'user/image');?>">
+												<input class="upload" type="file" id="fileupload-img" name="fileupload" data-url="<?php echo base_url(ADMIN.'user/image');?>">
 											</div>
 											<input type="hidden" name="image_temp" value=""/>
 											<div class="id-uploadsticker pull-right">
@@ -210,18 +210,18 @@
 								<div class="col-md-8 col-lg-8">
 									<div class="row">
 										<div class="col-md-8 profile-info">
-											<h1><?=ACL::user()->name;?></h1>
-											<p><?=$user_profile->about;?></p>
-											<p><a href="#"><?=$user_profile->website;?></a></p>
+											<h1><?php echo ACL::user()->name;?></h1>
+											<p><?php echo $user->profile->about;?></p>
+											<p><a href="#"><?php echo $user->profile->website;?></a></p>
 											<ul class="list-inline">
-												<?php if(!empty($user_profile->phone)) { ?>
-												<li><i class="fa fa-phone"></i> <?=$user_profile->phone;?></li>
+												<?php if(!empty($user->profile->phone)) { ?>
+												<li><i class="fa fa-phone"></i> <?php echo $user->profile->phone;?></li>
 												<?php } ?>
-												<?php if(!empty($user_profile->mobile_phone)) { ?>
-												<li><i class="fa fa-mobile-phone"></i> <?=$user_profile->mobile_phone;?></li>
+												<?php if(!empty($user->profile->mobile_phone)) { ?>
+												<li><i class="fa fa-mobile-phone"></i> <?php echo $user->profile->mobile_phone;?></li>
 												<?php } ?>		
-												<?php if(!empty($user_profile->division)) { ?>												
-												<li><i class="fa fa-briefcase"></i> <?=$user_profile->division;?></li>
+												<?php if(!empty($user->profile->division)) { ?>												
+												<li><i class="fa fa-briefcase"></i> <?php echo $user->profile->division;?></li>
 												<?php } ?>												
 											</ul>
 										</div>
@@ -846,22 +846,22 @@
 									<div class="tab-content">
 										<div class="tab-pane active" id="tab_1-1">
 											<?php echo form_open('',['id'=>'user-form','class'=>'user-form','role'=>'form']);?>	
-												<input type="hidden" value="<?=$user_profile->user_id;?>" name="user_id"/>
+												<input type="hidden" value="<?php echo $user->profile->user_id;?>" name="user_id"/>
 												<div class="form-group">
 													<label class="control-label">First Name</label>
-													<input type="text" class="form-control" name="first_name" placeholder="<?=$user_profile->first_name;?>" value="<?=$user_profile->first_name;?>">
+													<input type="text" class="form-control" name="first_name" placeholder="<?php echo $user->profile->first_name;?>" value="<?php echo $user->profile->first_name;?>">
 												</div>
 												<div class="form-group">
 													<label class="control-label">Last Name</label>
-													<input type="text" class="form-control" name="last_name" placeholder="<?=$user_profile->first_name;?>" value="<?=$user_profile->last_name;?>">
+													<input type="text" class="form-control" name="last_name" placeholder="<?php echo $user->profile->first_name;?>" value="<?php echo $user->profile->last_name;?>">
 												</div>												
 												<div class="form-group">
 													<label class="control-label">Phone Number</label>
-													<input type="text" class="form-control" name="phone" placeholder="<?=$user_profile->phone;?>" value="<?=$user_profile->phone;?>">
+													<input type="text" class="form-control" name="phone" placeholder="<?php echo $user->profile->phone;?>" value="<?php echo $user->profile->phone;?>">
 												</div>
 												<div class="form-group">
 													<label class="control-label">Mobile Number</label>
-													<input type="text" class="form-control" name="mobile_phone" placeholder="<?=$user_profile->mobile_phone;?>" value="<?=$user_profile->mobile_phone;?>">
+													<input type="text" class="form-control" name="mobile_phone" placeholder="<?php echo $user->profile->mobile_phone;?>" value="<?php echo $user->profile->mobile_phone;?>">
 												</div>
 												<!--div class="form-group">
 													<label class="control-label">Interests</label>
@@ -869,18 +869,18 @@
 												</div-->
 												<div class="form-group">
 													<label class="control-label">Occupation</label>
-													<input type="text" class="form-control" name="division" placeholder="<?=$user_profile->division;?>" value="<?=$user_profile->division;?>">
+													<input type="text" class="form-control" name="division" placeholder="<?php echo $user->profile->division;?>" value="<?php echo $user->profile->division;?>">
 												</div>
 												<div class="form-group">
 													<label class="control-label">About</label>
-		<textarea name="about" placeholder="<?=$user_profile->about;?>" rows="3" cols="5" class="form-control"><?=$user_profile->about;?></textarea>
+		<textarea name="about" placeholder="<?php echo $user->profile->about;?>" rows="3" cols="5" class="form-control"><?php echo $user->profile->about;?></textarea>
 												</div>
 												<div class="form-group">
 													<label class="control-label">Website</label>
-													<input name="website" type="text" class="form-control" placeholder="<?=$user_profile->website;?>" value="<?=$user_profile->website;?>">
+													<input name="website" type="text" class="form-control" placeholder="<?php echo $user->profile->website;?>" value="<?php echo $user->profile->website;?>">
 												</div>
 												<div class="form-group">
-													<label class="control-label">Captcha <a class="reload_captcha" rel="<?=base_url()?>admin/user/reload_captcha" href="javascript:;"><?php echo $captcha['image'];?></a></label>
+													<label class="control-label">Captcha <a class="reload_captcha" rel="<?php echo base_url()?>admin/user/reload_captcha" href="javascript:;"><?php echo $captcha['image'];?></a></label>
 													<input name="captcha" type="text" class="form-control" placeholder="Captcha" value="">
 												</div>																							
 												<div class="row margiv-top-10">
@@ -948,8 +948,8 @@
 											<?php echo form_close();?>
 										</div>
 										<div class="tab-pane" id="tab_3-3">
-										<?php echo form_open('#',['id'=>'user-form-password','class'=>'user-form-password','role'=>'form']);?>											<input type="hidden" class="form-control" id="user_id" name="user_id" value="<?=$user->id;?>">	
-											<input type="hidden" class="form-control" id="username" name="username" value="<?=$user->username;?>">
+										<?php echo form_open('#',['id'=>'user-form-password','class'=>'user-form-password','role'=>'form']);?>											<input type="hidden" class="form-control" id="user_id" name="user_id" value="<?php echo $user->id;?>">	
+											<input type="hidden" class="form-control" id="username" name="username" value="<?php echo $user->username;?>">
 											<div class="form-group">
 												<label class="control-label">Current Password</label>
 												<input type="password" class="form-control" name="password" id="password" value="">
@@ -973,7 +973,7 @@
 										</div>
 										<div class="tab-pane hidden" id="tab_4-4">
 											<?php echo form_open('#',['id'=>'','class'=>'','role'=>'form']);?>
-											<input type="hidden" class="form-control" id="user_id" name="user_id" value="<?=$user->id;?>">	
+											<input type="hidden" class="form-control" id="user_id" name="user_id" value="<?php echo $user->id;?>">	
 												<table class="table table-bordered table-striped">
 												<tbody><tr>
 													<td>Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus..</td>
@@ -1036,7 +1036,7 @@
 							<div class="row portfolio-block">
 								<div class="col-md-5">
 									<div class="portfolio-text">
-										<img alt="" src="<?=base_url();?>assets/img/profile/portfolio/logo_metronic.jpg">
+										<img alt="" src="<?php echo base_url();?>assets/img/profile/portfolio/logo_metronic.jpg">
 										<div class="portfolio-text-info">
 											<h4>Metronic - Responsive Template</h4>
 											<p> Lorem ipsum dolor sit consectetuer adipiscing elit.</p>
@@ -1076,7 +1076,7 @@
 							<!--end row-->
 							<div class="row portfolio-block">
 								<div class="col-md-5 col-sm-12 portfolio-text">
-									<img alt="" src="<?=base_url();?>assets/img/profile/portfolio/logo_azteca.jpg">
+									<img alt="" src="<?php echo base_url();?>assets/img/profile/portfolio/logo_azteca.jpg">
 									<div class="portfolio-text-info">
 										<h4>Metronic - Responsive Template</h4>
 										<p>
@@ -1115,7 +1115,7 @@
 							<!--end row-->
 							<div class="row portfolio-block">
 								<div class="col-md-5 portfolio-text">
-									<img alt="" src="<?=base_url();?>assets/img/profile/portfolio/logo_conquer.jpg">
+									<img alt="" src="<?php echo base_url();?>assets/img/profile/portfolio/logo_conquer.jpg">
 									<div class="portfolio-text-info">
 										<h4>Metronic - Responsive Template</h4>
 										<p>

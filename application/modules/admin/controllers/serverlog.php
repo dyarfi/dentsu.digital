@@ -10,6 +10,9 @@ class ServerLog extends Admin_Controller {
 	    
 	    // Load logs model
 	    $this->load->model('ServerLogs');
+
+	    // Load excel library
+        $this->load->library('Excel');        
 		
 	}
 	
@@ -278,6 +281,16 @@ class ServerLog extends Admin_Controller {
 
             // Redirect after delete
             redirect(ADMIN. $this->controller . '/index');
+
+    }
+
+    public function export() {
+
+		// Data collection        
+        $serverlogs = $this->ServerLogs->getAllServerLog();
+        
+		// Return excel data
+        return $this->excel->export($serverlogs);
 
     }
     

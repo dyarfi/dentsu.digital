@@ -1,19 +1,41 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 // Model Class Object for Users
-class Users Extends CI_Model {
+class Users Extends MY_Model {
+
 	// Table name for this model
-	protected $table = 'users';
+	public $table = 'users';
+
+	// Set primary key
+	public $primary_key = 'id';
+
+	// Belong to and has many relationship
+	public $belongs_to = ['group' => [
+							// Set relation Model
+							'model' => 'UserGroups',
+							// Set Foreign Key to primary key
+							'primary_key'=>'group_id'],
+
+						  'profile' => [
+							// Set relation Model
+							'model' => 'UserProfiles',
+							// Set Foreign Key to primary key
+							'primary_key'=>'id'],
+						];
+		
+	// Simply set $soft_delete to be TRUE and rows will magically be marked as deleted
+	public $soft_delete = TRUE;	
 	
-	public function __construct(){
+	public function __construct() {
 	    // Call the Model constructor
-	    parent::__construct();
+		parent::__construct();
 
 	    // Set default db
 	    $this->db = $this->load->database('default', true);		
 	    // Set default table
-	    $this->table = $this->db->dbprefix($this->table);			
-				
+	    $this->table = $this->db->dbprefix($this->table);
+		// Set private MY_Model table name
+		$this->_table = $this->table;
 	}
 	
 	public function install() {
@@ -114,20 +136,19 @@ class Users Extends CI_Model {
 	}
 	
 	public function getAllUser($status=''){
-	    $data = array();
-            if ($status) {
-                $options = array('status'=>$status);
-                $this->db->where($options,1);
-            }
-	    $this->db->order_by('added');
-	    $Q = $this->db->get($this->table);
-		if ($Q->num_rows() > 0){
-			//foreach ($Q->result_object() as $row){
-				//$data[] = $row;
-			//}
-			$data = $Q->result_object();
-		}
-	    $Q->free_result();
+		
+		// Set empty data
+		$data = array();
+
+		// Check status params
+        if ($status) {
+			$data = $this->order_by('added')->get_many_by(['status'=>$status]);
+		// If does not have params	
+        } else {
+	    	$data = $this->order_by('added')->with('group')->get_all();
+        }
+
+        // Return data
 	    return $data;
 	}
 	
@@ -138,10 +159,9 @@ class Users Extends CI_Model {
 
             // Option and query result
             $options = array('email' => $email);			
-            $Q = $this->db->get_where($this->table,$options,1);
-
+            $Q = $this->get_by($options,1);
             // Check result
-            if($Q->num_rows() > 0) {
+            if(count($Q) > 0) {
                 // Return true if not exists
                 return true;
             } else {
@@ -378,12 +398,12 @@ class Users Extends CI_Model {
 	}
 	
 	public function deleteUser($id) {
-		
-		// Check user id
-		$this->db->where('id', $id);
+
+		// Check user id /** using regular ci model method **/
+		// $this->db->where('id', $id);
 		
 		// Delete user form database
-		if ($this->db->delete($this->table)) {
+		if ($this->delete($id)) {
 			
 			// Check user profile id
 			$this->db->where('user_id', $id);

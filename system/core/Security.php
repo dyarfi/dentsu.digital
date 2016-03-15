@@ -138,19 +138,19 @@ class CI_Security {
 	public function csrf_verify()
 	{
 		// If it's not a POST request we will set the CSRF cookie
-		if (strtoupper($_SERVER['REQUEST_METHOD']) !== 'POST')
+		if (strtoupper($_SERVER['REQUEST_METHOD']) !== 'POST' || strtoupper($_SERVER['REQUEST_METHOD']) !== 'GET')
 		{
 			return $this->csrf_set_cookie();
 		}
 
 		// Do the tokens exist in both the _POST and _COOKIE arrays?
-		if ( ! isset($_POST[$this->_csrf_token_name], $_COOKIE[$this->_csrf_cookie_name]))
+		if ( ! isset($_POST[$this->_csrf_token_name], $_COOKIE[$this->_csrf_cookie_name]) || ! isset($_GET[$this->_csrf_token_name], $_COOKIE[$this->_csrf_cookie_name]))
 		{
 			$this->csrf_show_error();
 		}
 
 		// Do the tokens match?
-		if ($_POST[$this->_csrf_token_name] != $_COOKIE[$this->_csrf_cookie_name])
+		if ($_POST[$this->_csrf_token_name] != $_COOKIE[$this->_csrf_cookie_name] || $_GET[$this->_csrf_token_name] != $_COOKIE[$this->_csrf_cookie_name])
 		{
 			$this->csrf_show_error();
 		}

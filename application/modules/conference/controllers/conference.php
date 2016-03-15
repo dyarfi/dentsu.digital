@@ -48,12 +48,12 @@ class Conference extends Admin_Controller {
 			// Set our Grocery CRUD
             $crud = new grocery_CRUD();
 			// Set tables
-            $crud->set_table('tbl_conferences');
+            $crud->set_table($this->Conferences->table);
             // Set CRUD subject
-            $crud->set_subject('Conference');                            
+            $crud->set_subject('Conference');
             
-            $crud->set_relation_n_n('speakers', 'tbl_conference_speakers', 'tbl_speakers', 'conference_id', 'speaker_id', 'subject', 'priority');
-            $crud->set_relation_n_n('submissions', 'tbl_conference_submissions', 'tbl_submissions', 'conference_id', 'submission_id', 'subject', 'priority');
+            $crud->set_relation_n_n('speakers', $this->Speakers->table_pivot,  $this->Speakers->table, $this->Speakers->table_pivot.'.conference_id', 'speaker_id', 'subject', 'priority');
+            $crud->set_relation_n_n('submissions', $this->Submissions->table_pivot, $this->Submissions->table, $this->Submissions->table_pivot.'.conference_id', 'submission_id', 'subject', 'priority');
             
             // Set new action
 			//$crud->add_action('Set To Employee', '', '','fa fa-arrow-circle-left',array($this,'_callback_set_conference_to_employee'));

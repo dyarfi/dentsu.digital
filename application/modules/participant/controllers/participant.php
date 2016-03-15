@@ -21,7 +21,7 @@ class Participant extends Admin_Controller {
 	    // Set our Grocery CRUD
             $crud = new grocery_CRUD();
             // Set tables
-            $crud->set_table('tbl_participants');
+            $crud->set_table($this->Participants->table);
             // Set CRUD subject
             $crud->set_subject('Participant');                            
             // Set table relation

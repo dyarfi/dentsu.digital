@@ -1,10 +1,10 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 // Model Class Object for Facebook Temp Data
-class Fbtemp Extends CI_Model {
+class Fbtemp Extends MY_Model {
     
 	// Table name for this model
-	protected $table = 'fb_temp';
+	public $table = 'fb_temp';
 	
 	public function __construct(){
 	    // Call the Model constructor

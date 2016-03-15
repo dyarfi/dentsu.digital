@@ -1,10 +1,10 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 // Model Class Object for Participants
-class Participants Extends CI_Model {
+class Participants Extends MY_Model {
     
     // Table name for this model
-    protected $table = 'participants';
+    public $table = 'participants';
 
     public function __construct(){
 	// Call the Model constructor

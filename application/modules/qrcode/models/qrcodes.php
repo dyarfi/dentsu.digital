@@ -1,10 +1,10 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 // Model Class Object for Qrcodes
-class Qrcodes Extends CI_Model {
+class Qrcodes Extends MY_Model {
     
 	// Table name for this model
-	protected $table = 'qrcodes';
+	public $table = 'qrcodes';
 	
 	public function __construct(){
 		// Call the Model constructor

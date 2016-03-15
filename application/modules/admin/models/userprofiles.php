@@ -1,9 +1,25 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 // Model Class Object for Users
-class UserProfiles Extends CI_Model {
+class UserProfiles Extends MY_Model {
+
 	// Table name for this model
-	protected $table = 'user_profiles';
+	public $table = 'user_profiles';
+
+	// Set primary key
+	public $primary_key = 'user_id';
+
+	// Belong to and has many relationship
+	public $belongs_to = ['user' => [
+							// Set relation Model
+							'model' => 'Users',
+							// Set Foreign Key to primary key
+							'primary_key'=>'user_id']
+						];
+
+	// Simply set $soft_delete to be TRUE and rows will magically be marked as deleted
+	// public $soft_delete = TRUE;	
+
 	
 	public function __construct() {
 	    // Call the Model constructor
@@ -12,8 +28,12 @@ class UserProfiles Extends CI_Model {
 	    // Set default db
 	    $this->db = $this->load->database('default', true);		
 	    // Set default table
-	    $this->table = $this->db->dbprefix($this->table);			
+	    $this->table 	= $this->db->dbprefix($this->table);
+	    // Set MY_Model table name
+	    $this->_table 	= $this->table;
+
 	}
+
 	public function install(){
 		$insert_data		= FALSE;
 
@@ -48,13 +68,12 @@ class UserProfiles Extends CI_Model {
 			$this->db->query($sql);
 		}
 
-                if(!$this->db->query('SELECT * FROM `'.$this->table.'` LIMIT 0 , 1;'))
+        if(!$this->db->query('SELECT * FROM `'.$this->table.'` LIMIT 0 , 1;'))
 			$insert_data	= TRUE;
         
 		if ($insert_data) {			
 			$sql = 'INSERT INTO `'. $this->table .'` VALUES '
                                 .'(\'1\', \'male\', \'Superadmin of this Website\', \'\',\'\', \'Web Programmer\', \'DKI Jakarta\', \'Jakarta\', \'Jl. Gading Putih 1 F2 No. 4\', \'14240\', \'\', \'2010/09/06\', \'1234\', \'\', \'0\', \'-\', \'image/jpeg\', \'78d57b4b5a0c6048b75bb0c9d91a8392.jpg\', \'1\', \'1283760138\', \'1283831030\'), '
-
                                 .'(\'2\', \'male\', \'Administrator of this Website\', \'\',\'\', \'Web Designer\', \'DKI Jakarta\', \'Jakarta\', \'Jl. Gading Putih 1 F2 No. 4\', \'14240\', \'\', \'2010/09/06\', \'1234\', \'\', \'0\', \'-\', \'image/jpeg\', \'78d57b4b5a0c6048b75bb0c9d91a8392.jpg\', \'1\', \'1283760138\', \'1283831030\'), '
                                 .'(\'3\', \'male\', \'User of this Website\', \'\',\'\', \'Jakarta\', \'\', \'\', \'Jl. Pulomas Barat 1 No. 31\', \'\', \'\', \'0000/00/00\', \'1234\', \'\', \'\', \'\', \'image/jpeg\', \'a8a484572c007e1e17648ae2c7ad629c.jpg\', \'1\', \'1285152397\', \'0\'), '
                                 .'(\'4\', \'male\', \'\', \'\', \'Jakarta\', \'\',\'\', \'\', \'Jl. Pulomas Barat 1 No. 31\', \'\', \'\', \'0000/00/00\', \'081807244697\', \'\', \'\', \'\', \'image/jpeg\', \'eb068fc7204f01f8cd25375b42fc6953.jpg\', \'1\', \'1285152397\', \'1326110970\'), '
@@ -70,15 +89,7 @@ class UserProfiles Extends CI_Model {
 	
 	public function getUserProfile($id=''){
 	    if(!empty($id)) {
-		$data = array();
-		$options = array('user_id' => $id);
-		$Q = $this->db->get_where($this->table,$options,1);
-		if ($Q->num_rows() > 0){
-			foreach ($Q->result_object() as $row)
-			$data = $row;
-		}
-		$Q->free_result();
-		return $data;
+			return $this->get($id);
 	    }
 	}	
 	
@@ -108,7 +119,7 @@ class UserProfiles Extends CI_Model {
 	public function setStatus($id=null,$status=null) {
 	   
 	    //Get user id
-	    $this->db->where('user_id', $id);
+	    $this->get_by('user_id', $id);
 	    
 	    //Return result
 	    return $this->db->update($this->table, array('status'=>$status,'modified'=>time()));

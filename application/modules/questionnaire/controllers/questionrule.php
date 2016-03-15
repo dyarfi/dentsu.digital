@@ -24,14 +24,15 @@ class Questionrule extends Admin_Controller {
         $this->load->library('grocery_CRUD');
         //$this->load->model('user_model');
         $this->load->model('Questionrules');
+        $this->load->model('Questions');
     }
 
     public function index() {
         try {
             $crud = new grocery_CRUD();
-            $crud->set_table('tbl_question_rules');
+            $crud->set_table($this->Questionrules->table);
             $crud->set_subject('List Question Rules');
-            $crud->set_relation('question_id','tbl_questions','name');
+            $crud->set_relation('question_id',$this->Questions->table,'name');
             
             $crud->display_as('user_id', 'User');
             $crud->display_as('question_id', 'Question');

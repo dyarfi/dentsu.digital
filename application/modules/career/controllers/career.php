@@ -37,11 +37,11 @@ class Career extends Admin_Controller {
 	    // Set our Grocery CRUD
             $crud = new grocery_CRUD();
             // Set tables
-            $crud->set_table('tbl_careers');
+            $crud->set_table($this->Careers->table);
             // Set CRUD subject
             $crud->set_subject('Career');                            
             // Set table relation
-            $crud->set_relation('division_id', 'tbl_divisions', 'subject');
+            $crud->set_relation('division_id', $this->Divisions->table, 'subject');
             // Set column
             $crud->columns('subject', 'name','division_id','sent_to','status');   
             // The fields that user will see on add and edit form

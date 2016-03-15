@@ -20,10 +20,17 @@ class User extends Admin_Controller {
 
         // Load config files
         $this->_config = $this->load->config('admin',true);
+
+        // Load excel library
+        $this->load->library('Excel');
         
     }		
 
-    public function index() {		
+    public function index() {
+
+    	// Get the User's User Groups
+    	//$test = $this->Users->with('group')->get_all();
+    	//print_r($test);
 
         // Set default statuses
         $data['statuses'] = $this->configs['status'];
@@ -31,26 +38,8 @@ class User extends Admin_Controller {
 	    // Set class name to view
 	    $data['class_name'] = $this->_class_name;
 
-        // Get users data
-        $rows = $this->Users->getAllUser();
-        
-        $temp_rows = array();
-            
-        if($rows) {
-			$i = 0;
-            foreach($rows as $row){		
-                $temp_rows[$i]->id = $row->id;
-                $temp_rows[$i]->username = $row->username;
-                $temp_rows[$i]->email = $row->email;
-                $temp_rows[$i]->added = $row->added;
-                $temp_rows[$i]->modified = $row->modified;
-                $temp_rows[$i]->status = $data['statuses'][$row->status];
-                $temp_rows[$i]->group_id = $this->UserGroups->getGroupName_ById($row->group_id);
-                $i++;
-            }
-        }
-
-        if (@$temp_rows) $data['rows'] = $temp_rows;
+        // Get users data       
+        $data['rows'] = $this->Users->getAllUser();
 		
 	    // User profiles
         $data['user_profiles'] = $this->UserProfiles->getUserProfile(Acl::user()->id);
@@ -362,7 +351,8 @@ class User extends Admin_Controller {
         }
 
         // Check if user data ID is found and redirect if false
-        $user = $this->Users->getUser($id);
+        $user = $this->Users->with('profile')->get($id);
+        
         if (!count($user)){
             $this->session->set_flashdata('message',"Data not found.");			
             redirect(ADMIN. $this->controller . '/index');
@@ -394,10 +384,7 @@ class User extends Admin_Controller {
         $data['captcha']		= $this->Captcha->image();
 
         // User account data
-        $data['user']			= $this->Users->getUser($id);		
-
-        // User profile data
-        $data['user_profile']	= $this->UserProfiles->getUserProfile($id);
+        $data['user']			= $user;
 
         // Main template
         $data['main']	= 'users/users_view';
@@ -434,9 +421,9 @@ class User extends Admin_Controller {
 			array('field' => 'last_name', 
 			      'label' => 'Last Name', 
 			      'rules' => 'trim|xss_clean|max_length[25]'),
-			array('field' => 'captcha', 
-			      'label' => 'Captcha', 
-			      'rules' => 'trim|xss_clean|max_length[6]|callback_match_captcha'),
+			//array('field' => 'captcha', 
+			      //'label' => 'Captcha', 
+			      //'rules' => 'trim|xss_clean|max_length[6]|callback_match_captcha'),
 			array('field' => 'phone', 
 			      'label' => 'Phone', 
 			      'rules' => 'trim|is_natural|xss_clean|max_length[25]'),
@@ -466,8 +453,13 @@ class User extends Admin_Controller {
 
                     } else {
 
-                            // Unset captcha post
-                            unset($_POST['captcha']); 
+                            // Unset unrelated post
+                            unset($_POST['captcha']);
+                            unset($_POST['username']);
+                            unset($_POST['email']);
+                            unset($_POST['password']);
+                            unset($_POST['password1']);
+                            unset($_POST['group_id']);
 
                             // Set User Data
                             $user_profile = $this->UserProfiles->setUserProfiles($this->input->post());			
@@ -698,6 +690,16 @@ class User extends Admin_Controller {
 		    $this->session->set_flashdata('message','Data not Available');
 		    redirect(ADMIN.$this->_class_name.'/index');			
 		}
+    }
+
+    public function export() {
+
+    	// Data collection
+        $users = $this->Users->get_all();
+        
+		// Return excel data
+        return $this->excel->export($users);
+
     }
 
     public function search() { }

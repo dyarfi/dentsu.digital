@@ -21,7 +21,10 @@ class Information extends Admin_Controller {
     public function __construct() {
             parent::__construct();
 
-            // Load Information model
+            // Load Conferences model
+            $this->load->model('conference/Conferences');
+
+             // Load Information model
             $this->load->model('conference/Informations');
 
             // Load Schedule model
@@ -40,11 +43,11 @@ class Information extends Admin_Controller {
 	    // Set our Grocery CRUD
             $crud = new grocery_CRUD();
             // Set tables
-            $crud->set_table('tbl_informations');
+            $crud->set_table($this->Informations->table);
             // Set CRUD subject
             $crud->set_subject('Information');                            
             // Set table relation
-            $crud->set_relation('conference_id', 'tbl_conferences', 'name');
+            $crud->set_relation('conference_id', $this->Conferences->table, 'name');
             // Set column
             $crud->columns('subject','conference_id','cover','status');   
             // Unsets the fields at the add form.

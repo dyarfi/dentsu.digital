@@ -138,10 +138,10 @@ class Authenticate extends CI_Controller {
 	    }
 
 	    // Load js for administrator login
-		$data['js_files'] = array(base_url('assets/admin/scripts/custom/login-soft.js'));
+		$data['js_files'] = [base_url('assets/admin/scripts/custom/login-soft.js')];
 		
 		// Load CSS for the template
-		$data['css_files'] = array(base_url('assets/admin/css/pages/login-soft.css'));
+		$data['css_files'] = [base_url('assets/admin/css/pages/login-soft.css')];
 		
 		// Load JS execution
 		$data['js_inline'] = "Login.init();";
@@ -159,7 +159,7 @@ class Authenticate extends CI_Controller {
 	    $this->Users->setLastLogin(@Acl::user()->id);		
 
 	    // Destroy user session		
-	    ACL::session_destroy();
+	    Acl::session_destroy();
         
 	    // Redirect admin to refresh
 	    redirect(ADMIN.'authenticate');

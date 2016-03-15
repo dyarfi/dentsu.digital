@@ -1,9 +1,9 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 // Model Class Object for Language
-class Languages Extends CI_Model {
+class Languages Extends MY_Model {
 	// Table name for this model
-	protected $table = 'languages'; 
+	public $table = 'languages'; 
 	
 	public function __construct() {
 	    // Call the Model constructor

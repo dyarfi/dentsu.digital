@@ -1,10 +1,10 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 // Model Class Object for Province
-class Provinces extends CI_Model {
+class Provinces extends MY_Model {
 	
 	// Table name for this model
-	protected $table = 'provinces'; 
+	public $table = 'provinces'; 
 	
 	public function __construct () {
 		parent::__construct();

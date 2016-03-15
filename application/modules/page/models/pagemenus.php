@@ -1,10 +1,10 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 // Model Class Object for PageMenus
-class PageMenus Extends CI_Model {
+class PageMenus Extends MY_Model {
 	
 	// Table name for this model
-	protected $table = 'page_menus';
+	public $table = 'page_menus';
 	
 	public function __construct(){
 		// Call the Model constructor

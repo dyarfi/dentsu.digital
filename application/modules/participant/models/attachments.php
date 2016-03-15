@@ -1,10 +1,10 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 // Model Class Object for Attachments
-class Attachments Extends CI_Model {
+class Attachments Extends MY_Model {
     
 	// Table name for this model
-	protected $table = 'participant_attachment_submissions';
+	public $table = 'participant_attachment_submissions';
 	
 	public function __construct(){
 	    // Call the Model constructor

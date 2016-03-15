@@ -89,12 +89,14 @@ $config['modulelist'] = array(
 						'user/change'	=> 'Change User Status',
 						'user/image'	=> 'Change User Image', /** Upload temp user image **/
 						'user/upload'	=> 'Upload User Image', /** Upload user image **/
+						'user/export'	=> 'Export User Data', /** Export user data  **/
 						// User Group functions
 						'usergroup/add'	    => 'Add User Group',
 						'usergroup/view'    => 'View User Group',
 						'usergroup/edit'    => 'Edit User Group',
 						'usergroup/delete'  => 'Delete User Group',
-						'usergroup/change'  => 'Change User Group Status',
+						'usergroup/change'  => 'Change User Group Status',						
+						'usergroup/export'	=> 'Export User Group Data', /** Export User Group data  **/		
 						// Language functions
 						'language/add'	    => 'Add Language',
 						'language/view'	    => 'View Language',
@@ -111,7 +113,8 @@ $config['modulelist'] = array(
 						'serverlog/view'	=> 'View Server Log',
 						'serverlog/edit'	=> 'Edit Server Log',
 						'serverlog/delete'	=> 'Delete Server Log',
-						'serverlog/trash'	=> 'Trash Server Log'
+						'serverlog/trash'	=> 'Trash Server Log',
+						'serverlog/export'	=> 'Export Server Log Data' /** Export Server Log data  **/						
 						)
 	),
 	// Page module
@@ -325,8 +328,7 @@ $config['modulelist'] = array(
                     'attachment/index/export'  => 'Export Attachment',
                     'attachment/index/print'   => 'Print Attachment',
         )
-	),
-	/*
+	),	
 	// Conference module
 	'Conference' => array (
 		// Career Models list
@@ -404,8 +406,7 @@ $config['modulelist'] = array(
                 'conference_banner/index/export' => 'Export Banner',
                 'conference_banner/index/print'	=> 'Print Banner'
                 ),
-	),
-	*/
+	)
 );
 
 

@@ -20,7 +20,7 @@
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
  */
 
-class image_CRUD {
+class image_CRUD extends CI_Controller {
 
 	protected $table_name = null;
 	protected $priority_field = null;
@@ -52,6 +52,7 @@ class image_CRUD {
 
 	function __construct() {
 		$this->ci = &get_instance();
+		$this->ci->config->load('config');
 		$this->ci->config->set_item('csrf_protection', 'FALSE');
 	}
 
@@ -263,7 +264,7 @@ class image_CRUD {
 	}
 
 	protected function _upload_file($upload_dir) {
-		
+
 		$reg_exp = '/(\\.|\\/)(gif|jpeg|jpg|png)$/i';
 		
 		$options = array(

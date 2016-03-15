@@ -37,11 +37,11 @@ class Page extends Admin_Controller {
 	    // Set our Grocery CRUD
             $crud = new grocery_CRUD();
             // Set tables
-            $crud->set_table('tbl_pages');
+            $crud->set_table($this->Pages->table);
             // Set CRUD subject
             $crud->set_subject('Page');                            
             // Set table relation
-            $crud->set_relation('menu_id','tbl_page_menus','name');
+            $crud->set_relation('menu_id',$this->PageMenus->table,'name');
 			// Add custom column
             // Set column
             $crud->columns('subject','name','menu_id','synopsis','text','gallery','status','added','modified');			

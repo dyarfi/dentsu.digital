@@ -22,21 +22,22 @@ class Questionnaire extends Admin_Controller {
 		parent::__construct();
 
         $this->load->library('grocery_CRUD');
-        //$this->load->model('user_model');
+
+        // Load models
+        $this->load->model('admin/Users');
         $this->load->model('Questionnaires');
     }
 
     public function index() {
         try {
             $crud = new grocery_CRUD();
-            $crud->set_table('tbl_questionnaires');
+            $crud->set_table($this->Questionnaires->table);
             $crud->set_subject('List Questionnaire');
             $crud->display_as('user_id', 'User');
             $crud->columns('questionnaire_text', 'user_id','status');                      
-            //$crud->callback_column('user_id', array($this, '_callback_admin'));            
+            $crud->callback_column('user_id', array($this, '_callback_admin'));            
             //$crud->field_type('user_id','dropdown',$this->user_model->get_values_users());   
             $crud->field_type('status','dropdown',array('1' => 'Enable', '0' => 'Disable'));    
-            $crud->field_type('user_id','hidden');
             $crud->field_type('order','hidden');
             $crud->field_type('count','hidden');
             $crud->field_type('added','hidden');
@@ -46,6 +47,9 @@ class Questionnaire extends Admin_Controller {
             // Set upload field
             $crud->set_field_upload('file_name','uploads/questionnaire');
             
+            // Set user that who is in charge for this questionnaire 
+            //$crud->callback_column('user_id', array($this, '_callback_admin'));
+                
 //            $crud->columns('name', 'email', 'phphone_number', 'twitter', 'total_image');
 //            $crud->callback_column('total_image', array($this, '_callback_total_image'));
 //            $crud->display_as('name', 'Name');
@@ -78,8 +82,8 @@ class Questionnaire extends Admin_Controller {
     }
 
     public function _callback_admin($value, $row) {
-        $user = $this->user_model->get_admin($row->user_id);
-        return $user->username;
+        $user = $this->Users->getUser($row->user_id);
+        return $user->email;
     }
 
     public function list_image() {

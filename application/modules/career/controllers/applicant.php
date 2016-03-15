@@ -45,11 +45,11 @@ class Applicant extends Admin_Controller {
 			//$crud->where('tbl_applicants.status','1');
 
             // Set tables
-            $crud->set_table('tbl_applicants');
+            $crud->set_table($this->Applicants->table);
             // Set CRUD subject
             $crud->set_subject('Applicant');                            
             // Set table relation
-            $crud->set_relation('career_id', 'tbl_careers', 'subject');
+            $crud->set_relation('career_id', $this->Careers->table, 'subject');
 			// Set new action
 			// $crud->add_action('Set To Employee', '', '','fa fa-arrow-circle-left',array($this,'_callback_set_applicant_to_employee'));
 			// Callback_column set to

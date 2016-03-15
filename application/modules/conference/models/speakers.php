@@ -1,23 +1,22 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 // Model Class Object for Speakers
-class Speakers Extends CI_Model {
+class Speakers Extends MY_Model {
 	// Table name for this model
-	protected $table = 'speakers';
+	public $table = 'conference_speakers';
+	public $table_pivot = 'conference_attach_speakers';
 	
 	public function __construct(){
 		// Call the Model constructor
 		parent::__construct();
 		
 		$this->_model_vars	= array(
-						    'id'		=> 0,
-						    'conference_id'	=> 0,
+						    'id'			=> 0,
 						    'url'			=> '',
 						    'subject'		=> '',
-                            'nationality_id'=> '',
-                            'research_area' => '',
-						    'biography'		=> '',
-						    'user_id'		=> 0,
+                            'description'	=> '',
+                            'file_name'		=> '',
+                            'user_id'		=> 0,
 						    'count'			=> 0,
 						    'status'		=> '',
 						    'added'			=> 0,
@@ -27,7 +26,10 @@ class Speakers Extends CI_Model {
 		
 		// Set default table
 		$this->table = $this->db->dbprefix($this->table);
-				
+		
+		// Set default table_pivot
+		$this->table_pivot = $this->db->dbprefix($this->table_pivot);
+
 	}
 	
 	public function install() {
@@ -39,19 +41,16 @@ class Speakers Extends CI_Model {
                 
 		$sql	= 'CREATE TABLE IF NOT EXISTS `'.$this->table.'` ('
 				. '`id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, '
-				. '`conference_id` INT(11) UNSIGNED NULL, '
 				. '`url` VARCHAR(255) NULL, '
 				. '`subject` VARCHAR(255) NULL, '
-                . '`nationality_id` INT(11) NULL, '
-                . '`research_area` VARCHAR(255) NULL, '
-                . '`biography` TEXT NOT NULL, '
-				. '`photo` VARCHAR(255) NULL, '
+                . '`description` TEXT NOT NULL, '
+                . '`file_name` VARCHAR(255) NULL, '				
 				. '`user_id` TINYINT(3) NULL , '
 				. '`count` INT(11) NULL , '		
 				. '`status` TINYINT(1) NULL , '
 				. '`added` INT(11) UNSIGNED NULL, '
 				. '`modified` INT(11) UNSIGNED NULL, '
-				. 'INDEX (`url`, `conference_id`) '
+				. 'INDEX (`url`) '
 				. ') ENGINE=MYISAM DEFAULT CHARSET=utf8;';
 				
 				

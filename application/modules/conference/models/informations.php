@@ -1,9 +1,9 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 // Model Class Object for Informations
-class Informations Extends CI_Model {
+class Informations Extends MY_Model {
 	// Table name for this model
-	protected $table = 'informations';
+	public $table = 'conference_informations';
 	
 	public function __construct(){
 		// Call the Model constructor
@@ -43,8 +43,6 @@ class Informations Extends CI_Model {
 				. '`url` VARCHAR(255) NULL, '
 				. '`subject` VARCHAR(255) NULL, '
 				. '`description` TEXT NULL, '
-				. '`ext_link1` VARCHAR(324) NULL, '
-				. '`ext_link2` VARCHAR(324) NULL, '
 				. '`cover` VARCHAR(324) NULL, '
 				. '`allow_comment` TINYINT(1) NOT NULL, '			
 				. '`user_id` TINYINT(3) NULL , '

@@ -54,32 +54,20 @@
 		if(!empty($rows)) { ?>
 		<div class="portlet-body">
 		    <div class="table-toolbar">
-			<div class="btn-group">
-			    <a class="btn red" id="sample_editable_1_new" href="<?=base_url(ADMIN.$class_name.'/trash');?>">
-			    Trash Log <i class="fa fa-trash-o"></i>
-			    </a>
-			</div>
-			<!--div class="btn-group pull-right">
-			    <button data-toggle="dropdown" class="btn dropdown-toggle">Tools <i class="fa fa-angle-down"></i>
-			    </button>
-			    <ul class="dropdown-menu pull-right">
-				<li>
-				    <a href="#">
-					     Print
+				<div class="btn-group">
+				    <a class="btn red" id="sample_editable_1_new" href="<?=base_url(ADMIN.$class_name.'/trash');?>">
+				    Trash Log <i class="fa fa-trash-o"></i>
 				    </a>
-				</li>
-				<li>
-				    <a href="#">
-					     Save as PDF
-				    </a>
-				</li>
-				<li>
-				    <a href="#">
-					     Export to Excel
-				    </a>
-				</li>
-			    </ul>
-			</div-->
+				</div>
+				<div class="btn-group pull-right">
+				    <button data-toggle="dropdown" class="btn dropdown-toggle">Tools <i class="fa fa-angle-down"></i>
+				    </button>
+				    <ul class="dropdown-menu pull-right">
+					<!-- <li><a href="#">Print</a></li> -->
+					<!-- <li><a href="#">Save as PDF</a></li> -->
+					<li><a href="<?php echo base_url(ADMIN . $class_name.'/export');?>">Export to Excel</a></li>
+				    </ul>
+				</div>			    
 		    </div>
 		    <div role="grid" class="dataTables_wrapper" id="sample_1_wrapper">						
 		    <!--div class="table-scrollable"-->

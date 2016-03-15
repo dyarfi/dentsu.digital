@@ -1,9 +1,9 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 // Model Class Object for Eblasts
-class Eblasts Extends CI_Model {
+class Eblasts Extends MY_Model {
 	// Table name for this model
-	protected $table = 'eblast';
+	public $table = 'eblast';
 	
 	public function __construct(){
 	    // Call the Model constructor

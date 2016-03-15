@@ -1,15 +1,16 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 // Model Class Object for Applicants
-class Applicants Extends CI_Model {
+class Applicants Extends MY_Model {
 	// Table name for this model
-	protected $table = 'applicants';
+	public $table = 'applicants';
 	
 	public function __construct(){
 		// Call the Model constructor
 		parent::__construct();
 		
-		$this->_model_vars	= array('id'			=> 0,
+		$this->_model_vars	= array(
+						'id'			=> 0,
 						'career_id'		=> 0,
 						'user_id'		=> 0,
 						'name'			=> '',

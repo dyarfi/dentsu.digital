@@ -23,14 +23,16 @@ class Question extends Admin_Controller {
 
         $this->load->library('grocery_CRUD');
         //$this->load->model('user_model');
+        // Load Questionnaires model
         $this->load->model('Questionnaires');
-        
+        // Load Questions model        
+        $this->load->model('Questions');
     }
 
     public function index() {
         try {
             $crud = new grocery_CRUD();
-            $crud->set_table('tbl_questions');
+            $crud->set_table($this->Questions->table);
             $crud->set_subject('List Questions');
             $crud->columns('question_text', 'questionnaire_id','status');                      
 

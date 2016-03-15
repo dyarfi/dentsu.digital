@@ -1,9 +1,9 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 // Model Class Object for Schedules
-class Schedules Extends CI_Model {
+class Schedules Extends MY_Model {
 	// Table name for this model
-	protected $table = 'schedules';
+	public $table = 'schedules';
 	
 	public function __construct(){
 		// Call the Model constructor

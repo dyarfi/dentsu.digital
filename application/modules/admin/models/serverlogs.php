@@ -1,9 +1,9 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 // Model Class Object for ServerLogs
-class ServerLogs Extends CI_Model {
+class ServerLogs Extends MY_Model {
 	// Table name for this model
-	protected $table = 'server_logs';
+	public $table = 'server_logs';
 	
 	public function __construct(){
 	    // Call the Model constructor

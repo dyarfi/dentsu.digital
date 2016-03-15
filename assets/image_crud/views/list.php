@@ -11,6 +11,16 @@
 	$this->set_js('assets/image_crud/js/jquery.colorbox-min.js');
 	
 	$this->set_js('assets/grocery_crud/themes/flexigrid/js/cookies.js');
+
+	// Jquery File Upload
+	//$this->set_js('assets/admin/plugins/jquery-file-upload/js/jquery.ui.widget.min.js');
+	//$this->set_js('assets/admin/plugins/jquery-file-upload/js/jquery.iframe-transport.js');
+	//$this->set_js('assets/admin/plugins/jquery-file-upload/js/jquery.fileupload.js');
+	//$this->set_js('assets/admin/plugins/jquery-file-upload/js/jquery.fileupload-process.js');
+	//$this->set_js('assets/admin/plugins/jquery-file-upload/js/jquery.fileupload-validate.js');
+	//$this->set_js('assets/admin/plugins/jquery-file-upload/js/jquery.fileupload-ui.js');
+	//$this->set_js('assets/admin/plugins/jquery-file-upload/js/jquery.iframe-transport.js');
+
 ?>
 <script>
 $(function(){
@@ -46,7 +56,9 @@ function loadPhotoGallery(){
 		}
 	});
 }
+
 function createUploader() {	
+
 	var uploader = new qq.FineUploader({
 		element: document.getElementById('fine-uploader'),
 		//autoUpload: false,
@@ -61,9 +73,10 @@ function createUploader() {
 				 loadPhotoGallery();
 			 }
 		},
-		debug: true,
-		/*template: '<div class="qq-uploader">' +
-			'<div class="qq-upload-drop-area"><span><?php echo $this->l("upload-drop-area");?></span></div>' +
+		debug: true/*,
+		template: 
+			'<input type="hidden" value="'+readCookie('csrf_cookie')+'" name="csrf_token">' +
+			'<div class="qq-uploader">' +
 			'<div class="qq-upload-button"><?php echo $this->l("upload_button");?></div>' +
 			'<ul class="qq-upload-list"></ul>' +
 			'</div>',
@@ -73,8 +86,7 @@ function createUploader() {
 			'<span class="qq-upload-size"></span>' +
 			'<a class="qq-upload-cancel" href="#"><?php echo $this->l("upload-cancel");?></a>' +
 			'<span class="qq-upload-failed-text"><?php echo $this->l("upload-failed");?></span>' +
-			'</li>',
-*/
+			'</li>'*/	
 	}).setParams({
 		csrf_token: readCookie('csrf_cookie')
 	});

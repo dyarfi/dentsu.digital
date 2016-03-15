@@ -1,10 +1,10 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 // Model Class Object for Colorcontents
-class Colorcontents Extends CI_Model {
+class Colorcontents Extends MY_Model {
     
 	// Table name for this model
-	protected $table = 'color_contents';
+	public $table = 'color_contents';
 	
 	public function __construct(){
 		// Call the Model constructor
