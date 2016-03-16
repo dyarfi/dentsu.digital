@@ -109,6 +109,7 @@ $route[$admin.'/conference_banner/(:any)']  = 'conference/conference_banner/$1';
 */
 
 $route['default_controller'] = 'home';
+//$route['example'] 			 = 'example/request_dropbox';
 //$route['(:any)']			 = 'home/menu/$1';
 //$route['(:any)/page/(:any)'] = 'home/page/$1/$2';
 $route['download/(:num)']	 = 'download';

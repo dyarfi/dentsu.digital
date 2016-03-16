@@ -196,9 +196,8 @@ class upload extends Public_Controller {
 
 		}	
 
-	}	
-
-
+	}
+	
 }
 
 /* End of file upload.php */

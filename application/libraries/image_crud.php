@@ -20,7 +20,7 @@
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
  */
 
-class image_CRUD extends CI_Controller {
+class image_CRUD {
 
 	protected $table_name = null;
 	protected $priority_field = null;
@@ -52,8 +52,6 @@ class image_CRUD extends CI_Controller {
 
 	function __construct() {
 		$this->ci = &get_instance();
-		$this->ci->config->load('config');
-		$this->ci->config->set_item('csrf_protection', 'FALSE');
 	}
 
 	function set_table($table_name)

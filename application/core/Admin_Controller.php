@@ -42,7 +42,7 @@ class Admin_Controller extends CI_Controller {
 		$this->config->set_item('language', 'english');
 
 		// Set user data lists from login session		
-		$this->user				= Acl::user();
+		$this->user				= ACL::user();
 
 		// Load user module and function lists
 		$this->module_list		= json_decode($this->session->userdata('module_list'),TRUE);

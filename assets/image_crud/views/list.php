@@ -2,17 +2,13 @@
 	$this->set_css('assets/image_crud/css/fineuploader.css');
 	$this->set_css('assets/image_crud/css/photogallery.css');
 	$this->set_css('assets/image_crud/css/colorbox.css');
-
 	$this->set_js('assets/image_crud/js/jquery-1.8.2.min.js');
 	$this->set_js('assets/image_crud/js/jquery-ui-1.9.0.custom.min.js');
-
 	$this->set_js('assets/image_crud/js/fineuploader-3.2.min.js');
-	
-	$this->set_js('assets/image_crud/js/jquery.colorbox-min.js');
-	
+	$this->set_js('assets/image_crud/js/jquery.colorbox-min.js');	
 	$this->set_js('assets/grocery_crud/themes/flexigrid/js/cookies.js');
 
-	// Jquery File Upload
+	// Jquery File Upload to change ? 
 	//$this->set_js('assets/admin/plugins/jquery-file-upload/js/jquery.ui.widget.min.js');
 	//$this->set_js('assets/admin/plugins/jquery-file-upload/js/jquery.iframe-transport.js');
 	//$this->set_js('assets/admin/plugins/jquery-file-upload/js/jquery.fileupload.js');
@@ -21,6 +17,7 @@
 	//$this->set_js('assets/admin/plugins/jquery-file-upload/js/jquery.fileupload-ui.js');
 	//$this->set_js('assets/admin/plugins/jquery-file-upload/js/jquery.iframe-transport.js');
 
+	$CI =& get_instance();
 ?>
 <script>
 $(function(){
@@ -73,6 +70,10 @@ function createUploader() {
 				 loadPhotoGallery();
 			 }
 		},
+		//params: {
+		    //"<?php echo $CI->security->get_csrf_token_name(); ?>":"<?php echo $CI->security->get_csrf_hash(); ?>",
+		    //"generateError": true
+	    //},
 		debug: true/*,
 		template: 
 			'<input type="hidden" value="'+readCookie('csrf_cookie')+'" name="csrf_token">' +
@@ -88,7 +89,7 @@ function createUploader() {
 			'<span class="qq-upload-failed-text"><?php echo $this->l("upload-failed");?></span>' +
 			'</li>'*/	
 	}).setParams({
-		csrf_token: readCookie('csrf_cookie')
+		"<?php echo $CI->security->get_csrf_token_name(); ?>":"<?php echo $CI->security->get_csrf_hash(); ?>"
 	});
 }
 
@@ -97,7 +98,7 @@ function saveTitle(data_id, data_title)
 	  	$.ajax({
 			url: '<?php echo $insert_title_url; ?>',
 			type: 'post',
-			data: {primary_key: data_id, value: data_title},
+			data: {primary_key: data_id, value: data_title, "<?php echo $CI->security->get_csrf_token_name(); ?>":"<?php echo $CI->security->get_csrf_hash(); ?>"},
 			beforeSend: function()
 			{
 				$('.file-upload-messages-container:first').show();

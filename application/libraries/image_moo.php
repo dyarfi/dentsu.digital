@@ -66,7 +66,7 @@
  *
  */
 
-class Image_moo extends CI_Controller
+class Image_moo
 {
 	// image vars
 	private $main_image="";
@@ -95,10 +95,6 @@ class Image_moo extends CI_Controller
 	// create stuff here as needed
 	//----------------------------------------------------------------------------------------------------------
 	{
-
-		$this->ci = &get_instance();
-		$this->ci->config->load('config');
-		$this->ci->config->set_item('csrf_protection', 'FALSE');	
 		
 		log_message('debug', "Image Moo Class Initialized");
 	}
