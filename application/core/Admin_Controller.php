@@ -42,7 +42,7 @@ class Admin_Controller extends CI_Controller {
 		$this->config->set_item('language', 'english');
 
 		// Set user data lists from login session		
-		$this->user				= ACL::user();
+		$this->user				= Acl::user();
 
 		// Load user module and function lists
 		$this->module_list		= json_decode($this->session->userdata('module_list'),TRUE);
@@ -61,7 +61,7 @@ class Admin_Controller extends CI_Controller {
 				&& strpos($this->uri->uri_string(), ADMIN) == 0 
 					&& $this->uri->segment(2) !== 'authenticate') {
 			// Destroy all session
-			ACL::session_destroy();
+			Acl::session_destroy();
 			// Redirect to authentication if direct access to all classes
 			redirect(ADMIN.'authenticate/logout');
 		}

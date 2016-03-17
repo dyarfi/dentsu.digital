@@ -186,6 +186,14 @@ class Fabric extends Public_Controller {
 
 	// Redirect if particpant already participated
 	public function participated () {
+		
+		// Check if attachment is already existed
+		if (!$this->attachment) {
+
+			// Redirect Participant already participated
+			redirect('fabric');
+
+		}	
 
 		// Set Gallery Data
 	    $data['gallery'] 		= $this->Attachments->getAllAttachment('fabric');

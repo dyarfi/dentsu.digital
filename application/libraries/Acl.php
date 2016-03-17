@@ -1,6 +1,6 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class ACL {
+class Acl extends CI_Controller {
 		
 	private $_ci;
 	
@@ -10,8 +10,8 @@ class ACL {
 
 	    $this->_ci->load->helper('url');
 	    $this->_ci->load->library('session');
-
-	    //if (strpos($this->_ci->session->userdata('prev_url'), ADMIN) !== FALSE 
+		
+		//if (strpos($this->_ci->session->userdata('prev_url'), ADMIN) !== FALSE 
 			    //&& $this->_ci->session->userdata('prev_url') != $this->_ci->session->userdata('curr_url')) {
 		    // Set Previous URL to current URL
 		    //$this->_ci->session->set_userdata('prev_url', $this->_ci->session->userdata('curr_url'));
@@ -54,7 +54,7 @@ class ACL {
 	    // ------- If User is Login set available data --- start
 	    if ($this->user != '') {
 		    //$this->userhistory		= Model_UserHistory::instance();
-		    $this->module_list		= json_decode($this->session->userdata('module_list'),TRUE);
+		    $this->module_list			= json_decode($this->session->userdata('module_list'),TRUE);
 		    $this->module_function_list	= json_decode($this->session->userdata('module_function_list'),TRUE);
 	    }
 

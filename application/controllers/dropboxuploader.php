@@ -261,9 +261,13 @@ class DropboxUploader extends Public_Controller {
 		    // default form var
 		    var userform = $(this).next('.msg');
 
+		    var submit_button = $(this);
+
 		    // canvas.discardActiveGroup();
 		    // canvas.discardActiveObject();
 		    // canvas.renderAll();
+
+    	  	submit_button.prop(\"disabled\", true);
 
 		      $.ajax({
 		         url: 'dropboxuploader/upload_dropbox?type=dropbox',
@@ -288,6 +292,7 @@ class DropboxUploader extends Public_Controller {
 		            +msg.result.text+'</div>');       
 
 		            if (msg.result.code === 1) {          
+	            	  submit_button.prop(\"disable\",false);
 		              setTimeout(function() {
 		                // Do something after 5 seconds
 		                window.location.href = base_URL + 'dropboxuploader';
@@ -299,7 +304,9 @@ class DropboxUploader extends Public_Controller {
 		            }
 		            // alert('Error has been occurred');
 		         }
-		      });
+		      }).always(function() {
+				    submit_button.prop(\"disabled\", true);
+			  	});
 	   	});";
 
 	    // Load site template
@@ -308,6 +315,14 @@ class DropboxUploader extends Public_Controller {
 
 	// Redirect if particpant already participated
 	public function participated () {
+
+		// Check if attachment is already existed
+		if (!$this->attachment) {
+
+			// Redirect Participant already participated
+			redirect('dropboxuploader');
+
+		}	
 
 		// Set Gallery Data
 	    $data['gallery'] 		= $this->Attachments->getAllAttachment('dropbox');
@@ -372,7 +387,14 @@ class DropboxUploader extends Public_Controller {
 	    		$this->dropbox->add('Public',$file,['dropbox']);	
 
 	    		$dropbox_file_name = $this->dropbox->media('Public/'.$filename);
-        	    		    		
+	    		
+	    		//$dropbox_file_name = $this->dropbox->shares('Public/'.$filename,['short_url'=>false]);	
+	    		//$dropbox_file_name = $this->dropbox->metadata('Public/'.$filename);
+	    		//print_r($dropbox_file_name->url);
+	    		//$link = $this->dropbox->metadata_link($dropbox_file_name->url);
+	    		//print_r($link);
+        	    //exit;
+
     			// Send success message 
 				$result['result']['code'] = 1;
 				$result['result']['text'] = 'Success';				
