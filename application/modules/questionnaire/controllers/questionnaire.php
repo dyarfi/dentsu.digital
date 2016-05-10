@@ -26,6 +26,7 @@ class Questionnaire extends Admin_Controller {
         // Load models
         $this->load->model('admin/Users');
         $this->load->model('Questionnaires');
+
     }
 
     public function index() {
@@ -34,7 +35,7 @@ class Questionnaire extends Admin_Controller {
             $crud->set_table($this->Questionnaires->table);
             $crud->set_subject('List Questionnaire');
             $crud->display_as('user_id', 'User');
-            $crud->columns('questionnaire_text', 'user_id','status');                      
+            $crud->columns('questionnaire_text','quest_per_column','user_id','status');                      
             $crud->callback_column('user_id', array($this, '_callback_admin'));            
             //$crud->field_type('user_id','dropdown',$this->user_model->get_values_users());   
             $crud->field_type('status','dropdown',array('1' => 'Enable', '0' => 'Disable'));    
@@ -42,7 +43,9 @@ class Questionnaire extends Admin_Controller {
             $crud->field_type('count','hidden');
             $crud->field_type('added','hidden');
             $crud->field_type('modified','hidden');
-
+            
+            // Set field display alias
+            $crud->display_as('quest_per_column', 'Questions / Column');
 
             // Set upload field
             $crud->set_field_upload('file_name','uploads/questionnaire');

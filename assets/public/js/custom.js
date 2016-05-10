@@ -227,6 +227,61 @@
 		});
 	}
 	
+
+	$('#msform').submit(function(e) {
+
+		e.preventDefault();
+		// default form var
+		var userform = $(this);				
+        // process the form
+		$.ajax({
+			type        : 'POST', // define the type of HTTP verb we want to use (POST for our form)
+            //url       : 'process.php', // the url where we want to POST
+			data        : $(this).serialize(), // our data object
+			dataType    : 'json', // what type of data do we expect back from the server
+			encode      : true,
+            //beforeSend: function(){
+            	//userform.find('input').prop(\"disabled\", true);
+            //},
+			complete: function(message) {
+				var msg = message.responseJSON;
+				userform.find('.msg').empty();
+				userform.find('.msg')
+				.html('<div class="alert alert-danger msg">'
+					+'<button class="close" data-close="alert"></button>'
+					+msg.result.text+'</div>');		
+					if (msg.result.code === 1) {
+						userform.find('input').prop("disabled", true);
+						setTimeout(function() {
+													// Do something after 5 seconds
+							window.location.href = base_URL + 'user';
+						}, 2000);
+					} else {
+						userform.find('input').prop("disabled", false);
+					}
+
+				// userform.find('input').prop("disabled", false);
+
+				// $('.reload_captcha').click();
+				// alert(msg.result);
+				// console.log(msg.result);
+			},
+			error: function(x,message,t) {
+				if(message==="timeout") {
+					alert('got timeout');
+				} else {
+					//alert(message);
+				}
+			}
+			}).always(function() {
+				userform.find('input').prop("disabled", true);
+		});				
+
+		return false;
+
+	});
+
+
 	if(typeof $.fn.colorbox == 'function') {
 		if ($(".colorbox").attr('href') !== '#') {
 		    $(".colorbox").colorbox({

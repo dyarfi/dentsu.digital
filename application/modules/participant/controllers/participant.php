@@ -21,7 +21,7 @@ class Participant extends Admin_Controller {
 	    // Set our Grocery CRUD
             $crud = new grocery_CRUD();
             // Set tables
-            $crud->set_table($this->Participants->table);
+            $crud->set_table($this->Participants->table)->order_by('join_date','desc');
             // Set CRUD subject
             $crud->set_subject('Participant');                            
             // Set table relation
@@ -36,10 +36,12 @@ class Participant extends Admin_Controller {
             //$crud->display_as('suburban','Kecamatan');
 			//$crud->display_as('file_name','ID Image File');
             // Set column
-            $crud->columns('id_number','name','photo_url','gender','age','email','phone_number','address','province','urbandistrict','suburban','zipcode','oshi_favorite','fb_pic_url','file_name','join_date');
+            /* $crud->columns('id_number','name','photo_url','gender','age','email','phone_number','address','province','urbandistrict','suburban','zipcode','oshi_favorite','fb_pic_url','file_name','join_date'); */
+            $crud->columns('name','email','phone_number','address','join_date');
 			// The fields that user will see on add and edit form
 			//$crud->fields('subject','name','menu_id','synopsis','text','publish_date','unpublish_date','status','added','modified');
             // Set column display 
+            $crud->display_as('phone_number','Phone');            
             //$crud->display_as('menu_id','Menu');
 			// Changes the default field type
 			//$crud->field_type('added', 'hidden');

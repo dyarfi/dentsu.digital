@@ -1,9 +1,9 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 // Model Class Object for Language
-class Languages Extends MY_Model {
+class Languages Extends CI_Model {
 	// Table name for this model
-	public $table = 'languages'; 
+	protected $table = 'languages'; 
 	
 	public function __construct() {
 	    // Call the Model constructor
@@ -74,7 +74,7 @@ class Languages Extends MY_Model {
 	    $data = array();
 	    $this->db->order_by('added');
 		if ($status) {
-			$this->db->where('status',$status);
+			$this->db->where($status);
 		}
 		$Q = $this->db->get($this->table);
 		if ($Q->num_rows() > 0){
@@ -99,23 +99,64 @@ class Languages Extends MY_Model {
 	    $Q->free_result();
 	    return $data;
 	}
+
+	public function getUrl_ById($id = null){
+	    $data = '';
+	    $options = array('id' => $id);
+	    $Q = $this->db->get_where($this->table,$options,1);
+
+	    if ($Q->num_rows() > 0){
+			foreach ($Q->result_object() as $row)
+				$data = $row->url;
+	    }
+	    $Q->free_result();
+	    return $data;
+	}
         
 	public function getByPrefix($prefix = null){
 	    $data = '';
 	    $options = array('prefix' => $prefix);
-	    $Q = $this->db->get_where($this->table,$options,1);
-	    if ($Q->num_rows() > 0){
+        $Q = $this->db->get_where($this->table,$options,1);
+        if ($Q->num_rows() > 0){
 			foreach ($Q->result_object() as $row) {
-				$data = $Q->result_object();
+				$data = $row;
 			}
 	    }
+        
+	    $Q->free_result();
+	    return $data;
+	}
+	
+	public function getByUrl($url = null){
+	    $data = '';
+	    $options = array('url' => $url);
+        $Q = $this->db->get_where($this->table,$options,1);		
+        if ($Q->num_rows() > 0){
+			foreach ($Q->result_object() as $row) {
+				$data = $row;
+			}
+	    }
+        
 	    $Q->free_result();
 	    return $data;
 	}
 	
 	public function getDefault($prefix = null) {
 	    $data = '';
-	    $options = array('default' => 1, 'is_system' => 1, 'status' => 1);
+	    $options = array('default' => 1, /*'is_system' => 1,*/ 'status' => 1);
+	    $Q = $this->db->get_where($this->table,$options,1);
+	    if ($Q->num_rows() > 0){
+		    foreach ($Q->result_object() as $row){
+			    $data = $row;
+		    }
+		}
+	    $Q->free_result();
+	    return $data;
+	}
+    
+    public function getActiveLanguage($prefix = null) {
+	    $data = '';
+	    $options = array('status' => 1,'is_system' => 0);
 	    $Q = $this->db->get_where($this->table,$options,1);
 	    if ($Q->num_rows() > 0){
 		    foreach ($Q->result_object() as $row){

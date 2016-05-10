@@ -4,7 +4,6 @@
 $config['upload_path']		= BASEPATH.'uploads/questionnaire/';
 $config['upload_url']		= 'uploads/questionnaire/';
 
-
 /* End of file admin.php */
 
 /* Location: ./application/modules/questionnaire/config/questionnaire.php */

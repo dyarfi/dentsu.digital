@@ -37,7 +37,7 @@ class Setting extends Admin_Controller {
 		$data['js_files'] = array(base_url('assets/admin/scripts/custom/form-setting.js'));
 		
 		// Load Text Editor execution
-		$data['script_bottom'] = "FormSetting.init();";
+		$data['js_inline'] = "FormSetting.init();";
 		
 		// Set data rows
 		$data['rows']	= $this->Settings->getAllSetting();

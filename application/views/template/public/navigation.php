@@ -1,6 +1,7 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed'); ?>
 <nav class="navbar navbar-custom navbar-fixed-topsssss" role="navigation">
 	<div class="container">
+		<?php /*
 		<div class="navbar-header page-scroll">
 			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
 				<i class="fa fa-bars fa-inverse"></i>
@@ -28,7 +29,7 @@
 			  </li-->
 			</ul>
 		</div>
-		
+		*/?>
 		<!-- /.navbar-collapse -->
 	</div>
 	<!-- /.container -->

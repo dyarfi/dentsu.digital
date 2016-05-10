@@ -1,6 +1,6 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed'); ?>
 	
-	<footer>
+	<footer class="hide">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12 col-lg-12">

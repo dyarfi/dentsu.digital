@@ -28,9 +28,19 @@ class User extends Admin_Controller {
 
     public function index() {
 
-    	// Get the User's User Groups
-    	//$test = $this->Users->with('group')->get_all();
-    	//print_r($test);
+    	// Set empty query
+    	$options = '';
+
+    	// Set if user not a superadmin
+    	if ($this->user->group_id > 1) {
+
+    		// Set database query
+    		$options = array('group_id >' => 1);
+
+    	}
+
+        // Get users data
+        $rows = $this->Users->getAllUser('',$options);
 
         // Set default statuses
         $data['statuses'] = $this->configs['status'];
@@ -39,7 +49,7 @@ class User extends Admin_Controller {
 	    $data['class_name'] = $this->_class_name;
 
         // Get users data       
-        $data['rows'] = $this->Users->getAllUser();
+        $data['rows'] = $rows;
 		
 	    // User profiles
         $data['user_profiles'] = $this->UserProfiles->getUserProfile(Acl::user()->id);

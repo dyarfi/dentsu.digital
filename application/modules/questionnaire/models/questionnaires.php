@@ -27,6 +27,7 @@ class Questionnaires Extends MY_Model {
                 $sql	= 'CREATE TABLE IF NOT EXISTS `'.$this->table.'` ('
 				. '`id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, '
 				. '`type` INT(11) NULL, '
+                . '`quest_per_column` TINYINT(3) NULL, '                
                 . '`name` VARCHAR(255) NULL, '
 				. '`questionnaire_text` TEXT NULL, '
                 . '`value` VARCHAR(12), '

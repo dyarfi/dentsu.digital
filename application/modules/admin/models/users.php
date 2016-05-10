@@ -135,20 +135,24 @@ class Users Extends MY_Model {
 	    }
 	}
 	
-	public function getAllUser($status=''){
-		
-		// Set empty data
-		$data = array();
-
-		// Check status params
+	public function getAllUser($status='',$options=''){
+	    $data = array();
+	    if ($options) {
+	    	$this->db->where($options);	   
+	    }
         if ($status) {
-			$data = $this->order_by('added')->get_many_by(['status'=>$status]);
-		// If does not have params	
-        } else {
-	    	$data = $this->order_by('added')->with('group')->get_all();
+            $options = array('status'=>$status);
+            $this->db->where($options,1);
         }
-
-        // Return data
+	    $this->db->order_by('added');
+	    $Q = $this->db->get($this->table);
+		if ($Q->num_rows() > 0){
+			//foreach ($Q->result_object() as $row){
+				//$data[] = $row;
+			//}
+			$data = $Q->result_object();
+		}
+	    $Q->free_result();
 	    return $data;
 	}
 	

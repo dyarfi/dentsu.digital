@@ -220,7 +220,6 @@ jQuery(document).ready(function() {
     FormStatus.init();
     FormUser.init();
     FormModule.init();
-    FormSetting.init();
 <?php echo ($js_inline) ? "\t".$js_inline."\n" : "";?>
 <?php if ($this->session->flashdata('message')) { ?>
 	bootbox.alert('<h3><?php echo $this->session->flashdata('message');?></h3>');
