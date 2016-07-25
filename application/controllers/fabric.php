@@ -107,7 +107,7 @@ class Fabric extends Public_Controller {
 		// Load fabric js library
 		$data['js_files'] = ['fabric' => 
 		[
-								// Jquery File Upload
+		// Jquery File Upload
 		'admin/plugins/jquery-file-upload/js/jquery.ui.widget.min.js',
 		'admin/plugins/jquery-file-upload/js/jquery.iframe-transport.js',
 		'admin/plugins/jquery-file-upload/js/jquery.fileupload.js',
@@ -116,9 +116,9 @@ class Fabric extends Public_Controller {
 		'admin/plugins/jquery-file-upload/js/jquery.fileupload-ui.js',
 		'admin/plugins/jquery-file-upload/js/jquery.iframe-transport.js',
 		
-								// Jquery Fabric JS	
+		// Jquery Fabric JS	
 		'admin/plugins/fabric.js/canvas2image.js',
-								// 'assets/admin/plugins/fabric.js/fabric-0.9.15.js', // old version
+		// 'assets/admin/plugins/fabric.js/fabric-0.9.15.js', // old version
 		'admin/plugins/fabric.js/fabric-1.6.0-rc.1.min.js',
 		'admin/plugins/fabric.js/aligning_guidelines.js',
 		'admin/plugins/fabric.js/client.js'

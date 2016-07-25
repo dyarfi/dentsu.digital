@@ -82,6 +82,9 @@ class Home extends Public_Controller {
 		
 		// Set facebook link data
 		$data['vacancies']	= $this->Careers->getAllCareer();
+
+		// Set Gallery Data
+		$data['gallery'] 		= $this->Attachments->getAllAttachment('fabric');
 				
 		// Set facebook link data
 		$data['facebook']	= $this->Settings->getByParameter('socmed_facebook');
@@ -100,6 +103,16 @@ class Home extends Public_Controller {
 		
 		// Set main template
 		$data['main'] = 'home';
+
+		// Load qr code js execution
+		$data['js_inline'] 		= "$('#fancybox').fancybox();
+		$('.li-participated').hover(function(e){
+			e.preventDefault();
+			$(this).find('.participated').show();
+		},function(e){
+			e.preventDefault();
+			$(this).find('.participated').hide();
+		})";
 		
 		// Load site template
 		$this->load->view('template/public/template', $this->load->vars($data));		

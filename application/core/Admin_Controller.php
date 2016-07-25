@@ -19,27 +19,26 @@ class Admin_Controller extends CI_Controller {
 		
 		// Load Session library
 		$this->load->library('session');
-        
-        // Load Helper Library
-        $this->load->helper('csv');
 		
 		// Load Admin config
 		$this->configs			= $this->load->config('admin/admin',true);			
 		
 		// Load Setting Model
-		// $this->load->model('admin/Settings');
+		$this->load->model('admin/Settings');
 		
 		// Load Setting Model
-		// $this->load->model('admin/Languages');
+		$this->load->model('admin/Languages');
+        // Site content
+        $this->load->model('Content');
 		
 		// Set i18ln for the default language
-		// $this->i18ln = $this->Languages->getDefault();
+		$this->i18ln			= $this->Languages->getDefault();
+		
+		// Set default language to English
+		$this->config->set_item('language','english'); 
 		
 		// Session destroy
 		//$this->session->sess_destroy();
-		
-		// Set config value for default
-		$this->config->set_item('language', 'english');
 
 		// Set user data lists from login session		
 		$this->user				= Acl::user();
@@ -47,13 +46,12 @@ class Admin_Controller extends CI_Controller {
 		// Load user module and function lists
 		$this->module_list		= json_decode($this->session->userdata('module_list'),TRUE);
 		$this->module_function_list	= json_decode($this->session->userdata('module_function_list'),TRUE);		
-		
+
 		$this->module			= @$this->uri->segments[1];
 		$this->controller		= @$this->uri->segments[2];
 		$this->action			= @$this->uri->segments[3];
-		$this->param			= @$this->uri->segments[4];																		
-		$this->module_request	= $this->controller . '/' .$this->action;	
-		
+		$this->param			= ($this->uri->segments[4] != '') ? '/' . $this->uri->segments[4] : '';
+		$this->module_request	= $this->controller . '/' .$this->action . $this->param;			
 		$this->module_menu		= self::check_module_menu($this->module_request);
 		
 		// Check if user data is true empty and redirect to authenticate
@@ -61,7 +59,7 @@ class Admin_Controller extends CI_Controller {
 				&& strpos($this->uri->uri_string(), ADMIN) == 0 
 					&& $this->uri->segment(2) !== 'authenticate') {
 			// Destroy all session
-			Acl::session_destroy();
+			ACL::session_destroy();
 			// Redirect to authentication if direct access to all classes
 			redirect(ADMIN.'authenticate/logout');
 		}
@@ -97,27 +95,28 @@ class Admin_Controller extends CI_Controller {
 		
 		$module_list 	= $this->module_list;
 
-		$module_function_list 	= $this->module_function_list;				
-		
+		$module_function_list 	= $this->module_function_list;		
+
 		// Check again for necessaries variables
 		if ($module_list && $module_function_list && strstr($this->uri->uri_string, ADMIN) !='') {
 			
 			$url_to_match = '';
 			
-			if ($controller != '' && $action != '') $url_to_match = $controller .'/'. $action;	
+			if ($controller != '' && $action != '') $url_to_match = $this->module_request;	
 
-			$function_modules 	= array_merge_recursive($module_list,$module_function_list);
-									
+			$function_modules 	= array_merge_recursive($module_list, $module_function_list);
+
 			// Define all accessible function action into TRUE
 			foreach ($function_modules as $modules) {
-												
+
 				if (!empty($modules[$url_to_match])) {
-					
-					$accessible = TRUE;					
+				
+					$accessible = TRUE;		
 
 				}
-			}	
-			
+
+			}
+
 			// Define controller or post that don't have to be checked
 			if ($accessible === FALSE 
 					// For Bypassing admin-panel reload_captcha method in all classes
@@ -135,9 +134,11 @@ class Admin_Controller extends CI_Controller {
 					// For Bypassing redirect in each @controller provides
 					&& $controller != 'baseadmin') {
 				
+				$message = $param ? str_replace('/', '', $param) : $action;
+			
 				if ($this->input->is_ajax_request()) {
 					// Send permission message to client
-					echo 'You do not have permission to '.$action;
+					echo 'You do not have permission to '.$message;
 					exit;
 				}
 				
@@ -145,8 +146,11 @@ class Admin_Controller extends CI_Controller {
 				 * Send permission message to client via session
 				 * Set session 'acl_error' if action not accessible for users
 				 */
-				$this->session->set_flashdata('message', 'You do not have permission to '.$action.'!');
+
+				
+				$this->session->set_flashdata('message', 'You do not have permission to '.$message.'!');
 				redirect(ADMIN . $this->controller. '/index');
+				
 			} 
 
 		} 
@@ -178,27 +182,5 @@ class Admin_Controller extends CI_Controller {
 		return $menu_name;
 		
 	}
-    
-    /**
-	* Export data from database tables to csv 
-	*
-	* @access	public
-	* @param	array
-	* @return	string
-	*/
-    public function export_csv ($table='', $name='', $force='') {
-        
-        $filename = "export-".$this->_class_name .'-'. date("Y-m-d_H:i:s") . ".csv";
-        
-        $array = array(
-            array('Last Name', 'First Name', 'Gender'),
-            array('Furtado', 'Nelly', 'female'),
-            array('Twain', 'Shania', 'female'),
-            array('Farmer', 'Mylene', 'female')
-        );
-        
-        //$asdf = array('asdf','dsfg');
-        print_r(array_to_csv($array,$filename));
-    }
 	
 }
