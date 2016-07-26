@@ -70,7 +70,7 @@ class Setting extends Admin_Controller {
 		$this->load->view('template/admin/template', $this->load->vars($data));
 	}
         
-	public function edit($id=0) {
+	public function edit($id='') {
 		
 		// Check if param is given or not and check from database
 		if (empty($id) || !$this->Settings->getSetting($id)) {
@@ -134,7 +134,7 @@ class Setting extends Admin_Controller {
 		} else {	
 			
 			// Set fields from database
-			$fields         = (object) $this->Settings->getSetting($id);
+			$fields         = $this->Settings->getSetting($id);
 			
 		}
 		
@@ -161,7 +161,7 @@ class Setting extends Admin_Controller {
 		$data['errors']     = $errors;
 
 		// Set field data to view
-		$data['fields']     = $fields;		
+		$data['fields']     = (object) $fields;		
 			
 		// Setting Status Data
 		$data['statuses']   = $this->configs['status'];		
