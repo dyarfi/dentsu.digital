@@ -63,7 +63,7 @@ class Quest extends Public_Controller {
 			$errors	= $fields;
 
 		    // Set validation rules
-			$this->form_validation->set_rules('email', 'Email','trim|valid_email|required|min_length[5]|max_length[36]|callback_match_email|xss_clean');	    
+			$this->form_validation->set_rules('email', 'Email','trim|valid_email|required|min_length[5]|max_length[36]|callback_match_email|xss_clean');
 
 		    // Check if post is requested
 			if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -81,12 +81,23 @@ class Quest extends Public_Controller {
 			    	// Set default participant data
 					$participant = $this->Participants->getByEmail($this->input->post('email'));
 
+					// Default message
+					$checked = FALSE;
+
+					// Check if existed
+					if($participant) {
+
+						// Send data result
+						$checked = TRUE;
+
+					}
+					
 					// Set participant data to session
 					$this->session->set_userdata('participant', $participant);
 
 		            // Send success update password result
 					$result['result']['code'] = 1;
-					$result['result']['text'] = 'Thank you, wait for a moment please...';
+					$result['result']['text'] = !empty($checked) ? 'Thank you, wait for a moment please...' : 'No user with that email...';
 
 				}
 
@@ -352,7 +363,7 @@ class Quest extends Public_Controller {
 							userform.find('input').prop(\"disabled\", true);
 							setTimeout(function() {
 														// Do something after 5 seconds
-								window.location.href = base_URL + 'fabric';
+								window.location.href = base_URL + 'quest';
 							}, 2000);
 						} else {
 							userform.find('input').prop(\"disabled\", false);
