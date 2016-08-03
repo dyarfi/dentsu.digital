@@ -45,6 +45,29 @@ class Language extends Admin_Controller {
 	    // Set admin title page with module menu
 	    $data['page_title'] = $this->module_menu;
 
+
+	    $data['js_inline'] = "$('input[name=\"site_language\"]').change(function(){
+								var rel = $(this).attr('rel');
+								var val = $(this).val();
+								// Submit form on Ajax								
+								if (rel) {
+									$.ajax({
+										url: 'change',
+										type:'POST',
+										data: 'site_language=default&id='+val,
+							            datatype: \"JSON\",
+										success:function(data) {
+											//$.setMessage('.message-handler','Updated!')
+											var msg = jQuery.parseJSON(data);
+											if(msg.result == 1) {
+												window.location.href = base_ADM + '/language/index?active=current';
+											}
+										}			
+									});		
+								}
+								
+							});";
+
 	    // Load admin template
 	    $this->load->view('template/admin/template', $this->load->vars($data));
 				
@@ -57,6 +80,7 @@ class Language extends Admin_Controller {
 			    'name'=>'',
 			    'url'=>'',
 				'prefix'=>'',
+				'native'=>'',			    
 			    'default'=>'',
 			    'is_system'=>'',
 			    'status'=>'');
@@ -67,6 +91,7 @@ class Language extends Admin_Controller {
 	    $this->form_validation->set_rules('name', 'Name', 'trim|required|xss_clean');
 	    $this->form_validation->set_rules('url', 'Url', 'trim|required|xss_clean');
 		$this->form_validation->set_rules('prefix', 'Prefix', 'trim|required|xss_clean');
+		$this->form_validation->set_rules('native', 'Native', 'trim|required|xss_clean');	    
 	    $this->form_validation->set_rules('status', 'Status','trim|required|xss_clean');
 
 	    // Check if post is requested
@@ -93,7 +118,7 @@ class Language extends Admin_Controller {
 				$this->session->set_flashdata('message','Language created!');
 
 				// Redirect after add
-				redirect(ADMIN.'language/index');
+				redirect('admin/language');
 
 			}
 	    }	
@@ -139,7 +164,7 @@ class Language extends Admin_Controller {
 	    if (empty($id) || !$this->Languages->getLanguage($id)) {
 		    $this->session->set_flashdata('message','Item not found!');
 		    // Redirect to index
-		    redirect(ADMIN.'language/index');
+		    redirect(base_url().'admin/language');
 	    }				
 
 	    // Default data setup
@@ -147,6 +172,7 @@ class Language extends Admin_Controller {
 			    'name' => '',
 			    'url' => '',
 				'prefix' => '',
+				'native' => '',
 			    'status' => '');
 
 	    $errors = $fields;
@@ -155,6 +181,7 @@ class Language extends Admin_Controller {
 	    $this->form_validation->set_rules('name', 'Name', 'trim|required|xss_clean');
 	    $this->form_validation->set_rules('url', 'Url', 'trim|required|xss_clean');
 		$this->form_validation->set_rules('prefix', 'Prefix', 'trim|required|xss_clean');
+	    $this->form_validation->set_rules('native', 'Native', 'trim|required|xss_clean');	    
 	    $this->form_validation->set_rules('status', 'Status','trim|required|xss_clean');
 
 	    // Check if post is requested		
@@ -179,6 +206,7 @@ class Language extends Admin_Controller {
 					'name' => $this->input->post('name'),
 					'url' => $this->input->post('url'),
 					'prefix' => $this->input->post('prefix'),
+					'native' => $this->input->post('native'),
 					'status' => $this->input->post('status')
 				);
 
@@ -189,7 +217,7 @@ class Language extends Admin_Controller {
 				$this->session->set_flashdata('message','Language updated');
 
 				// Redirect after add
-				redirect(ADMIN.'language/index');
+				redirect('admin/language');
 
 			}
 
@@ -236,14 +264,16 @@ class Language extends Admin_Controller {
 	    $this->load->view('template/admin/template', $this->load->vars($data));
 
 	}
+
 	public function delete($id){
 	    // Set delete method in model
 	    $this->Languages->deleteLanguage($id);
 	    // Set flash message to display
 	    $this->session->set_flashdata('message','Language deleted');
 	    // Redirect to index
-	    redirect(ADMIN.'language/index');
+	    redirect('admin/language');
 	}	
+
 	public function view($id=null){
 
 	    if (empty($id) && (int) $id == 0) {
@@ -289,13 +319,25 @@ class Language extends Admin_Controller {
 	
 	// Action for update item status
 	public function change() {	
-	    if ($this->input->post('check') !='') {
+
+		if ($this->input->post('site_language') == 'default') {
+
+			// Set to database
+			$this->Languages->setPublicLanguage($this->input->post('id'));
+
+			// Set message
+			$this->session->set_flashdata('message','Site Language changed!');
+			echo json_encode(['result'=>1]);
+			// redirect(ADMIN.$this->_class_name.'/index');			
+
+		} else if ($this->input->post('check') !='') {
 			
 			$rows	= $this->input->post('check');
 			foreach ($rows as $row) {
 				// Set id for load and change status
 				$this->Languages->setStatus($row,$this->input->post('select_action'));
 			}
+
 			// Set message
 			$this->session->set_flashdata('message','Status changed!');
 			redirect(ADMIN.$this->_class_name.'/index');

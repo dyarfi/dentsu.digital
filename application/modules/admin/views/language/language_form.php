@@ -69,6 +69,17 @@
 				</div>
 			    </div>			  
 			</div>
+			<div class="col-md-6">
+			    <div class="form-group">
+				<label class="control-label col-md-3">Native</label>
+				<div class="col-md-9">
+				    <div class="input-group">
+					<input type="text" class="form-control" name="native" placeholder="Native" value="<?=$fields->native;?>" id="native">
+				    </div>
+				    <span class="help-block"><?php echo $errors['native'];?></span>
+				</div>
+			    </div>			  
+			</div>
 		    </div>
 		    <div class="row">					
 			<!--/span-->
@@ -144,7 +155,7 @@
 			</div>
 		    </div>
 		</div>
-	    <?php echo form_close();?>
+		<?php echo form_close();?>
 	    <!-- END FORM-->
 	</div>
 </div>	

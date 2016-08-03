@@ -24,9 +24,11 @@ class Languages Extends CI_Model {
 			$sql	= 'CREATE TABLE IF NOT EXISTS `'. $this->table .'` ('
 					. '`id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT, '
 					. '`name` VARCHAR(64) NOT NULL, '
-					. '`url` VARCHAR(82) NULL, '
+					. '`url` VARCHAR(48) NULL, '
 					. '`prefix` VARCHAR(8) NULL, '
-					. '`default` TINYINT(1) NULL DEFAULT 0, '					
+					. '`native` VARCHAR(48) NULL, '					
+					. '`default` TINYINT(1) NULL DEFAULT 0, '
+					. '`site_language` TINYINT(1) NOT NULL DEFAULT 0, '					
 					. '`is_system` TINYINT(1) NOT NULL DEFAULT 0, '
 					. '`status` TINYINT(1) NOT NULL DEFAULT 1, '
 					. '`added` INT(11) UNSIGNED NOT NULL, '
@@ -44,16 +46,50 @@ class Languages Extends CI_Model {
 
 		if ($insert_data) {
 			$sql	= 'INSERT INTO `'. $this->table .'` '
-					. '(`id`, `name`, `url`, `prefix`, `default`, `is_system`, `status`, `added`, `modified`) '
+					. '(`id`, `name`, `url`, `prefix`, `native`, `default`, `site_language`,`is_system`, `status`, `added`, `modified`) '
 					. 'VALUES '
-					. '(1, \'Indonesia\', \'indonesia\', \'id\', 0, 0, 1, '.time().', 0), '
-					. '(2, \'English\', \'english\', \'en\', 1, 1, 1, '.time().', 0), '
-					. '(3, \'Arab\', \'arab\', \'ar\', 0, 0, 0, '.time().', 0);';
+					. '(1, \'Indonesia\', \'indonesia\', \'id\',\'indonesian\', 0, 0, 0, 1, '.time().', 0), '
+					. '(2, \'English\', \'english\', \'en\',\'english\' 1, 1, 1, 1, '.time().', 0), '
+					. '(3, \'Arab\', \'arab\', \'ar\', \'arabian\'0, 0, 0, 0, '.time().', 0);';
 
 			if ($sql) $this->db->query($sql);
 		}
 		
 		return $this->db->table_exists($this->table);
+	}
+	
+
+	public function setSiteLanguage ($language) {
+
+		if ($language = $this->getByUrl($language)->url) {
+		
+			// Set expired time for about a month
+			$time_expired = 7200 + 60 * 60 * 24 * 30;
+			
+			// Set language from database 
+			//$this->config->set_item('language', $language);
+            $this->config->set_item('language', $language);
+			
+			// Set cookie from default variables
+			//$this->input->set_cookie("language",$language,$time_expired);			
+			$this->session->unset_userdata('language');
+            $this->session->set_userdata('language', $language);
+				
+            // Redirect to previous page
+			if ($this->input->get('rel')) {
+				// Redirect to where the page is requested
+				// $this->output->set_header('Referer:'.$this->input->get('rel'));
+				redirect($this->input->get('rel'));
+			} else {
+				// Redirect to referrer
+				redirect($this->agent->referrer());
+			}
+		} else {
+
+			return redirect(base_url());
+			
+		}
+
 	}
 	
 	public function getLanguage($id = null){
@@ -153,7 +189,20 @@ class Languages Extends CI_Model {
 	    $Q->free_result();
 	    return $data;
 	}
-    
+
+    public function getDefaultSiteLanguage () {
+		$data = '';
+	    $options = array('site_language' => 1, 'status' => 1);
+	    $Q = $this->db->get_where($this->table,$options,1);
+	    if ($Q->num_rows() > 0){
+		    foreach ($Q->result_object() as $row){
+			    $data = $row;
+		    }
+		}
+	    $Q->free_result();
+	    return $data;
+    }
+
     public function getActiveLanguage($prefix = null) {
 	    $data = '';
 	    $options = array('status' => 1,'is_system' => 0);
@@ -175,6 +224,22 @@ class Languages Extends CI_Model {
 		$data = $Q->num_rows();
 	    $Q->free_result();
 	    return $data;
+	}
+
+	public function setPublicLanguage($id=null){
+
+		if ($id) {
+
+			$data = ['site_language'=>0];		    
+			$updated = $this->db->where('site_language', 1)->update($this->table, $data);
+
+		    if ($updated) {
+				
+				return $this->db->where('id', $id)->update($this->table, ['site_language'=>1]);
+			
+			}
+		}
+
 	}
 	
 	public function setLanguage($object=null) {
