@@ -3,36 +3,36 @@
 class Fabric extends Public_Controller {
 
 	var $attachment = '';
-	var $participant = '';	
-	
+	var $participant = '';
+
 	public function __construct() {
 		parent::__construct();
-		
+
 		// Load User related model in admin module
 		$this->load->model('page/Pagemenus');
 		$this->load->model('page/Pages');
 
-        // Check if session was made 
+        // Check if session was made
 		if ($this->participant) {
-			
+
 			// Set temporary data
 			$this->_participant = $this->Participants->getParticipant($this->participant->id);
-			
+
 			// Unset data from session
-			unset($this->participant);	
-			
+			unset($this->participant);
+
 			// Set new data and to session
 			$this->participant = $this->_participant;
 			$this->session->set_userdata('participant',$this->participant);
-			
+
 		}
-		
+
 		// Get participant attachment by type
 		$this->attachment = $this->Attachments->getParticipantAttachmentByType($this->participant->id);
-		
-		//print_r($this->attachment);		
+
+		//print_r($this->attachment);
 		//print_r($this->participant);
-		
+
 	}
 
 	public function index() {
@@ -43,7 +43,7 @@ class Fabric extends Public_Controller {
 			// Redirect Participant already participated
 			redirect('fabric/participated');
 
-		}			
+		}
 
 		if ($this->input->is_ajax_request()) {
 
@@ -59,7 +59,7 @@ class Fabric extends Public_Controller {
 			$errors	= $fields;
 
 		    // Set validation rules
-			$this->form_validation->set_rules('email', 'Email','trim|valid_email|required|min_length[5]|max_length[36]|callback_match_email|xss_clean');	    
+			$this->form_validation->set_rules('email', 'Email','trim|valid_email|required|min_length[5]|max_length[36]|callback_match_email|xss_clean');
 
 		    // Check if post is requested
 			if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -86,15 +86,15 @@ class Fabric extends Public_Controller {
 
 				}
 
-			} 	
+			}
 
 			// Return data esult
 			$data['json'] = $result;
-			
-			// Load data into view		
-			$this->load->view('json', $this->load->vars($data));	
 
-		}	
+			// Load data into view
+			$this->load->view('json', $this->load->vars($data));
+
+		}
 
 		//$data['logged_in']		= $this->logged_in;
 
@@ -103,98 +103,105 @@ class Fabric extends Public_Controller {
 
 	    // Set site title page with module menu
 		$data['page_title'] 	= 'Fabric Canvas';
-		
+
 		// Load fabric js library
-		$data['js_files'] = ['fabric' => 
-		[
-		// Jquery File Upload
-		'admin/plugins/jquery-file-upload/js/jquery.ui.widget.min.js',
-		'admin/plugins/jquery-file-upload/js/jquery.iframe-transport.js',
-		'admin/plugins/jquery-file-upload/js/jquery.fileupload.js',
-		'admin/plugins/jquery-file-upload/js/jquery.fileupload-process.js',	
-		'admin/plugins/jquery-file-upload/js/jquery.fileupload-validate.js',
-		'admin/plugins/jquery-file-upload/js/jquery.fileupload-ui.js',
-		'admin/plugins/jquery-file-upload/js/jquery.iframe-transport.js',
-		
-		// Jquery Fabric JS	
-		'admin/plugins/fabric.js/canvas2image.js',
-		// 'assets/admin/plugins/fabric.js/fabric-0.9.15.js', // old version
-		'admin/plugins/fabric.js/fabric-1.6.0-rc.1.min.js',
-		'admin/plugins/fabric.js/aligning_guidelines.js',
-		'admin/plugins/fabric.js/client.js'
-		]	
+		$data['js_files'] = ['fabric' =>
+    		[
+    		// Jquery File Upload
+    		'admin/plugins/jquery-file-upload/js/jquery.ui.widget.min.js',
+    		'admin/plugins/jquery-file-upload/js/jquery.iframe-transport.js',
+    		'admin/plugins/jquery-file-upload/js/jquery.fileupload.js',
+    		'admin/plugins/jquery-file-upload/js/jquery.fileupload-process.js',
+    		'admin/plugins/jquery-file-upload/js/jquery.fileupload-validate.js',
+    		'admin/plugins/jquery-file-upload/js/jquery.fileupload-ui.js',
+    		'admin/plugins/jquery-file-upload/js/jquery.iframe-transport.js',
+			// Jquery colorpicker
+			'admin/plugins/fabric.js/jquery.miniColors.min.js',
+    		// Jquery Fabric JS
+    		'admin/plugins/fabric.js/canvas2image.js',
+    		// 'assets/admin/plugins/fabric.js/fabric-0.9.15.js', // old version
+    		'admin/plugins/fabric.js/fabric-1.6.0-rc.1.min.js',
+    		'admin/plugins/fabric.js/aligning_guidelines.js',
+    		'admin/plugins/fabric.js/centering_guidelines.js',
+    		'admin/plugins/fabric.js/client.js'
+    		]
+		];
+		// Load fabric js library
+		$data['css_files'] = [
+		'simplecolorpicker' => 'public/css/jquery.simplecolorpicker.css',
+		'jquery.miniColors' => 'public/css/jquery.miniColors.css',
 		];
 
 		// Load js execution
 		$data['js_inline'] = "
 		$('#submit_email').submit(function(e) {
 			e.preventDefault();
-				// default form var
-			var userform = $(this);				
-                // process the form
+			// default form var
+			var userform = $(this);
+            // process the form
 			$.ajax({
 				type        : 'POST', // define the type of HTTP verb we want to use (POST for our form)
-                    //url       : 'process.php', // the url where we want to POST
+                //url       : 'process.php', // the url where we want to POST
 				data        : $(this).serialize(), // our data object
 				dataType    : 'json', // what type of data do we expect back from the server
 				encode      : true,
-                    //beforeSend: function(){
-                    	//userform.find('input').prop(\"disabled\", true);
-                    //},
+                //beforeSend: function(){
+                	//userform.find('input').prop(\"disabled\", true);
+                //},
 				complete: function(message) {
 					var msg = message.responseJSON;
 					userform.find('.msg').empty();
 					userform.find('.msg')
 					.html('<div class=\"alert alert-danger msg\">'
 						+'<button class=\"close\" data-close=\"alert\"></button>'
-						+msg.result.text+'</div>');		
+						+msg.result.text+'</div>');
 
-if (msg.result.code === 1) {
-	userform.find('input').prop(\"disabled\", true);
-	setTimeout(function() {
-								// Do something after 5 seconds
-		window.location.href = base_URL + 'fabric';
-	}, 2000);
-} else {
-	userform.find('input').prop(\"disabled\", false);
-}
+					if (msg.result.code === 1) {
+						userform.find('input').prop(\"disabled\", true);
+						setTimeout(function() {
+													// Do something after 5 seconds
+							window.location.href = base_URL + 'fabric';
+							}, 2000);
+						} else {
+							userform.find('input').prop(\"disabled\", false);
+						}
 
 						// userform.find('input').prop(\"disabled\", false);
 
 						// $('.reload_captcha').click();
 						// alert(msg.result);
 						// console.log(msg.result);
-},
-error: function(x,message,t) {
-	if(message===\"timeout\") {
-		alert('got timeout');
-	} else {
-							//alert(message);
-	}
-}
-}).always(function() {
-	userform.find('input').prop(\"disabled\", true);
-});				
+						},
+						error: function(x,message,t) {
+							if(message===\"timeout\") {
+								alert('got timeout');
+							} else {
+													//alert(message);
+							}
+						}
+						}).always(function() {
+							userform.find('input').prop(\"disabled\", true);
+						});
 
-return false;
-});
-";
+						return false;
+					});
+					";
 
-		// Load site template
-$this->load->view('template/public/template', $this->load->vars($data));	
+	// Load site template
+	$this->load->view('template/public/template', $this->load->vars($data));
 
 }
 
 	// Redirect if particpant already participated
 public function participated () {
-	
+
 		// Check if attachment is already existed
 	if (!$this->attachment) {
 
 			// Redirect Participant already participated
 		redirect('fabric');
 
-	}	
+	}
 
 		// Set Gallery Data
 	$data['gallery'] 		= $this->Attachments->getAllAttachment('fabric');
@@ -227,7 +234,7 @@ $this->load->view('template/public/template', $this->load->vars($data));
 	// -------------- CALLBACK METHODS -------------- //
 
     // Match Email post to Database // Reverse Mode
-public function match_email($email) {		
+public function match_email($email) {
 
 		// Check email if empty
 	if ($email == '') {
@@ -237,14 +244,15 @@ public function match_email($email) {
 		// Check email if match
 	else if ($this->Participants->getByEmail($email) == 1) {
 
-		$this->form_validation->set_message('match_email', 'The %s is already taken.');			
+		$this->form_validation->set_message('match_email', 'The %s is already taken.');
 
 		return true;
+		//return false;
 
 	} else {
-		$this->form_validation->set_message('match_email', 'Use valid email please.');		
+		$this->form_validation->set_message('match_email', 'Use valid email please.');
 		return false;
-	} 
+	}
 
 }
 }

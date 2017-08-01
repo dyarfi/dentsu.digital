@@ -1,10 +1,10 @@
 (function() {
 
   var canvas = new fabric.Canvas('canvas');
-  
+
   canvas.backgroundColor = 'white';
 
-  //var image = $('input[name="image_temp"]').val();  
+  //var image = $('input[name="image_temp"]').val();
   //if ($('input[name="image_temp"]').value()) {
     //alert('asdf');
   //}
@@ -26,9 +26,9 @@ if (document.getElementById('fileupload') != null) {
     $('#canva-row').show();
     $('.item-handler').show();
 
-    reader.onload = function (event) { 
-      
-        console.log('fdsf');
+    reader.onload = function (event) {
+
+        //console.log('fdsf');
 
         // resizeCanvas();
 
@@ -38,7 +38,7 @@ if (document.getElementById('fileupload') != null) {
         imgObj.src = event.target.result;
         imgObj.onload = function () {
             // start fabricJS stuff
-            
+
             var image = new fabric.Image(imgObj);
 
             //console.log(image.width);
@@ -62,7 +62,7 @@ if (document.getElementById('fileupload') != null) {
             canvas.centerObject(image);
             // end fabricJS stuff
         }
-        
+
     }
     reader.readAsDataURL(e.target.files[0]);
   }
@@ -75,17 +75,19 @@ if (document.getElementById('fileupload') != null) {
       canvas.setWidth(document.getElementById('canva-row').offsetWidth );
     } else {
       canvas.setWidth(itemHandlerWidth);
-      canvas.setHeight(itemHandlerHeight);      
+      canvas.setHeight(itemHandlerHeight);
     }
   }
 
   resizeCanvas();
-  
+
   initAligningGuidelines(canvas);
-  
+  initCenteringGuidelines(canvas);
+
   canvas.observe('object:modified', function (e) {
-    var activeObject = e.target;
-    activeObject.straighten(45);    
+    /*** this is for locking the rotate modification of a object selected ***/
+    //var activeObject = e.target;
+    //activeObject.straighten(45);
   });
 
   // load image from menu to canva
@@ -106,7 +108,7 @@ if (document.getElementById('fileupload') != null) {
     canvas.setActiveGroup(new fabric.Group(canvas.getObjects())).renderAll();
 
     var cropZone = canvas.getActiveGroup();
-    
+
     // dont save select helper
     canvas.discardActiveObject().renderAll();
     canvas.discardActiveGroup().renderAll();
@@ -115,7 +117,7 @@ if (document.getElementById('fileupload') != null) {
     var context = cropDestination.getContext('2d');
     cropDestination.width = cropZone.width + 60;
     cropDestination.height = cropZone.height + 60;
-    
+
     var cropSourceLeft = cropZone.left - (cropZone.width / 2) - 30;
     var cropSourceTop = cropZone.top - (cropZone.height / 2) - 30;
 
@@ -146,11 +148,156 @@ if (document.getElementById('fileupload') != null) {
     canvas.remove(canvas.getActiveObject());
   });
 
-  // add text to canva
-  $('#addText').on('click', function () {
-    var text = new fabric.Text($('#canvaText').val(), {left : 210, top: 110});
-    canvas.add(text);
-  });
+    // add text to canva
+    $('#addText').on('click', function () {
+        var text = new fabric.Text($('#canvaText').val(), {left : 210, top: 110});
+        canvas.add(text);
+    });
+    $("#text-bold").click(function() {
+      var activeObject = canvas.getActiveObject();
+      if (activeObject && activeObject.type === 'text') {
+        activeObject.fontWeight = (activeObject.fontWeight == 'bold' ? '' : 'bold');
+        canvas.renderAll();
+      }
+    });
+  $("#text-italic").click(function() {
+      var activeObject = canvas.getActiveObject();
+      if (activeObject && activeObject.type === 'text') {
+          activeObject.fontStyle = (activeObject.fontStyle == 'italic' ? '' : 'italic');
+        canvas.renderAll();
+      }
+    });
+  $("#text-strike").click(function() {
+      var activeObject = canvas.getActiveObject();
+      if (activeObject && activeObject.type === 'text') {
+          activeObject.textDecoration = (activeObject.textDecoration == 'line-through' ? '' : 'line-through');
+        canvas.renderAll();
+      }
+    });
+  $("#text-underline").click(function() {
+      var activeObject = canvas.getActiveObject();
+      if (activeObject && activeObject.type === 'text') {
+          activeObject.textDecoration = (activeObject.textDecoration == 'underline' ? '' : 'underline');
+        canvas.renderAll();
+      }
+    });
+  $("#text-left").click(function() {
+      var activeObject = canvas.getActiveObject();
+      if (activeObject && activeObject.type === 'text') {
+          activeObject.textAlign = 'left';
+        canvas.renderAll();
+      }
+    });
+  $("#text-center").click(function() {
+      var activeObject = canvas.getActiveObject();
+      if (activeObject && activeObject.type === 'text') {
+          activeObject.textAlign = 'center';
+        canvas.renderAll();
+      }
+    });
+  $("#text-right").click(function() {
+      var activeObject = canvas.getActiveObject();
+      if (activeObject && activeObject.type === 'text') {
+          activeObject.textAlign = 'right';
+        canvas.renderAll();
+      }
+    });
+  $("#font-family").change(function() {
+      var activeObject = canvas.getActiveObject();
+      if (activeObject && activeObject.type === 'text') {
+        activeObject.fontFamily = this.value;
+        canvas.renderAll();
+      }
+    });
+    $('#text-bgcolor').miniColors({
+        change: function(hex, rgb) {
+          var activeObject = canvas.getActiveObject();
+          if (activeObject && activeObject.type === 'text') {
+              activeObject.backgroundColor = this.value;
+            canvas.renderAll();
+          }
+        },
+        open: function(hex, rgb) {
+            //
+        },
+        close: function(hex, rgb) {
+            //
+        }
+    });
+    $('#text-fontcolor').miniColors({
+        change: function(hex, rgb) {
+          var activeObject = canvas.getActiveObject();
+          if (activeObject && activeObject.type === 'text') {
+              activeObject.fill = this.value;
+              canvas.renderAll();
+          }
+        },
+        open: function(hex, rgb) {
+            //
+        },
+        close: function(hex, rgb) {
+            //
+        }
+    });
+    $('#text-strokecolor').miniColors({
+        change: function(hex, rgb) {
+          var activeObject = canvas.getActiveObject();
+          if (activeObject && activeObject.type === 'text') {
+              activeObject.strokeStyle = this.value;
+              canvas.renderAll();
+          }
+        },
+        open: function(hex, rgb) {
+            //
+        },
+        close: function(hex, rgb) {
+            //
+        }
+    });
+
+
+    function getRandomNum(min, max) {
+        return Math.random() * (max - min) + min;
+    }
+
+    function onObjectSelected(e) {
+        var selectedObject = e.target;
+        $("#text-string").val("");
+        selectedObject.hasRotatingPoint = true
+        if (selectedObject && selectedObject.type === 'text') {
+            //display text editor
+            $("#texteditor").css('display', 'block');
+            $("#text-string").val(selectedObject.getText());
+            $('#text-fontcolor').miniColors('value',selectedObject.fill);
+            $('#text-strokecolor').miniColors('value',selectedObject.strokeStyle);
+            $("#imageeditor").css('display', 'block');
+        }
+        else if (selectedObject && selectedObject.type === 'image'){
+            //display image editor
+            $("#texteditor").css('display', 'none');
+            $("#imageeditor").css('display', 'block');
+    }
+    }
+    function onSelectedCleared(e){
+         $("#texteditor").css('display', 'none');
+         $("#text-string").val("");
+         $("#imageeditor").css('display', 'none');
+    }
+    function setFont(font){
+        var activeObject = canvas.getActiveObject();
+        if (activeObject && activeObject.type === 'text') {
+            activeObject.fontFamily = font;
+            canvas.renderAll();
+        }
+    }
+    function removeWhite(){
+      var activeObject = canvas.getActiveObject();
+      if (activeObject && activeObject.type === 'image') {
+          activeObject.filters[2] =  new fabric.Image.filters.RemoveWhite({hreshold: 100, distance: 10});//0-255, 0-255
+          activeObject.applyFilters(canvas.renderAll.bind(canvas));
+      }
+    }
+
 
   $('#send_image').click(function(e) {
     // Prevent own default clicking
@@ -162,20 +309,18 @@ if (document.getElementById('fileupload') != null) {
     canvas.discardActiveGroup();
     canvas.discardActiveObject();
     canvas.renderAll();
-    
+
       $.ajax({
          url: 'upload/upload_result?type=fabric',
          type: 'POST',
          dataType : 'json', // what type of data do we expect back from the server
          data: {
             data: canvas.toDataURL('image/png'),
-            csrf_token: $.cookie('csrf_cookie')
+            _token: $('meta[name="csrf-token"]').attr('content')
          },
          complete: function(data, status) {
-          var msg = data.responseJSON;
+          var msg = $.parseJSON(data.responseText);
 
-            console.log(msg);
-            
             //userform.find('.msg').empty();
             //userform.find('.msg')
 
@@ -183,9 +328,9 @@ if (document.getElementById('fileupload') != null) {
             userform
             .html('<div class=\"alert alert-danger msg\">'
             +'<button class=\"close\" data-close=\"alert\"></button>'
-            +msg.result.text+'</div>');       
+            +msg.result.text+'</div>');
 
-            if (msg.result.code === 1) {          
+            if (msg.result.code === 1) {
               setTimeout(function() {
                 // Do something after 5 seconds
                 window.location.href = base_URL + 'fabric';

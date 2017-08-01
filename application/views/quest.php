@@ -10,53 +10,51 @@
                     * This is when user already participated
                     */
                     if (count($questionnaire_user_answers) == $progress) { ?>
-
-
-                    <?php 
-                    } 
+                    <?php
+                    }
                     ?>
 
                     <div class="col-lg-12 col-md-12 col-xs-12">
-                        
+
                         <br/><br/><br/><br/><br/><br/>
 
-                        <?php if($this->logged_in) { ?> 
+                        <?php if($this->logged_in) { ?>
 
                         <div class="col-lg-12 col-md-12 col-xs-12 error-handler ostrich_sansblack">
-                            <?php if (!empty($progress)) { ?> 
+                            <?php if (!empty($progress)) { ?>
                             <div class="col-md-12 center-block text-center">
                                 <div class="second circle">
-                                    <strong></strong>
-                                    <span><small>COMPLETED</small></span>
+                                    <span class="clearfix">
+                                        <strong></strong>
+                                        <span><small>COMPLETED</small></span>
+                                    </span>
                                 </div>
                             </div>
                             <?php } ?>
-                            
-                            <br/><br/><br/><br/><br/><br/>
-                            
-                            <div class="clearfix"></div>
 
+                            <br/><br/><br/><br/><br/><br/>
+                            <div class="clearfix"></div>
                             <?php echo validation_errors('<div class="alert alert-danger" role="alert"><span>', '</span></div>'); ?>
                         </div>
-                        <h3 class="quiz-head">Questions</h3>
                         <div class="row-fluid">
                             <?php if ($questionnaires) { ?>
+                                    <h3 class="quiz-head">Questions</h3>
                                     <div class="row">
                                     <!-- <h4>Questionnaires</h4> -->
                                     <?php echo form_open(base_url('quest'),['id'=>'form-questionnaire','class'=>'form-inline form-quiz-pocky','enctype'=>'multipart/form-data','role'=>'form','name'=>'questionnaire']);?>
                                     <ol class="text-left">
-                                          <?php 
+                                          <?php
                                           $i=1;
                                           foreach($questionnaires as $questionnaire) { ?>
                                            <li>
                                                 <h3><?php echo $questionnaire->questionnaire_text;?></h3>
                                                 <?php if ($questions) { ?>
                                                 <ul class="list-inline qrid_<?php echo $questionnaire->id;?>">
-                                                <?php foreach ($questions as $question) { 
+                                                <?php foreach ($questions as $question) {
                                                   $j = 1;
                                                   if ($questionnaire->id === $question->questionnaire_id) { ?>
                                                   <li>
-                                                    <div class="text-left">                                                     
+                                                    <div class="text-left">
                                                         <label for="qsid_<?php echo $question->id;?>">
                                                             <?php if ($question->file_name) {  /* ?>
                                                             <div class="center-block">
@@ -69,13 +67,13 @@
                                                     </div>
                                                     <?php //echo $errors['qrid_'.$question->questionnaire_id]; ?>
                                                   </li>
-                                                  <?php 
+                                                  <?php
                                                   }
                                                   $j++;
                                                 } ?>
                                                 </ul>
                                                 <?php } ?>
-                                            </li>                   
+                                            </li>
                                           <?php
                                           $i++;
                                           }
@@ -84,16 +82,19 @@
                                         <div class="center-block submit-block">
                                             <button class="btn btn-default btn-lg" name="submit">Kirim</button>
                                         </div>
-                                    <?php echo form_close();?> 
+                                    <?php echo form_close();?>
                                     </div>
                                 <?php } else { ?>
-                                <div class="">  
+                                <div class="">
                                     <h1>Hooray, you're done!!!! <small>Thanks for participating!</small></h1>
-                                </div>  
-                            <?php } ?>                                
+                                    <a class="btn btn-success btn-md" href="<?php echo base_url('quest/gallery');?>">
+                                        <span class="fa fa-users"> </span>
+                                        Results
+                                    </a>
+                                </div>
+                            <?php } ?>
                         </div>
-
-                        <?php } else { ?>  
+                        <?php } else { ?>
                         <div class="row-fluid" style="margin:200px auto 300px auto; ">
                           <div class="center-block">
                             <div class="text-center main-block">
@@ -107,15 +108,13 @@
                               </div>
                             </div>
                           </div>
-                        </div>    
-                        <?php } ?>                
-                        
+                        </div>
+                        <?php } ?>
                         <br/><br/><br/><br/><br/><br/>
-
                     </div>
-                </div>                        
-            </div>                
+                </div>
+            </div>
         </div>
     </div>
     <!-- /.row -->
-</div>    
+</div>

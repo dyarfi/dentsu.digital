@@ -25,7 +25,7 @@ class Sessions Extends MY_Model {
 
 			$sql = 'CREATE TABLE IF NOT EXISTS `'.$this->table.'` ('
 					. '`session_id` VARCHAR(42) NOT NULL DEFAULT 0 PRIMARY KEY,'
-					. '`ip_address` INT(11) NOT NULL DEFAULT 0, '
+					. '`ip_address` VARCHAR(24) NOT NULL DEFAULT 0, '
 					. '`user_agent` VARCHAR(255) NULL, '
 					. '`last_activity` INT(11) UNSIGNED NOT NULL,'
 					. '`user_data` blob NULL, '
