@@ -2,10 +2,10 @@
 
 // Model Class Object for Attachments
 class Attachments Extends MY_Model {
-    
+
 	// Table name for this model
 	public $table = 'participant_attachment_submissions';
-	
+
 	public function __construct(){
 	    // Call the Model constructor
 	    parent::__construct();
@@ -14,14 +14,14 @@ class Attachments Extends MY_Model {
 
 	    // Set default table
 	    $this->table = $this->db->dbprefix($this->table);
-				
+
 	}
-	
+
 	public function install() {
-		
+
 	    $insert_data	= FALSE;
 
-	    if (!$this->db->table_exists($this->table)) 
+	    if (!$this->db->table_exists($this->table))
 	    $insert_data	= FALSE;
 
 	    $sql	= 'CREATE TABLE IF NOT EXISTS `'.$this->table.'` ('
@@ -31,8 +31,8 @@ class Attachments Extends MY_Model {
 			    . '`url` VARCHAR(255) NULL, '
 			    . '`title` VARCHAR(255) NULL, '
 			    . '`file_name` TEXT NULL, '
-			    . '`attribute` TEXT NULL, '			    
-			    . '`count` INT(11) NULL , '	
+			    . '`attribute` TEXT NULL, '
+			    . '`count` INT(11) NULL , '
 			    . '`status` TINYINT(1) NULL DEFAULT 1, '
 			    . '`added` INT(11) NULL, '
 			    . '`modified` INT(11) NULL, '
@@ -50,12 +50,12 @@ class Attachments Extends MY_Model {
 	    }
 
 	    return $this->db->table_exists($this->table);
-		
+
 	}
-	
+
 	public function getCount($status = null){
         $data = array();
-        $options = array(); 
+        $options = array();
         if ($status) {
             $options = array('status' => $status);
         }
@@ -64,7 +64,7 @@ class Attachments Extends MY_Model {
         $data = $this->db->count_all_results();
 	    return $data;
 	}
-    
+
 	public function getParticipantAttachment($participant_id = null){
 	    if(!empty($participant_id)){
             $data = array();
@@ -92,7 +92,7 @@ class Attachments Extends MY_Model {
 		return $data;
 	    }
 	}
-    
+
 	public function getAttachment($id = null){
 	    if(!empty($id)){
 		$data = array();
@@ -105,12 +105,12 @@ class Attachments Extends MY_Model {
 		$Q->free_result();
 		return $data;
 	    }
-	}	
-	
+	}
+
 	public function getAllAttachment($type=''){
-		
+
 		$data = array();
-		
+
 		if ($type !='') {
 			$options = ['status'=>1,'type'=>$type];
 			$this->db->where($options);
@@ -121,12 +121,12 @@ class Attachments Extends MY_Model {
 	    if ($Q->num_rows() > 0){
 			$data = $Q->result_object();
 	    }
-	    
+
 	    $Q->free_result();
 
 	    return $data;
-	}	
-	
+	}
+
 	public function getByType($type = null){
 		if(!empty($type)){
 			$data = array();
@@ -139,37 +139,37 @@ class Attachments Extends MY_Model {
 			$Q->free_result();
 			return $data;
 		}
-	}	
+	}
 
 	// Set attachment for new or update
 	public function setAttachment($object=null){
 
 	    // Set Attachment data
-	    $data = array(	
+	    $data = array(
 		    'participant_id'   => $object['participant_id'],
 		    'url'	=> $object['url'],
 		    'title'	=> $object['title'],
 		    'count'	=> $object['count'],
 		    'file_name'	=> $object['file_name'],
-		    'attribute'	=> $object['attribute'],		    
+		    'attribute'	=> $object['attribute'],
 		    'type'		=> $object['type'],
 		    'status'    => $object['status'],
 		    'added'		=> time(),
 		    'modified'  => $object['modified']
 	    );
 
-		if ($this->getParticipantAttachment($object['participant_id'])) {
+		//if ($this->getParticipantAttachment($object['participant_id'])) {
 
-  			// Update User data             
-		    $this->db->where('participant_id', $object['participant_id']);      
+  			// Update User data
+		    //$this->db->where('participant_id', $object['participant_id']);
 
 		    // Return last insert id primary
-		    $update = $this->db->update($this->table, $data);	
+		    //$update = $this->db->update($this->table, $data);
 
 		    // Return update
-		    return $update;
-		    
-		} else {
+		    //return $update;
+
+		//} else {
 
 			// Insert Attachment data
 		    $this->db->insert($this->table, $data);
@@ -178,19 +178,19 @@ class Attachments Extends MY_Model {
 		    $insert_id = $this->db->insert_id();
 
 		    // Return last insert id primary
-		    return $insert_id;		  
+		    return $insert_id;
 
-		}    
-		
-	}	
-	
+		//}    
+
+	}
+
 	// Delete Participant
 	public function deleteAttachment($id) {
-		
+
 	    // Check Participant id
 	    $this->db->where('id', $id);
 
 	    // Delete Participant form database
-	    return $this->db->delete($this->table);		
-	}	
+	    return $this->db->delete($this->table);
+	}
 }

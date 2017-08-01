@@ -38,14 +38,8 @@ if (document.getElementById('fileupload') != null) {
         imgObj.src = event.target.result;
         imgObj.onload = function () {
             // start fabricJS stuff
-
             var image = new fabric.Image(imgObj);
-
-            //console.log(image.width);
-            //console.log(image.height);
-
             resizeCanvas(image.width,image.height);
-
             /*
             image.set({
                 left: 250,
@@ -55,7 +49,6 @@ if (document.getElementById('fileupload') != null) {
                 cornersize: 10
             });
             */
-
             image.set('selectable',false);
             //image.scale(getRandomNum(0.1, 0.25)).setCoords();
             canvas.add(image);
@@ -68,18 +61,41 @@ if (document.getElementById('fileupload') != null) {
   }
 }
   // resize the canvas to fill browser window dynamically
-  window.addEventListener('resize', resizeCanvas, false);
+  window.addEventListener('resize', resizeCanvas, true);
 
   function resizeCanvas(itemHandlerWidth='',itemHandlerHeight='') {
+    //if (itemHandlerWidth == '' && document.getElementById('canva-row') != null) {
+      //canvas.setWidth(document.getElementById('canva-row').offsetWidth );
+    //} else {
+      //canvas.setWidth(itemHandlerWidth);
+      //canvas.setHeight(itemHandlerHeight);
+    //}
+
     if (itemHandlerWidth == '' && document.getElementById('canva-row') != null) {
-      canvas.setWidth(document.getElementById('canva-row').offsetWidth );
+        canvas.setWidth(document.getElementById('canva-row').offsetWidth );
+        canvas.setHeight(document.getElementById('canva-row').offsetHeight );
     } else {
-      canvas.setWidth(itemHandlerWidth);
-      canvas.setHeight(itemHandlerHeight);
+        /*
+        // Landscape or portrait
+        var ratio = itemHandlerWidth / itemHandlerHeight;
+
+        // Size canvas respectively
+        if( itemHandlerWidth > itemHandlerHeight ) {
+          //alert('Landscape.');
+          canvas.setWidth(Math.round( window.innerWidth * 0.99 ));
+          canvas.setHeight(canvas.width / ratio);
+        } else {
+          //alert( 'Portrait.' );
+          canvas.setHeight(Math.round( window.innerHeight * 0.99));
+          canvas.setWidth(canvas.height * ratio);
+        }
+        */
+        canvas.setWidth(itemHandlerWidth);
+        canvas.setHeight(itemHandlerHeight);
     }
   }
 
-  resizeCanvas();
+  //resizeCanvas();
 
   initAligningGuidelines(canvas);
   initCenteringGuidelines(canvas);
@@ -311,7 +327,7 @@ if (document.getElementById('fileupload') != null) {
     canvas.renderAll();
 
       $.ajax({
-         url: 'upload/upload_result?type=fabric',
+         url: base_URL + 'upload/upload_result?type=fabric',
          type: 'POST',
          dataType : 'json', // what type of data do we expect back from the server
          data: {

@@ -2,7 +2,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8">
+	<meta name="author" content="Dentsu Digital" />
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title><?php echo $page_title; ?></title>
   <script type="text/javascript">var base_URL = '<?php echo base_url();?>';</script>
   <?php
