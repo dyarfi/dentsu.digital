@@ -314,12 +314,14 @@ class MX_Loader extends CI_Loader
 		extract($this->_ci_cached_vars);
 
 		ob_start();
-
-		if ((bool) @ini_get('short_open_tag') === FALSE AND CI::$APP->config->item('rewrite_short_tags') == TRUE) {
+		
+		include($_ci_path);
+        /*if ((bool) @ini_get('short_open_tag') === FALSE AND CI::$APP->config->item('rewrite_short_tags') == TRUE) {
+		    var_dump('?>'.preg_replace("/;*\s*\?>/", "; ?>", str_replace('<?=', '<?php echo ', file_get_contents($_ci_path))));exit;
 			echo eval('?>'.preg_replace("/;*\s*\?>/", "; ?>", str_replace('<?=', '<?php echo ', file_get_contents($_ci_path))));
 		} else {
 			include($_ci_path); 
-		}
+		}*/
 
 		log_message('debug', 'File loaded: '.$_ci_path);
 

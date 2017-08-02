@@ -181,7 +181,7 @@
 												<div class="img-thumbnail">
 													<a href="#" class="handle-img">
 													<?php if (empty($user->profile->file_name)) { ?>
-														<img alt="" src="<?php echo base_url($upload_url.'users_default.png');?>">							
+														<img alt="" src="<?php echo base_url($upload_url.'users_default.png');?>">
 													<?php } else {?>
 														<img alt="" src="<?php echo base_url($upload_url.$user->profile->file_name);?>">
 													<?php } ?>
@@ -202,15 +202,15 @@
 													<button type="submit" class="profile-edit btn btn-default">Save</button>
 												</div>
 											</div>
-											<?php echo form_close(); ?>											
-			
+											<?php echo form_close(); ?>
+
 										</li>
 									</ul>
 								</div>
 								<div class="col-md-8 col-lg-8">
 									<div class="row">
 										<div class="col-md-8 profile-info">
-											<h1><?php echo ACL::user()->name;?></h1>
+											<h1><?php echo $this->acl->user()->name;?></h1>
 											<p><?php echo $user->profile->about;?></p>
 											<p><a href="#"><?php echo $user->profile->website;?></a></p>
 											<ul class="list-inline">
@@ -219,13 +219,13 @@
 												<?php } ?>
 												<?php if(!empty($user->profile->mobile_phone)) { ?>
 												<li><i class="fa fa-mobile-phone"></i> <?php echo $user->profile->mobile_phone;?></li>
-												<?php } ?>		
-												<?php if(!empty($user->profile->division)) { ?>												
+												<?php } ?>
+												<?php if(!empty($user->profile->division)) { ?>
 												<li><i class="fa fa-briefcase"></i> <?php echo $user->profile->division;?></li>
-												<?php } ?>												
+												<?php } ?>
 											</ul>
 										</div>
-										<!--end col-md-8-->										
+										<!--end col-md-8-->
 									</div>
 									<!--end row-->
 									<div class="tabbable tabbable-custom tabbable-custom-profile hidden">
@@ -845,7 +845,7 @@
 								<div class="col-md-9">
 									<div class="tab-content">
 										<div class="tab-pane active" id="tab_1-1">
-											<?php echo form_open('',['id'=>'user-form','class'=>'user-form','role'=>'form']);?>	
+											<?php echo form_open('',['id'=>'user-form','class'=>'user-form','role'=>'form']);?>
 												<input type="hidden" value="<?php echo $user->profile->user_id;?>" name="user_id"/>
 												<div class="form-group">
 													<label class="control-label">First Name</label>
@@ -854,7 +854,7 @@
 												<div class="form-group">
 													<label class="control-label">Last Name</label>
 													<input type="text" class="form-control" name="last_name" placeholder="<?php echo $user->profile->first_name;?>" value="<?php echo $user->profile->last_name;?>">
-												</div>												
+												</div>
 												<div class="form-group">
 													<label class="control-label">Phone Number</label>
 													<input type="text" class="form-control" name="phone" placeholder="<?php echo $user->profile->phone;?>" value="<?php echo $user->profile->phone;?>">
@@ -882,7 +882,7 @@
 												<div class="form-group">
 													<label class="control-label">Captcha <a class="reload_captcha" rel="<?php echo base_url()?>admin/user/reload_captcha" href="javascript:;"><?php echo $captcha['image'];?></a></label>
 													<input name="captcha" type="text" class="form-control" placeholder="Captcha" value="">
-												</div>																							
+												</div>
 												<div class="row margiv-top-10">
 													<div class="col-md-4 col-lg-4 col-xs-4 pull-left">
 														<button class="btn green">
@@ -902,7 +902,7 @@
 											<p>
 												 Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
 											</p>
-											<?php echo form_open('',['id'=>'user-form','class'=>'user-form','role'=>'form']);?>	
+											<?php echo form_open('',['id'=>'user-form','class'=>'user-form','role'=>'form']);?>
 												<div class="form-group">
 													<div style="width: 310px;" class="thumbnail">
 														<img alt="" src="http://www.placehold.it/310x170/EFEFEF/AAAAAA&amp;text=no+image">
@@ -948,7 +948,7 @@
 											<?php echo form_close();?>
 										</div>
 										<div class="tab-pane" id="tab_3-3">
-										<?php echo form_open('#',['id'=>'user-form-password','class'=>'user-form-password','role'=>'form']);?>											<input type="hidden" class="form-control" id="user_id" name="user_id" value="<?php echo $user->id;?>">	
+										<?php echo form_open('#',['id'=>'user-form-password','class'=>'user-form-password','role'=>'form']);?>											<input type="hidden" class="form-control" id="user_id" name="user_id" value="<?php echo $user->id;?>">
 											<input type="hidden" class="form-control" id="username" name="username" value="<?php echo $user->username;?>">
 											<div class="form-group">
 												<label class="control-label">Current Password</label>
@@ -973,7 +973,7 @@
 										</div>
 										<div class="tab-pane hidden" id="tab_4-4">
 											<?php echo form_open('#',['id'=>'','class'=>'','role'=>'form']);?>
-											<input type="hidden" class="form-control" id="user_id" name="user_id" value="<?php echo $user->id;?>">	
+											<input type="hidden" class="form-control" id="user_id" name="user_id" value="<?php echo $user->id;?>">
 												<table class="table table-bordered table-striped">
 												<tbody><tr>
 													<td>Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus..</td>
@@ -1525,4 +1525,4 @@
 		</div>
 		<!-- END PAGE CONTENT-->
 	</div>
-</div>	
+</div>

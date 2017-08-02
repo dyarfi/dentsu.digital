@@ -3,7 +3,7 @@
 // Class for Users in Admin
 class User extends Admin_Controller {
 
-    public $_class_name; 
+    public $_class_name;
 	public $_config;
 
     public function __construct() {
@@ -11,11 +11,11 @@ class User extends Admin_Controller {
 
 	    // Set class name
 	    $this->_class_name = $this->controller;
-		    
+
         // Load user related model
         $this->load->model('Users');
         $this->load->model('UserProfiles');
-        $this->load->model('UserGroups');		
+        $this->load->model('UserGroups');
         $this->load->model('Captcha');
 
         // Load config files
@@ -23,8 +23,8 @@ class User extends Admin_Controller {
 
         // Load excel library
         $this->load->library('Excel');
-        
-    }		
+
+    }
 
     public function index() {
 
@@ -48,16 +48,16 @@ class User extends Admin_Controller {
 	    // Set class name to view
 	    $data['class_name'] = $this->_class_name;
 
-        // Get users data       
+        // Get users data
         $data['rows'] = $rows;
-		
+
 	    // User profiles
-        $data['user_profiles'] = $this->UserProfiles->getUserProfile(Acl::user()->id);
-	    
+        $data['user_profiles'] = $this->UserProfiles->getUserProfile($this->acl->user()->id);
+
         // Set main template
         $data['main'] = 'users/users_index';
 
-        // Set module with URL request 
+        // Set module with URL request
         $data['module_title'] = $this->module;
 
         // Set admin title page with module menu
@@ -66,23 +66,23 @@ class User extends Admin_Controller {
         // Load admin template
         $this->load->view('template/admin/template', $this->load->vars($data));
 
-    }	
-    
+    }
+
     public function add() {
-		
+
 	    // Default data setup
 	    $fields	= array(
 			    'username'		=> '',
 			    'email'		=> '',
 			    'password'		=> '',
 			    'password1'		=> '',
-			    'gender'		=> '',				
+			    'gender'		=> '',
 			    'group_id'		=> '',
 			    'first_name'	=> '',
-			    'last_name'		=> '',				
+			    'last_name'		=> '',
 			    'birthday'		=> '',
-			    'phone'		=> '',	
-			    'mobile_phone'	=> '',				
+			    'phone'		=> '',
+			    'mobile_phone'	=> '',
 			    'fax'		=> '',
 			    'website'		=> '',
 			    'about'		=> '',
@@ -95,17 +95,17 @@ class User extends Admin_Controller {
 	    $this->form_validation->set_rules('email', 'Email','trim|valid_email|required|min_length[5]|max_length[36]|callback_match_email|xss_clean');
 	    $this->form_validation->set_rules('password', 'Password','trim|required');
 	    $this->form_validation->set_rules('password1', 'Retype Password','trim|required|matches[password]');
-	    $this->form_validation->set_rules('gender', 'Gender','required');		
+	    $this->form_validation->set_rules('gender', 'Gender','required');
 	    $this->form_validation->set_rules('group_id', 'Group','required');
 	    $this->form_validation->set_rules('first_name', 'First Name','trim');
 	    $this->form_validation->set_rules('last_name', 'Last Name','required');
 	    $this->form_validation->set_rules('birthday', 'Birthday','required');
 	    $this->form_validation->set_rules('phone', 'Phone','trim|is_natural|xss_clean|max_length[25]');
-	    $this->form_validation->set_rules('mobile_phone', 'Mobile Phone','trim');		
+	    $this->form_validation->set_rules('mobile_phone', 'Mobile Phone','trim');
 	    $this->form_validation->set_rules('fax', 'Fax','trim|is_natural|xss_clean|max_length[25]');
 	    $this->form_validation->set_rules('website', 'Website','trim|prep_url|xss_clean|max_length[35]');
 	    $this->form_validation->set_rules('about', 'About','trim|xss_clean|max_length[1000]');
-	    $this->form_validation->set_rules('division', 'Division','trim|xss_clean|max_length[55]');				
+	    $this->form_validation->set_rules('division', 'Division','trim|xss_clean|max_length[55]');
 	    $this->form_validation->set_rules('status', 'Status','required');
 
 	    // Check if post is requested
@@ -137,14 +137,14 @@ class User extends Admin_Controller {
 
 		    }
 
-	    } 	
+	    }
 
 		// Load js for administrator login
 		$data['js_files'] = array(base_url('assets/admin/scripts/custom/form-user.js'));
-		
+
 		// Load JS execution
 		$data['js_inline'] = "FormUser.init();";
-		
+
 	    // Set Action
 	    $data['action'] = 'add';
 
@@ -170,9 +170,9 @@ class User extends Admin_Controller {
 	    $data['class_name'] = $this->_class_name;
 
 	    // Main template
-	    $data['main']		= 'users/users_form';		
+	    $data['main']		= 'users/users_form';
 
-	    // Set module with URL request 
+	    // Set module with URL request
 	    $data['module_title'] = $this->module;
 
 	    // Set admin title page with module menu
@@ -182,15 +182,15 @@ class User extends Admin_Controller {
 	    $this->load->view('template/admin/template', $this->load->vars($data));
 
     }
-	
+
     public function edit($id=0){
-				
+
 	    // Check if param is given or not and check from database
 	    if (empty($id) || !$this->Users->getUser($id)) {
 		    $this->session->set_flashdata('message','Item not found!');
 		    // Redirect to index
 		    redirect(ADMIN. $this->controller . '/index');
-	    }	
+	    }
 
 	    //Default data setup
 	    $fields	= array(
@@ -198,13 +198,13 @@ class User extends Admin_Controller {
 			    'email'			=> '',
 			    //'password'		=> '',
 			    //'password1'		=> '',
-			    'gender'		=> '',				
+			    'gender'		=> '',
 			    'group_id'		=> '',
 			    'first_name'	=> '',
-			    'last_name'		=> '',				
+			    'last_name'		=> '',
 			    'birthday'		=> '',
-			    'phone'			=> '',	
-			    'mobile_phone'	=> '',				
+			    'phone'			=> '',
+			    'mobile_phone'	=> '',
 			    'fax'			=> '',
 			    'website'		=> '',
 			    'about'			=> '',
@@ -217,20 +217,20 @@ class User extends Admin_Controller {
 	    //$this->form_validation->set_rules('email', 'Email','trim|valid_email|required|min_length[5]|max_length[24]|callback_match_email|xss_clean');
 	    //$this->form_validation->set_rules('password', 'Password','trim|required');
 	    //$this->form_validation->set_rules('password1', 'Retype Password','trim|required|matches[password]');
-	    $this->form_validation->set_rules('gender', 'Gender','required');		
+	    $this->form_validation->set_rules('gender', 'Gender','required');
 	    $this->form_validation->set_rules('group_id', 'Group','required');
 	    $this->form_validation->set_rules('first_name', 'First Name','trim');
 	    $this->form_validation->set_rules('last_name', 'Last Name','required');
 	    $this->form_validation->set_rules('birthday', 'Birthday','required');
 	    $this->form_validation->set_rules('phone', 'Phone','trim|is_natural|xss_clean|max_length[25]');
-	    $this->form_validation->set_rules('mobile_phone', 'Mobile Phone','trim');		
+	    $this->form_validation->set_rules('mobile_phone', 'Mobile Phone','trim');
 	    $this->form_validation->set_rules('fax', 'Fax','trim|is_natural|xss_clean|max_length[25]');
 	    $this->form_validation->set_rules('website', 'Website','trim|prep_url|xss_clean|max_length[35]');
 	    $this->form_validation->set_rules('about', 'About','trim|xss_clean|max_length[1000]');
-	    $this->form_validation->set_rules('division', 'Division','trim|xss_clean|max_length[55]');				
+	    $this->form_validation->set_rules('division', 'Division','trim|xss_clean|max_length[55]');
 	    $this->form_validation->set_rules('status', 'Status','required');
 
-	    // Check if post is requested		
+	    // Check if post is requested
 	    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 		    // Validation form checks
@@ -243,7 +243,7 @@ class User extends Admin_Controller {
 			    }
 
 			    // Set previous post merge to default
-			    $fields = array_merge($fields, $this->input->post());	
+			    $fields = array_merge($fields, $this->input->post());
 
 			    //print_r($this->input->post());
 
@@ -259,12 +259,12 @@ class User extends Admin_Controller {
 				    'full_backend_access' => $this->input->post('full_backend_access'),
 				    'status' => $this->input->post('status'),
 				    // Profile Accounts
-				    'gender'	=> $this->input->post('gender'),				
+				    'gender'	=> $this->input->post('gender'),
 				    'first_name'	=> $this->input->post('first_name'),
-				    'last_name'	=> $this->input->post('last_name'),				
+				    'last_name'	=> $this->input->post('last_name'),
 				    'birthday'	=> $this->input->post('birthday'),
-				    'phone'		=> $this->input->post('phone'),	
-				    'mobile_phone'	=> $this->input->post('mobile_phone'),				
+				    'phone'		=> $this->input->post('phone'),
+				    'mobile_phone'	=> $this->input->post('mobile_phone'),
 				    'fax'		=> $this->input->post('fax'),
 				    'website'	=> $this->input->post('website'),
 				    'about'		=> $this->input->post('about'),
@@ -282,7 +282,7 @@ class User extends Admin_Controller {
 
 		    }
 
-	    } else {	
+	    } else {
 
 		    // Set password1 to null
 		    $fields['password1']	= '';
@@ -290,17 +290,17 @@ class User extends Admin_Controller {
 		    // Set fields from database
 		    $_fields		= array_merge($fields,(array) $this->Users->getUser($id));
 
-		    $profile	= (array) $this->UserProfiles->getUserProfile($id);									
+		    $profile	= (array) $this->UserProfiles->getUserProfile($id);
 		    $fields		= (object) array_merge($_fields,$profile);
 
 	    }
 
 		// Load js for administrator login
 		$data['js_files'] = array(base_url('assets/admin/scripts/custom/form-user.js'));
-		
+
 		// Load JS execution
 		$data['js_inline'] = "FormUser.init();";
-		
+
 	    // Set Action
 	    $data['action'] = 'edit';
 
@@ -311,7 +311,7 @@ class User extends Admin_Controller {
 	    $data['errors'] = $errors;
 
 	    // Set field data to view
-	    $data['fields'] = (object) $fields;		
+	    $data['fields'] = (object) $fields;
 
 	    // User Status Data
 	    $data['statuses']   = $this->configs['status'];
@@ -326,9 +326,9 @@ class User extends Admin_Controller {
 	    $data['class_name'] = $this->_class_name;
 
 	    // Set form to view
-	    $data['main'] = 'users/users_form';			
+	    $data['main'] = 'users/users_form';
 
-	    // Set module with URL request 
+	    // Set module with URL request
 	    $data['module_title'] = $this->module;
 
 	    // Set admin title page with module menu
@@ -338,7 +338,7 @@ class User extends Admin_Controller {
 	    $this->load->view('template/admin/template', $this->load->vars($data));
 
     }
-	
+
     public function delete($id){
 
         // Delete user data
@@ -353,7 +353,7 @@ class User extends Admin_Controller {
     }
 
     public function view($id=null){
-		
+
         // Check if data is found and redirect if false
         if (empty($id) && (int) count($id) == 0) {
             $this->session->set_flashdata('message',"Error submission.");
@@ -362,9 +362,9 @@ class User extends Admin_Controller {
 
         // Check if user data ID is found and redirect if false
         $user = $this->Users->with('profile')->get($id);
-        
+
         if (!count($user)){
-            $this->session->set_flashdata('message',"Data not found.");			
+            $this->session->set_flashdata('message',"Data not found.");
             redirect(ADMIN. $this->controller . '/index');
         }
 
@@ -377,10 +377,10 @@ class User extends Admin_Controller {
 			base_url('assets/admin/plugins/jquery-file-upload/js/jquery.fileupload-validate.js'),
 			base_url('assets/admin/plugins/jquery-file-upload/js/jquery.fileupload-ui.js'),
 		);
-		
+
 		// Load js for administrator login
 		$data['js_files'] = array(base_url('assets/admin/scripts/custom/form-user.js'));
-		
+
 		// Load JS execution
 		$data['js_inline'] = "FormUser.init();";
 
@@ -399,7 +399,7 @@ class User extends Admin_Controller {
         // Main template
         $data['main']	= 'users/users_view';
 
-        // Set module with URL request 
+        // Set module with URL request
         $data['module_title'] = $this->module;
 
         // Set admin title page with module menu
@@ -414,40 +414,40 @@ class User extends Admin_Controller {
 
             // Check if the request via AJAX
             if (!$this->input->is_ajax_request()) {
-                    exit('No direct script access allowed');		
-            }	
+                    exit('No direct script access allowed');
+            }
 
             // Define initialize result
             $result['result'] = '';
 
             // Action Update User Profile via Ajax
-            if ($action === 'update') {			
+            if ($action === 'update') {
 
 		    // Set validation config
 		    $config = array(
-			array('field' => 'first_name', 
-			      'label' => 'First Name', 
-			      'rules' => 'trim|required|xss_clean|max_length[25]'),	
-			array('field' => 'last_name', 
-			      'label' => 'Last Name', 
+			array('field' => 'first_name',
+			      'label' => 'First Name',
+			      'rules' => 'trim|required|xss_clean|max_length[25]'),
+			array('field' => 'last_name',
+			      'label' => 'Last Name',
 			      'rules' => 'trim|xss_clean|max_length[25]'),
-			//array('field' => 'captcha', 
-			      //'label' => 'Captcha', 
+			//array('field' => 'captcha',
+			      //'label' => 'Captcha',
 			      //'rules' => 'trim|xss_clean|max_length[6]|callback_match_captcha'),
-			array('field' => 'phone', 
-			      'label' => 'Phone', 
+			array('field' => 'phone',
+			      'label' => 'Phone',
 			      'rules' => 'trim|is_natural|xss_clean|max_length[25]'),
-				    array('field' => 'mobile_phone', 
-			      'label' => 'Mobile Phone', 
+				    array('field' => 'mobile_phone',
+			      'label' => 'Mobile Phone',
 			      'rules' => 'trim|is_natural|xss_clean|max_length[25]'),
-				    array('field' => 'website', 
-			      'label' => 'Website', 
+				    array('field' => 'website',
+			      'label' => 'Website',
 			      'rules' => 'trim|prep_url|xss_clean|max_length[35]'),
-				    array('field' => 'about', 
-			      'label' => 'About', 
+				    array('field' => 'about',
+			      'label' => 'About',
 			      'rules' => 'trim|xss_clean|max_length[1000]'),
-				    array('field' => 'division', 
-			      'label' => 'Division', 
+				    array('field' => 'division',
+			      'label' => 'Division',
 			      'rules' => 'trim|xss_clean|max_length[55]')
 		     );
 
@@ -472,42 +472,42 @@ class User extends Admin_Controller {
                             unset($_POST['group_id']);
 
                             // Set User Data
-                            $user_profile = $this->UserProfiles->setUserProfiles($this->input->post());			
+                            $user_profile = $this->UserProfiles->setUserProfiles($this->input->post());
 
                             // Check data if user is exists and status is active
                             if (!empty($user_profile) && $user_profile->status == 1) {
 
-                                    // Send message if true 
+                                    // Send message if true
                                     $result['result']['code'] = 1;
                                     $result['result']['text'] = 'Changes saved !';
 
-                            } else if (!empty($user_profile) && $user->status != 1) { 
+                            } else if (!empty($user_profile) && $user->status != 1) {
 
                                     // Send message if account is not active
                                     $result['result']['code'] = 2;
-                                    $result['result']['text'] = 'Your account profile is not active';			
+                                    $result['result']['text'] = 'Your account profile is not active';
 
                             } else {
 
-                                    // Send message if account not found					
+                                    // Send message if account not found
                                     $result['result']['code'] = 0;
-                                    $result['result']['text'] = 'Profile not found';			
+                                    $result['result']['text'] = 'Profile not found';
                             }
                     }
 
             // Checking Action via Ajax
-            } else if ($action === 'check') {			
+            } else if ($action === 'check') {
 
                     // Check Username users via Ajax
                     if ($this->uri->segments[5] === 'username') {
 
                             // Set User Data
-                            $user = $this->Users->getUserByUsername($this->input->post('username'));			
+                            $user = $this->Users->getUserByUsername($this->input->post('username'));
 
                             // Check data
                             if (!empty($user) && $user->status == 1) {
 
-                                    // Send message if true 
+                                    // Send message if true
                                     $result['result']['code'] = 1;
                                     $result['result']['text'] = 'Username already exist!';
 
@@ -515,45 +515,45 @@ class User extends Admin_Controller {
 
                                     // Send message if account is not active
                                     $result['result']['code'] = 2;
-                                    $result['result']['text'] = 'Your account profile is not active';			
+                                    $result['result']['text'] = 'Your account profile is not active';
 
                             } else {
 
                                     // Send message if account not found
                                     $result['result']['code'] = 0;
-                                    $result['result']['text'] = 'Profile not found';			
+                                    $result['result']['text'] = 'Profile not found';
 
-                            }	
+                            }
 
-                    // Check Email users via Ajax	
-                    } else if ($this->uri->segments[5] === 'email') {			
+                    // Check Email users via Ajax
+                    } else if ($this->uri->segments[5] === 'email') {
 
                             // Set User Data
-                            $user = $this->Users->getUserByEmail($this->input->post('email'));			
+                            $user = $this->Users->getUserByEmail($this->input->post('email'));
 
                             // Check data
                             if (!empty($user) && $user->status == 1) {
 
-                                    // Send message if true 
+                                    // Send message if true
                                     $result['result']['code'] = 1;
                                     $result['result']['text'] = 'Email already exist!';
 
-                            } else if (!empty($user) && $user->status != 1) { 
+                            } else if (!empty($user) && $user->status != 1) {
 
                                     // Send message if account is not active
                                     $result['result']['code'] = 2;
-                                    $result['result']['text'] = 'Your account profile is not active';		
+                                    $result['result']['text'] = 'Your account profile is not active';
 
                             } else {
 
                                     // Send message if account not found
                                     $result['result']['code'] = 0;
-                                    $result['result']['text'] = 'Email not found';			
+                                    $result['result']['text'] = 'Email not found';
 
-                            }	
+                            }
 
-                    // Check Password users via Ajax	
-                    } else if ($this->uri->segments[5] === 'password') {		
+                    // Check Password users via Ajax
+                    } else if ($this->uri->segments[5] === 'password') {
 
                             // Default hash
                             $hash_password = '';
@@ -561,7 +561,7 @@ class User extends Admin_Controller {
                             // Change to Password hash from POST
                             if ($_POST['password'] !== '') {
                                     $hash_password		= sha1($_POST['username'].$_POST['password']);
-                                    $_POST['password']	= $hash_password;								
+                                    $_POST['password']	= $hash_password;
                             }
 
                             //print_r($this->Users->getUserPassword($this->input->post('password')));
@@ -569,17 +569,17 @@ class User extends Admin_Controller {
                             // Set validation config
                             $config = array(
                                             array(
-                                                    'field'   => 'password1', 
+                                                    'field'   => 'password1',
                                                     'label'   => 'New Password' ,
-                                                    'rules'   => 'trim|required'),						
+                                                    'rules'   => 'trim|required'),
                                             array(
-                                                    'field'   => 'password2', 
-                                                    'label'   => 'Re-type New Password', 
+                                                    'field'   => 'password2',
+                                                    'label'   => 'Re-type New Password',
                                                     'rules'   => 'trim|required|matches[password1]'),
                                             array(
-                                                    'field'   => 'password', 
-                                                    'label'   => 'Password', 
-                                                    'rules'   => 'trim|required|max_length[255]|callback_match_password')						
+                                                    'field'   => 'password',
+                                                    'label'   => 'Password',
+                                                    'rules'   => 'trim|required|max_length[255]|callback_match_password')
                             );
 
                             // Set rules to form validation
@@ -595,8 +595,8 @@ class User extends Admin_Controller {
                             } else {
 
                                     // Get user with the user id post
-                                    $user	= $this->Users->getUser($this->input->post('user_id'));					
-                                    $newp	= $this->Users->setPassword($user, $this->input->post('password1')); 
+                                    $user	= $this->Users->getUser($this->input->post('user_id'));
+                                    $newp	= $this->Users->setPassword($user, $this->input->post('password1'));
 
                                     // Check if the password is changed
                                     if (!empty($newp)) {
@@ -614,9 +614,9 @@ class User extends Admin_Controller {
                                     }
 
                             }
-                    }		
-            } 		
-            // Check user data and Add via Ajax	
+                    }
+            }
+            // Check user data and Add via Ajax
             else if($action === 'add') {
 
                     $result['result'] = '';
@@ -626,21 +626,21 @@ class User extends Admin_Controller {
             // Return data esult
             $data['json'] = $result;
 
-            // Load data into view		
-            $this->load->view('json', $this->load->vars($data));	
+            // Load data into view
+            $this->load->view('json', $this->load->vars($data));
     }
 
     public function forgot_password() {
 
 		// Check if the request via AJAX
 		if (!$this->input->is_ajax_request()) {
-			exit('No direct script access allowed');		
+			exit('No direct script access allowed');
 		}
 
 		// Define initialize result
 		$result['result'] = '';
 
-	    // Check if post is requested		
+	    // Check if post is requested
 	    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 			// Get User Data
@@ -651,7 +651,7 @@ class User extends Admin_Controller {
 				$password = $this->Users->setPassword($user);
 
 				$result['result']['code'] = 1;
-				$result['result']['text'] = 'Your new password: <b>'. $password .'</b>';			
+				$result['result']['text'] = 'Your new password: <b>'. $password .'</b>';
 
 				$this->load->library('email');
 
@@ -662,29 +662,29 @@ class User extends Admin_Controller {
 
 				$this->email->send();
 
-			} else if (!empty($user) && $user->status != 1) { 
+			} else if (!empty($user) && $user->status != 1) {
 
 				// Account is not Active
 				$result['result']['code'] = 2;
-				$result['result']['text'] = 'Your account is not active';			
+				$result['result']['text'] = 'Your account is not active';
 
 			} else {
 
 				// Account is not existed
 				$result['result']['code'] = 0;
-				$result['result']['text'] = 'Email or User not found';			
+				$result['result']['text'] = 'Email or User not found';
 
 			}
 		}
 
-		$data['json'] = $result;				
-		$this->load->view('json', $this->load->vars($data));					
+		$data['json'] = $result;
+		$this->load->view('json', $this->load->vars($data));
 
     }
 
-    
+
     // Action for update item status
-    public function change() {	
+    public function change() {
 		if ($this->input->post('check') !='') {
 		    $rows	= $this->input->post('check');
 		    foreach ($rows as $row) {
@@ -695,10 +695,10 @@ class User extends Admin_Controller {
 		    // Set message
 		    $this->session->set_flashdata('message','Status changed!');
 		    redirect(ADMIN.$this->_class_name.'/index');
-		} else {	
+		} else {
 		    // Set message
 		    $this->session->set_flashdata('message','Data not Available');
-		    redirect(ADMIN.$this->_class_name.'/index');			
+		    redirect(ADMIN.$this->_class_name.'/index');
 		}
     }
 
@@ -706,7 +706,7 @@ class User extends Admin_Controller {
 
     	// Data collection
         $users = $this->Users->get_all();
-        
+
 		// Return excel data
         return $this->excel->export($users);
 
@@ -718,17 +718,17 @@ class User extends Admin_Controller {
 
 		// Check if the request via AJAX
 		if (empty($_POST)) {
-			exit('No direct script access allowed');		
-		}	
-				
+			exit('No direct script access allowed');
+		}
+
 		$config = array(
-			array('field' => 'image_name', 
-                  'label' => 'File', 
+			array('field' => 'image_name',
+                  'label' => 'File',
                   'rules' => 'trim|required|xss_clean|max_length[35]'));
-		
+
 		// Set rules to form validation
 		$this->form_validation->set_rules($config);
-		
+
 		// Run validation for checking
 		if ($this->form_validation->run() === FALSE) {
 
@@ -743,45 +743,45 @@ class User extends Admin_Controller {
 		} else {
 
 		}
-								
+
 	}
 
 	public function image() {
-			
+
 		// Check if the request via AJAX
 		if (!$this->input->is_ajax_request()) {
-			exit('No direct script access allowed');		
-		}	
-		
+			exit('No direct script access allowed');
+		}
+
 		// Define initialize result
 		$result['result'] = '';
-								
-		if($_FILES && $_SERVER['REQUEST_METHOD'] == 'POST') {					
-				
+
+		if($_FILES && $_SERVER['REQUEST_METHOD'] == 'POST') {
+
 				// uncomment to see javascript loading progress
 				//usleep(2000000);
-				
+
 				$upload		= TRUE;
 				$file_hash	= md5(time() + rand(100, 999));
 				$file_data	= pathinfo($_FILES['fileupload']['name']);
-									
+
 				$file_element_name = 'fileupload';
-				
+
 				$config['upload_path'] = './uploads/users/';
 				$config['allowed_types'] = 'gif|jpg|png|doc|txt';
 				$config['max_size'] = 1024 * 8;
 				$config['encrypt_name'] = FALSE;
-				
+
 				$this->load->library('upload', $config);
 
 				$thumb	= $file_data['filename'].'_thumb.'.$file_data['extension'];
-				
+
 				if(file_exists($config['upload_path'].$_FILES['fileupload']['name'])) {
-					
+
 					$upload	= FALSE;
-				
+
 				}
-				
+
 				if (!$this->upload->do_upload($file_element_name) || $upload === FALSE)
 				{
 					$status = 'error!';
@@ -803,7 +803,7 @@ class User extends Admin_Controller {
 						$config['width']	= 264;
 						$config['height']	= 220;
 
-						$this->load->library('image_lib', $config); 
+						$this->load->library('image_lib', $config);
 
 						$this->image_lib->resize();
 
@@ -813,12 +813,12 @@ class User extends Admin_Controller {
 
 						$thumb = $file_data['filename'].'_thumb.'.$file_data['extension'];
 					//}
-					
+
 					$status = "success";
 					$msg = "File successfully uploaded";
 
 				}
-				
+
 						//print_r($msg);
 						//exit;
 
@@ -831,33 +831,33 @@ class User extends Admin_Controller {
 										'thumbnailUrl'	=>'uploads/users/'. $thumb,
 										//'deleteUrl'		=>URL::site(ADMIN).'/news/filedelete/'.$file_id,
 										'deleteType'	=>'DELETE'
-										);						
+										);
 		} else {
-					
-				// Send message if account not found					
+
+				// Send message if account not found
 				$result['result']['code'] = 0;
 				$result['result']['text'] = 'Image not Found';
 		}
 
 		// Return data esult
 		$data['json'] = $result;
-		
-		// Load data into view		
-		$this->load->view('json', $this->load->vars($data));	
-		
+
+		// Load data into view
+		$this->load->view('json', $this->load->vars($data));
+
 	}
-	
+
 	// Check if upload dir exists or create one and upload file if true and return file name
 	public static function _upload_to ($file, $name, $upload_path='', $file_perm = '') {
 		if (!empty($upload_path)) {
-			
-			if ( ! is_dir($upload_path) OR ! is_writable(realpath($upload_path))) {	
+
+			if ( ! is_dir($upload_path) OR ! is_writable(realpath($upload_path))) {
 				mkdir($upload_path);
 			}
 
-			// Make the filename into a complete path			
+			// Make the filename into a complete path
 			$filename = realpath($upload_path).DIRECTORY_SEPARATOR.$file['name'];
-			
+
 			if (move_uploaded_file($file['tmp_name'], $filename))
 			{
 				if ($file_perm !== FALSE)
@@ -869,17 +869,17 @@ class User extends Admin_Controller {
 				// Return new file path
 				return $filename;
 			}
-			
+
 		} else {
 			return false;
 		}
-		
+
 	}
 
     // -------------- CALLBACK METHODS -------------- //
 
     // Match Email post to Database
-    public function match_email($email) {		
+    public function match_email($email) {
 
 		// Check email if empty
 		if ($email == '') {
@@ -888,16 +888,16 @@ class User extends Admin_Controller {
 		}
 		// Check email if match
 		else if ($this->Users->getUserEmail($email) == 1) {
-				$this->form_validation->set_message('match_email', 'The %s is already taken.');			
+				$this->form_validation->set_message('match_email', 'The %s is already taken.');
 				return false;
 		} else {
 				return true;
-		} 
+		}
 
     }
 
     // Match Captcha post to Database
-    public function match_captcha($captcha) {		
+    public function match_captcha($captcha) {
 
 		// Check captcha if empty
 		if ($captcha == '') {
@@ -907,7 +907,7 @@ class User extends Admin_Controller {
 		// Check captcha if match
 		else if ($this->Captcha->match($captcha)) {
 				return true;
-		} 
+		}
 
     }
 
@@ -921,7 +921,7 @@ class User extends Admin_Controller {
 		}
 		// Check password if match
 		else if ($this->Users->getUserPassword($password) != 1) {
-				$this->form_validation->set_message('match_password', 'The %s not match with your current password.');			
+				$this->form_validation->set_message('match_password', 'The %s not match with your current password.');
 				return false;
 		// Match current password
 		} else {

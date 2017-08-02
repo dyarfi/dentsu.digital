@@ -1,8 +1,9 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Acl extends CI_Controller {
+class Acl {
 		
-	private $_ci;
+	public $_ci;
+	public $user;
 	
 	public function __construct () {
 	
@@ -10,8 +11,8 @@ class Acl extends CI_Controller {
 
 	    $this->_ci->load->helper('url');
 	    $this->_ci->load->library('session');
-		
-		//if (strpos($this->_ci->session->userdata('prev_url'), ADMIN) !== FALSE 
+
+	    //if (strpos($this->_ci->session->userdata('prev_url'), ADMIN) !== FALSE 
 			    //&& $this->_ci->session->userdata('prev_url') != $this->_ci->session->userdata('curr_url')) {
 		    // Set Previous URL to current URL
 		    //$this->_ci->session->set_userdata('prev_url', $this->_ci->session->userdata('curr_url'));
@@ -33,7 +34,8 @@ class Acl extends CI_Controller {
 	*/		
 	public function user() {
 	
-	    $user		= !empty($this->session->userdata['user_session']) ? $this->session->userdata['user_session'] : '';
+	    $user		= !empty($this->_ci->session->userdata['user_session']) ? $this->_ci->session->userdata['user_session'] : '';
+		$this->user = $user;
 		
 	    return $user;
 	}
@@ -54,14 +56,14 @@ class Acl extends CI_Controller {
 	    // ------- If User is Login set available data --- start
 	    if ($this->user != '') {
 		    //$this->userhistory		= Model_UserHistory::instance();
-		    $this->module_list			= json_decode($this->session->userdata('module_list'),TRUE);
-		    $this->module_function_list	= json_decode($this->session->userdata('module_function_list'),TRUE);
+		    $this->module_list			= json_decode($this->_ci->session->userdata('module_list'),TRUE);
+		    $this->module_function_list	= json_decode($this->_ci->session->userdata('module_function_list'),TRUE);
 	    }
 
 	    $modules				= array();
 
 	    // Check admin url
-	    if (strstr($this->uri->uri_string, ADMIN) !== '') {	
+	    if (strstr($this->_ci->uri->uri_string, ADMIN) !== '') {	
 		    // Get module listings
 		    $modules	= $this->module_list;			
 	    }
@@ -79,12 +81,12 @@ class Acl extends CI_Controller {
 	public function session_destroy () {
 		
 		//Destroy user session		
-	    $this->session->unset_userdata('module_list');
-	    $this->session->unset_userdata('module_function_list');
-	    $this->session->unset_userdata('user_data');		
-	    $this->session->unset_userdata('user_session');
+	    $this->_ci->session->unset_userdata('module_list');
+	    $this->_ci->session->unset_userdata('module_function_list');
+	    $this->_ci->session->unset_userdata('user_data');		
+	    $this->_ci->session->unset_userdata('user_session');
 
-	    return ($this->session->sess_destroy());
+	    return ($this->_ci->session->sess_destroy());
 	}
 	
 }

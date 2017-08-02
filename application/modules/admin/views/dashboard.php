@@ -12,14 +12,14 @@
 			<div class="col-md-12">
 				<!-- BEGIN PAGE TITLE & BREADCRUMB-->
 				<h3 class="page-title">
-				Dashboard <small><a href="<?=$this->config->item('developer_url');?>" class="logoHandler">
-					<?=$this->config->item('developer_name');?>
-				</a></small>				
+				Dashboard <small><a href="<?php echo $this->config->item('developer_url');?>" class="logoHandler">
+					<?php echo $this->config->item('developer_name');?>
+				</a></small>
 				</h3>
 				<ul class="page-breadcrumb breadcrumb">
 					<li>
 						<i class="fa fa-home"></i>
-						<a href="<?=base_url(ADMIN.'admin/dashboard/index')?>">
+						<a href="<?php echo base_url(ADMIN.'admin/dashboard/index')?>">
 							Home
 						</a>
 						<i class="fa fa-angle-right"></i>
@@ -50,7 +50,7 @@
 							 Total Vote
 						</div>
 					</div>
-					<a class="more" href="<?=base_url()?>__admin_vote/all">
+					<a class="more" href="<?php echo base_url()?>__admin_vote/all">
 						 View more <i class="m-icon-swapright m-icon-white"></i>
 					</a>
 				</div>
@@ -62,13 +62,13 @@
 					</div>
 					<div class="details">
 						<div class="number">
-							 <?=$tusers;?>
+							 <?php echo $tusers;?>
 						</div>
 						<div class="desc">
 							 Total User
 						</div>
 					</div>
-					<a class="more" href="<?=base_url(ADMIN.'user/index');?>">
+					<a class="more" href="<?php echo base_url(ADMIN.'user/index');?>">
 						 View more <i class="m-icon-swapright m-icon-white"></i>
 					</a>
 				</div>
@@ -81,7 +81,7 @@
 
 		<div class="clearfix">
 		</div>
-		
+
 		<div class="row">
 			<div class="col-md-12 col-sm-12">
 				<div class="portlet box green">
@@ -99,9 +99,9 @@
 					</div>
 					</div>
 				</div>
-			</div>	
+			</div>
 		</div>
-		
+
 		<div class="row">
 			<div class="col-md-12 col-sm-12">
 				<div class="portlet box red">
@@ -119,9 +119,9 @@
 					</div>
 					</div>
 				</div>
-			</div>	
+			</div>
 		</div>
-		
+
 		<div class="row hidden">
 			<div class="col-md-12 col-sm-12">
 				<div class="portlet box blue">

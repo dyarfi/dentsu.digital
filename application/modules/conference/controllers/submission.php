@@ -7,10 +7,10 @@ class Submission extends Admin_Controller {
      *
      * Maps to the following URL
      * 		http://example.com/index.php/welcome
-     *	- or -  
+     *	- or -
      * 		http://example.com/index.php/welcome/index
      *	- or -
-     * Since this controller is set as the default controller in 
+     * Since this controller is set as the default controller in
      * config/routes.php, it's displayed at http://example.com/
      *
      * So any other public methods not prefixed with an underscore will
@@ -23,10 +23,10 @@ class Submission extends Admin_Controller {
 
 	    // Load User model
 	    //$this->load->model('admin/Users');
-	    
+
 	    // Load User Profiles model
 	    //$this->load->model('admin/UserProfiles');
-	    
+
 	    // Load Conference model
 	    $this->load->model('Conferences');
 
@@ -35,7 +35,7 @@ class Submission extends Admin_Controller {
 
 	    // Load Schedule model
 	    $this->load->model('Schedules');
-        
+
         // Load Submission model
 	    $this->load->model('Submissions');
 
@@ -43,7 +43,7 @@ class Submission extends Admin_Controller {
 	   $this->load->library('grocery_CRUD');
 
     }
-	
+
     public function index() {
         try {
 			// Set our Grocery CRUD
@@ -54,18 +54,18 @@ class Submission extends Admin_Controller {
 			//$crud->where('tbl_user_profiles.status',1);
             // Set tables
             $crud->set_table($this->Submissions->table);
-			// Handles the default primary key for a specific table. 
+			// Handles the default primary key for a specific table.
 			//$crud->set_primary_key('user_id','tbl_user_profiles');
             // Set CRUD subject
-            $crud->set_subject('Submission'); 
-            
+            $crud->set_subject('Submission');
+
             // Fields
             $crud->fields('subject','url','description','user_id','status','added','modified');
-            
+
 			// Set column
-            $crud->columns('subject','description','added','modified','status');			
+            $crud->columns('subject','description','added','modified','status');
             // Set field type
-            $crud->field_type('user_id','hidden', ACL::user()->id);
+            $crud->field_type('user_id','hidden', $this->acl->user()->id);
             $crud->field_type('added','hidden');
             $crud->field_type('modified','hidden');
             $crud->field_type('url','hidden');
@@ -89,7 +89,7 @@ class Submission extends Admin_Controller {
             show_error($e->getMessage() . ' --- ' . $e->getTraceAsString());
         }
     }
-    
+
     public function set($id=null) {
 		if (!empty($id)) {
 			$objects = $this->Applicants->getApplicant($id);
@@ -106,16 +106,16 @@ class Submission extends Admin_Controller {
 			[phone] => 647474747
 			[address] => 45745747
 			[birth_date] => 4567457
-			[birth_place] => 
+			[birth_place] =>
 			[education_grade] => 1
-			[education_name] => 
-			[education_major] => 
-			[education_from] => 
-			[education_to] => 
-			[employment_name] => 
-			[employment_position] => 
-			[employment_from] => 
-			[employment_to] => 
+			[education_name] =>
+			[education_major] =>
+			[education_from] =>
+			[education_to] =>
+			[employment_name] =>
+			[employment_position] =>
+			[employment_from] =>
+			[employment_to] =>
 			[photo] => 3b394-1513781_10205610488526266_3600135193534162242_n.jpg
 			[cv_file] => 976bd-export-2015-02-13_14_37_25.xls
 			[is_located] => 0
@@ -142,25 +142,25 @@ class Submission extends Admin_Controller {
 
 			/*
 			 * 'username'	=> $object['username'],
-				'email'	=> $object['email'],			
-				'password'	=> sha1($object['username'].$object['password']),	
-				'group_id'	=> @$object['group_id'],			
-				'added'	=> time(),	
+				'email'	=> $object['email'],
+				'password'	=> sha1($object['username'].$object['password']),
+				'group_id'	=> @$object['group_id'],
+				'added'	=> time(),
 				'status'	=> $object['status']
 
-			 * 
+			 *
 				'user_id'	=> $insert_id,
 				'gender'	=> !empty($object['gender']) ? $object['gender'] : NULL,
 				'first_name'	=> !empty($object['first_name']) ? $object['first_name'] : NULL,
 				'last_name'	=> !empty($object['last_name']) ? $object['last_name'] : NULL,
 				'birthday'	=> !empty($object['birthday']) ? $object['birthday'] : NULL,
-				'phone'		=> !empty($object['phone']) ? $object['phone'] : NULL,	
+				'phone'		=> !empty($object['phone']) ? $object['phone'] : NULL,
 				'mobile_phone'	=> !empty($object['mobile_phone']) ? $object['mobile_phone'] : NULL,
 				'fax'		=> !empty($object['fax']) ? $object['fax'] : NULL,
 				'website'	=> !empty($object['website']) ? $object['website'] : NULL,
 				'about'		=> !empty($object['about']) ? $object['about'] : NULL,
 				'division'	=> !empty($object['division']) ? $object['division'] : NULL,
-				'added'		=> time(),	
+				'added'		=> time(),
 				'status'	=> 1)
 			 */
 
@@ -173,12 +173,12 @@ class Submission extends Admin_Controller {
 			}
 		}
     }
-    
+
     private function load($crud, $nav) {
         $output = $crud->render();
         $output->nav = $nav;
         if ($crud->getState() == 'list') {
-            // Set Title 
+            // Set Title
             $output->page_title = 'Submission Listings';
             // Set Main Template
             $output->main       = 'template/admin/metronix';
@@ -186,7 +186,7 @@ class Submission extends Admin_Controller {
             $this->load->view('template/admin/template.php', $output);
         } else {
             $this->load->view('template/admin/popup.php', $output);
-        }    
+        }
     }
 }
 
