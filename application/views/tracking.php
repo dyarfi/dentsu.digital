@@ -6,8 +6,8 @@
 if ($gallery && $attachment) { ?>
 <div class="container">
   <div class="text-center main-block">
-    <h4>Gallery</h4>
-    <div class="row-fluid" style="margin:170px auto">
+    <h4><a href="<?php echo base_url('tracking');?>" title="Quest Home"><span class="fa fa-home fa-2x"></span></a> &raquo; Tracking Gallery</h4>
+    <div class="row-fluid" style="margin:20px auto">
       <ul class="list-unstyled list-inline">
         <?php foreach ($gallery as $img) { ?>
         <li class="li-participated">
@@ -29,19 +29,6 @@ if ($gallery && $attachment) { ?>
 * This is when user not yet participated
 */
 ?>
-<style type="text/styelsheet">
-@media (min-width:980px) {
-  body { /*padding-top: 60px;*/ }
-}
-.main-block { margin: 180px auto 360px auto; }
-.main-box { margin: 100px auto 100px auto; display: inline-block; }
-.canvas-container { margin: 0 auto; float: none; border: 5px solid #aaa; overflow: hidden; }
-.menu { margin-bottom: 20px; }
-.menu img { margin-bottom: 10px; cursor: pointer; border: 1px solid white; }
-.menu img:hover{ border: 1px solid green; }
-.thumb { height: 70px; }
-.msg { margin: 10px auto 10px auto; }
-</style>
 <div class="container">
    <div class="center-block">
       <div class="text-center main-block" style="margin:100px auto 180px auto;">
@@ -80,13 +67,15 @@ if ($gallery && $attachment) { ?>
             </div>
           <div class="center-block handler-text"><h3></h3></div>
             <?php } else { ?>
-                <div class="row-fluid" style="margin:200px auto 300px auto; ">
+                <div class="row-fluid" style="margin:100px auto 100px auto; ">
                   <div class="center-block">
                     <div class="text-center main-block">
                       <div class="center-block clearfix main-box">
                         <?php echo form_open('',['class'=>'form-inline','id'=>'submit_email']);?>
                         <h3>Please Input your Email first...</h3>
-                        <?php echo form_input(['name'=>'email','class'=>'form-control','placeholder'=>'email@d3.dentsu.co.id']);?>
+                        <div class="form-group">
+                            <?php echo form_input(['name'=>'email','class'=>'form-control','placeholder'=>'email@dx-d3.com']);?>
+                        </div>
                         <?php echo form_submit(['type'=>'submit', 'name'=>'submit', 'value'=>'Submit', 'class'=>'btn btn-primary']);?>
                         <div class="msg"></div>
                         <?php echo form_close();?>
@@ -97,21 +86,6 @@ if ($gallery && $attachment) { ?>
             <?php } ?>
     </div>
   </div>
-
-  <style>
-  .rect {
-    border: 2px solid #a64ceb;
-    left: -1000px;
-    position: absolute;
-    top: -1000px;
-  }
-  /*#img_tracking {*/
-    /*position: absolute;*/
-    /*top: 50%;*/
-    /*left: 50%;*/
-    /*margin: -173px 0 0 -300px;*/
-  /*}*/
-  </style>
   <!-- /.container -->
 </div>
 <?php

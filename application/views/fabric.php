@@ -1,19 +1,4 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed'); ?>
-<style>
-@media (min-width:980px) {
-  body { padding-top: 60px; }
-}
-.main-block { margin: 180px auto 360px auto; }
-.main-box { margin: 100px auto 100px auto; }
-.canvas-container { margin: 0 auto; float: none; border: 5px solid #aaa; overflow: hidden; }
-.menu { margin-bottom: 20px; }
-.menu img { margin-bottom: 10px; cursor: pointer; border: 1px solid white; }
-.menu img:hover{ border: 1px solid green; }
-.thumb { height: 70px; }
-.msg { margin: 10px auto 10px auto; }
-.li-participated { position:relative; }
-.participated { display:none;padding:2px;position:absolute;bottom:0;left:0;right:0;z-index:1;background:#f2f2f2;width:auto;margin 0 auto;word-wrap:break-word; font-size: 0.9em}
-</style>
 <?php
 /*
 * This is when user already participated
@@ -21,8 +6,8 @@
 if ($gallery && $attachment) { ?>
 <div class="container">
   <div class="text-center main-block">
-    <h4>Gallery</h4>
-    <div class="row-fluid" style="margin:170px auto">
+    <h4><a href="<?php echo base_url('fabric');?>" title="Quest Home"><span class="fa fa-home fa-2x"></span></a> &raquo; Fabric Gallery</h4>
+    <div class="row-fluid" style="margin:20px auto">
       <ul class="list-unstyled list-inline">
         <?php foreach ($gallery as $img) { ?>
         <li class="li-participated">
@@ -176,13 +161,15 @@ if ($gallery && $attachment) { ?>
                     <?php echo form_close();?>
             </div>
 <?php } else { ?>
-<div class="row-fluid" style="margin:200px auto 300px auto; ">
+<div class="row-fluid" style="margin:100px auto 100px auto; ">
   <div class="center-block">
     <div class="text-center main-block">
       <div class="center-block clearfix main-box">
         <?php echo form_open('',['class'=>'form-inline','id'=>'submit_email']);?>
         <h3>Please Input your Email first...</h3>
-        <?php echo form_input(['name'=>'email','class'=>'form-control','placeholder'=>'email@d3.dentsu.co.id']);?>
+        <div class="form-group">
+            <?php echo form_input(['name'=>'email','class'=>'form-control','placeholder'=>'email@dx-d3.com']);?>
+        </div>
         <?php echo form_submit(['type'=>'submit', 'name'=>'submit', 'value'=>'Submit', 'class'=>'btn btn-primary']);?>
         <div class="msg"></div>
         <?php echo form_close();?>

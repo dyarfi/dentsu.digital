@@ -16,10 +16,9 @@
 
                     <div class="col-lg-12 col-md-12 col-xs-12">
 
-                        <br/><br/><br/><br/><br/><br/>
+                        <br/><br/>
 
                         <?php if($this->logged_in) { ?>
-
                         <div class="col-lg-12 col-md-12 col-xs-12 error-handler ostrich_sansblack">
                             <?php if (!empty($progress)) { ?>
                             <div class="col-md-12 center-block text-center">
@@ -31,8 +30,7 @@
                                 </div>
                             </div>
                             <?php } ?>
-
-                            <br/><br/><br/><br/><br/><br/>
+                            <br/><br/>
                             <div class="clearfix"></div>
                             <?php echo validation_errors('<div class="alert alert-danger" role="alert"><span>', '</span></div>'); ?>
                         </div>
@@ -95,13 +93,15 @@
                             <?php } ?>
                         </div>
                         <?php } else { ?>
-                        <div class="row-fluid" style="margin:200px auto 300px auto; ">
+                        <div class="row-fluid" style="margin:100px auto 100px auto; ">
                           <div class="center-block">
                             <div class="text-center main-block">
                               <div class="center-block clearfix main-box">
                                 <?php echo form_open('',['class'=>'form-inline','id'=>'submit_email']);?>
                                 <h3>Please Input your Email first...</h3>
-                                <?php echo form_input(['name'=>'email','class'=>'form-control','placeholder'=>'email@d3.dentsu.co.id']);?>
+                                <div class="form-group">
+                                    <?php echo form_input(['name'=>'email','class'=>'form-control','placeholder'=>'email@dx-d3.com']);?>
+                                </div>
                                 <?php echo form_submit(['type'=>'submit', 'name'=>'submit', 'value'=>'Submit', 'class'=>'btn btn-primary']);?>
                                 <div class="msg"></div>
                                 <?php echo form_close();?>

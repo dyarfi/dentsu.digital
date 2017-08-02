@@ -2,14 +2,10 @@
 //print_r($questionnaires);
 ?>
 <div class="container marginbot-50">
-
-<br/><br/><br/><br/>
-
-  <h4>Questionnaires Result</h4>
-
+  <h4><a href="<?php echo base_url('quest');?>" title="Quest Home"><span class="fa fa-home fa-2x"></span></a> &raquo; Questionnaires Result</h4>
     <?php echo form_open('',['class'=>'form-horizontal']);?>
       <select name="quests" id="index_quest" class="form-control"/>
-            <option value="">----- PILIH -----</option>
+            <option value="">----- PICK QUEST -----</option>
             <?php
             $i=1;
             foreach($questionnaires as $questionnaire) { ?>

@@ -52,7 +52,7 @@
 				<div class="messageFlash">
 					<?php $this->load->view('flashdata'); ?>
 				</div>
-				<div class="content">
+				<div class="content marginbot-30">
 					<?php $this->load->view($main); ?>
 				</div>
 			</div>
@@ -71,16 +71,12 @@
     // Add javascripts
     $this->minify->js([
       "public/js/jquery.min.js",
+	  "public/js/jquery.easing.min.js",
       "public/js/jquery.cookie.js",
       "public/js/jquery.fancybox.pack.js",
-	  "public/js/jquery.jqplot.1.0.8/jquery.jqplot.min.js",
-	  "public/js/jquery.jqplot.1.0.8/plugins/jqplot.pieRenderer.min.js",
-	  "public/js/jquery.jqplot.1.0.8/plugins/jqplot.json2.min.js",
-      "public/js/bootstrap.min.js",
+	  "public/js/bootstrap.min.js",
       "admin/plugins/bootbox/bootbox.min.js",
-      "public/js/jquery.easing.min.js",
-      "public/js/jquery.scrollTo.js",
-      "public/js/imagesloaded.pkgd.min.js"
+      "public/js/jquery.scrollTo.js"
     ]);
     /*
      * Adding additional javascript from controller
@@ -107,11 +103,6 @@
     <script src="<?php echo $file; ?>"></script>
     <?php endforeach; } */
   ?>
-  <!-- Custom Theme JavaScript -->
-  <script type="text/javascript" src="<?php echo base_url('assets/public/js/jquery.jqplot.1.0.8/jquery.jqplot.min.js');?>"></script>
-  <script type="text/javascript" src="<?php echo base_url('assets/public/js/jquery.jqplot.1.0.8/plugins/jqplot.pieRenderer.min.js');?>"></script>
-  <script type="text/javascript" src="<?php echo base_url('assets/public/js/jquery.jqplot.1.0.8/plugins/jqplot.json2.min.js');?>"></script>
-
   <script src="<?php echo base_url();?>assets/public/js/custom.js"></script>
   <script type="text/javascript">
   $(document).ready(function() {
