@@ -7,17 +7,17 @@ class Questionnaire extends Admin_Controller {
      *
      * Maps to the following URL
      * 		http://example.com/index.php/welcome
-     *	- or -  
+     *	- or -
      * 		http://example.com/index.php/welcome/index
      *	- or -
-     * Since this controller is set as the default controller in 
+     * Since this controller is set as the default controller in
      * config/routes.php, it's displayed at http://example.com/
      *
      * So any other public methods not prefixed with an underscore will
      * map to /index.php/welcome/<method_name>
      * @see http://codeigniter.com/user_guide/general/urls.html
      */
-	
+
 	public function __construct() {
 		parent::__construct();
 
@@ -35,24 +35,24 @@ class Questionnaire extends Admin_Controller {
             $crud->set_table($this->Questionnaires->table);
             $crud->set_subject('List Questionnaire');
             $crud->display_as('user_id', 'User');
-            $crud->columns('questionnaire_text','quest_per_column','user_id','status');                      
-            $crud->callback_column('user_id', array($this, '_callback_admin'));            
-            //$crud->field_type('user_id','dropdown',$this->user_model->get_values_users());   
-            $crud->field_type('status','dropdown',array('1' => 'Enable', '0' => 'Disable'));    
+            $crud->columns('questionnaire_text',/*'quest_per_column',*/'user_id','status');
+            $crud->callback_column('user_id', array($this, '_callback_admin'));
+            //$crud->field_type('user_id','dropdown',$this->user_model->get_values_users());
+            $crud->field_type('status','dropdown',array('1' => 'Enable', '0' => 'Disable'));
             $crud->field_type('order','hidden');
             $crud->field_type('count','hidden');
             $crud->field_type('added','hidden');
             $crud->field_type('modified','hidden');
-            
+
             // Set field display alias
             $crud->display_as('quest_per_column', 'Questions / Column');
 
             // Set upload field
             $crud->set_field_upload('file_name','uploads/questionnaire');
-            
-            // Set user that who is in charge for this questionnaire 
+
+            // Set user that who is in charge for this questionnaire
             //$crud->callback_column('user_id', array($this, '_callback_admin'));
-                
+
 //            $crud->columns('name', 'email', 'phphone_number', 'twitter', 'total_image');
 //            $crud->callback_column('total_image', array($this, '_callback_total_image'));
 //            $crud->display_as('name', 'Name');
@@ -64,7 +64,7 @@ class Questionnaire extends Admin_Controller {
 
             //$crud->callback_column('fb_pic_url',array($this,'callback_pic'));
 
-            //$crud->unset_add();            
+            //$crud->unset_add();
             //$crud->unset_edit();
             //$crud->unset_delete();
 
@@ -73,7 +73,7 @@ class Questionnaire extends Admin_Controller {
             show_error($e->getMessage() . ' --- ' . $e->getTraceAsString());
         }
     }
-    
+
     public function callback_pic($value = '', $primary_key = null){
         return '<a href="'.$value.'" class="image-thumbnail">'
         . '<img src="'.$value.'" height="50px"> </a>';
@@ -100,7 +100,7 @@ class Questionnaire extends Admin_Controller {
             $crud->callback_column('email', array($this, '_callback_get_email'));
             $crud->callback_column('phone_number', array($this, '_callback_get_phone'));
             $crud->callback_column('twitter', array($this, '_callback_get_twitter'));
-//            
+//
             $crud->display_as('participant_id', 'Name');
             $crud->display_as('image_url', 'Image');
             $crud->set_field_upload('image_url', 'uploads');
@@ -167,7 +167,7 @@ class Questionnaire extends Admin_Controller {
         $output = $crud->render();
         $output->nav = $nav;
         if ($crud->getState() == 'list') {
-            // Set Qrcode Title 
+            // Set Qrcode Title
             $output->page_title = 'Questionnare Listings';
             // Set Main Template
             $output->main       = 'template/admin/metronix';
@@ -175,7 +175,7 @@ class Questionnaire extends Admin_Controller {
             $this->load->view('template/admin/template.php', $output);
         } else {
             $this->load->view('template/admin/popup.php', $output);
-        }    
+        }
     }
 
 }
