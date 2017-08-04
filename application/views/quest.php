@@ -95,10 +95,15 @@
                             <?php } ?>
                         </div>
                         <?php } else { ?>
-                        <div class="row-fluid" style="margin:100px auto 100px auto; ">
+                        <div class="row-fluid" style="margin:50px auto 100px auto; ">
                           <div class="center-block">
                             <div class="text-center main-block">
                               <div class="center-block clearfix main-box">
+                                <a class="btn btn-success btn-md" href="<?php echo base_url('quest/gallery');?>">
+                                    <span class="fa fa-users"> </span>
+                                    Results
+                                </a>
+                                <br/><br/><br/>
                                 <?php echo form_open('',['class'=>'form-inline','id'=>'submit_email']);?>
                                 <h3>Please Input your Email first...</h3>
                                 <div class="form-group">
