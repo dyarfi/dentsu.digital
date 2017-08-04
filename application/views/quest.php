@@ -54,11 +54,13 @@
                                                   <li>
                                                     <div class="text-left">
                                                         <label for="qsid_<?php echo $question->id;?>">
-                                                            <?php if ($question->file_name) {  /* ?>
+                                                            <?php if ($question->file_name) {   ?>
                                                             <div class="center-block">
-                                                                <img style="height:160px;margin:0 auto 10px auto;" src="<?php echo base_url('uploads/questionnaire/questions/'.$question->file_name);?>" class="img-thumbnail"/>
+                                                                <a href="<?php echo base_url('uploads/questionnaire/'.$question->file_name);?>" rel="img-group" title="<?php echo strip_tags($questionnaire->questionnaire_text);?><?php echo ($question->name) ? ' ('.$question->name.') ' : ' ';?><?php echo preg_replace('/(\D+.\:)/','',strip_tags($question->question_text));?>">
+                                                                    <img alt="<?php echo $question->subject;?>" style="height:160px;margin:0 auto 10px auto;" src="<?php echo base_url('uploads/questionnaire/'.$question->file_name);?>" class="img-thumbnail"/>
+                                                                </a>
                                                             </div>
-                                                            <?php */} ?>
+                                                            <?php } ?>
                                                             <input type="radio" <?php echo ($fields['qrid_'.$question->questionnaire_id] == 'qsid_'.$question->id ? 'checked="checked"' : '');?> name="qrid_<?php echo $questionnaire->id;?>" id="qsid_<?php echo $question->id;?>" value="qsid_<?php echo $question->id;?>" class="check_box"/>
                                                             <?php echo preg_replace('/(\D+.\:)/','',strip_tags($question->question_text));?>
                                                         </label>
@@ -100,7 +102,7 @@
                                 <?php echo form_open('',['class'=>'form-inline','id'=>'submit_email']);?>
                                 <h3>Please Input your Email first...</h3>
                                 <div class="form-group">
-                                    <?php echo form_input(['name'=>'email','class'=>'form-control','placeholder'=>'email@dx-d3.com']);?>
+                                    <?php echo form_input(['name'=>'email','class'=>'form-control','placeholder'=>'email@email.com']);?>
                                 </div>
                                 <?php echo form_submit(['type'=>'submit', 'name'=>'submit', 'value'=>'Submit', 'class'=>'btn btn-primary']);?>
                                 <div class="msg"></div>

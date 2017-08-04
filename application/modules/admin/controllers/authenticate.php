@@ -156,7 +156,7 @@ class Authenticate extends CI_Controller {
 	public function logout() {
 
 		// Set user's last login
-	    $this->Users->setLastLogin(@$this->acl->user()->id);		
+	    $this->Users->setLastLogin(@$this->acl->user()->id);
 
 	    // Destroy user session
 	    $this->acl->session_destroy();
@@ -169,11 +169,28 @@ class Authenticate extends CI_Controller {
     private function log_check ($session='') {
 
         // Check if user is logged in or not
-	    if ($this->session->userdata('user_session')->id != '') {
+	    if (@$this->session->userdata('user_session')->id != '') {
             /** Redirect to dashboards **/
 			redirect(str_replace('{admin_id}', $this->session->userdata('user_session')->id, $this->configs['default_page']));
 	    }
 
+    }
+
+	// Match Captcha post to Database
+    public function match_captcha($captcha) {
+
+        // Check captcha if empty
+        if ($captcha == '') {
+            $this->form_validation->set_message('match_captcha', lang('required'));
+            return false;
+        }
+        // Check captcha if match
+        else if (!$this->Captcha->match($captcha)) {
+            $this->form_validation->set_message('match_captcha', lang('regex_match'));
+            return false;
+        } else {
+            return true;
+        }
     }
 
 }

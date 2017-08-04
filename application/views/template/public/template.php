@@ -76,7 +76,7 @@
       "public/js/jquery.fancybox.pack.js",
 	  "public/js/bootstrap.min.js",
       "admin/plugins/bootbox/bootbox.min.js",
-      "public/js/jquery.scrollTo.js"
+      "public/js/jquery.scrollTo.js",
     ]);
     /*
      * Adding additional javascript from controller
@@ -99,11 +99,20 @@
      * Debugging information only
      *
      */
-    /* if (!empty($js_files)) { foreach ($js_files as $file): ?>
-    <script src="<?php echo $file; ?>"></script>
-    <?php endforeach; } */
+	 /*
+    if (!empty($js_files)) { foreach ($js_files as $file => $jses): ?>
+    <script rel="<?php echo $file;?>" src="<?php echo $jses; ?>"></script>
+    <?php endforeach; }
+	*/
   ?>
-  <script src="<?php echo base_url();?>assets/public/js/custom.js"></script>
+  <script src="<?php echo base_url("assets/public/js/jquery.jqplot.1.0.8/jquery.jqplot.js"); ?>"></script>
+  <script src="<?php echo base_url("assets/public/js/jquery.jqplot.1.0.8/plugins/jqplot.highlighter.js"); ?>"></script>
+  <script src="<?php echo base_url("assets/public/js/jquery.jqplot.1.0.8/plugins/jqplot.cursor.js"); ?>"></script>
+  <script src="<?php echo base_url("assets/public/js/jquery.jqplot.1.0.8/plugins/jqplot.dateAxisRenderer.js"); ?>"></script>
+  <script src="<?php echo base_url("assets/public/js/jquery.jqplot.1.0.8/plugins/jqplot.pieRenderer.js"); ?>"></script>
+  <script src="<?php echo base_url("assets/public/js/jquery.jqplot.1.0.8/plugins/jqplot.json2.js"); ?>"></script>
+  <script src="<?php echo base_url('assets/public/js/circle-progress.js');?>"></script>
+  <script src="<?php echo base_url('assets/public/js/custom.js');?>"></script>
   <script type="text/javascript">
   $(document).ready(function() {
   <?php

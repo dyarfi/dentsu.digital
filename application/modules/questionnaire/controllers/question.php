@@ -7,17 +7,17 @@ class Question extends Admin_Controller {
      *
      * Maps to the following URL
      * 		http://example.com/index.php/welcome
-     *	- or -  
+     *	- or -
      * 		http://example.com/index.php/welcome/index
      *	- or -
-     * Since this controller is set as the default controller in 
+     * Since this controller is set as the default controller in
      * config/routes.php, it's displayed at http://example.com/
      *
      * So any other public methods not prefixed with an underscore will
      * map to /index.php/welcome/<method_name>
      * @see http://codeigniter.com/user_guide/general/urls.html
      */
-	
+
 	public function __construct() {
 		parent::__construct();
 
@@ -25,7 +25,7 @@ class Question extends Admin_Controller {
         //$this->load->model('user_model');
         // Load Questionnaires model
         $this->load->model('Questionnaires');
-        // Load Questions model        
+        // Load Questions model
         $this->load->model('Questions');
     }
 
@@ -34,37 +34,23 @@ class Question extends Admin_Controller {
             $crud = new grocery_CRUD();
             $crud->set_table($this->Questions->table);
             $crud->set_subject('List Questions');
-            $crud->columns('question_text', 'questionnaire_id','status');                      
+            $crud->columns('name','question_text','file_name','questionnaire_id','status');
 
             $crud->display_as('questionnaire_id', 'Questionnaires');
             $crud->display_as('user_id', 'User');
 
             $crud->callback_column('questionnaire_id', array($this, '_callback_questionnaires'));
-
+            $crud->callback_column('file_name', array($this, '_callback_column_media'));
             $crud->callback_column('modified', array($this, '_callback_modified'));
             $crud->callback_column('added', array($this, '_callback_added'));
-            
-            $crud->field_type('questionnaire_id','dropdown',@$this->Questionnaires->get_values_questionnaires());    
-            //$crud->field_type('user_id','dropdown',$this->user_model->get_values_users());    
-            
+
+            $crud->field_type('questionnaire_id','dropdown',@$this->Questionnaires->get_values_questionnaires());
+            //$crud->field_type('user_id','dropdown',$this->user_model->get_values_users());
+
             $crud->field_type('status','dropdown',array('1' => 'Enable', '0' => 'Disable'));
+            // Set upload field
+            $crud->set_field_upload('file_name','uploads/questionnaire');
 
-//            $crud->columns('name', 'email', 'phphone_number', 'twitter', 'total_image');
-//            $crud->callback_column('total_image', array($this, '_callback_total_image'));
-//            $crud->display_as('name', 'Name');
-//            $crud->display_as('email', 'Email');
-//            $crud->display_as('phone_number', 'Phone Number');
-//            $crud->display_as('twitter', 'Phone Number');
-//            $crud->display_as('total_image', 'Total Image Submitted');
-            //$crud->columns('name', 'team_id');
-
-
-            //$crud->callback_column('fb_pic_url',array($this,'_callback_pic'));
-
-            //$crud->unset_add();            
-            //$crud->unset_edit();
-            //$crud->unset_delete();
-            
             $this->load($crud, 'questions');
         } catch (Exception $e) {
             show_error($e->getMessage() . ' --- ' . $e->getTraceAsString());
@@ -100,7 +86,7 @@ class Question extends Admin_Controller {
             $crud->callback_column('email', array($this, '_callback_get_email'));
             $crud->callback_column('phone_number', array($this, '_callback_get_phone'));
             $crud->callback_column('twitter', array($this, '_callback_get_twitter'));
-//            
+//
             $crud->display_as('participant_id', 'Name');
             $crud->display_as('image_url', 'Image');
             $crud->set_field_upload('image_url', 'uploads');
@@ -113,7 +99,7 @@ class Question extends Admin_Controller {
         } catch (Exception $e) {
             show_error($e->getMessage() . ' --- ' . $e->getTraceAsString());
         }
-    }      
+    }
 
     public function _callback_questionnaires($value, $row) {
         $questionnaire = $this->Questionnaires->get_questionnaires($row->questionnaire_id);
@@ -138,6 +124,14 @@ class Question extends Admin_Controller {
     public function _callback_get_twitter($value, $row) {
         $total = $this->user_model->get_twitter($row->image_id);
         return $total;
+    }
+
+    public function _callback_column_media($value,$row) {
+	    if ($value) {
+            return '<a href="'.base_url('uploads/questionnaire').'/'.$value.'" class="fancyframe iframe"><img height="40" src="'.base_url('uploads/questionnaire').'/'.$value.'"/></a>';
+        } else {
+            return '-';
+        }
     }
 
     public function user() {
@@ -168,7 +162,7 @@ class Question extends Admin_Controller {
         $output = $crud->render();
         $output->nav = $nav;
         if ($crud->getState() == 'list') {
-            // Set Qrcode Title 
+            // Set Qrcode Title
             $output->page_title = 'Question Listings';
             // Set Main Template
             $output->main       = 'template/admin/metronix';
@@ -176,7 +170,7 @@ class Question extends Admin_Controller {
             $this->load->view('template/admin/template.php', $output);
         } else {
             $this->load->view('template/admin/popup.php', $output);
-        }    
+        }
     }
 
 }

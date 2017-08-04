@@ -79,7 +79,8 @@ class Quest extends Public_Controller {
 				{
 
 			    	// Set default participant data
-					$participant = $this->Participants->getByEmail($this->input->post('email'));
+					//$participant = $this->Participants->getByEmail($this->input->post('email'));
+					$participant = $this->Participants->getByEmailOrAdd($this->input->post('email'));
 
 					// Default message
 					$checked = FALSE;
@@ -232,11 +233,13 @@ class Quest extends Public_Controller {
 		$data['fields'] 		= $fields;
 
 		// Load js jquery plot for graph
+		/*
 		$data['js_files'] = ['quest'=>
 								[
 							      "public/js/circle-progress.js"
 								]
 							];
+		*/
 
 		// Load js execution
 		$data['js_inline'] = "
@@ -300,7 +303,15 @@ class Quest extends Public_Controller {
 						});
 
 						return false;
-						});
+					});
+					$('a[rel=img-group]').fancybox({
+						'transitionIn'		: 'none',
+						'transitionOut'		: 'none',
+						'titlePosition' 	: 'over',
+						'titleFormat'       : function(title, currentArray, currentIndex, currentOpts) {
+						    return '<span id=\"fancybox-title-over\">Image ' +  (currentIndex + 1) + ' / ' + currentArray.length + ' ' + title + '</span>';
+						}
+					});
 				";
 
 		// Load site template
@@ -374,13 +385,18 @@ class Quest extends Public_Controller {
 								];
 
 			// Load js jquery plot for graph
-			$data['js_files'] = ['quest'=>
+			/* can't compy with js compressor
+			$data['js_files'] = ['fabric'=>
 									[
-									  "public/js/jquery.jqplot.1.0.8/jquery.jqplot.min.js",
-									  "public/js/jquery.jqplot.1.0.8/plugins/jqplot.pieRenderer.min.js",
-									  "public/js/jquery.jqplot.1.0.8/plugins/jqplot.json2.min.js"
+									  "public/js/jquery.jqplot.1.0.8/jquery.jqplot.js",
+									  "public/js/jquery.jqplot.1.0.8/plugins/jqplot.highlighter.js",
+									  "public/js/jquery.jqplot.1.0.8/plugins/jqplot.cursor.js",
+									  "public/js/jquery.jqplot.1.0.8/plugins/jqplot.dateAxisRenderer.js",
+									  "public/js/jquery.jqplot.1.0.8/plugins/jqplot.pieRenderer.js",
+									  "public/js/jquery.jqplot.1.0.8/plugins/jqplot.json2.js"
 									]
 								];
+			*/
 
 			// Load js execution
 			$data['js_inline'] = "jQuery.jqplot.config.enablePlugins = true;
@@ -451,9 +467,18 @@ class Quest extends Public_Controller {
 												seriesDefaults: {
 												  shadow: false,
 												  renderer: jQuery.jqplot.PieRenderer,
-												  rendererOptions: { padding: 2, sliceMargin: 2, startAngle: -90, showDataLabels: true},
+												  rendererOptions: { padding: 4, sliceMargin: 4, startAngle: -90, showDataLabels: true},
 												},
-												legend: { show:true, location: 'w', rowSpacing:2, placement:'outsideGrid', border:'0px',fontSize:'1.0em'}
+												legend: { show:true, location: 'w', rowSpacing:4, placement:'outsideGrid', border:'0px',fontSize:'1.0em'},
+												cursor: {
+												      show: true,
+												      tooltipLocation:'sw'
+											  	},
+												highlighter: {
+											      show: true,
+											      useAxesFormatters: false,
+											      tooltipFormatString: '%s'
+											    }
 											}
 										  );
 										}

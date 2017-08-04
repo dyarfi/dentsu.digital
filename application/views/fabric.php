@@ -168,7 +168,7 @@ if ($gallery && $attachment) { ?>
         <?php echo form_open('',['class'=>'form-inline','id'=>'submit_email']);?>
         <h3>Please Input your Email first...</h3>
         <div class="form-group">
-            <?php echo form_input(['name'=>'email','class'=>'form-control','placeholder'=>'email@dx-d3.com']);?>
+            <?php echo form_input(['name'=>'email','class'=>'form-control','placeholder'=>'email@email.com']);?>
         </div>
         <?php echo form_submit(['type'=>'submit', 'name'=>'submit', 'value'=>'Submit', 'class'=>'btn btn-primary']);?>
         <div class="msg"></div>

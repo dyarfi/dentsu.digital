@@ -45,7 +45,7 @@
 | the active record class
 */
 
-$active_group = 'default';
+$active_group = ($_SERVER['HTTP_HOST'] == 'labs.dentsudigital.dev') ? 'development' : 'default';
 $active_record = TRUE;
 
 $db['default']['hostname'] = 'localhost';
@@ -64,6 +64,40 @@ $db['default']['swap_pre'] = '';
 $db['default']['autoinit'] = TRUE;
 $db['default']['stricton'] = FALSE;
 
+//$db['development']['dbdriver'] = 'pdo';
+//$db['development']['hostname'] = 'mysql:host=homestead;port=33060;dbname=dentsu_digital';
+
+//$db['development']['hostname'] = 'mysql:host=homestead;port=33060';
+//$db['development']['dbdriver'] = 'pdo';
+$db['development']['hostname'] = 'homestead';
+$db['development']['username'] = 'homestead';
+$db['development']['password'] = 'secret';
+$db['development']['database'] = 'dentsu_digital';
+$db['development']['dbdriver'] = 'mysqli';
+$db['development']['dbprefix'] = 'tbl_';
+$db['development']['pconnect'] = TRUE;
+$db['development']['db_debug'] = TRUE;
+$db['development']['cache_on'] = FALSE;
+$db['development']['cachedir'] = '';
+$db['development']['char_set'] = 'utf8';
+$db['development']['dbcollat'] = 'utf8_general_ci';
+$db['development']['swap_pre'] = '';
+$db['development']['autoinit'] = TRUE;
+$db['development']['stricton'] = FALSE;
+
+/*
+echo 'Connecting to database: ' .$db['development']['database'];
+ $dbh=mysql_connect
+ (
+   $db['development']['hostname'],
+   $db['development']['username'],
+   $db['development']['password'])
+   or die('Cannot connect to the database because: ' . mysql_error());
+   mysql_select_db ($db['development']['database']);
+
+   echo '<br />   Connected OK:'  ;
+   die( 'file: ' .__FILE__ . ' Line: ' .__LINE__);
+*/
 
 /* End of file database.php */
 /* Location: ./application/config/database.php */
