@@ -23,6 +23,7 @@ class Question extends Admin_Controller {
 
         $this->load->library('grocery_CRUD');
         //$this->load->model('user_model');
+        $this->load->model('admin/Users');
         // Load Questionnaires model
         $this->load->model('Questionnaires');
         // Load Questions model
@@ -34,20 +35,38 @@ class Question extends Admin_Controller {
             $crud = new grocery_CRUD();
             $crud->set_table($this->Questions->table);
             $crud->set_subject('List Questions');
-            $crud->columns('name','question_text','file_name','questionnaire_id','status');
+
+            $crud->columns('name','question_text','file_name','questionnaire_id',/*'user_id',*/'status');
+            $crud->fields('name','questionnaire_id','question_text','file_name','user_id','status','added','modified');
+
+            $crud->set_rules('name','Question Name','required');
+            $crud->set_rules('question_text','Question Text','required');
+            $crud->set_rules('questionnaire_id','Questionnaire','required');
 
             $crud->display_as('questionnaire_id', 'Questionnaires');
             $crud->display_as('user_id', 'User');
-
+            $crud->callback_column('user_id', array($this, '_callback_admin'));
             $crud->callback_column('questionnaire_id', array($this, '_callback_questionnaires'));
             $crud->callback_column('file_name', array($this, '_callback_column_media'));
-            $crud->callback_column('modified', array($this, '_callback_modified'));
-            $crud->callback_column('added', array($this, '_callback_added'));
+            // This callback escapes the default auto column output of the field name at the add form
+			$crud->callback_column('added',array($this,'_callback_time'));
+			$crud->callback_column('modified',array($this,'_callback_time'));
+            // This callback escapes the default auto field output of the field name at the add form
+			$crud->callback_add_field('added',array($this,'_callback_time_added'));
+			// This callback escapes the default auto field output of the field name at the edit form
+			$crud->callback_edit_field('modified',array($this,'_callback_time_modified'));
+
+            $crud->field_type('added','hidden');
+            $crud->field_type('modified','hidden');
 
             $crud->field_type('questionnaire_id','dropdown',@$this->Questionnaires->get_values_questionnaires());
             //$crud->field_type('user_id','dropdown',$this->user_model->get_values_users());
 
             $crud->field_type('status','dropdown',array('1' => 'Enable', '0' => 'Disable'));
+
+            // Changes the default field type
+            $crud->field_type('user_id','hidden', $this->acl->user()->id);
+
             // Set upload field
             $crud->set_field_upload('file_name','uploads/questionnaire');
 
@@ -57,12 +76,23 @@ class Question extends Admin_Controller {
         }
     }
 
-    public function _callback_modified ($value, $row) {
-        return time();
+    public function _callback_admin($value, $row) {
+        $user = $this->Users->getUser($row->user_id);
+        return $user->email;
     }
 
-    public function _callback_added ($value, $row) {
-        return time();
+    public function _callback_time ($value, $row) {
+		return empty($value) ? '-' : date('D, d-M-Y',$value);
+    }
+
+    public function _callback_time_added ($value, $row) {
+		$time = time();
+		return '<input type="hidden" maxlength="50" value="'.$time.'" name="added">';
+    }
+
+    public function _callback_time_modified ($value, $row) {
+		$time = time();
+		return '<input type="hidden" maxlength="50" value="'.$time.'" name="modified">';
     }
 
     public function _callback_pic($value = '', $primary_key = null){

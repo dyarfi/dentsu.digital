@@ -36,6 +36,10 @@ class Questionnaire extends Admin_Controller {
             $crud->set_subject('List Questionnaire');
             $crud->display_as('user_id', 'User');
             $crud->columns('questionnaire_text',/*'quest_per_column',*/'user_id','status');
+            $crud->fields('name','questionnaire_text','file_name','user_id','status');
+            $crud->set_rules('name','Questionnaire Name','required');
+            $crud->set_rules('questionnaire_text','Questionnaire Text','required');
+
             $crud->callback_column('user_id', array($this, '_callback_admin'));
             //$crud->field_type('user_id','dropdown',$this->user_model->get_values_users());
             $crud->field_type('status','dropdown',array('1' => 'Enable', '0' => 'Disable'));
@@ -44,11 +48,22 @@ class Questionnaire extends Admin_Controller {
             $crud->field_type('added','hidden');
             $crud->field_type('modified','hidden');
 
+            // Changes the default field type
+            $crud->field_type('user_id','hidden', $this->acl->user()->id);
+
             // Set field display alias
             $crud->display_as('quest_per_column', 'Questions / Column');
 
             // Set upload field
             $crud->set_field_upload('file_name','uploads/questionnaire');
+
+            // This callback escapes the default auto column output of the field name at the add form
+			$crud->callback_column('added',array($this,'_callback_time'));
+			$crud->callback_column('modified',array($this,'_callback_time'));
+            // This callback escapes the default auto field output of the field name at the add form
+			$crud->callback_add_field('added',array($this,'_callback_time_added'));
+			// This callback escapes the default auto field output of the field name at the edit form
+			$crud->callback_edit_field('modified',array($this,'_callback_time_modified'));
 
             // Set user that who is in charge for this questionnaire
             //$crud->callback_column('user_id', array($this, '_callback_admin'));
@@ -72,6 +87,20 @@ class Questionnaire extends Admin_Controller {
         } catch (Exception $e) {
             show_error($e->getMessage() . ' --- ' . $e->getTraceAsString());
         }
+    }
+
+    public function _callback_time ($value, $row) {
+		return empty($value) ? '-' : date('D, d-M-Y',$value);
+    }
+
+    public function _callback_time_added ($value, $row) {
+		$time = time();
+		return '<input type="hidden" maxlength="50" value="'.$time.'" name="added">';
+    }
+
+    public function _callback_time_modified ($value, $row) {
+		$time = time();
+		return '<input type="hidden" maxlength="50" value="'.$time.'" name="modified">';
     }
 
     public function callback_pic($value = '', $primary_key = null){

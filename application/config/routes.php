@@ -41,7 +41,7 @@
 /*
 | -------------------------------------------------------------------------
 | MODULE ADMIN PANEL ROUTING - [START]
-| ------------------------------------------------------------------------- 
+| -------------------------------------------------------------------------
 */
 
 $admin = (ADMIN) ? str_replace('/', '', ADMIN) : '';
@@ -56,7 +56,7 @@ $route[$admin.'/user/(:any)']		= 'admin/user/$1';
 $route[$admin.'/usergroup/(:any)']	= 'admin/usergroup/$1';
 $route[$admin.'/language/(:any)']	= 'admin/language/$1';
 $route[$admin.'/modulelist/(:any)']	= 'admin/modulelist/$1';
-$route[$admin.'/setting/(:any)']	= 'admin/setting/$1'; 
+$route[$admin.'/setting/(:any)']	= 'admin/setting/$1';
 $route[$admin.'/serverlog/(:any)']	= 'admin/serverlog/$1';
 /***** Administrator module menu mandatory [end] *****/
 
@@ -75,7 +75,8 @@ $route[$admin.'/qrcodescanner/(:any)']	= 'qrcode/qrcodescanner/$1';
 $route[$admin.'/questionnaire/(:any)']		= 'questionnaire/$1';
 $route[$admin.'/question/(:any)']			= 'questionnaire/question/$1';
 $route[$admin.'/questionrule/(:any)']		= 'questionnaire/questionrule/$1';
-$route[$admin.'/questionuseranswer/(:any)']	= 'questionnaire/questionuseranswer/$1';
+$route[$admin.'/participantanswered/(:any)']		= 'questionnaire/participantanswered/$1';
+//$route[$admin.'/questionuseranswer/(:any)']	= 'questionnaire/questionuseranswer/$1';
 
 // Participant and Attachment Routes
 $route[$admin.'/participant/(:any)']			= 'participant/$1';
@@ -105,7 +106,7 @@ $route[$admin.'/conference_banner/(:any)']  = 'conference/conference_banner/$1';
 /*
 | -------------------------------------------------------------------------
 | MODULE ADMIN PANEL ROUTING - [END]
-| ------------------------------------------------------------------------- 
+| -------------------------------------------------------------------------
 */
 
 $route['default_controller'] = 'home';

@@ -1,5 +1,5 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-				
+
 //======================== Administrator Access - start config - ========================//
 
 $config['module_list.models']		= array('admin/ModuleLists');
@@ -9,11 +9,11 @@ $config['module_list.module_function']	= array(
 											'modulelist/trash'	=> 'Delete User Permission'
 											);
 
-/* MODULE MENU 
- * 
+/* MODULE MENU
+ *
  * Current MENU is only set to user and setting
  * Accessed by administrators only
- * 
+ *
  */
 
 // Module Menu List
@@ -25,9 +25,9 @@ $config['admin_list.module_menu']	= array(
 						'language/index'    => 'Languages',
 						'setting/index'	    => 'Settings'
 						);
-									
+
 /* MODULE FUNCTION
- * 
+ *
  * Current FUNCTION is only set to user and setting
  * Accessed by administrators only
  */
@@ -43,7 +43,7 @@ $config['admin_list.module_function']	= array(
 //======================== Administrator Access - end config - ========================//
 
 // Default modules
-$config['modulelist'] = array(	
+$config['modulelist'] = array(
 	// Admin module
 	'Admin' => array(
 		// Admin Models list
@@ -95,8 +95,8 @@ $config['modulelist'] = array(
 						'usergroup/view'    => 'View User Group',
 						'usergroup/edit'    => 'Edit User Group',
 						'usergroup/delete'  => 'Delete User Group',
-						'usergroup/change'  => 'Change User Group Status',						
-						'usergroup/export'	=> 'Export User Group Data', /** Export User Group data  **/		
+						'usergroup/change'  => 'Change User Group Status',
+						'usergroup/export'	=> 'Export User Group Data', /** Export User Group data  **/
 						// Language functions
 						'language/add'	    => 'Add Language',
 						'language/view'	    => 'View Language',
@@ -114,7 +114,7 @@ $config['modulelist'] = array(
 						'serverlog/edit'	=> 'Edit Server Log',
 						'serverlog/delete'	=> 'Delete Server Log',
 						'serverlog/trash'	=> 'Trash Server Log',
-						'serverlog/export'	=> 'Export Server Log Data' /** Export Server Log data  **/						
+						'serverlog/export'	=> 'Export Server Log Data' /** Export Server Log data  **/
 						)
 	),
 	// Page module
@@ -128,7 +128,7 @@ $config['modulelist'] = array(
 		// Page module functions
 		'module_function'	=> array(
 						// Page functions
-						'page/index/add'	=> 'Add Page',							
+						'page/index/add'	=> 'Add Page',
 						'page/index/view'	=> 'View Page',
 						'page/index/edit'	=> 'Edit Page',
 						'page/index/delete'	=> 'Delete Page',
@@ -138,13 +138,13 @@ $config['modulelist'] = array(
 						// Pages Gallery functions
                         'page_gallery/index'        => 'Gallery',
                         'page_gallery/index/add'	=> 'Add Gallery',
-                        'page_gallery/index/view'	=> 'View Gallery',			
-                        'page_gallery/index/edit'	=> 'Edit Gallery',			
+                        'page_gallery/index/view'	=> 'View Gallery',
+                        'page_gallery/index/edit'	=> 'Edit Gallery',
                         'page_gallery/index/delete' => 'Delete Gallery',
                         'page_gallery/index/change' => 'Change Gallery',
                         'page_gallery/index/export' => 'Export Gallery',
                         'page_gallery/index/print'	=> 'Print Gallery',
-                        'page_gallery/index/upload_file'	=> 'Upload Gallery',                        
+                        'page_gallery/index/upload_file'	=> 'Upload Gallery',
 						// Page Menu functions
 						'pagemenu/index/add'	=> 'Add Page Menu',
 						'pagemenu/index/view'	=> 'View Page Menu',
@@ -186,16 +186,16 @@ $config['modulelist'] = array(
 						'division/index/print'	=> 'Print Division',
 						// Applicant functions
 						'applicant/index/add'	 => 'Add Applicant',
-						'applicant/index/view'	 => 'View Applicant',			
-						'applicant/index/edit'	 => 'Edit Applicant',			
+						'applicant/index/view'	 => 'View Applicant',
+						'applicant/index/edit'	 => 'Edit Applicant',
 						'applicant/index/delete' => 'Delete Applicant',
 						'applicant/index/change' => 'Change Applicant',
 						'applicant/index/export' => 'Export Applicant',
 						'applicant/index/print'	 => 'Print Applicant',
 						// Employee functions
 						'employee/index/add'	=> 'Add Employee',
-						'employee/index/view'	=> 'View Employee',			
-						'employee/index/edit'	=> 'Edit Employee',			
+						'employee/index/view'	=> 'View Employee',
+						'employee/index/edit'	=> 'Edit Employee',
 						'employee/index/delete' => 'Delete Employee',
 						'employee/set'			=> 'Set to Employee',
 						'employee/index/change' => 'Change Employee',
@@ -211,7 +211,8 @@ $config['modulelist'] = array(
 		'module_menu'	=> array(
 						'questionnaire/index'	=> 'Questionnaires',
 						'question/index'		=> 'Questions',
-						'questionrule/index'	=> 'Question Rule'
+						'questionrule/index'	=> 'Question Rule',
+						'participantanswered/index' => 'Questionnaires Answer'
 						),
 		// Questionnaire module functions
 		'module_function'	=> array(
@@ -239,6 +240,14 @@ $config['modulelist'] = array(
 						'questionrule/index/change'	=> 'Change Question Rule Status',
 						'questionrule/index/export'	=> 'Export Question Rule',
 						'questionrule/index/print'	=> 'Print Question Rule',
+						// Questionnaire Participant Answer rule functions
+						'participantanswered/index/add'	=> 'Add Participant Answer',
+						'participantanswered/index/view'	=> 'View Participant Answer',
+						'participantanswered/index/edit'	=> 'Edit Participant Answer',
+						'participantanswered/index/delete'	=> 'Delete Participant Answer',
+						'participantanswered/index/change'	=> 'Change Participant Answer Status',
+						'participantanswered/index/export'	=> 'Export Participant Answer',
+						'participantanswered/index/print'	=> 'Print Participant Answer',
 						),
 	),
 	// Qrcode module
@@ -307,6 +316,7 @@ $config['modulelist'] = array(
 		// Participant module menus
 		'module_menu'		=> array(
                     'participant/index' => 'Participant',
+                    'attachment/index'	=> 'Attachment',
                     'attachment/index'	=> 'Attachment'
         ),
 		// Participant module functions
@@ -328,7 +338,7 @@ $config['modulelist'] = array(
                     'attachment/index/export'  => 'Export Attachment',
                     'attachment/index/print'   => 'Print Attachment',
         )
-	),	
+	),
 	// Conference module
 	'Conference' => array (
 		// Career Models list
@@ -361,16 +371,16 @@ $config['modulelist'] = array(
                 'speaker/index/print'	=> 'Print Speaker',
                 // Informations functions
                 'information/index/add'     => 'Add Information',
-                'information/index/view'	=> 'View Information',			
-                'information/index/edit'	=> 'Edit Information',			
+                'information/index/view'	=> 'View Information',
+                'information/index/edit'	=> 'Edit Information',
                 'information/index/delete'  => 'Delete Information',
                 'information/index/change'  => 'Change Information',
                 'information/index/export'  => 'Export Information',
                 'information/index/print'	=> 'Print Information',
                 // Schedule functions
                 'schedule/index/add'	=> 'Add Schedule',
-                'schedule/index/view'	=> 'View Schedule',			
-                'schedule/index/edit'	=> 'Edit Schedule',			
+                'schedule/index/view'	=> 'View Schedule',
+                'schedule/index/edit'	=> 'Edit Schedule',
                 'schedule/index/delete' => 'Delete Schedule',
                 'schedule/set'			=> 'Set to Schedule',
                 'schedule/index/change' => 'Change Schedule',
@@ -379,8 +389,8 @@ $config['modulelist'] = array(
 
                 // Conferences Submissions functions
                 'conference/submission/index/add'	=> 'Add Submission',
-                'conference/submission/index/view'	=> 'View Submission',			
-                'conference/submission/index/edit'	=> 'Edit Submission',			
+                'conference/submission/index/view'	=> 'View Submission',
+                'conference/submission/index/edit'	=> 'Edit Submission',
                 'conference/submission/index/delete' => 'Delete Submission',
                 'conference/submission/index/change' => 'Change Submission',
                 'conference/submission/index/export' => 'Export Submission',
@@ -389,8 +399,8 @@ $config['modulelist'] = array(
                 // Conferences Gallery functions
                 'conference_gallery/index'	=> 'Gallery',
                 'conference_gallery/index/add'	=> 'Add Gallery',
-                'conference_gallery/index/view'	=> 'View Gallery',			
-                'conference_gallery/index/edit'	=> 'Edit Gallery',			
+                'conference_gallery/index/view'	=> 'View Gallery',
+                'conference_gallery/index/edit'	=> 'Edit Gallery',
                 'conference_gallery/index/delete' => 'Delete Gallery',
                 'conference_gallery/index/change' => 'Change Gallery',
                 'conference_gallery/index/export' => 'Export Gallery',
@@ -399,8 +409,8 @@ $config['modulelist'] = array(
                 // Conferences Banner functions
                 'conference_banner/index'	=> 'Banner',
                 'conference_banner/index/add'	=> 'Add Banner',
-                'conference_banner/index/view'	=> 'View Banner',			
-                'conference_banner/index/edit'	=> 'Edit Banner',			
+                'conference_banner/index/view'	=> 'View Banner',
+                'conference_banner/index/edit'	=> 'Edit Banner',
                 'conference_banner/index/delete' => 'Delete Banner',
                 'conference_banner/index/change' => 'Change Banner',
                 'conference_banner/index/export' => 'Export Banner',

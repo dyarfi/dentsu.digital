@@ -428,6 +428,29 @@ class Quest extends Public_Controller {
 												ret = data;
 											  }
 											});
+											/*
+											$.ajax({
+											  // have to use synchronous here, else the function
+											  // will return before the data is fetched
+											  async: false,
+											  url: base_URL + 'quest/detail/' + quest_id,
+											  dataType:'json',
+											  sortData:true,
+											  success: function(data) {
+											  	var html = '<h3>'+quest_text+'</h3>';
+												var n = 1;
+											   	$.each(data, function(i, item) {
+												    html += '<span class=\"clearfix\">'+n+'. '+item.name;
+													if(item.file_name) {
+												    	html += '&nbsp;<img height=\"200px\" src=\"'+ base_URL + 'uploads/questionnaire/' + item.file_name + '\"/>';
+													}
+													html += '</span>';
+													n++;
+												});
+												$('.question-holder').empty().html(html);
+											  }
+											});
+											*/
 											return ret;
 										  };
 
@@ -494,5 +517,22 @@ class Quest extends Public_Controller {
 		    $this->load->view('template/public/template', $this->load->vars($data));
 
 	    }
+	}
+
+	public function detail ($id='') {
+
+		if (!empty($id) && $this->input->is_ajax_request()) {
+			// Load Questionaires data by id
+			//$data['questions'] = json_encode($this->questionnaires_model->get_questions_by_questionnaires($id));
+			// echo '[[["Data 1",3],["Data 2",4],["Data 3",10]]]';
+
+			// Set main template
+			$data['json'] = $this->Questionnaires->get_questions_by_questionnaires($id);
+
+			// Load admin template
+			$this->load->view('json', $this->load->vars($data));
+
+		}
+
 	}
 }
